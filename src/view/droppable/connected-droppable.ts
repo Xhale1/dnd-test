@@ -1,37 +1,37 @@
-import { connect } from "react-redux";
 import memoizeOne from "memoize-one";
 import { FunctionComponent } from "react";
+import { connect } from "react-redux";
 import { invariant } from "../../invariant";
-import type {
-  State,
-  DroppableId,
-  DraggableId,
-  CompletedDrag,
-  DraggableDimension,
-  DimensionMap,
-  TypeId,
-  Critical,
-  DraggableRubric,
-  DraggableDescriptor,
-} from "../../types";
-import type {
-  MapProps,
-  InternalOwnProps,
-  DroppableProps,
-  DefaultProps,
-  Selector,
-  DispatchProps,
-  DroppableStateSnapshot,
-  UseClone,
-  DraggableChildrenFn,
-} from "./droppable-types";
-import Droppable from "./droppable";
-import isStrictEqual from "../is-strict-equal";
-import whatIsDraggedOver from "../../state/droppable/what-is-dragged-over";
 import { updateViewportMaxScroll as updateViewportMaxScrollAction } from "../../state/action-creators";
-import isDragging from "../../state/is-dragging";
-import StoreContext from "../context/store-context";
+import whatIsDraggedOver from "../../state/droppable/what-is-dragged-over";
 import whatIsDraggedOverFromResult from "../../state/droppable/what-is-dragged-over-from-result";
+import isDragging from "../../state/is-dragging";
+import type {
+  CompletedDrag,
+  Critical,
+  DimensionMap,
+  DraggableDescriptor,
+  DraggableDimension,
+  DraggableId,
+  DraggableRubric,
+  DroppableId,
+  State,
+  TypeId,
+} from "../../types";
+import StoreContext from "../context/store-context";
+import isStrictEqual from "../is-strict-equal";
+import Droppable from "./droppable";
+import type {
+  DefaultProps,
+  DispatchProps,
+  DraggableChildrenFn,
+  DroppableProps,
+  DroppableStateSnapshot,
+  InternalOwnProps,
+  MapProps,
+  Selector,
+  UseClone,
+} from "./droppable-types";
 
 const isMatchingType = (type: TypeId, critical: Critical): boolean =>
   type === critical.droppable.type;
@@ -266,8 +266,6 @@ const ConnectedDroppable = connect(
   {
     // Ensuring our context does not clash with consumers
     context: StoreContext as any,
-    // pure: true is default value, but being really clear
-    pure: true,
     // When pure, compares the result of mapStateToProps to its previous value.
     // Default value: shallowEqual
     // Switching to a strictEqual as we return a memoized object on changes

@@ -2,38 +2,38 @@ import type { Position } from "css-box-model";
 import memoizeOne from "memoize-one";
 import type { FunctionComponent } from "react";
 import { connect } from "react-redux";
-import Draggable from "./draggable";
-import isDragging from "../../state/is-dragging";
-import { origin, negate } from "../../state/position";
-import isStrictEqual from "../is-strict-equal";
 import * as animation from "../../animation";
 import { dropAnimationFinished as dropAnimationFinishedAction } from "../../state/action-creators";
-import type {
-  State,
-  DraggableId,
-  DroppableId,
-  DraggableDimension,
-  Displacement,
-  CompletedDrag,
-  DragImpact,
-  MovementMode,
-  DropResult,
-  LiftEffect,
-  Combine,
-} from "../../types";
-import type {
-  DraggableProps,
-  MapProps,
-  OwnProps,
-  DispatchProps,
-  Selector,
-  DraggableStateSnapshot,
-  DropAnimation,
-} from "./draggable-types";
 import whatIsDraggedOver from "../../state/droppable/what-is-dragged-over";
-import StoreContext from "../context/store-context";
 import whatIsDraggedOverFromResult from "../../state/droppable/what-is-dragged-over-from-result";
 import { tryGetCombine } from "../../state/get-impact-location";
+import isDragging from "../../state/is-dragging";
+import { negate, origin } from "../../state/position";
+import type {
+  Combine,
+  CompletedDrag,
+  Displacement,
+  DraggableDimension,
+  DraggableId,
+  DragImpact,
+  DroppableId,
+  DropResult,
+  LiftEffect,
+  MovementMode,
+  State,
+} from "../../types";
+import StoreContext from "../context/store-context";
+import isStrictEqual from "../is-strict-equal";
+import Draggable from "./draggable";
+import type {
+  DispatchProps,
+  DraggableProps,
+  DraggableStateSnapshot,
+  DropAnimation,
+  MapProps,
+  OwnProps,
+  Selector,
+} from "./draggable-types";
 
 const getCombineWithFromResult = (result: DropResult): DraggableId | null => {
   return result.combine ? result.combine.draggableId : null;
@@ -380,8 +380,6 @@ const ConnectedDraggable = connect(
   {
     // Using our own context for the store to avoid clashing with consumers
     context: StoreContext as any,
-    // Default value, but being really clear
-    pure: true,
     // When pure, compares the result of mapStateToProps to its previous value.
     // Default value: shallowEqual
     // Switching to a strictEqual as we return a memoized object on changes
