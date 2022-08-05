@@ -31,15 +31,6 @@ If you are interested in making a large contribution to this library there is so
 
 The online courses listed are no free - feel free to seek out alternatives if you want to. We recommend the egghead.io courses because they are quite comprehensive.
 
-### Git commit guidelines
-
-We have very precise rules over how our git commit messages can be formatted. This leads to **more readable messages** that are easy to follow when looking through the **project history**. But also, we use the git commit messages to **generate the change log**. This project adheres to [Semantic Versioning 2.0](http://semver.org/).
-
-The commit message formatting can be added using a typical git workflow or through the use of a CLI
-wizard ([Commitizen](https://github.com/commitizen/cz-cli)). To use the wizard, run `pnpm cz` or `git commit` in your terminal after staging your changes in git.
-
-The format of each commit must follow the [Conventional Commits specification](https://www.conventionalcommits.org/en/v1.0.0/).
-
 ### General knowledge
 
 - [You Don't Know JS](https://github.com/getify/You-Dont-Know-JS): This is an amazing resource that I recommend all the time. It is great for having a deeper understanding of the JavaScript language.
