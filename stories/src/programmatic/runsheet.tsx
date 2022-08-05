@@ -1,15 +1,15 @@
 /* eslint-disable no-console */
-import React, { useState, useCallback, useEffect, ReactElement } from 'react';
 import type {
   DropResult,
   PreDragActions,
-  SnapDragActions,
   SensorAPI,
-} from '@react-forked/dnd';
-import { DragDropContext } from '@react-forked/dnd';
-import type { Quote } from '../types';
+  SnapDragActions,
+} from '@hello-pangea/dnd';
+import { DragDropContext } from '@hello-pangea/dnd';
+import React, { ReactElement, useCallback, useEffect, useState } from 'react';
 import QuoteList from '../primatives/quote-list';
 import reorder from '../reorder';
+import type { Quote } from '../types';
 
 function delay(fn: () => void, time = 300) {
   return new Promise<void>((resolve) => {

@@ -1,22 +1,22 @@
 /* eslint-disable no-console */
 /* eslint-disable no-await-in-loop */
-import React, { useState, useEffect, ReactElement } from 'react';
 import styled from '@emotion/styled';
-import { useCallback } from 'use-memo-one';
 import type {
   DropResult,
   PreDragActions,
-  SnapDragActions,
   Sensor,
   SensorAPI,
-} from '@react-forked/dnd';
-import { DragDropContext } from '@react-forked/dnd';
-import type { Quote } from '../types';
+  SnapDragActions,
+} from '@hello-pangea/dnd';
+import { DragDropContext } from '@hello-pangea/dnd';
+import React, { ReactElement, useEffect, useState } from 'react';
+import { useCallback } from 'use-memo-one';
+import bindEvents from '../../../src/view/event-bindings/bind-events';
+import { grid } from '../constants';
 import { quotes as initial } from '../data';
 import QuoteList from '../primatives/quote-list';
 import reorder from '../reorder';
-import bindEvents from '../../../src/view/event-bindings/bind-events';
-import { grid } from '../constants';
+import type { Quote } from '../types';
 
 function sleep(fn: () => void, time = 300) {
   return new Promise<void>((resolve) => {

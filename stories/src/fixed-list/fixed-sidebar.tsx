@@ -1,19 +1,19 @@
-import React, { ReactElement } from 'react';
-import ReactDOM from 'react-dom';
-import styled from '@emotion/styled';
 import { colors } from '@atlaskit/theme';
-import { DragDropContext, Draggable, Droppable } from '@react-forked/dnd';
+import styled from '@emotion/styled';
 import type {
-  DropResult,
   DraggableProvided,
   DraggableStateSnapshot,
   DroppableProvided,
-} from '@react-forked/dnd';
-import type { Quote } from '../types';
+  DropResult,
+} from '@hello-pangea/dnd';
+import { DragDropContext, Draggable, Droppable } from '@hello-pangea/dnd';
+import React, { ReactElement } from 'react';
+import ReactDOM from 'react-dom';
+import { invariant } from '../../../src/invariant';
 import { grid } from '../constants';
 import { getQuotes } from '../data';
 import QuoteItem from '../primatives/quote-item';
-import { invariant } from '../../../src/invariant';
+import type { Quote } from '../types';
 
 const sidebarWidth = 300;
 

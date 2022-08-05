@@ -1,16 +1,16 @@
-import React, { Component, ReactElement } from 'react';
-import ReactDOM from 'react-dom';
-import memoizeOne from 'memoize-one';
-import styled from '@emotion/styled';
 import { colors } from '@atlaskit/theme';
-import { Draggable } from '@react-forked/dnd';
+import styled from '@emotion/styled';
 import type {
   DraggableProvided,
   DraggableStateSnapshot,
-} from '@react-forked/dnd';
+} from '@hello-pangea/dnd';
+import { Draggable } from '@hello-pangea/dnd';
+import memoizeOne from 'memoize-one';
+import React, { Component, ReactElement } from 'react';
+import ReactDOM from 'react-dom';
 import { invariant } from '../../../src/invariant';
+import { borderRadius, grid } from '../constants';
 import type { Task as TaskType } from '../types';
-import { grid, borderRadius } from '../constants';
 import BlurContext from './blur-context';
 
 interface Props {

@@ -1,14 +1,14 @@
-import React, { CSSProperties, ReactElement } from 'react';
 import styled from '@emotion/styled';
-import { DragDropContext, Draggable, Droppable } from '@react-forked/dnd';
 import type {
-  DroppableProvided,
   DraggableProvided,
   DraggableStateSnapshot,
   DraggingStyle,
-  NotDraggingStyle,
+  DroppableProvided,
   DropResult,
-} from '@react-forked/dnd';
+  NotDraggingStyle,
+} from '@hello-pangea/dnd';
+import { DragDropContext, Draggable, Droppable } from '@hello-pangea/dnd';
+import React, { CSSProperties, ReactElement } from 'react';
 import { grid } from '../constants';
 import reorder from '../reorder';
 

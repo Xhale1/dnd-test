@@ -1,18 +1,18 @@
-import React, {
-  Component,
-  ReactElement,
-  MouseEvent,
-  TouchEvent,
-  KeyboardEvent,
-} from 'react';
-import styled from '@emotion/styled';
 import { colors } from '@atlaskit/theme';
-import { Draggable } from '@react-forked/dnd';
+import styled from '@emotion/styled';
 import type {
   DraggableProvided,
   DraggableStateSnapshot,
-} from '@react-forked/dnd';
-import { grid, borderRadius } from '../constants';
+} from '@hello-pangea/dnd';
+import { Draggable } from '@hello-pangea/dnd';
+import React, {
+  Component,
+  KeyboardEvent,
+  MouseEvent,
+  ReactElement,
+  TouchEvent,
+} from 'react';
+import { borderRadius, grid } from '../constants';
 import type { Id, Task as TaskType } from '../types';
 
 // https://developer.mozilla.org/en-US/docs/Web/API/MouseEvent/button

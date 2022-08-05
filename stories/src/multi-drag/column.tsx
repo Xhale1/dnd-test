@@ -1,16 +1,16 @@
-import React, { Component, ReactElement } from 'react';
-import styled from '@emotion/styled';
-import memoizeOne from 'memoize-one';
 import { colors } from '@atlaskit/theme';
-import { Droppable } from '@react-forked/dnd';
+import styled from '@emotion/styled';
 import type {
   DroppableProvided,
   DroppableStateSnapshot,
-} from '@react-forked/dnd';
-import { grid, borderRadius } from '../constants';
+} from '@hello-pangea/dnd';
+import { Droppable } from '@hello-pangea/dnd';
+import memoizeOne from 'memoize-one';
+import React, { Component, ReactElement } from 'react';
+import { borderRadius, grid } from '../constants';
+import type { Id, Task as TaskType } from '../types';
 import Task from './task';
 import type { Column as ColumnType } from './types';
-import type { Task as TaskType, Id } from '../types';
 
 interface Props {
   column: ColumnType;

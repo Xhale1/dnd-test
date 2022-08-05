@@ -1,20 +1,20 @@
 /* eslint-disable react/sort-comp */
-import type { Property } from 'csstype';
-import React, { Component, Fragment, ReactElement } from 'react';
-import type { ReactNode } from 'react';
-import ReactDOM from 'react-dom';
-import styled from '@emotion/styled';
 import { colors } from '@atlaskit/theme';
-import { DragDropContext, Droppable, Draggable } from '@react-forked/dnd';
+import styled from '@emotion/styled';
 import type {
-  DropResult,
-  DroppableProvided,
   DraggableProvided,
   DraggableStateSnapshot,
-} from '@react-forked/dnd';
+  DroppableProvided,
+  DropResult,
+} from '@hello-pangea/dnd';
+import { DragDropContext, Draggable, Droppable } from '@hello-pangea/dnd';
+import type { Property } from 'csstype';
+import type { ReactNode } from 'react';
+import React, { Component, Fragment, ReactElement } from 'react';
+import ReactDOM from 'react-dom';
 import { invariant } from '../../../src/invariant';
-import reorder from '../reorder';
 import { grid } from '../constants';
+import reorder from '../reorder';
 import type { Quote } from '../types';
 
 const Table = styled.table<{ layout: Property.TableLayout }>`

@@ -1,12 +1,12 @@
-import React, { Component, ReactElement } from 'react';
-import styled from '@emotion/styled';
 import { colors } from '@atlaskit/theme';
-import { DragDropContext } from '@react-forked/dnd';
-import type { DropResult } from '@react-forked/dnd';
-import type { Quote } from '../types';
+import styled from '@emotion/styled';
+import type { DropResult } from '@hello-pangea/dnd';
+import { DragDropContext } from '@hello-pangea/dnd';
+import React, { Component, ReactElement } from 'react';
+import { grid } from '../constants';
 import AuthorList from '../primatives/author-list';
 import reorder from '../reorder';
-import { grid } from '../constants';
+import type { Quote } from '../types';
 
 interface Props {
   initial: Quote[];

@@ -1,22 +1,22 @@
+import { colors } from '@atlaskit/theme';
+import styled from '@emotion/styled';
+import type { BeforeCapture, DropResult } from '@hello-pangea/dnd';
+import { DragDropContext, Draggable, Droppable } from '@hello-pangea/dnd';
+import type { BoxModel, Position } from 'css-box-model';
+import { getBox } from 'css-box-model';
 import React, {
-  useState,
+  ReactElement,
+  useContext,
   useEffect,
   useRef,
-  useContext,
-  ReactElement,
+  useState,
 } from 'react';
-import { getBox } from 'css-box-model';
-import type { Position, BoxModel } from 'css-box-model';
-import styled from '@emotion/styled';
-import { colors } from '@atlaskit/theme';
-import { DragDropContext, Droppable, Draggable } from '@react-forked/dnd';
-import type { BeforeCapture, DropResult } from '@react-forked/dnd';
-import { getQuotes } from '../data';
-import type { Quote } from '../types';
 import bindEvents from '../../../src/view/event-bindings/bind-events';
 import { BeforeCaptureEvent } from '../../../src/view/event-bindings/event-types';
 import { grid } from '../constants';
+import { getQuotes } from '../data';
 import reorder, { moveBetween } from '../reorder';
+import type { Quote } from '../types';
 
 const UseTrimmingContext = React.createContext<boolean>(false);
 

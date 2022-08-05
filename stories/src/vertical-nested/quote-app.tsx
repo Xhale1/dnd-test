@@ -1,14 +1,14 @@
-import React, { Component, ReactElement } from 'react';
-import styled from '@emotion/styled';
 import { colors } from '@atlaskit/theme';
-import { DragDropContext } from '@react-forked/dnd';
-import type { DropResult } from '@react-forked/dnd';
+import styled from '@emotion/styled';
+import type { DropResult } from '@hello-pangea/dnd';
+import { DragDropContext } from '@hello-pangea/dnd';
+import React, { Component, ReactElement } from 'react';
 import { invariant } from '../../../src/invariant';
 import { grid } from '../constants';
-import QuoteList from './quote-list';
-import reorder from '../reorder';
 import { getQuotes } from '../data';
+import reorder from '../reorder';
 import type { Quote } from '../types';
+import QuoteList from './quote-list';
 import type { NestedQuoteList } from './types';
 
 const quotes: Quote[] = getQuotes(10);

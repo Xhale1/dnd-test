@@ -1,8 +1,8 @@
-import type { DraggableLocation } from '@react-forked/dnd';
-import type { Column, ColumnMap, Entities } from './types';
-import type { Id } from '../types';
+import type { DraggableLocation } from '@hello-pangea/dnd';
 import { invariant } from '../../../src/invariant';
 import reorder from '../reorder';
+import type { Id } from '../types';
+import type { Column, ColumnMap, Entities } from './types';
 
 interface Args {
   entities: Entities;

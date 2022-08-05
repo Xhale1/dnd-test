@@ -1,9 +1,9 @@
-import React, { CSSProperties } from 'react';
-import styled from '@emotion/styled';
 import { colors } from '@atlaskit/theme';
-import type { DraggableProvided } from '@react-forked/dnd';
+import styled from '@emotion/styled';
+import type { DraggableProvided } from '@hello-pangea/dnd';
+import React, { CSSProperties } from 'react';
 import { borderRadius, grid } from '../constants';
-import type { Quote, AuthorColors } from '../types';
+import type { AuthorColors, Quote } from '../types';
 
 interface Props {
   quote: Quote;

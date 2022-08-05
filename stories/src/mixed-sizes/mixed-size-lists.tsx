@@ -1,13 +1,13 @@
 import { colors } from '@atlaskit/theme';
 import styled from '@emotion/styled';
+import type { DropResult } from '@hello-pangea/dnd';
+import { DragDropContext, Draggable, Droppable } from '@hello-pangea/dnd';
 import React, { ReactElement, useState } from 'react';
 import { useMemo } from 'use-memo-one';
-import { DragDropContext, Draggable, Droppable } from '@react-forked/dnd';
-import type { DropResult } from '@react-forked/dnd';
-import type { Quote } from '../types';
 import { grid } from '../constants';
 import { authorQuoteMap } from '../data';
 import reorder, { reorderQuoteMap } from '../reorder';
+import type { Quote } from '../types';
 
 const Parent = styled.div`
   display: flex;

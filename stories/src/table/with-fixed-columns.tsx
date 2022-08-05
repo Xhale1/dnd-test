@@ -1,16 +1,16 @@
-import type { Property } from 'csstype';
-import React, { Component, Fragment, ReactElement } from 'react';
-import styled from '@emotion/styled';
 import { colors } from '@atlaskit/theme';
-import { DragDropContext, Droppable, Draggable } from '@react-forked/dnd';
+import styled from '@emotion/styled';
 import type {
-  DropResult,
-  DroppableProvided,
   DraggableProvided,
   DraggableStateSnapshot,
-} from '@react-forked/dnd';
-import reorder from '../reorder';
+  DroppableProvided,
+  DropResult,
+} from '@hello-pangea/dnd';
+import { DragDropContext, Draggable, Droppable } from '@hello-pangea/dnd';
+import type { Property } from 'csstype';
+import React, { Component, Fragment, ReactElement } from 'react';
 import { grid } from '../constants';
+import reorder from '../reorder';
 import type { Quote } from '../types';
 
 const Table = styled.table<{ layout: Property.TableLayout }>`

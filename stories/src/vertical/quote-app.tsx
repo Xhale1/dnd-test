@@ -1,11 +1,11 @@
-import React, { CSSProperties, ReactElement, useState } from 'react';
 import styled from '@emotion/styled';
-import type { DropResult } from '@react-forked/dnd';
-import { DragDropContext } from '@react-forked/dnd';
-import type { Quote } from '../types';
+import type { DropResult } from '@hello-pangea/dnd';
+import { DragDropContext } from '@hello-pangea/dnd';
+import React, { CSSProperties, ReactElement, useState } from 'react';
+import { grid } from '../constants';
 import QuoteList from '../primatives/quote-list';
 import reorder from '../reorder';
-import { grid } from '../constants';
+import type { Quote } from '../types';
 
 const Root = styled.div`
   /* flexbox */

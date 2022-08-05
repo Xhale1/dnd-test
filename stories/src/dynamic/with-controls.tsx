@@ -1,14 +1,14 @@
 /* eslint-disable no-restricted-syntax */
-import React, { ReactElement } from 'react';
-import type { ChangeEvent } from 'react';
 import styled from '@emotion/styled';
-import { DragDropContext } from '@react-forked/dnd';
-import type { DropResult, DragUpdate } from '@react-forked/dnd';
-import QuoteList from '../primatives/quote-list';
-import { generateQuoteMap, authors } from '../data';
-import { reorderQuoteMap } from '../reorder';
+import type { DragUpdate, DropResult } from '@hello-pangea/dnd';
+import { DragDropContext } from '@hello-pangea/dnd';
+import type { ChangeEvent } from 'react';
+import React, { ReactElement } from 'react';
 import { grid } from '../constants';
-import type { Quote, QuoteMap, Author } from '../types';
+import { authors, generateQuoteMap } from '../data';
+import QuoteList from '../primatives/quote-list';
+import { reorderQuoteMap } from '../reorder';
+import type { Author, Quote, QuoteMap } from '../types';
 
 const initial: QuoteMap = generateQuoteMap(0);
 

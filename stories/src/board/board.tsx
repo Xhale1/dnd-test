@@ -1,16 +1,16 @@
-import React, { Component, ReactElement } from 'react';
-import styled from '@emotion/styled';
-import { Global, css } from '@emotion/react';
 import { colors } from '@atlaskit/theme';
+import { css, Global } from '@emotion/react';
+import styled from '@emotion/styled';
 import type {
-  DropResult,
   DraggableLocation,
   DroppableProvided,
-} from '@react-forked/dnd';
-import { DragDropContext, Droppable } from '@react-forked/dnd';
-import type { QuoteMap, Quote } from '../types';
-import Column from './column';
+  DropResult,
+} from '@hello-pangea/dnd';
+import { DragDropContext, Droppable } from '@hello-pangea/dnd';
+import React, { Component, ReactElement } from 'react';
 import reorder, { reorderQuoteMap } from '../reorder';
+import type { Quote, QuoteMap } from '../types';
+import Column from './column';
 
 interface ParentContainerProps {
   height: string;

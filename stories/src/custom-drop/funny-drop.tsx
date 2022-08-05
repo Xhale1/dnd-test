@@ -1,16 +1,16 @@
-import React, { CSSProperties, ReactElement } from 'react';
-import styled from '@emotion/styled';
 import { colors } from '@atlaskit/theme';
-import { DragDropContext, Draggable, Droppable } from '@react-forked/dnd';
+import styled from '@emotion/styled';
 import type {
-  DroppableProvided,
   DraggableProvided,
   DraggableStateSnapshot,
   DraggingStyle,
-  NotDraggingStyle,
   DropAnimation,
+  DroppableProvided,
   DropResult,
-} from '@react-forked/dnd';
+  NotDraggingStyle,
+} from '@hello-pangea/dnd';
+import { DragDropContext, Draggable, Droppable } from '@hello-pangea/dnd';
+import React, { CSSProperties, ReactElement } from 'react';
 import { grid } from '../constants';
 import reorder from '../reorder';
 

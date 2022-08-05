@@ -1,17 +1,17 @@
 /* eslint-disable no-console */
-import React, { useRef, useState, useCallback, ReactElement } from 'react';
 import styled from '@emotion/styled';
 import type {
   DropResult,
   PreDragActions,
-  SnapDragActions,
   SensorAPI,
-} from '@react-forked/dnd';
-import { DragDropContext } from '@react-forked/dnd';
-import type { Quote } from '../types';
+  SnapDragActions,
+} from '@hello-pangea/dnd';
+import { DragDropContext } from '@hello-pangea/dnd';
+import React, { ReactElement, useCallback, useRef, useState } from 'react';
+import { borderRadius, grid } from '../constants';
 import QuoteList from '../primatives/quote-list';
 import reorder from '../reorder';
-import { grid, borderRadius } from '../constants';
+import type { Quote } from '../types';
 
 interface ControlProps {
   quotes: Quote[];

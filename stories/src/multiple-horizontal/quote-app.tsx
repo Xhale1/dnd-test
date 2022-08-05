@@ -1,12 +1,12 @@
-import React, { Component, ReactElement } from 'react';
-import styled from '@emotion/styled';
 import { colors } from '@atlaskit/theme';
-import { DragDropContext } from '@react-forked/dnd';
-import type { DropResult } from '@react-forked/dnd';
-import AuthorList from '../primatives/author-list';
+import styled from '@emotion/styled';
+import type { DropResult } from '@hello-pangea/dnd';
+import { DragDropContext } from '@hello-pangea/dnd';
+import React, { Component, ReactElement } from 'react';
 import { grid } from '../constants';
-import { reorderQuoteMap } from '../reorder';
+import AuthorList from '../primatives/author-list';
 import type { ReorderQuoteMapResult } from '../reorder';
+import { reorderQuoteMap } from '../reorder';
 import type { QuoteMap } from '../types';
 
 const Root = styled.div`

@@ -1,28 +1,28 @@
-import React, { CSSProperties, ReactElement, useReducer } from 'react';
-import { FixedSizeList as List, areEqual } from 'react-window';
-import styled from '@emotion/styled';
-import { Global, css } from '@emotion/react';
 import { colors } from '@atlaskit/theme';
+import { css, Global } from '@emotion/react';
+import styled from '@emotion/styled';
 import {
   DragDropContext,
-  Droppable,
   Draggable,
-  DropResult,
   DraggableLocation,
   DraggableProvided,
-  DraggableStateSnapshot,
-  DroppableProvided,
   DraggableRubric,
+  DraggableStateSnapshot,
+  Droppable,
+  DroppableProvided,
   DroppableStateSnapshot,
-} from '@react-forked/dnd';
-import type { QuoteMap, Quote } from '../../types';
+  DropResult,
+} from '@hello-pangea/dnd';
+import React, { CSSProperties, ReactElement, useReducer } from 'react';
+import { areEqual, FixedSizeList as List } from 'react-window';
+import { borderRadius, grid } from '../../constants';
+import { generateQuoteMap } from '../../data';
+import QuoteItem from '../../primatives/quote-item';
+import { getBackgroundColor } from '../../primatives/quote-list';
 import Title from '../../primatives/title';
 import { reorderQuoteMap } from '../../reorder';
-import QuoteItem from '../../primatives/quote-item';
-import { grid, borderRadius } from '../../constants';
-import { getBackgroundColor } from '../../primatives/quote-list';
+import type { Quote, QuoteMap } from '../../types';
 import QuoteCountSlider from '../quote-count-chooser';
-import { generateQuoteMap } from '../../data';
 
 const Container = styled.div`
   display: flex;

@@ -19,21 +19,6 @@ const config = {
   ],
 };
 
-if (process.env.REACT_VERSION === '16') {
-  config.testPathIgnorePatterns = [
-    ...config.testPathIgnorePatterns,
-    // These test do not requires react and will
-    // be run in the base run (with react v17)
-    'test/unit/docs',
-    'test/unit/health',
-  ];
-  config.cacheDirectory = '.cache/jest-cache-react-16';
-  config.moduleNameMapper = {
-    '^react-dom((\\/.*)?)$': 'react-dom-16$1',
-    '^react((\\/.*)?)$': 'react-16$1',
-  };
-}
-
 if (process.env.CI) {
   config.maxWorkers = 2;
 }

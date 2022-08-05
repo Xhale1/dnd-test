@@ -1,11 +1,11 @@
-import React, { ReactElement, useState } from 'react';
-import styled from '@emotion/styled';
 import { colors } from '@atlaskit/theme';
-import { DragDropContext, Droppable, Draggable } from '@react-forked/dnd';
-import type { DropResult } from '@react-forked/dnd';
-import type { Task } from '../types';
+import styled from '@emotion/styled';
+import type { DropResult } from '@hello-pangea/dnd';
+import { DragDropContext, Draggable, Droppable } from '@hello-pangea/dnd';
+import React, { ReactElement, useState } from 'react';
 import { grid } from '../constants';
 import reorder, { moveBetween } from '../reorder';
+import type { Task } from '../types';
 
 let uniqueId = 0;
 function getTasks(count: number): Task[] {

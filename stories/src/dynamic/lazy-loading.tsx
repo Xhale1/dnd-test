@@ -1,14 +1,14 @@
-import React, { ReactElement } from 'react';
-import { DragDropContext } from '@react-forked/dnd';
 import type {
-  DropResult,
-  DragUpdate,
   DraggableLocation,
-} from '@react-forked/dnd';
+  DragUpdate,
+  DropResult,
+} from '@hello-pangea/dnd';
+import { DragDropContext } from '@hello-pangea/dnd';
+import React, { ReactElement } from 'react';
+import { getQuotes, quotes as initial } from '../data';
 import QuoteList from '../primatives/quote-list';
-import type { Quote } from '../types';
-import { quotes as initial, getQuotes } from '../data';
 import reorder from '../reorder';
+import type { Quote } from '../types';
 
 interface State {
   quotes: Quote[];

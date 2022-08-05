@@ -1,17 +1,17 @@
-import React, { Component, ReactElement } from 'react';
 import styled from '@emotion/styled';
-import { DragDropContext } from '@react-forked/dnd';
 import type {
+  DraggableLocation,
   DragStart,
   DropResult,
-  DraggableLocation,
-} from '@react-forked/dnd';
-import initial from './data';
+} from '@hello-pangea/dnd';
+import { DragDropContext } from '@hello-pangea/dnd';
+import React, { Component, ReactElement } from 'react';
+import type { Id, Task } from '../types';
 import Column from './column';
-import type { Result as ReorderResult } from './utils';
-import { mutliDragAwareReorder, multiSelectTo as multiSelect } from './utils';
-import type { Task, Id } from '../types';
+import initial from './data';
 import type { Entities } from './types';
+import type { Result as ReorderResult } from './utils';
+import { multiSelectTo as multiSelect, mutliDragAwareReorder } from './utils';
 
 const Container = styled.div`
   display: flex;

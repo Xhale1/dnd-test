@@ -1,10 +1,10 @@
-import React, { Component } from 'react';
 import {
   DragDropContext,
-  Droppable,
   Draggable,
+  Droppable,
   DropResult,
-} from '@react-forked/dnd';
+} from '@hello-pangea/dnd';
+import React, { Component } from 'react';
 
 // fake data generator
 const getItems = (count: number) =>

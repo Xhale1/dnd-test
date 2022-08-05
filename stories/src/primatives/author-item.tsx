@@ -1,10 +1,10 @@
-import React, { Component, ReactElement } from 'react';
-import styled from '@emotion/styled';
 import { colors } from '@atlaskit/theme';
+import styled from '@emotion/styled';
 import type {
   DraggableProvided,
   DraggableStateSnapshot,
-} from '@react-forked/dnd';
+} from '@hello-pangea/dnd';
+import React, { Component, ReactElement } from 'react';
 import { grid } from '../constants';
 import type { Author } from '../types';
 

@@ -1,16 +1,16 @@
+import { DragDropContext, Draggable, Droppable } from '@hello-pangea/dnd';
 import React, { CSSProperties, ReactElement, useState } from 'react';
 import ReactDOM from 'react-dom';
+import { List, WindowScroller } from 'react-virtualized';
 import 'react-virtualized/styles.css';
-import { WindowScroller, List } from 'react-virtualized';
-import { Droppable, Draggable, DragDropContext } from '@react-forked/dnd';
 
 import type {
-  DroppableProvided,
   DraggableProvided,
-  DraggableStateSnapshot,
   DraggableRubric,
+  DraggableStateSnapshot,
+  DroppableProvided,
   DropResult,
-} from '@react-forked/dnd';
+} from '@hello-pangea/dnd';
 import type { Quote } from '../../types';
 
 import QuoteItem from '../../primatives/quote-item';

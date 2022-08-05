@@ -1,10 +1,10 @@
+import type { DropResult } from '@hello-pangea/dnd';
+import { DragDropContext } from '@hello-pangea/dnd';
 import React, { ReactElement, useState } from 'react';
-import { DragDropContext } from '@react-forked/dnd';
-import type { DropResult } from '@react-forked/dnd';
 import { quotes as initial } from '../data';
-import type { Quote } from '../types';
 import QuoteList from '../primatives/quote-list';
 import reorder from '../reorder';
+import type { Quote } from '../types';
 
 function getQuotes() {
   const large: Quote = {
