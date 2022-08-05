@@ -1,19 +1,19 @@
-import { colors } from '@atlaskit/theme';
-import styled from '@emotion/styled';
+import { colors } from "@atlaskit/theme";
+import styled from "@emotion/styled";
 import type {
   DraggableProvided,
   DraggableStateSnapshot,
-} from '@hello-pangea/dnd';
-import { Draggable } from '@hello-pangea/dnd';
+} from "@hello-pangea/dnd";
+import { Draggable } from "@hello-pangea/dnd";
 import React, {
   Component,
   KeyboardEvent,
   MouseEvent,
   ReactElement,
   TouchEvent,
-} from 'react';
-import { borderRadius, grid } from '../constants';
-import type { Id, Task as TaskType } from '../types';
+} from "react";
+import { borderRadius, grid } from "../constants";
+import type { Id, Task as TaskType } from "../types";
 
 // https://developer.mozilla.org/en-US/docs/Web/API/MouseEvent/button
 const primaryButton = 0;
@@ -58,7 +58,7 @@ interface ContainerProps {
 
 const getColor = ({ isSelected, isGhosting }: ContainerProps): string => {
   if (isGhosting) {
-    return 'darkgrey';
+    return "darkgrey";
   }
   if (isSelected) {
     return colors.B200;
@@ -75,9 +75,9 @@ const Container = styled.div<ContainerProps>`
   font-size: 18px;
   border: 3px solid ${colors.N90};
   ${(props) =>
-    props.isDragging ? `box-shadow: 2px 2px 1px ${colors.N90};` : ''} ${(
-    props,
-  ) => (props.isGhosting ? 'opacity: 0.8;' : '')}
+    props.isDragging ? `box-shadow: 2px 2px 1px ${colors.N90};` : ""} ${(
+    props
+  ) => (props.isGhosting ? "opacity: 0.8;" : "")}
 
   /* needed for SelectionCount */
   position: relative;
@@ -119,7 +119,7 @@ export default class Task extends Component<Props> {
   onKeyDown = (
     event: KeyboardEvent<HTMLDivElement>,
     provided: DraggableProvided,
-    snapshot: DraggableStateSnapshot,
+    snapshot: DraggableStateSnapshot
   ): void => {
     if (event.defaultPrevented) {
       return;
@@ -170,9 +170,9 @@ export default class Task extends Component<Props> {
 
   // Determines if the platform specific toggle selection in group key was used
   wasToggleInSelectionGroupKeyUsed = (
-    event: MouseEvent | KeyboardEvent,
+    event: MouseEvent | KeyboardEvent
   ): boolean => {
-    const isUsingWindows = navigator.platform.indexOf('Win') >= 0;
+    const isUsingWindows = navigator.platform.indexOf("Win") >= 0;
     return isUsingWindows ? event.ctrlKey : event.metaKey;
   };
 
@@ -207,7 +207,7 @@ export default class Task extends Component<Props> {
       <Draggable draggableId={task.id} index={index}>
         {(
           provided: DraggableProvided,
-          snapshot: DraggableStateSnapshot,
+          snapshot: DraggableStateSnapshot
         ): ReactElement => {
           const shouldShowSelection: boolean =
             snapshot.isDragging && selectionCount > 1;

@@ -1,9 +1,9 @@
-import { getRect } from 'css-box-model';
-import type { Spacing } from 'css-box-model';
-import clip from '../../../../src/state/droppable/util/clip';
-import { offsetByPosition } from '../../../../src/state/spacing';
+import { getRect } from "css-box-model";
+import type { Spacing } from "css-box-model";
+import clip from "../../../../src/state/droppable/util/clip";
+import { offsetByPosition } from "../../../../src/state/spacing";
 
-it('should select clip a subject in a frame', () => {
+it("should select clip a subject in a frame", () => {
   const subject: Spacing = {
     top: 0,
     left: 0,
@@ -20,7 +20,7 @@ it('should select clip a subject in a frame', () => {
   expect(clip(frame, subject)).toEqual(getRect(frame));
 });
 
-it('should return null when the subject it outside the frame on any side', () => {
+it("should return null when the subject it outside the frame on any side", () => {
   const frame: Spacing = {
     top: 0,
     left: 0,

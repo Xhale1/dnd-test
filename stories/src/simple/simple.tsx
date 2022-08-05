@@ -4,8 +4,8 @@ import {
   DraggableStyle,
   Droppable,
   DropResult,
-} from '@hello-pangea/dnd';
-import React, { Component } from 'react';
+} from "@hello-pangea/dnd";
+import React, { Component } from "react";
 
 // fake data generator
 const getItems = (count: number) =>
@@ -18,7 +18,7 @@ const getItems = (count: number) =>
 const reorder = <TList extends unknown[]>(
   list: TList,
   startIndex: number,
-  endIndex: number,
+  endIndex: number
 ): TList => {
   const result = Array.from(list) as TList;
   const [removed] = result.splice(startIndex, 1);
@@ -31,22 +31,22 @@ const grid = 8;
 
 const getItemStyle = (
   isDragging: boolean,
-  draggableStyle: DraggableStyle = {},
+  draggableStyle: DraggableStyle = {}
 ) => ({
   // some basic styles to make the items look a bit nicer
-  userSelect: 'none' as const,
+  userSelect: "none" as const,
   padding: grid * 2,
   margin: `0 0 ${grid}px 0`,
 
   // change background colour if dragging
-  background: isDragging ? 'lightgreen' : 'red',
+  background: isDragging ? "lightgreen" : "red",
 
   // styles we need to apply on draggables
   ...draggableStyle,
 });
 
 const getListStyle = (isDraggingOver: boolean) => ({
-  background: isDraggingOver ? 'lightblue' : 'grey',
+  background: isDraggingOver ? "lightblue" : "grey",
   padding: grid,
   width: 250,
 });
@@ -80,7 +80,7 @@ export default class App extends Component<AppProps, AppState> {
     const items = reorder(
       this.state.items,
       result.source.index,
-      result.destination.index,
+      result.destination.index
     );
 
     this.setState({
@@ -108,7 +108,7 @@ export default class App extends Component<AppProps, AppState> {
                       {...draggableProvided.dragHandleProps}
                       style={getItemStyle(
                         draggableSnapshot.isDragging,
-                        draggableProvided.draggableProps.style,
+                        draggableProvided.draggableProps.style
                       )}
                     >
                       {item.content}

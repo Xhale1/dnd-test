@@ -1,8 +1,8 @@
-import { getRect } from 'css-box-model';
-import type { Rect, Position } from 'css-box-model';
-import isPositionInFrame from '../../../../src/state/visibility/is-position-in-frame';
+import { getRect } from "css-box-model";
+import type { Rect, Position } from "css-box-model";
+import isPositionInFrame from "../../../../src/state/visibility/is-position-in-frame";
 
-describe('is position in frame', () => {
+describe("is position in frame", () => {
   const frame: Rect = getRect({
     top: 0,
     left: 0,
@@ -10,11 +10,11 @@ describe('is position in frame', () => {
     bottom: 100,
   });
 
-  it('should return true if inside the frame', () => {
+  it("should return true if inside the frame", () => {
     expect(isPositionInFrame(frame)(frame.center)).toBe(true);
   });
 
-  it('should return true for all corners', () => {
+  it("should return true for all corners", () => {
     const corners: Position[] = [
       // top left
       { x: 0, y: 0 },
@@ -31,7 +31,7 @@ describe('is position in frame', () => {
     });
   });
 
-  it('should return false if outside on any side', () => {
+  it("should return false if outside on any side", () => {
     const points: Position[] = [
       // top
       { x: 50, y: -1 },

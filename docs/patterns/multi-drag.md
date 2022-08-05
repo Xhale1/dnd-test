@@ -149,7 +149,7 @@ class Task extends Component<Props> {
 
   // Determines if the platform specific toggle selection in group key was used
   wasToggleInSelectionGroupKeyUsed = (event: MouseEvent | KeyboardEvent) => {
-    const isUsingWindows = navigator.platform.indexOf('Win') >= 0;
+    const isUsingWindows = navigator.platform.indexOf("Win") >= 0;
     return isUsingWindows ? event.ctrlKey : event.metaKey;
   };
 

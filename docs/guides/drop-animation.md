@@ -13,7 +13,7 @@ In some cases you might want to add an additional `transform` or change the `tra
 Here is the shape of `DropAnimation`:
 
 ```ts
-type DropReason = 'DROP' | 'CANCEL';
+type DropReason = "DROP" | "CANCEL";
 
 interface DropAnimation {
   // how long the animation will run for
@@ -40,7 +40,7 @@ function getStyle(style, snapshot) {
   // move to the right spot
   const translate = `translate(${moveTo.x}px, ${moveTo.y}px)`;
   // add a bit of turn for fun
-  const rotate = 'rotate(0.5turn)';
+  const rotate = "rotate(0.5turn)";
 
   // patching the existing style
   return {

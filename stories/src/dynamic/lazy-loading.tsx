@@ -2,13 +2,13 @@ import type {
   DraggableLocation,
   DragUpdate,
   DropResult,
-} from '@hello-pangea/dnd';
-import { DragDropContext } from '@hello-pangea/dnd';
-import React, { ReactElement } from 'react';
-import { getQuotes, quotes as initial } from '../data';
-import QuoteList from '../primatives/quote-list';
-import reorder from '../reorder';
-import type { Quote } from '../types';
+} from "@hello-pangea/dnd";
+import { DragDropContext } from "@hello-pangea/dnd";
+import React, { ReactElement } from "react";
+import { getQuotes, quotes as initial } from "../data";
+import QuoteList from "../primatives/quote-list";
+import reorder from "../reorder";
+import type { Quote } from "../types";
 
 interface State {
   quotes: Quote[];
@@ -62,7 +62,7 @@ export default class LazyLoading extends React.Component<unknown, State> {
     const quotes = reorder(
       this.state.quotes,
       result.source.index,
-      result.destination.index,
+      result.destination.index
     );
 
     this.setState({

@@ -1,18 +1,18 @@
-import type { Position } from 'css-box-model';
+import type { Position } from "css-box-model";
 import type {
   CollectionStartingActionCreator,
   PublishWhileDraggingActionCreator,
   UpdateDroppableScrollActionCreator,
   UpdateDroppableIsEnabledActionCreator,
   UpdateDroppableIsCombineEnabledActionCreator,
-} from '../action-creators';
+} from "../action-creators";
 import type {
   DroppableId,
   Critical,
   DimensionMap,
   LiftRequest,
   Viewport,
-} from '../../types';
+} from "../../types";
 
 export interface StartPublishingResult {
   critical: Critical;
@@ -26,7 +26,7 @@ export interface DimensionMarshal {
   // it is also possible to update whether combining is enabled
   updateDroppableIsCombineEnabled: (
     id: DroppableId,
-    isEnabled: boolean,
+    isEnabled: boolean
   ) => void;
   updateDroppableScroll: (id: DroppableId, newScroll: Position) => void;
   scrollDroppable: (id: DroppableId, change: Position) => void;

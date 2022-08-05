@@ -1,34 +1,34 @@
-import React from 'react';
-import { getRect } from 'css-box-model';
-import { render } from '@testing-library/react';
+import React from "react";
+import { getRect } from "css-box-model";
+import { render } from "@testing-library/react";
 import type {
   DraggableProvided,
   DroppableProvided,
   DragStart,
   DragUpdate,
   DropResult,
-} from '../../../src';
-import type { Responders } from '../../../src/types';
-import { DragDropContext, Droppable, Draggable } from '../../../src';
-import { getComputedSpacing } from '../../util/dimension';
-import { simpleLift, keyboard } from './util/controls';
-import setDOMRect from '../../util/set-dom-rect';
+} from "../../../src";
+import type { Responders } from "../../../src/types";
+import { DragDropContext, Droppable, Draggable } from "../../../src";
+import { getComputedSpacing } from "../../util/dimension";
+import { simpleLift, keyboard } from "./util/controls";
+import setDOMRect from "../../util/set-dom-rect";
 
 // Both list and item will have the same dimensions
-jest.spyOn(Element.prototype, 'getBoundingClientRect').mockImplementation(() =>
+jest.spyOn(Element.prototype, "getBoundingClientRect").mockImplementation(() =>
   setDOMRect(
     getRect({
       top: 0,
       left: 0,
       right: 100,
       bottom: 100,
-    }),
-  ),
+    })
+  )
 );
 
 // Stubbing out totally - not including margins in this
 jest
-  .spyOn(window, 'getComputedStyle')
+  .spyOn(window, "getComputedStyle")
   .mockImplementation(() => getComputedSpacing({}));
 
 interface State {
@@ -101,27 +101,27 @@ afterEach(() => {
   jest.useRealTimers();
 });
 
-it('should allow the disabling of a droppable in onDragStart', () => {
+it("should allow the disabling of a droppable in onDragStart", () => {
   const responders: Responders = {
     onDragStart: jest.fn(),
     onDragUpdate: jest.fn(),
     onDragEnd: jest.fn(),
   };
   const { getByTestId } = render(<App {...responders} />);
-  const handle: HTMLElement = getByTestId('drag-handle');
+  const handle: HTMLElement = getByTestId("drag-handle");
 
   simpleLift(keyboard, handle);
   // flush responder
   jest.runOnlyPendingTimers();
 
   const start: DragStart = {
-    draggableId: 'draggable',
+    draggableId: "draggable",
     source: {
-      droppableId: 'droppable',
+      droppableId: "droppable",
       index: 0,
     },
-    type: 'DEFAULT',
-    mode: 'SNAP',
+    type: "DEFAULT",
+    mode: "SNAP",
   };
   expect(responders.onDragStart).toHaveBeenCalledWith(start);
 

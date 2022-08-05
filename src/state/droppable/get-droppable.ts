@@ -1,4 +1,4 @@
-import type { BoxModel, Position } from 'css-box-model';
+import type { BoxModel, Position } from "css-box-model";
 import type {
   Axis,
   DroppableDimension,
@@ -6,11 +6,11 @@ import type {
   Scrollable,
   DroppableSubject,
   ScrollSize,
-} from '../../types';
-import { vertical, horizontal } from '../axis';
-import { origin } from '../position';
-import getMaxScroll from '../get-max-scroll';
-import getSubject from './util/get-subject';
+} from "../../types";
+import { vertical, horizontal } from "../axis";
+import { origin } from "../position";
+import getMaxScroll from "../get-max-scroll";
+import getSubject from "./util/get-subject";
 
 export interface Closest {
   client: BoxModel;
@@ -25,7 +25,7 @@ interface Args {
   isEnabled: boolean;
   isCombineEnabled: boolean;
   isFixedOnPage: boolean;
-  direction: 'vertical' | 'horizontal';
+  direction: "vertical" | "horizontal";
   client: BoxModel;
   // is null when in a fixed container
   page: BoxModel;
@@ -75,7 +75,7 @@ export default ({
     };
   })();
 
-  const axis: Axis = direction === 'vertical' ? vertical : horizontal;
+  const axis: Axis = direction === "vertical" ? vertical : horizontal;
 
   const subject: DroppableSubject = getSubject({
     page,

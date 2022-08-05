@@ -1,4 +1,4 @@
-import * as dataAttr from '../../src/view/data-attributes';
+import * as dataAttr from "../../src/view/data-attributes";
 
 export function getDroppableSelector(droppableId?: string) {
   if (droppableId) {

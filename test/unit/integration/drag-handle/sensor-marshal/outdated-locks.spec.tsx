@@ -1,30 +1,30 @@
-import React from 'react';
-import { act, render } from '@testing-library/react';
-import { invariant } from '../../../../../src/invariant';
+import React from "react";
+import { act, render } from "@testing-library/react";
+import { invariant } from "../../../../../src/invariant";
 import type {
   SensorAPI,
   PreDragActions,
   SnapDragActions,
-} from '../../../../../src/types';
-import App from '../../util/app';
+} from "../../../../../src/types";
+import App from "../../util/app";
 
 let consoleWarnSpy: jest.SpyInstance;
 
 beforeEach(() => {
-  consoleWarnSpy = jest.spyOn(console, 'warn').mockImplementation(() => {});
+  consoleWarnSpy = jest.spyOn(console, "warn").mockImplementation(() => {});
 });
 
 afterEach(() => {
   consoleWarnSpy.mockRestore();
 });
 
-it('should not allow pre drag actions when in a dragging phase', () => {
+it("should not allow pre drag actions when in a dragging phase", () => {
   const sensor = jest.fn<void, [SensorAPI]>();
   render(<App sensors={[sensor]} />);
   const api: SensorAPI | undefined = sensor.mock.calls[0]?.[0];
-  invariant(api, 'expected api to be set');
+  invariant(api, "expected api to be set");
 
-  const preDrag: PreDragActions | null = api.tryGetLock('0');
+  const preDrag: PreDragActions | null = api.tryGetLock("0");
   invariant(preDrag);
   // it is currently active
   expect(preDrag.isActive()).toBe(true);
@@ -35,7 +35,7 @@ it('should not allow pre drag actions when in a dragging phase', () => {
   expect(preDrag.isActive()).toBe(false);
   preDrag.abort();
   expect(consoleWarnSpy.mock.calls[0][0]).toEqual(
-    expect.stringContaining('Cannot perform action'),
+    expect.stringContaining("Cannot perform action")
   );
 
   // drag is active - not aborted by preDrag
@@ -49,17 +49,17 @@ it('should not allow pre drag actions when in a dragging phase', () => {
   // preDrag is still out of date
   preDrag.abort();
   expect(consoleWarnSpy.mock.calls[0][0]).toEqual(
-    expect.stringContaining('Cannot perform action'),
+    expect.stringContaining("Cannot perform action")
   );
 });
 
-it('should not allow drag actions after a drop', () => {
+it("should not allow drag actions after a drop", () => {
   const sensor = jest.fn<void, [SensorAPI]>();
   render(<App sensors={[sensor]} />);
   const api: SensorAPI | undefined = sensor.mock.calls[0]?.[0];
-  invariant(api, 'expected api to be set');
+  invariant(api, "expected api to be set");
 
-  const preDrag: PreDragActions | null = api.tryGetLock('0');
+  const preDrag: PreDragActions | null = api.tryGetLock("0");
   invariant(preDrag);
   expect(preDrag.isActive()).toBe(true);
 
@@ -74,17 +74,17 @@ it('should not allow drag actions after a drop', () => {
 
   drag.moveUp();
   expect(consoleWarnSpy.mock.calls[0][0]).toEqual(
-    expect.stringContaining('Cannot perform action'),
+    expect.stringContaining("Cannot perform action")
   );
 });
 
-it('should not allow drag actions after lock lost', () => {
+it("should not allow drag actions after lock lost", () => {
   const sensor = jest.fn<void, [SensorAPI]>();
   const { unmount } = render(<App sensors={[sensor]} />);
   const api: SensorAPI | undefined = sensor.mock.calls[0]?.[0];
-  invariant(api, 'expected api to be set');
+  invariant(api, "expected api to be set");
 
-  const preDrag: PreDragActions | null = api.tryGetLock('0');
+  const preDrag: PreDragActions | null = api.tryGetLock("0");
   invariant(preDrag);
   expect(preDrag.isActive()).toBe(true);
 

@@ -1,8 +1,8 @@
-import React from 'react';
-import { fireEvent, render } from '@testing-library/react';
-import App from '../../util/app';
-import { touch } from '../../util/controls';
-import { isDragging } from '../../util/helpers';
+import React from "react";
+import { fireEvent, render } from "@testing-library/react";
+import App from "../../util/app";
+import { touch } from "../../util/controls";
+import { isDragging } from "../../util/helpers";
 
 beforeEach(() => {
   jest.useFakeTimers();
@@ -12,14 +12,14 @@ afterEach(() => {
   jest.useRealTimers();
 });
 
-it('should opt of a context menu', () => {
+it("should opt of a context menu", () => {
   const { getByText } = render(<App />);
-  const handle: HTMLElement = getByText('item: 0');
+  const handle: HTMLElement = getByText("item: 0");
 
   touch.preLift(handle);
 
   // prevented during a pending drag
-  const first: Event = new Event('contextmenu', {
+  const first: Event = new Event("contextmenu", {
     bubbles: true,
     cancelable: true,
   });
@@ -29,7 +29,7 @@ it('should opt of a context menu', () => {
   touch.lift(handle);
 
   // prevented during a drag
-  const second: Event = new Event('contextmenu', {
+  const second: Event = new Event("contextmenu", {
     bubbles: true,
     cancelable: true,
   });

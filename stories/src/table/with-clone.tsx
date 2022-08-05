@@ -1,22 +1,22 @@
 /* eslint-disable react/sort-comp */
-import { colors } from '@atlaskit/theme';
-import styled from '@emotion/styled';
+import { colors } from "@atlaskit/theme";
+import styled from "@emotion/styled";
 import type {
   DraggableProvided,
   DraggableRubric,
   DraggableStateSnapshot,
   DroppableProvided,
   DropResult,
-} from '@hello-pangea/dnd';
-import { DragDropContext, Draggable, Droppable } from '@hello-pangea/dnd';
-import type { Property } from 'csstype';
-import type { ReactNode } from 'react';
-import React, { Component, Fragment, ReactElement } from 'react';
-import { invariant } from '../../../src/invariant';
+} from "@hello-pangea/dnd";
+import { DragDropContext, Draggable, Droppable } from "@hello-pangea/dnd";
+import type { Property } from "csstype";
+import type { ReactNode } from "react";
+import React, { Component, Fragment, ReactElement } from "react";
+import { invariant } from "../../../src/invariant";
 
-import { grid } from '../constants';
-import reorder from '../reorder';
-import type { Quote } from '../types';
+import { grid } from "../constants";
+import reorder from "../reorder";
+import type { Quote } from "../types";
 
 const Table = styled.table<{ layout: Property.TableLayout }>`
   width: 500px;
@@ -35,7 +35,7 @@ const THead = styled.thead`
 `;
 
 const Row = styled.tr<{ isDragging?: boolean }>`
-  ${(props) => (props.isDragging ? `background: ${colors.G50};` : '')};
+  ${(props) => (props.isDragging ? `background: ${colors.G50};` : "")};
 `;
 
 const Cell = styled.td`
@@ -80,7 +80,7 @@ class TableCell extends React.Component<TableCellProps> {
   }
 
   getSnapshotBeforeUpdate(
-    prevProps: TableCellProps,
+    prevProps: TableCellProps
   ): TableCellSnapshot | undefined | null {
     // we will be locking the dimensions of the dragging item on mount
     if (this.props.isDragging) {
@@ -100,7 +100,7 @@ class TableCell extends React.Component<TableCellProps> {
   componentDidUpdate(
     prevProps: TableCellProps,
     prevState: unknown,
-    snapshot?: TableCellSnapshot | null,
+    snapshot?: TableCellSnapshot | null
   ) {
     const ref: HTMLElement | undefined | null = this.ref;
     if (!ref) {
@@ -122,8 +122,8 @@ class TableCell extends React.Component<TableCellProps> {
     }
 
     // no snapshot and drag is finished - clear the inline styles
-    ref.style.removeProperty('height');
-    ref.style.removeProperty('width');
+    ref.style.removeProperty("height");
+    ref.style.removeProperty("width");
   }
 
   componentWillUnmount() {
@@ -177,19 +177,19 @@ interface TableRowProps {
 
 // Using a table as the portal so that we do not get react
 // warnings when mounting a tr element
-const table: HTMLElement = document.createElement('table');
-table.classList.add('my-super-cool-table-portal');
+const table: HTMLElement = document.createElement("table");
+table.classList.add("my-super-cool-table-portal");
 Object.assign(table.style, {
-  margin: '0',
-  padding: '0',
-  border: '0',
-  height: '0',
-  width: '0',
+  margin: "0",
+  padding: "0",
+  border: "0",
+  height: "0",
+  width: "0",
 });
-const tbody: HTMLElement = document.createElement('tbody');
+const tbody: HTMLElement = document.createElement("tbody");
 table.appendChild(tbody);
 
-invariant(document.body, 'document.body required for example');
+invariant(document.body, "document.body required for example");
 
 document.body.appendChild(table);
 
@@ -252,7 +252,7 @@ interface AppProps {
 
 interface AppState {
   quotes: Quote[];
-  layout: 'fixed' | 'auto';
+  layout: "fixed" | "auto";
   isDragging: boolean;
 }
 
@@ -261,7 +261,7 @@ export default class TableApp extends Component<AppProps, AppState> {
 
   state: AppState = {
     quotes: this.props.initial,
-    layout: 'auto',
+    layout: "auto",
     isDragging: false,
   };
 
@@ -292,7 +292,7 @@ export default class TableApp extends Component<AppProps, AppState> {
     const quotes = reorder(
       this.state.quotes,
       result.source.index,
-      result.destination.index,
+      result.destination.index
     );
 
     this.setState({
@@ -302,7 +302,7 @@ export default class TableApp extends Component<AppProps, AppState> {
 
   toggleTableLayout = (): void => {
     this.setState({
-      layout: this.state.layout === 'auto' ? 'fixed' : 'auto',
+      layout: this.state.layout === "auto" ? "fixed" : "auto",
     });
   };
 
@@ -318,7 +318,7 @@ export default class TableApp extends Component<AppProps, AppState> {
 
     const wasCopied: boolean = (() => {
       try {
-        const result: boolean = document.execCommand('copy');
+        const result: boolean = document.execCommand("copy");
         return result;
       } catch (e) {
         return false;
@@ -326,7 +326,7 @@ export default class TableApp extends Component<AppProps, AppState> {
     })();
 
     // eslint-disable-next-line no-console
-    console.log('was copied?', wasCopied);
+    console.log("was copied?", wasCopied);
 
     // clear selection
     window?.getSelection()?.removeAllRanges();
@@ -366,7 +366,7 @@ export default class TableApp extends Component<AppProps, AppState> {
                 renderClone={(
                   provided: DraggableProvided,
                   snapshot: DraggableStateSnapshot,
-                  rubric: DraggableRubric,
+                  rubric: DraggableRubric
                 ) => (
                   <TableRow
                     provided={provided}
@@ -392,7 +392,7 @@ export default class TableApp extends Component<AppProps, AppState> {
                       >
                         {(
                           provided: DraggableProvided,
-                          snapshot: DraggableStateSnapshot,
+                          snapshot: DraggableStateSnapshot
                         ) => (
                           <TableRow
                             provided={provided}

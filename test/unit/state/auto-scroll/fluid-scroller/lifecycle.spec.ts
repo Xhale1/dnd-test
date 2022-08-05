@@ -1,14 +1,14 @@
-import forEach from './util/for-each';
-import type { BlockFnArgs } from './util/for-each';
-import type { DraggingState } from '../../../../../src/types';
-import getMocks from './util/get-args-mock';
-import getScroller from '../../../../../src/state/auto-scroller/fluid-scroller';
+import forEach from "./util/for-each";
+import type { BlockFnArgs } from "./util/for-each";
+import type { DraggingState } from "../../../../../src/types";
+import getMocks from "./util/get-args-mock";
+import getScroller from "../../../../../src/state/auto-scroller/fluid-scroller";
 
-import type { FluidScroller } from '../../../../../src/state/auto-scroller/fluid-scroller';
+import type { FluidScroller } from "../../../../../src/state/auto-scroller/fluid-scroller";
 
 forEach(({ state }: BlockFnArgs) => {
   const base: DraggingState = state.dragging();
-  it('should throw if a scroll occurs before a drag as started', () => {
+  it("should throw if a scroll occurs before a drag as started", () => {
     const scroller: FluidScroller = getScroller(getMocks());
     expect(() => scroller.scroll(base)).toThrow();
 
@@ -19,7 +19,7 @@ forEach(({ state }: BlockFnArgs) => {
     expect(() => scroller.scroll(base)).toThrow();
   });
 
-  it('should allow subsequent drags', () => {
+  it("should allow subsequent drags", () => {
     const scroller: FluidScroller = getScroller(getMocks());
     const run = () => {
       scroller.start(base);
@@ -31,7 +31,7 @@ forEach(({ state }: BlockFnArgs) => {
     });
   });
 
-  it('should allow defensive stop calls', () => {
+  it("should allow defensive stop calls", () => {
     const scroller: FluidScroller = getScroller(getMocks());
     // newly created - not started
     scroller.stop();
@@ -46,7 +46,7 @@ forEach(({ state }: BlockFnArgs) => {
     expect(run).not.toThrow();
   });
 
-  it('should throw if started multiple times', () => {
+  it("should throw if started multiple times", () => {
     const scroller: FluidScroller = getScroller(getMocks());
     scroller.start(base);
     expect(() => scroller.start(base)).toThrow();

@@ -1,5 +1,5 @@
-import type { Position } from 'css-box-model';
-import { invariant } from '../../invariant';
+import type { Position } from "css-box-model";
+import { invariant } from "../../invariant";
 import type {
   Axis,
   DroppableDimension,
@@ -8,23 +8,23 @@ import type {
   Scrollable,
   DroppableSubject,
   PlaceholderInSubject,
-} from '../../types';
-import getDraggablesInsideDroppable from '../get-draggables-inside-droppable';
-import { add, patch } from '../position';
-import getSubject from './util/get-subject';
-import isHomeOf from './is-home-of';
-import getDisplacedBy from '../get-displaced-by';
+} from "../../types";
+import getDraggablesInsideDroppable from "../get-draggables-inside-droppable";
+import { add, patch } from "../position";
+import getSubject from "./util/get-subject";
+import isHomeOf from "./is-home-of";
+import getDisplacedBy from "../get-displaced-by";
 
 const getRequiredGrowthForPlaceholder = (
   droppable: DroppableDimension,
   placeholderSize: Position,
-  draggables: DraggableDimensionMap,
+  draggables: DraggableDimensionMap
 ): Position | null => {
   const axis: Axis = droppable.axis;
 
   // A virtual list will most likely not contain all of the Draggables
   // so counting them does not help.
-  if (droppable.descriptor.mode === 'virtual') {
+  if (droppable.descriptor.mode === "virtual") {
     return patch(axis.line, placeholderSize[axis.line]);
   }
 
@@ -33,12 +33,12 @@ const getRequiredGrowthForPlaceholder = (
   const availableSpace: number = droppable.subject.page.contentBox[axis.size];
   const insideDroppable: DraggableDimension[] = getDraggablesInsideDroppable(
     droppable.descriptor.id,
-    draggables,
+    draggables
   );
   const spaceUsed: number = insideDroppable.reduce(
     (sum: number, dimension: DraggableDimension): number =>
       sum + dimension.client.marginBox[axis.size],
-    0,
+    0
   );
   const requiredSpace: number = spaceUsed + placeholderSize[axis.line];
   const needsToGrowBy: number = requiredSpace - availableSpace;
@@ -63,29 +63,29 @@ const withMaxScroll = (frame: Scrollable, max: Position): Scrollable => ({
 export const addPlaceholder = (
   droppable: DroppableDimension,
   draggable: DraggableDimension,
-  draggables: DraggableDimensionMap,
+  draggables: DraggableDimensionMap
 ): DroppableDimension => {
   const frame: Scrollable | null = droppable.frame;
 
   invariant(
     !isHomeOf(draggable, droppable),
-    'Should not add placeholder space to home list',
+    "Should not add placeholder space to home list"
   );
 
   invariant(
     !droppable.subject.withPlaceholder,
-    'Cannot add placeholder size to a subject when it already has one',
+    "Cannot add placeholder size to a subject when it already has one"
   );
 
   const placeholderSize: Position = getDisplacedBy(
     droppable.axis,
-    draggable.displaceBy,
+    draggable.displaceBy
   ).point;
 
   const requiredGrowth: Position | null = getRequiredGrowthForPlaceholder(
     droppable,
     placeholderSize,
-    draggables,
+    draggables
   );
 
   const added: PlaceholderInSubject = {
@@ -127,12 +127,12 @@ export const addPlaceholder = (
 };
 
 export const removePlaceholder = (
-  droppable: DroppableDimension,
+  droppable: DroppableDimension
 ): DroppableDimension => {
   const added: PlaceholderInSubject | null = droppable.subject.withPlaceholder;
   invariant(
     added,
-    'Cannot remove placeholder form subject when there was none',
+    "Cannot remove placeholder form subject when there was none"
   );
 
   const frame: Scrollable | null = droppable.frame;
@@ -154,7 +154,7 @@ export const removePlaceholder = (
   const oldMaxScroll: Position | null = added.oldFrameMaxScroll;
   invariant(
     oldMaxScroll,
-    'Expected droppable with frame to have old max frame scroll when removing placeholder',
+    "Expected droppable with frame to have old max frame scroll when removing placeholder"
   );
 
   const newFrame: Scrollable = withMaxScroll(frame, oldMaxScroll);

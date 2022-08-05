@@ -1,11 +1,11 @@
-import { colors } from '@atlaskit/theme';
-import styled from '@emotion/styled';
-import type { DropResult } from '@hello-pangea/dnd';
-import { DragDropContext, Draggable, Droppable } from '@hello-pangea/dnd';
-import React, { ReactElement, useState } from 'react';
-import { grid } from '../constants';
-import reorder, { moveBetween } from '../reorder';
-import type { Task } from '../types';
+import { colors } from "@atlaskit/theme";
+import styled from "@emotion/styled";
+import type { DropResult } from "@hello-pangea/dnd";
+import { DragDropContext, Draggable, Droppable } from "@hello-pangea/dnd";
+import React, { ReactElement, useState } from "react";
+import { grid } from "../constants";
+import reorder, { moveBetween } from "../reorder";
+import type { Task } from "../types";
 
 let uniqueId = 0;
 function getTasks(count: number): Task[] {
@@ -37,7 +37,7 @@ function renderTasks(
   tasks: Task[],
   options: {
     isDragEnabled: boolean;
-  } = { isDragEnabled: true },
+  } = { isDragEnabled: true }
 ) {
   return tasks.map((task: Task, index: number) => {
     return (
@@ -105,7 +105,7 @@ export default function AddingThings(): ReactElement {
     }
 
     if (source.droppableId === destination.droppableId) {
-      if (source.droppableId === 'tasks') {
+      if (source.droppableId === "tasks") {
         setTasks(reorder(tasks, source.index, destination.index));
       }
       // In our current UI it won't be possible to reorder trash
@@ -114,11 +114,11 @@ export default function AddingThings(): ReactElement {
 
     const { list1, list2 } = moveBetween({
       list1: {
-        id: 'tasks',
+        id: "tasks",
         values: tasks,
       },
       list2: {
-        id: 'trash',
+        id: "trash",
         values: trash,
       },
       source,
@@ -134,7 +134,7 @@ export default function AddingThings(): ReactElement {
       <App>
         <Tasks>
           <ListTitle>
-            Tasks{' '}
+            Tasks{" "}
             <span role="img" aria-label="book">
               📘
             </span>
@@ -151,7 +151,7 @@ export default function AddingThings(): ReactElement {
         {isShowingBin ? (
           <Bin>
             <ListTitle>
-              Trash{' '}
+              Trash{" "}
               <span role="img" aria-label="trash">
                 🗑
               </span>

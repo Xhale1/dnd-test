@@ -1,8 +1,8 @@
-import React from 'react';
-import { render, act } from '@testing-library/react';
-import AnimateInOut from '../../../../src/view/animate-in-out/animate-in-out';
+import React from "react";
+import { render, act } from "@testing-library/react";
+import AnimateInOut from "../../../../src/view/animate-in-out/animate-in-out";
 
-import type { AnimateProvided } from '../../../../src/view/animate-in-out/animate-in-out';
+import type { AnimateProvided } from "../../../../src/view/animate-in-out/animate-in-out";
 
 interface ChildProps {
   provided: AnimateProvided;
@@ -14,25 +14,25 @@ class Child extends React.Component<ChildProps> {
   }
 }
 
-it('should render children', () => {
+it("should render children", () => {
   const { getByText } = render(
     <AnimateInOut on="hey" shouldAnimate={false}>
       {(provided: AnimateProvided) => <Child provided={provided} />}
-    </AnimateInOut>,
+    </AnimateInOut>
   );
 
-  expect(getByText('none')).toBeTruthy();
+  expect(getByText("none")).toBeTruthy();
 });
 
-it('should allow children not to be rendered', () => {
+it("should allow children not to be rendered", () => {
   {
     const { unmount, container } = render(
       <AnimateInOut on={null} shouldAnimate={false}>
         {(provided: AnimateProvided) => <Child provided={provided} />}
-      </AnimateInOut>,
+      </AnimateInOut>
     );
 
-    expect(container.innerHTML).toEqual('');
+    expect(container.innerHTML).toEqual("");
     unmount();
   }
   // initial animation set to true
@@ -40,15 +40,15 @@ it('should allow children not to be rendered', () => {
     const { container, unmount } = render(
       <AnimateInOut on={null} shouldAnimate>
         {(provided: AnimateProvided) => <Child provided={provided} />}
-      </AnimateInOut>,
+      </AnimateInOut>
     );
 
-    expect(container.innerHTML).toEqual('');
+    expect(container.innerHTML).toEqual("");
     unmount();
   }
 });
 
-it('should allow children not to be rendered after a close animation', () => {
+it("should allow children not to be rendered after a close animation", () => {
   const child = jest
     .fn()
     .mockImplementation((provided: AnimateProvided) => (
@@ -69,16 +69,16 @@ it('should allow children not to be rendered after a close animation', () => {
   }
 
   const { rerender, container } = render(<App on="hey" shouldAnimate />);
-  expect(container.textContent).toEqual('open');
+  expect(container.textContent).toEqual("open");
 
   // data is gone - will animate closed
   rerender(<App on={null} shouldAnimate />);
-  expect(container.textContent).toEqual('close');
+  expect(container.textContent).toEqual("close");
 
   // letting animate-in-out know that the animation is finished
   act(() => {
     child.mock.calls[child.mock.calls.length - 1][0].onClose();
   });
 
-  expect(container.innerHTML).toEqual('');
+  expect(container.innerHTML).toEqual("");
 });

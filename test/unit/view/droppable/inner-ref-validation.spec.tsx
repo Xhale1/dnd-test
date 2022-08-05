@@ -1,10 +1,10 @@
-import { render } from '@testing-library/react';
-import React from 'react';
-import type { DroppableProvided } from '../../../../src/view/droppable/droppable-types';
-import App from './util/app';
-import { withError } from '../../../util/console';
+import { render } from "@testing-library/react";
+import React from "react";
+import type { DroppableProvided } from "../../../../src/view/droppable/droppable-types";
+import App from "./util/app";
+import { withError } from "../../../util/console";
 
-it('should warn a consumer if they have not provided a ref', () => {
+it("should warn a consumer if they have not provided a ref", () => {
   class NoRef extends React.Component<{
     provided: DroppableProvided;
   }> {
@@ -25,7 +25,7 @@ it('should warn a consumer if they have not provided a ref', () => {
   });
 });
 
-it('should throw a consumer if they have provided an SVGElement', () => {
+it("should throw a consumer if they have provided an SVGElement", () => {
   class WithSVG extends React.Component<{
     provided: DroppableProvided;
   }> {

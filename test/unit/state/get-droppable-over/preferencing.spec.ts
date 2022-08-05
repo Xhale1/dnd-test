@@ -1,23 +1,23 @@
-import type { Rect } from 'css-box-model';
+import type { Rect } from "css-box-model";
 import {
   getDroppableDimension,
   getDraggableDimension,
-} from '../../../util/dimension';
+} from "../../../util/dimension";
 import type {
   DraggableDimension,
   DroppableDimension,
-} from '../../../../src/types';
-import { getOffsetForCrossAxisEndEdge } from '../get-drag-impact/util/get-offset-for-edge';
-import { offsetRectByPosition } from '../../../../src/state/rect';
-import getDroppableOver from '../../../../src/state/get-droppable-over';
-import { toDroppableMap } from '../../../../src/state/dimension-structures';
-import { afterCrossAxisPoint } from '../../../util/after-point';
+} from "../../../../src/types";
+import { getOffsetForCrossAxisEndEdge } from "../get-drag-impact/util/get-offset-for-edge";
+import { offsetRectByPosition } from "../../../../src/state/rect";
+import getDroppableOver from "../../../../src/state/get-droppable-over";
+import { toDroppableMap } from "../../../../src/state/dimension-structures";
+import { afterCrossAxisPoint } from "../../../util/after-point";
 
 const droppableOrigin: DroppableDimension = getDroppableDimension({
   descriptor: {
-    id: 'large',
-    type: 'standard',
-    mode: 'standard',
+    id: "large",
+    type: "standard",
+    mode: "standard",
   },
   borderBox: {
     top: 0,
@@ -29,9 +29,9 @@ const droppableOrigin: DroppableDimension = getDroppableDimension({
 
 const droppableFirst: DroppableDimension = getDroppableDimension({
   descriptor: {
-    id: 'small',
-    type: 'standard',
-    mode: 'standard',
+    id: "small",
+    type: "standard",
+    mode: "standard",
   },
   borderBox: {
     top: 1000,
@@ -43,9 +43,9 @@ const droppableFirst: DroppableDimension = getDroppableDimension({
 
 const droppableSecond: DroppableDimension = getDroppableDimension({
   descriptor: {
-    id: 'secondary',
-    type: 'standard',
-    mode: 'standard',
+    id: "secondary",
+    type: "standard",
+    mode: "standard",
   },
   borderBox: {
     top: 1000,
@@ -58,9 +58,9 @@ const droppableSecond: DroppableDimension = getDroppableDimension({
 
 const droppableThird: DroppableDimension = getDroppableDimension({
   descriptor: {
-    id: 'tertiary',
-    type: 'standard',
-    mode: 'standard',
+    id: "tertiary",
+    type: "standard",
+    mode: "standard",
   },
   borderBox: {
     top: 1000,
@@ -72,7 +72,7 @@ const droppableThird: DroppableDimension = getDroppableDimension({
 
 const draggable: DraggableDimension = getDraggableDimension({
   descriptor: {
-    id: 'my draggable',
+    id: "my draggable",
     index: 0,
     type: droppableOrigin.descriptor.type,
     droppableId: droppableOrigin.descriptor.id,
@@ -84,7 +84,7 @@ const draggable: DraggableDimension = getDraggableDimension({
  * In this case we're hovering over all three lists.
  * We expect that the furthest away active element is returned.
  */
-it('should prefer the furthest away droppable when multiple lists are hit', () => {
+it("should prefer the furthest away droppable when multiple lists are hit", () => {
   const offset = getOffsetForCrossAxisEndEdge({
     crossAxisEndEdgeOn: droppableThird.page.borderBox.center,
     dragging: draggable.page.borderBox,
@@ -93,7 +93,7 @@ it('should prefer the furthest away droppable when multiple lists are hit', () =
 
   const pageBorderBox: Rect = offsetRectByPosition(
     draggable.page.borderBox,
-    afterCrossAxisPoint(droppableThird.axis, offset),
+    afterCrossAxisPoint(droppableThird.axis, offset)
   );
 
   const result = getDroppableOver({
@@ -114,7 +114,7 @@ it('should prefer the furthest away droppable when multiple lists are hit', () =
  * In this case we're hovering over the primary and secondary and lists.
  * We expect that the furthest away active element is returned (not including the tertiary list).
  */
-it('should prefer the second furthest away droppable when multiple lists are hit', () => {
+it("should prefer the second furthest away droppable when multiple lists are hit", () => {
   const offset = getOffsetForCrossAxisEndEdge({
     crossAxisEndEdgeOn: droppableSecond.page.borderBox.center,
     dragging: draggable.page.borderBox,
@@ -123,7 +123,7 @@ it('should prefer the second furthest away droppable when multiple lists are hit
 
   const pageBorderBox: Rect = offsetRectByPosition(
     draggable.page.borderBox,
-    afterCrossAxisPoint(droppableSecond.axis, offset),
+    afterCrossAxisPoint(droppableSecond.axis, offset)
   );
 
   const result = getDroppableOver({

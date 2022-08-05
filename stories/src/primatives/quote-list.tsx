@@ -1,21 +1,21 @@
-import { colors } from '@atlaskit/theme';
-import styled from '@emotion/styled';
+import { colors } from "@atlaskit/theme";
+import styled from "@emotion/styled";
 import type {
   DraggableProvided,
   DraggableStateSnapshot,
   DroppableProvided,
   DroppableStateSnapshot,
-} from '@hello-pangea/dnd';
-import { Draggable, Droppable } from '@hello-pangea/dnd';
-import React, { CSSProperties, ReactElement } from 'react';
-import { grid } from '../constants';
-import type { Quote } from '../types';
-import QuoteItem from './quote-item';
-import Title from './title';
+} from "@hello-pangea/dnd";
+import { Draggable, Droppable } from "@hello-pangea/dnd";
+import React, { CSSProperties, ReactElement } from "react";
+import { grid } from "../constants";
+import type { Quote } from "../types";
+import QuoteItem from "./quote-item";
+import Title from "./title";
 
 export const getBackgroundColor = (
   isDraggingOver: boolean,
-  isDraggingFrom: boolean,
+  isDraggingFrom: boolean
 ): string => {
   if (isDraggingOver) {
     return colors.R50;
@@ -37,7 +37,7 @@ const Wrapper = styled.div<WrapperProps>`
     getBackgroundColor(props.isDraggingOver, props.isDraggingFrom)};
   display: flex;
   flex-direction: column;
-  opacity: ${({ isDropDisabled }) => (isDropDisabled ? 0.5 : 'inherit')};
+  opacity: ${({ isDropDisabled }) => (isDropDisabled ? 0.5 : "inherit")};
   padding: ${grid}px;
   border: ${grid}px;
   padding-bottom: 0;
@@ -96,7 +96,7 @@ function InnerQuoteList(props: QuoteListProps): ReactElement {
         <Draggable key={quote.id} draggableId={quote.id} index={index}>
           {(
             dragProvided: DraggableProvided,
-            dragSnapshot: DraggableStateSnapshot,
+            dragSnapshot: DraggableStateSnapshot
           ) => (
             <QuoteItem
               key={quote.id}
@@ -142,7 +142,7 @@ export default function QuoteList(props: Props): ReactElement {
     scrollContainerStyle,
     isDropDisabled,
     isCombineEnabled,
-    listId = 'LIST',
+    listId = "LIST",
     listType,
     style,
     quotes,
@@ -172,7 +172,7 @@ export default function QuoteList(props: Props): ReactElement {
     >
       {(
         dropProvided: DroppableProvided,
-        dropSnapshot: DroppableStateSnapshot,
+        dropSnapshot: DroppableStateSnapshot
       ) => (
         <Wrapper
           style={style}

@@ -1,8 +1,8 @@
-import { render } from '@testing-library/react';
-import React from 'react';
-import { invariant } from '../../../../src/invariant';
-import { getMarshalStub } from '../../../util/dimension-marshal';
-import { setViewport } from '../../../util/viewport';
+import { render } from "@testing-library/react";
+import React from "react";
+import { invariant } from "../../../../src/invariant";
+import { getMarshalStub } from "../../../util/dimension-marshal";
+import { setViewport } from "../../../util/viewport";
 import {
   App,
   immediate,
@@ -12,35 +12,35 @@ import {
   scheduled,
   ScrollableItem,
   WithAppContext,
-} from './util/shared';
+} from "./util/shared";
 import type {
   Registry,
   DroppableCallbacks,
-} from '../../../../src/state/registry/registry-types';
-import createRegistry from '../../../../src/state/registry/create-registry';
-import setDOMRect from '../../../util/set-dom-rect';
+} from "../../../../src/state/registry/registry-types";
+import createRegistry from "../../../../src/state/registry/create-registry";
+import setDOMRect from "../../../util/set-dom-rect";
 
 setViewport(preset.viewport);
 
-it('should throw if the droppable has no closest scrollable', () => {
+it("should throw if the droppable has no closest scrollable", () => {
   const marshal = getMarshalStub();
   const registry: Registry = createRegistry();
-  const registerSpy = jest.spyOn(registry.droppable, 'register');
+  const registerSpy = jest.spyOn(registry.droppable, "register");
   // no scroll parent
   const { container } = render(
     <WithAppContext marshal={marshal} registry={registry}>
       <App parentIsScrollable={false} droppableIsScrollable={false} />,
-    </WithAppContext>,
+    </WithAppContext>
   );
-  const droppable = container.querySelector('.droppable') as HTMLElement;
+  const droppable = container.querySelector(".droppable") as HTMLElement;
   invariant(droppable);
-  const parent = container.querySelector('.scroll-parent') as HTMLElement;
+  const parent = container.querySelector(".scroll-parent") as HTMLElement;
   invariant(parent);
   jest
-    .spyOn(droppable, 'getBoundingClientRect')
+    .spyOn(droppable, "getBoundingClientRect")
     .mockImplementation(() => setDOMRect(smallFrameClient.borderBox));
   jest
-    .spyOn(parent, 'getBoundingClientRect')
+    .spyOn(parent, "getBoundingClientRect")
     .mockImplementation(() => setDOMRect(bigClient.borderBox));
 
   // validating no initial scroll
@@ -63,18 +63,18 @@ it('should throw if the droppable has no closest scrollable', () => {
   expect(droppable.scrollLeft).toBe(0);
 });
 
-describe('there is a closest scrollable', () => {
-  it('should update the scroll of the closest scrollable', () => {
+describe("there is a closest scrollable", () => {
+  it("should update the scroll of the closest scrollable", () => {
     const marshal = getMarshalStub();
     const registry: Registry = createRegistry();
-    const registerSpy = jest.spyOn(registry.droppable, 'register');
+    const registerSpy = jest.spyOn(registry.droppable, "register");
     const { container } = render(
       <WithAppContext marshal={marshal} registry={registry}>
         <ScrollableItem />
-      </WithAppContext>,
+      </WithAppContext>
     );
     const scrollContainer = container.querySelector(
-      '.scroll-container',
+      ".scroll-container"
     ) as HTMLElement;
     invariant(scrollContainer);
 
@@ -93,18 +93,18 @@ describe('there is a closest scrollable', () => {
     expect(scrollContainer.scrollTop).toBe(1000);
   });
 
-  it('should throw if asked to scoll while scroll is not currently being watched', () => {
+  it("should throw if asked to scoll while scroll is not currently being watched", () => {
     const marshal = getMarshalStub();
     const registry: Registry = createRegistry();
-    const registerSpy = jest.spyOn(registry.droppable, 'register');
+    const registerSpy = jest.spyOn(registry.droppable, "register");
     const { container } = render(
       <WithAppContext marshal={marshal} registry={registry}>
         <ScrollableItem />
-      </WithAppContext>,
+      </WithAppContext>
     );
 
     const scrollContainer = container.querySelector(
-      '.scroll-container',
+      ".scroll-container"
     ) as HTMLElement;
     invariant(scrollContainer);
     expect(scrollContainer.scrollTop).toBe(0);

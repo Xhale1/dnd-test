@@ -1,23 +1,23 @@
-import { getRect } from 'css-box-model';
-import type { Rect, Position, Spacing } from 'css-box-model';
+import { getRect } from "css-box-model";
+import type { Rect, Position, Spacing } from "css-box-model";
 import type {
   Axis,
   DraggableDimension,
   DroppableDimension,
   Viewport,
-} from '../../../../../../src/types';
-import getClosestDraggable from '../../../../../../src/state/move-in-direction/move-cross-axis/get-closest-draggable';
-import scrollDroppable from '../../../../../../src/state/droppable/scroll-droppable';
-import { add, distance, patch } from '../../../../../../src/state/position';
+} from "../../../../../../src/types";
+import getClosestDraggable from "../../../../../../src/state/move-in-direction/move-cross-axis/get-closest-draggable";
+import scrollDroppable from "../../../../../../src/state/droppable/scroll-droppable";
+import { add, distance, patch } from "../../../../../../src/state/position";
 import {
   getDroppableDimension,
   getDraggableDimension,
   withAssortedSpacing,
-} from '../../../../../util/dimension';
-import { expandByPosition } from '../../../../../../src/state/spacing';
-import { horizontal, vertical } from '../../../../../../src/state/axis';
-import getViewport from '../../../../../../src/view/window/get-viewport';
-import { noAfterCritical } from '../../../../../../src/state/no-impact';
+} from "../../../../../util/dimension";
+import { expandByPosition } from "../../../../../../src/state/spacing";
+import { horizontal, vertical } from "../../../../../../src/state/axis";
+import getViewport from "../../../../../../src/view/window/get-viewport";
+import { noAfterCritical } from "../../../../../../src/state/no-impact";
 
 const viewport: Viewport = getViewport();
 
@@ -37,9 +37,9 @@ const viewport: Viewport = getViewport();
 
     const droppable: DroppableDimension = getDroppableDimension({
       descriptor: {
-        id: 'droppable',
-        type: 'TYPE',
-        mode: 'standard',
+        id: "droppable",
+        type: "TYPE",
+        mode: "standard",
       },
       direction: axis.direction,
       borderBox,
@@ -48,7 +48,7 @@ const viewport: Viewport = getViewport();
 
     const hiddenBackwards: DraggableDimension = getDraggableDimension({
       descriptor: {
-        id: 'hiddenBackwards',
+        id: "hiddenBackwards",
         droppableId: droppable.descriptor.id,
         type: droppable.descriptor.type,
         index: 0,
@@ -65,7 +65,7 @@ const viewport: Viewport = getViewport();
     // item bleeds backwards past the start of the droppable
     const partiallyHiddenBackwards: DraggableDimension = getDraggableDimension({
       descriptor: {
-        id: 'partialHiddenBackwards',
+        id: "partialHiddenBackwards",
         droppableId: droppable.descriptor.id,
         type: droppable.descriptor.type,
         index: 1,
@@ -81,7 +81,7 @@ const viewport: Viewport = getViewport();
 
     const visible1: DraggableDimension = getDraggableDimension({
       descriptor: {
-        id: 'visible1',
+        id: "visible1",
         droppableId: droppable.descriptor.id,
         type: droppable.descriptor.type,
         index: 2,
@@ -97,7 +97,7 @@ const viewport: Viewport = getViewport();
 
     const visible2: DraggableDimension = getDraggableDimension({
       descriptor: {
-        id: 'visible2',
+        id: "visible2",
         droppableId: droppable.descriptor.id,
         type: droppable.descriptor.type,
         index: 3,
@@ -114,7 +114,7 @@ const viewport: Viewport = getViewport();
     // bleeds over the end of the visible boundary
     const partiallyHiddenForwards: DraggableDimension = getDraggableDimension({
       descriptor: {
-        id: 'partiallyHiddenForwards',
+        id: "partiallyHiddenForwards",
         droppableId: droppable.descriptor.id,
         type: droppable.descriptor.type,
         index: 4,
@@ -131,7 +131,7 @@ const viewport: Viewport = getViewport();
     // totally invisible
     const hiddenForwards: DraggableDimension = getDraggableDimension({
       descriptor: {
-        id: 'hiddenForwards',
+        id: "hiddenForwards",
         droppableId: droppable.descriptor.id,
         type: droppable.descriptor.type,
         index: 5,
@@ -147,7 +147,7 @@ const viewport: Viewport = getViewport();
 
     const outOfViewport: DraggableDimension = getDraggableDimension({
       descriptor: {
-        id: 'hidden',
+        id: "hidden",
         droppableId: droppable.descriptor.id,
         type: droppable.descriptor.type,
         index: 6,
@@ -171,12 +171,12 @@ const viewport: Viewport = getViewport();
       outOfViewport,
     ];
 
-    it('should return the closest draggable', () => {
+    it("should return the closest draggable", () => {
       // closet to visible1
       const center1: Position = patch(
         axis.line,
         visible1.page.borderBox.center[axis.line],
-        100,
+        100
       );
       const result1: DraggableDimension | null = getClosestDraggable({
         pageBorderBoxCenter: center1,
@@ -191,7 +191,7 @@ const viewport: Viewport = getViewport();
       const center2: Position = patch(
         axis.line,
         visible2.page.borderBox.center[axis.line],
-        100,
+        100
       );
       const result2: DraggableDimension | null = getClosestDraggable({
         pageBorderBoxCenter: center2,
@@ -203,7 +203,7 @@ const viewport: Viewport = getViewport();
       expect(result2).toBe(visible2);
     });
 
-    it('should return null if there are no draggables in the droppable', () => {
+    it("should return null if there are no draggables in the droppable", () => {
       const center: Position = {
         x: 100,
         y: 100,
@@ -220,7 +220,7 @@ const viewport: Viewport = getViewport();
       expect(result).toBe(null);
     });
 
-    it('should take into account the change in droppable scroll', () => {
+    it("should take into account the change in droppable scroll", () => {
       const scrollable: DroppableDimension = getDroppableDimension({
         descriptor: droppable.descriptor,
         direction: axis.direction,
@@ -237,12 +237,12 @@ const viewport: Viewport = getViewport();
       });
       const scrolled: DroppableDimension = scrollDroppable(
         scrollable,
-        patch(axis.line, 20),
+        patch(axis.line, 20)
       );
       const center: Position = patch(
         axis.line,
         visible1.page.borderBox.center[axis.line],
-        100,
+        100
       );
 
       const result: DraggableDimension | null = getClosestDraggable({
@@ -266,12 +266,12 @@ const viewport: Viewport = getViewport();
       expect(result1).toBe(visible1);
     });
 
-    describe('removal of draggables that are visible', () => {
-      it('should ignore draggables backward that have no total visiblity', () => {
+    describe("removal of draggables that are visible", () => {
+      it("should ignore draggables backward that have no total visiblity", () => {
         const center: Position = patch(
           axis.line,
           hiddenBackwards.page.borderBox.center[axis.line],
-          100,
+          100
         );
 
         const result: DraggableDimension | null = getClosestDraggable({
@@ -285,11 +285,11 @@ const viewport: Viewport = getViewport();
         expect(result).toBe(visible1);
       });
 
-      it('should ignore draggables that have backwards partial visiblility', () => {
+      it("should ignore draggables that have backwards partial visiblility", () => {
         const center: Position = patch(
           axis.line,
           partiallyHiddenBackwards.page.borderBox.center[axis.line],
-          100,
+          100
         );
 
         const result: DraggableDimension | null = getClosestDraggable({
@@ -303,11 +303,11 @@ const viewport: Viewport = getViewport();
         expect(result).toBe(visible1);
       });
 
-      it('should ignore draggables that have forward partial visiblility', () => {
+      it("should ignore draggables that have forward partial visiblility", () => {
         const center: Position = patch(
           axis.line,
           partiallyHiddenForwards.page.borderBox.center[axis.line],
-          100,
+          100
         );
 
         const result: DraggableDimension | null = getClosestDraggable({
@@ -321,11 +321,11 @@ const viewport: Viewport = getViewport();
         expect(result).toBe(visible2);
       });
 
-      it('should ignore draggables forward that have no visiblity', () => {
+      it("should ignore draggables forward that have no visiblity", () => {
         const center: Position = patch(
           axis.line,
           hiddenForwards.page.borderBox.center[axis.line],
-          100,
+          100
         );
 
         const result: DraggableDimension | null = getClosestDraggable({
@@ -339,11 +339,11 @@ const viewport: Viewport = getViewport();
         expect(result).toBe(visible2);
       });
 
-      it('should ignore draggables that are outside of the viewport', () => {
+      it("should ignore draggables that are outside of the viewport", () => {
         const center: Position = patch(
           axis.line,
           outOfViewport.page.borderBox.center[axis.line],
-          100,
+          100
         );
 
         const result: DraggableDimension | null = getClosestDraggable({
@@ -357,7 +357,7 @@ const viewport: Viewport = getViewport();
         expect(result).toBe(visible2);
       });
 
-      it('should return null if there are no visible targets', () => {
+      it("should return null if there are no visible targets", () => {
         const notVisible: DraggableDimension[] = [
           hiddenBackwards,
           hiddenForwards,
@@ -380,13 +380,13 @@ const viewport: Viewport = getViewport();
       });
     });
 
-    it('should return the draggable that is first on the main axis in the event of a tie', () => {
+    it("should return the draggable that is first on the main axis in the event of a tie", () => {
       // in this case the distance between visible1 and visible2 is the same
       const center: Position = patch(
         axis.line,
         // this is shared edge
         visible2.page.borderBox[axis.start],
-        100,
+        100
       );
 
       const result: DraggableDimension | null = getClosestDraggable({
@@ -403,7 +403,7 @@ const viewport: Viewport = getViewport();
 
       // 1. that they have equal distances
       expect(distance(center, visible1.page.borderBox.center)).toEqual(
-        distance(center, visible2.page.borderBox.center),
+        distance(center, visible2.page.borderBox.center)
       );
 
       // 2. if we move beyond the edge visible2 will be selected

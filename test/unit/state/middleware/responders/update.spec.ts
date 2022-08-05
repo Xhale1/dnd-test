@@ -1,21 +1,21 @@
-import { invariant } from '../../../../../src/invariant';
+import { invariant } from "../../../../../src/invariant";
 import {
   initialPublish,
   move,
   moveDown,
-} from '../../../../../src/state/action-creators';
-import type { MoveArgs } from '../../../../../src/state/action-creators';
-import middleware from '../../../../../src/state/middleware/responders';
-import { add } from '../../../../../src/state/position';
+} from "../../../../../src/state/action-creators";
+import type { MoveArgs } from "../../../../../src/state/action-creators";
+import middleware from "../../../../../src/state/middleware/responders";
+import { add } from "../../../../../src/state/position";
 import {
   getDragStart,
   initialPublishArgs,
-} from '../../../../util/preset-action-args';
-import createStore from '../util/create-store';
-import getAnnounce from './util/get-announce-stub';
-import createResponders from './util/get-responders-stub';
-import type { State, DragUpdate } from '../../../../../src/types';
-import type { Store, Dispatch } from '../../../../../src/state/store-types';
+} from "../../../../util/preset-action-args";
+import createStore from "../util/create-store";
+import getAnnounce from "./util/get-announce-stub";
+import createResponders from "./util/get-responders-stub";
+import type { State, DragUpdate } from "../../../../../src/types";
+import type { Store, Dispatch } from "../../../../../src/state/store-types";
 
 beforeEach(() => {
   jest.useFakeTimers();
@@ -30,7 +30,7 @@ const start = (dispatch: Dispatch) => {
   jest.runOnlyPendingTimers();
 };
 
-it('should call onDragUpdate if the position has changed on move', () => {
+it("should call onDragUpdate if the position has changed on move", () => {
   const responders = createResponders();
   const store: Store = createStore(middleware(() => responders, getAnnounce()));
 
@@ -54,11 +54,11 @@ it('should call onDragUpdate if the position has changed on move', () => {
   };
   expect(responders.onDragUpdate).toHaveBeenCalledWith(
     update,
-    expect.any(Object),
+    expect.any(Object)
   );
 });
 
-it('should not call onDragUpdate if there is no movement from the last update', () => {
+it("should not call onDragUpdate if there is no movement from the last update", () => {
   const responders = createResponders();
   const store: Store = createStore(middleware(() => responders, getAnnounce()));
 
@@ -87,15 +87,15 @@ it('should not call onDragUpdate if there is no movement from the last update', 
 
   const state: State = store.getState();
   invariant(
-    state.phase === 'DRAGGING',
-    'Expecting state to be in dragging phase',
+    state.phase === "DRAGGING",
+    "Expecting state to be in dragging phase"
   );
 
   // A small movement that should not trigger any index changes
   store.dispatch(
     move({
       client: add(state.current.client.selection, { x: -1, y: -1 }),
-    }),
+    })
   );
 
   jest.runOnlyPendingTimers();

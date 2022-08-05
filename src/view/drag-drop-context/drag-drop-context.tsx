@@ -1,13 +1,13 @@
-import React from 'react';
-import type { ReactNode } from 'react';
-import type { Responders, ContextId, Sensor } from '../../types';
-import ErrorBoundary from './error-boundary';
-import preset from '../../screen-reader-message-preset';
-import App from './app';
+import React from "react";
+import type { ReactNode } from "react";
+import type { Responders, ContextId, Sensor } from "../../types";
+import ErrorBoundary from "./error-boundary";
+import preset from "../../screen-reader-message-preset";
+import App from "./app";
 import useUniqueContextId, {
   reset as resetContextId,
-} from './use-unique-context-id';
-import { reset as resetUniqueIds } from '../use-unique-id';
+} from "./use-unique-context-id";
+import { reset as resetUniqueIds } from "../use-unique-id";
 
 export interface DragDropContextProps extends Responders {
   // We do not technically need any children for this component

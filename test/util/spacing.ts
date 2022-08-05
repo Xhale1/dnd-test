@@ -1,8 +1,8 @@
-import type { Spacing } from 'css-box-model';
+import type { Spacing } from "css-box-model";
 
 export const expandBySpacing = (
   spacing1: Spacing,
-  spacing2: Spacing,
+  spacing2: Spacing
 ): Spacing => ({
   // pulling back to increase size
   top: spacing1.top - spacing2.top,
@@ -17,7 +17,7 @@ export const expandBySpacing = (
 
 export const shrinkBySpacing = (
   spacing1: Spacing,
-  spacing2: Spacing,
+  spacing2: Spacing
 ): Spacing => ({
   // pushing forward to descrease size
   top: spacing1.top + spacing2.top,

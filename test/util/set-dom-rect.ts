@@ -1,4 +1,4 @@
-import type { Rect } from 'css-box-model';
+import type { Rect } from "css-box-model";
 
 export default function setDOMRect(rect: Rect): DOMRect {
   return {

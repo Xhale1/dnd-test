@@ -16,7 +16,7 @@ interface Responders {
   onDragEnd: OnDragEndResponder;
 }
 
-import type { ReactNode } from 'react';
+import type { ReactNode } from "react";
 
 interface Props extends Responders {
   // We do not technically need any children for this component
@@ -43,8 +43,8 @@ interface Props extends Responders {
 ### Using a `class` component
 
 ```js
-import React from 'react';
-import { DragDropContext } from '@hello-pangea/dnd';
+import React from "react";
+import { DragDropContext } from "@hello-pangea/dnd";
 
 class App extends React.Component {
   onBeforeCapture = () => {
@@ -84,8 +84,8 @@ class App extends React.Component {
 ### Using a `function` component
 
 ```js
-import React from 'react';
-import { DragDropContext } from '@hello-pangea/dnd';
+import React from "react";
+import { DragDropContext } from "@hello-pangea/dnd";
 
 function App() {
   // using useCallback is optional

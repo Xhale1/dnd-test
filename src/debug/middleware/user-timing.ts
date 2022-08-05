@@ -1,4 +1,4 @@
-import type { Action } from '../../state/store-types';
+import type { Action } from "../../state/store-types";
 
 export default () =>
   (next: (a: Action) => unknown) =>

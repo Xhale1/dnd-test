@@ -1,9 +1,9 @@
-import type { ContextId, DraggableId } from '../../types';
-import * as attributes from '../data-attributes';
-import isElement from '../is-type-of-element/is-element';
-import isHtmlElement from '../is-type-of-element/is-html-element';
-import closest from './closest';
-import { warning } from '../../dev-warning';
+import type { ContextId, DraggableId } from "../../types";
+import * as attributes from "../data-attributes";
+import isElement from "../is-type-of-element/is-element";
+import isHtmlElement from "../is-type-of-element/is-html-element";
+import closest from "./closest";
+import { warning } from "../../dev-warning";
 
 function getSelector(contextId: ContextId): string {
   return `[${attributes.dragHandle.contextId}="${contextId}"]`;
@@ -11,12 +11,12 @@ function getSelector(contextId: ContextId): string {
 
 function findClosestDragHandleFromEvent(
   contextId: ContextId,
-  event: Event,
+  event: Event
 ): Element | null {
   const target = event.target;
 
   if (!isElement(target)) {
-    warning('event.target must be a Element');
+    warning("event.target must be a Element");
     return null;
   }
 
@@ -28,7 +28,7 @@ function findClosestDragHandleFromEvent(
   }
 
   if (!isHtmlElement(handle)) {
-    warning('drag handle must be a HTMLElement');
+    warning("drag handle must be a HTMLElement");
     return null;
   }
 
@@ -37,11 +37,11 @@ function findClosestDragHandleFromEvent(
 
 export default function tryGetClosestDraggableIdFromEvent(
   contextId: ContextId,
-  event: Event,
+  event: Event
 ): DraggableId | null {
   const handle: Element | null = findClosestDragHandleFromEvent(
     contextId,
-    event,
+    event
   );
 
   if (!handle) {

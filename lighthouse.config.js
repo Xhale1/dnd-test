@@ -1,14 +1,14 @@
 module.exports = {
-  extends: 'lighthouse:default',
+  extends: "lighthouse:default",
   settings: {
-    onlyCategories: ['accessibility'],
-    skipAudits: ['bypass'],
+    onlyCategories: ["accessibility"],
+    skipAudits: ["bypass"],
   },
   passes: [
     {
-      passName: 'defaultPass',
+      passName: "defaultPass",
       recordTrace: false,
-      gatherers: ['accessibility'],
+      gatherers: ["accessibility"],
     },
   ],
 };

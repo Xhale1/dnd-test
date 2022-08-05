@@ -1,25 +1,25 @@
-import React, { useEffect, useRef } from 'react';
-import type { ReactNode, MutableRefObject } from 'react';
-import { bindActionCreators, Dispatch } from 'redux';
-import { Provider } from 'react-redux';
-import { useMemo, useCallback } from 'use-memo-one';
-import { invariant } from '../../invariant';
-import createStore from '../../state/create-store';
-import createDimensionMarshal from '../../state/dimension-marshal/dimension-marshal';
-import canStartDrag from '../../state/can-start-drag';
-import scrollWindow from '../window/scroll-window';
-import createAutoScroller from '../../state/auto-scroller';
-import useStyleMarshal from '../use-style-marshal/use-style-marshal';
-import useFocusMarshal from '../use-focus-marshal';
-import useRegistry from '../../state/registry/use-registry';
-import type { Registry } from '../../state/registry/registry-types';
-import type { FocusMarshal } from '../use-focus-marshal/focus-marshal-types';
-import type { AutoScroller } from '../../state/auto-scroller/auto-scroller-types';
-import type { StyleMarshal } from '../use-style-marshal/style-marshal-types';
+import React, { useEffect, useRef } from "react";
+import type { ReactNode, MutableRefObject } from "react";
+import { bindActionCreators, Dispatch } from "redux";
+import { Provider } from "react-redux";
+import { useMemo, useCallback } from "use-memo-one";
+import { invariant } from "../../invariant";
+import createStore from "../../state/create-store";
+import createDimensionMarshal from "../../state/dimension-marshal/dimension-marshal";
+import canStartDrag from "../../state/can-start-drag";
+import scrollWindow from "../window/scroll-window";
+import createAutoScroller from "../../state/auto-scroller";
+import useStyleMarshal from "../use-style-marshal/use-style-marshal";
+import useFocusMarshal from "../use-focus-marshal";
+import useRegistry from "../../state/registry/use-registry";
+import type { Registry } from "../../state/registry/registry-types";
+import type { FocusMarshal } from "../use-focus-marshal/focus-marshal-types";
+import type { AutoScroller } from "../../state/auto-scroller/auto-scroller-types";
+import type { StyleMarshal } from "../use-style-marshal/style-marshal-types";
 import type {
   DimensionMarshal,
   Callbacks as DimensionMarshalCallbacks,
-} from '../../state/dimension-marshal/dimension-marshal-types';
+} from "../../state/dimension-marshal/dimension-marshal-types";
 import type {
   DraggableId,
   State,
@@ -27,10 +27,10 @@ import type {
   Announce,
   Sensor,
   ElementId,
-} from '../../types';
-import type { Store, Action } from '../../state/store-types';
-import type { SetAppCallbacks, AppCallbacks } from './drag-drop-context-types';
-import StoreContext from '../context/store-context';
+} from "../../types";
+import type { Store, Action } from "../../state/store-types";
+import type { SetAppCallbacks, AppCallbacks } from "./drag-drop-context-types";
+import StoreContext from "../context/store-context";
 import {
   move,
   publishWhileDragging,
@@ -39,16 +39,16 @@ import {
   updateDroppableIsCombineEnabled,
   collectionStarting,
   flush,
-} from '../../state/action-creators';
-import isMovementAllowed from '../../state/is-movement-allowed';
-import useAnnouncer from '../use-announcer';
-import useHiddenTextElement from '../use-hidden-text-element';
-import AppContext from '../context/app-context';
-import type { AppContextValue } from '../context/app-context';
-import useStartupValidation from './use-startup-validation';
-import usePrevious from '../use-previous-ref';
-import { warning } from '../../dev-warning';
-import useSensorMarshal from '../use-sensor-marshal/use-sensor-marshal';
+} from "../../state/action-creators";
+import isMovementAllowed from "../../state/is-movement-allowed";
+import useAnnouncer from "../use-announcer";
+import useHiddenTextElement from "../use-hidden-text-element";
+import AppContext from "../context/app-context";
+import type { AppContextValue } from "../context/app-context";
+import useStartupValidation from "./use-startup-validation";
+import usePrevious from "../use-previous-ref";
+import { warning } from "../../dev-warning";
+import useSensorMarshal from "../use-sensor-marshal/use-sensor-marshal";
 
 export interface Props extends Responders {
   contextId: string;
@@ -74,7 +74,7 @@ const createResponders = (props: Props): Responders => ({
 type LazyStoreRef = MutableRefObject<Store | null>;
 
 function getStore(lazyRef: LazyStoreRef): Store {
-  invariant(lazyRef.current, 'Could not find store from lazy ref');
+  invariant(lazyRef.current, "Could not find store from lazy ref");
   return lazyRef.current;
 }
 
@@ -109,7 +109,7 @@ export default function App(props: Props) {
     (action: Action): void => {
       getStore(lazyStoreRef).dispatch(action);
     },
-    [],
+    []
   );
 
   const marshalCallbacks: DimensionMarshalCallbacks = useMemo(
@@ -122,9 +122,9 @@ export default function App(props: Props) {
           updateDroppableIsCombineEnabled,
           collectionStarting,
         },
-        lazyDispatch as Dispatch,
+        lazyDispatch as Dispatch
       ),
-    [lazyDispatch],
+    [lazyDispatch]
   );
 
   const registry: Registry = useRegistry();
@@ -142,10 +142,10 @@ export default function App(props: Props) {
           {
             move,
           } as const,
-          lazyDispatch as Dispatch,
+          lazyDispatch as Dispatch
         ),
       }),
-    [dimensionMarshal.scrollDroppable, lazyDispatch],
+    [dimensionMarshal.scrollDroppable, lazyDispatch]
   );
 
   const focusMarshal: FocusMarshal = useFocusMarshal(contextId);
@@ -167,13 +167,13 @@ export default function App(props: Props) {
       focusMarshal,
       getResponders,
       styleMarshal,
-    ],
+    ]
   );
 
   // Checking for unexpected store changes
-  if (process.env.NODE_ENV !== 'production') {
+  if (process.env.NODE_ENV !== "production") {
     if (lazyStoreRef.current && lazyStoreRef.current !== store) {
-      warning('unexpected store change');
+      warning("unexpected store change");
     }
   }
 
@@ -183,7 +183,7 @@ export default function App(props: Props) {
   const tryResetStore = useCallback(() => {
     const current: Store = getStore(lazyStoreRef);
     const state: State = current.getState();
-    if (state.phase !== 'IDLE') {
+    if (state.phase !== "IDLE") {
       current.dispatch(flush());
     }
   }, []);
@@ -191,11 +191,11 @@ export default function App(props: Props) {
   const isDragging = useCallback((): boolean => {
     const state: State = getStore(lazyStoreRef).getState();
 
-    if (state.phase === 'DROP_ANIMATING') {
+    if (state.phase === "DROP_ANIMATING") {
       return true;
     }
 
-    if (state.phase === 'IDLE') {
+    if (state.phase === "IDLE") {
       return false;
     }
 
@@ -207,7 +207,7 @@ export default function App(props: Props) {
       isDragging,
       tryAbort: tryResetStore,
     }),
-    [isDragging, tryResetStore],
+    [isDragging, tryResetStore]
   );
 
   // doing this in render rather than a side effect so any errors on the
@@ -216,12 +216,12 @@ export default function App(props: Props) {
 
   const getCanLift = useCallback(
     (id: DraggableId) => canStartDrag(getStore(lazyStoreRef).getState(), id),
-    [],
+    []
   );
 
   const getIsMovementAllowed = useCallback(
     () => isMovementAllowed(getStore(lazyStoreRef).getState()),
-    [],
+    []
   );
 
   const appContext: AppContextValue = useMemo(
@@ -242,7 +242,7 @@ export default function App(props: Props) {
       getCanLift,
       getIsMovementAllowed,
       registry,
-    ],
+    ]
   );
 
   useSensorMarshal({

@@ -3,13 +3,13 @@
 `<Droppable />` components can be **dropped on by a `<Draggable />`**. They also **contain** `<Draggable />`s. A `<Draggable />` must be contained within a `<Droppable />`.
 
 ```js
-import { Droppable } from '@hello-pangea/dnd';
+import { Droppable } from "@hello-pangea/dnd";
 
 <Droppable droppableId="droppable-1" type="PERSON">
   {(provided, snapshot) => (
     <div
       ref={provided.innerRef}
-      style={{ backgroundColor: snapshot.isDraggingOver ? 'blue' : 'grey' }}
+      style={{ backgroundColor: snapshot.isDraggingOver ? "blue" : "grey" }}
       {...provided.droppableProps}
     >
       <h2>I am a droppable!</h2>
@@ -22,7 +22,7 @@ import { Droppable } from '@hello-pangea/dnd';
 ## Droppable props
 
 ```ts
-import type { ReactNode } from 'react';
+import type { ReactNode } from "react";
 
 interface Props {
   // required
@@ -39,8 +39,8 @@ interface Props {
   getContainerForClone?: () => HTMLElement;
 }
 
-type DroppableMode = 'standard' | 'virtual';
-type Direction = 'horizontal' | 'vertical';
+type DroppableMode = "standard" | "virtual";
+type Direction = "horizontal" | "vertical";
 ```
 
 ### Required props
@@ -85,9 +85,9 @@ interface DroppableProvided {
 
 interface DroppableProps {
   // used for shared global styles
-  'data-rfd-droppable-context-id': ContextId;
+  "data-rfd-droppable-context-id": ContextId;
   // Used to lookup. Currently not used for drag and drop lifecycle
-  'data-rfd-droppable-id': DroppableId;
+  "data-rfd-droppable-id": DroppableId;
 }
 ```
 
@@ -134,7 +134,7 @@ The `children` function is also provided with a small amount of state relating t
   {(provided, snapshot) => (
     <div
       ref={provided.innerRef}
-      style={{ backgroundColor: snapshot.isDraggingOver ? 'blue' : 'grey' }}
+      style={{ backgroundColor: snapshot.isDraggingOver ? "blue" : "grey" }}
       {...provided.droppableProps}
     >
       I am a droppable!
@@ -196,16 +196,16 @@ In this example we set the `background-color` of the home list to `pink` when we
 const getBackgroundColor = (snapshot: DroppableStateSnapshot): string => {
   // Giving isDraggingOver preference
   if (snapshot.isDraggingOver) {
-    return 'pink';
+    return "pink";
   }
 
   // If it is the home list but not dragging over
   if (snapshot.draggingFromThisWith) {
-    return 'blue';
+    return "blue";
   }
 
   // Otherwise use our default background
-  return 'white';
+  return "white";
 };
 ```
 
@@ -218,7 +218,7 @@ When a user drags over, or stops dragging over, a `<Droppable />` we re-render t
 Here is an example of how you could do this using `class` components:
 
 ```ts
-import React, { Component } from 'react';
+import React, { Component } from "react";
 
 class Student extends Component<{ student: Person }> {
   render() {
@@ -252,7 +252,7 @@ class Students extends Component<{ students: Person[] }> {
           <div
             ref={provided.innerRef}
             style={{
-              backgroundColor: snapshot.isDragging ? 'green' : 'lightblue',
+              backgroundColor: snapshot.isDragging ? "green" : "lightblue",
             }}
             {...provided.droppableProps}
           >

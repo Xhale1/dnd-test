@@ -1,11 +1,11 @@
-import React from 'react';
-import type { DraggableId } from '../../types';
-import type { DraggableProps, PrivateOwnProps } from './draggable-types';
-import ConnectedDraggable from './connected-draggable';
-import useRequiredContext from '../use-required-context';
-import DroppableContext from '../context/droppable-context';
+import React from "react";
+import type { DraggableId } from "../../types";
+import type { DraggableProps, PrivateOwnProps } from "./draggable-types";
+import ConnectedDraggable from "./connected-draggable";
+import useRequiredContext from "../use-required-context";
+import DroppableContext from "../context/droppable-context";
 
-import type { DroppableContextValue } from '../context/droppable-context';
+import type { DroppableContextValue } from "../context/droppable-context";
 
 // We can use this to render a draggable with more control
 // It is used by a Droppable to render a clone
@@ -26,9 +26,9 @@ export function PrivateDraggable(props: PrivateOwnProps) {
 export function PublicDraggable(props: DraggableProps) {
   // default values for props
   const isEnabled: boolean =
-    typeof props.isDragDisabled === 'boolean' ? !props.isDragDisabled : true;
+    typeof props.isDragDisabled === "boolean" ? !props.isDragDisabled : true;
   const canDragInteractiveElements = Boolean(
-    props.disableInteractiveElementBlocking,
+    props.disableInteractiveElementBlocking
   );
   const shouldRespectForcePress = Boolean(props.shouldRespectForcePress);
 

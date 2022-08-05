@@ -1,10 +1,10 @@
-import type { Position } from 'css-box-model';
-import rafSchd from 'raf-schd';
-import { invariant } from '../invariant';
-import bindEvents from './event-bindings/bind-events';
-import type { UIEventBinding } from './event-bindings/event-types';
-import getWindowScroll from './window/get-window-scroll';
-import { noop } from '../empty';
+import type { Position } from "css-box-model";
+import rafSchd from "raf-schd";
+import { invariant } from "../invariant";
+import bindEvents from "./event-bindings/bind-events";
+import type { UIEventBinding } from "./event-bindings/event-types";
+import getWindowScroll from "./window/get-window-scroll";
+import { noop } from "../empty";
 
 type OnWindowScroll = (newScroll: Position) => void;
 
@@ -20,7 +20,7 @@ interface Result {
 
 function getWindowScrollBinding(update: () => void): UIEventBinding {
   return {
-    eventName: 'scroll',
+    eventName: "scroll",
     // ## Passive: true
     // Eventual consistency is fine because we use position: fixed on the item
     // ## Capture: false
@@ -57,11 +57,11 @@ export default function getScrollListener({ onWindowScroll }: Args): Result {
   }
 
   function start() {
-    invariant(!isActive(), 'Cannot start scroll listener when already active');
+    invariant(!isActive(), "Cannot start scroll listener when already active");
     unbind = bindEvents(window, [binding]);
   }
   function stop() {
-    invariant(isActive(), 'Cannot stop scroll listener when not active');
+    invariant(isActive(), "Cannot stop scroll listener when not active");
     scheduled.cancel();
     unbind();
     unbind = noop;

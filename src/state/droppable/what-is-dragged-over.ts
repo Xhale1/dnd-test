@@ -1,4 +1,4 @@
-import type { ImpactLocation, DroppableId, DragImpact } from '../../types';
+import type { ImpactLocation, DroppableId, DragImpact } from "../../types";
 
 export default (impact: DragImpact): DroppableId | null => {
   const at: ImpactLocation | null = impact.at;
@@ -7,7 +7,7 @@ export default (impact: DragImpact): DroppableId | null => {
     return null;
   }
 
-  if (at.type === 'REORDER') {
+  if (at.type === "REORDER") {
     return at.destination.droppableId;
   }
 

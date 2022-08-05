@@ -1,15 +1,15 @@
-import type { Position, Rect } from 'css-box-model';
+import type { Position, Rect } from "css-box-model";
 import type {
   DraggingState,
   DroppableId,
   DraggableDimension,
   DroppableDimension,
   Viewport,
-} from '../../../types';
-import getBestScrollableDroppable from './get-best-scrollable-droppable';
-import whatIsDraggedOver from '../../droppable/what-is-dragged-over';
-import getWindowScrollChange from './get-window-scroll-change';
-import getDroppableScrollChange from './get-droppable-scroll-change';
+} from "../../../types";
+import getBestScrollableDroppable from "./get-best-scrollable-droppable";
+import whatIsDraggedOver from "../../droppable/what-is-dragged-over";
+import getWindowScrollChange from "./get-window-scroll-change";
+import getDroppableScrollChange from "./get-droppable-scroll-change";
 
 interface Args {
   state: DraggingState;

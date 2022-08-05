@@ -5,10 +5,10 @@ import type {
   DraggableDescriptor,
   DraggableIdMap,
   DisplacementMap,
-} from '../../src/types';
+} from "../../src/types";
 
 export function getDraggableIds(
-  draggables: DraggableDimension[],
+  draggables: DraggableDimension[]
 ): DraggableId[] {
   return draggables.map((d) => d.descriptor.id);
 }
@@ -36,7 +36,7 @@ export function getForcedDisplacement({
 }: GetDisplacedArgs): DisplacementGroups {
   const all: DraggableId[] = [
     ...visible.map(
-      (entry: VisibleEntry): DraggableDimension => entry.dimension,
+      (entry: VisibleEntry): DraggableDimension => entry.dimension
     ),
     ...invisible,
   ]
@@ -51,11 +51,11 @@ export function getForcedDisplacement({
         draggableId: descriptor.id,
         // defaulting to true
         shouldAnimate:
-          typeof entry.shouldAnimate === 'boolean' ? entry.shouldAnimate : true,
+          typeof entry.shouldAnimate === "boolean" ? entry.shouldAnimate : true,
       };
       return previous;
     },
-    {},
+    {}
   );
 
   return {

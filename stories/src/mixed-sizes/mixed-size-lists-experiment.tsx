@@ -1,22 +1,22 @@
-import { colors } from '@atlaskit/theme';
-import styled from '@emotion/styled';
-import type { BeforeCapture, DropResult } from '@hello-pangea/dnd';
-import { DragDropContext, Draggable, Droppable } from '@hello-pangea/dnd';
-import type { BoxModel, Position } from 'css-box-model';
-import { getBox } from 'css-box-model';
+import { colors } from "@atlaskit/theme";
+import styled from "@emotion/styled";
+import type { BeforeCapture, DropResult } from "@hello-pangea/dnd";
+import { DragDropContext, Draggable, Droppable } from "@hello-pangea/dnd";
+import type { BoxModel, Position } from "css-box-model";
+import { getBox } from "css-box-model";
 import React, {
   ReactElement,
   useContext,
   useEffect,
   useRef,
   useState,
-} from 'react';
-import bindEvents from '../../../src/view/event-bindings/bind-events';
-import { BeforeCaptureEvent } from '../../../src/view/event-bindings/event-types';
-import { grid } from '../constants';
-import { getQuotes } from '../data';
-import reorder, { moveBetween } from '../reorder';
-import type { Quote } from '../types';
+} from "react";
+import bindEvents from "../../../src/view/event-bindings/bind-events";
+import { BeforeCaptureEvent } from "../../../src/view/event-bindings/event-types";
+import { grid } from "../constants";
+import { getQuotes } from "../data";
+import reorder, { moveBetween } from "../reorder";
+import type { Quote } from "../types";
 
 const UseTrimmingContext = React.createContext<boolean>(false);
 
@@ -24,7 +24,7 @@ const Parent = styled.div`
   display: flex;
 `;
 
-type Width = 'small' | 'large';
+type Width = "small" | "large";
 
 interface ItemProps {
   quote: Quote;
@@ -48,7 +48,7 @@ function Item(props: ItemProps) {
   useEffect(() => {
     const unsubscribe = bindEvents(window, [
       {
-        eventName: 'onBeforeCapture',
+        eventName: "onBeforeCapture",
         fn: (event) => {
           if (!useTrimming) {
             return;
@@ -60,7 +60,7 @@ function Item(props: ItemProps) {
           const before: BeforeCapture = event.detail.before;
           const clientSelection: Position = event.detail.clientSelection;
 
-          if (before.mode !== 'FLUID') {
+          if (before.mode !== "FLUID") {
             return;
           }
 
@@ -82,7 +82,7 @@ function Item(props: ItemProps) {
           const halfWidth: number = targetWidth / 2;
           const distanceToLeft: number = Math.max(
             clientSelection.x - box.borderBox.left,
-            0,
+            0
           );
 
           el.style.width = `${targetWidth}px`;
@@ -101,14 +101,14 @@ function Item(props: ItemProps) {
           // how much we would be going past the right value
           const rightOverlap: number = Math.max(
             targetRight - box.borderBox.right,
-            0,
+            0
           );
 
           // need to ensure that we don't pull the element past
           // it's resting right position
           const leftOffset: number = proposedLeftOffset - rightOverlap;
 
-          el.style.position = 'relative';
+          el.style.position = "relative";
           el.style.left = `${leftOffset}px`;
         },
       } as BeforeCaptureEvent,
@@ -152,8 +152,8 @@ const StyledList = styled.div<StyledListProps>`
   padding: ${grid}px;
   box-sizing: border-box;
   background-color: ${(props) =>
-    props.isDraggingOver ? colors.B100 : 'inherit'};
-  width: ${(props) => (props.width === 'large' ? 800 : 200)}px;
+    props.isDraggingOver ? colors.B100 : "inherit"};
+  width: ${(props) => (props.width === "large" ? 800 : 200)}px;
 `;
 
 function List(props: ListProps) {
@@ -171,7 +171,7 @@ function List(props: ListProps) {
               key={quote.id}
               quote={quote}
               index={index}
-              shouldAllowTrimming={props.width === 'large'}
+              shouldAllowTrimming={props.width === "large"}
             />
           ))}
           {provided.placeholder}
@@ -193,7 +193,7 @@ export default function App(): ReactElement {
       return;
     }
     if (source.droppableId === destination.droppableId) {
-      if (source.droppableId === 'first') {
+      if (source.droppableId === "first") {
         setFirst(reorder(first, source.index, destination.index));
       } else {
         setSecond(reorder(second, source.index, destination.index));
@@ -203,11 +203,11 @@ export default function App(): ReactElement {
 
     const { list1, list2 } = moveBetween({
       list1: {
-        id: 'first',
+        id: "first",
         values: first,
       },
       list2: {
-        id: 'second',
+        id: "second",
         values: second,
       },
       source,
@@ -221,7 +221,7 @@ export default function App(): ReactElement {
   useEffect(() => {
     const unsubscribe = bindEvents(window, [
       {
-        eventName: 'mousemove',
+        eventName: "mousemove",
         fn: (event: MouseEvent) => {
           const current: Position = {
             x: event.clientX,
@@ -237,9 +237,9 @@ export default function App(): ReactElement {
 
   function onBeforeCapture(before: BeforeCapture) {
     window.dispatchEvent(
-      new CustomEvent('onBeforeCapture', {
+      new CustomEvent("onBeforeCapture", {
         detail: { before, clientSelection: clientSelectionRef.current },
-      }),
+      })
     );
   }
   return (
@@ -249,13 +249,13 @@ export default function App(): ReactElement {
           <List listId="first" quotes={first} width="small" />
           <List listId="second" quotes={second} width="large" />
         </Parent>
-        Item trimming experiment:{' '}
-        <strong>{useTrimming ? 'enabled' : 'disabled'}</strong>
+        Item trimming experiment:{" "}
+        <strong>{useTrimming ? "enabled" : "disabled"}</strong>
         <button
           type="button"
           onClick={() => setUseTrimming((value: boolean) => !value)}
         >
-          {useTrimming ? 'disable' : 'enable'}
+          {useTrimming ? "disable" : "enable"}
         </button>
       </DragDropContext>
     </UseTrimmingContext.Provider>

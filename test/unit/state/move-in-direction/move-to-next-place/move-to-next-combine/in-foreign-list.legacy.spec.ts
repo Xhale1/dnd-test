@@ -3,14 +3,14 @@ import type {
   DragImpact,
   DisplacedBy,
   DroppableDimension,
-} from '../../../../../../src/types';
-import { invariant } from '../../../../../../src/invariant';
-import { vertical, horizontal } from '../../../../../../src/state/axis';
-import { getPreset } from '../../../../../util/dimension';
-import moveToNextCombine from '../../../../../../src/state/move-in-direction/move-to-next-place/move-to-next-combine/index';
-import getDisplacedBy from '../../../../../../src/state/get-displaced-by';
-import { getForcedDisplacement } from '../../../../../util/impact';
-import { emptyGroups } from '../../../../../../src/state/no-impact';
+} from "../../../../../../src/types";
+import { invariant } from "../../../../../../src/invariant";
+import { vertical, horizontal } from "../../../../../../src/state/axis";
+import { getPreset } from "../../../../../util/dimension";
+import moveToNextCombine from "../../../../../../src/state/move-in-direction/move-to-next-place/move-to-next-combine/index";
+import getDisplacedBy from "../../../../../../src/state/get-displaced-by";
+import { getForcedDisplacement } from "../../../../../util/impact";
+import { emptyGroups } from "../../../../../../src/state/no-impact";
 
 const enableCombine = (droppable: DroppableDimension): DroppableDimension => ({
   ...droppable,
@@ -23,11 +23,11 @@ const enableCombine = (droppable: DroppableDimension): DroppableDimension => ({
   // always displace forward in foreign list
   const displacedBy: DisplacedBy = getDisplacedBy(
     axis,
-    preset.inHome1.displaceBy,
+    preset.inHome1.displaceBy
   );
 
   describe(`on ${axis.direction} axis`, () => {
-    it('should move onto a displaced item when moving forwards', () => {
+    it("should move onto a displaced item when moving forwards", () => {
       // inHome1 cross axis moved after inForeign1,
       // now moving forward onto inForeign2
       const current: DragImpact = {
@@ -40,7 +40,7 @@ const enableCombine = (droppable: DroppableDimension): DroppableDimension => ({
         }),
         displacedBy,
         at: {
-          type: 'REORDER',
+          type: "REORDER",
           destination: {
             index: preset.inForeign2.descriptor.index,
             droppableId: preset.foreign.descriptor.id,
@@ -60,7 +60,7 @@ const enableCombine = (droppable: DroppableDimension): DroppableDimension => ({
       const expected: DragImpact = {
         ...current,
         at: {
-          type: 'COMBINE',
+          type: "COMBINE",
           combine: {
             draggableId: preset.inForeign2.descriptor.id,
             droppableId: preset.foreign.descriptor.id,
@@ -70,7 +70,7 @@ const enableCombine = (droppable: DroppableDimension): DroppableDimension => ({
       expect(result).toEqual(expected);
     });
 
-    it('should move onto a non-displaced item when moving backwards', () => {
+    it("should move onto a non-displaced item when moving backwards", () => {
       // inHome1 in foreign list after inForeign2
       // moving backwards will move it onto the non-displaced inForeign2
       // ordered by closest impacted
@@ -83,7 +83,7 @@ const enableCombine = (droppable: DroppableDimension): DroppableDimension => ({
         }),
         displacedBy,
         at: {
-          type: 'REORDER',
+          type: "REORDER",
           destination: {
             index: preset.inForeign3.descriptor.index,
             droppableId: preset.foreign.descriptor.id,
@@ -104,7 +104,7 @@ const enableCombine = (droppable: DroppableDimension): DroppableDimension => ({
       const expected: DragImpact = {
         ...current,
         at: {
-          type: 'COMBINE',
+          type: "COMBINE",
           combine: {
             draggableId: preset.inForeign2.descriptor.id,
             droppableId: preset.foreign.descriptor.id,
@@ -114,7 +114,7 @@ const enableCombine = (droppable: DroppableDimension): DroppableDimension => ({
       expect(result).toEqual(expected);
     });
 
-    it('should not allow combining with anything before the first item', () => {
+    it("should not allow combining with anything before the first item", () => {
       const current: DragImpact = {
         displaced: getForcedDisplacement({
           visible: [
@@ -126,7 +126,7 @@ const enableCombine = (droppable: DroppableDimension): DroppableDimension => ({
         }),
         displacedBy,
         at: {
-          type: 'REORDER',
+          type: "REORDER",
           // in first position
           destination: {
             index: preset.inForeign1.descriptor.index,
@@ -146,13 +146,13 @@ const enableCombine = (droppable: DroppableDimension): DroppableDimension => ({
       expect(result).toEqual(null);
     });
 
-    it('should not allow combining with anything after the last item', () => {
+    it("should not allow combining with anything after the last item", () => {
       // in last position
       const current: DragImpact = {
         displaced: emptyGroups,
         displacedBy,
         at: {
-          type: 'REORDER',
+          type: "REORDER",
           // in last position
           destination: {
             index: preset.inForeign4.descriptor.index + 1,

@@ -1,13 +1,13 @@
-import React from 'react';
-import { storiesOf } from '@storybook/react';
+import React from "react";
+import { storiesOf } from "@storybook/react";
 // import { Draggable, Droppable, DragDropContext } from '../../src/';
 
 class App extends React.Component {
   render() {
-    return 'Used for debugging codesandbox examples (copy paste them into this file)';
+    return "Used for debugging codesandbox examples (copy paste them into this file)";
   }
 }
 
-storiesOf('Examples/Troubleshoot example', module).add('debug example', () => (
+storiesOf("Examples/Troubleshoot example", module).add("debug example", () => (
   <App />
 ));

@@ -1,4 +1,4 @@
-import { Quote } from '../types';
+import { Quote } from "../types";
 
 export interface NestedQuoteList {
   id: string;

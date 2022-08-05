@@ -1,4 +1,4 @@
-import type { DropReason } from '../../types';
+import type { DropReason } from "../../types";
 
 export interface StyleMarshal {
   dragging: () => void;

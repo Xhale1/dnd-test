@@ -5,7 +5,7 @@ import type {
   DropResult,
   DraggableLocation,
   Combine,
-} from './types';
+} from "./types";
 
 export interface MessagePreset {
   dragHandleUsageInstructions: string;
@@ -30,7 +30,7 @@ const onDragStart = (start: DragStart): string => `
 
 const withLocation = (
   source: DraggableLocation,
-  destination: DraggableLocation,
+  destination: DraggableLocation
 ) => {
   const isInHomeList: boolean = source.droppableId === destination.droppableId;
 
@@ -55,7 +55,7 @@ const withLocation = (
 const withCombine = (
   id: DraggableId,
   source: DraggableLocation,
-  combine: Combine,
+  combine: Combine
 ): string => {
   const inHomeList: boolean = source.droppableId === combine.droppableId;
 
@@ -84,7 +84,7 @@ const onDragUpdate = (update: DragUpdate): string => {
     return withCombine(update.draggableId, update.source, combine);
   }
 
-  return 'You are over an area that cannot be dropped on';
+  return "You are over an area that cannot be dropped on";
 };
 
 const returnedToStart = (source: DraggableLocation): string => `
@@ -93,7 +93,7 @@ const returnedToStart = (source: DraggableLocation): string => `
 `;
 
 const onDragEnd = (result: DropResult): string => {
-  if (result.reason === 'CANCEL') {
+  if (result.reason === "CANCEL") {
     return `
       Movement cancelled.
       ${returnedToStart(result.source)}

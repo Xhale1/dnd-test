@@ -1,17 +1,17 @@
-import React from 'react';
-import { render, fireEvent } from '@testing-library/react';
-import * as keyCodes from '../../../src/view/key-codes';
+import React from "react";
+import { render, fireEvent } from "@testing-library/react";
+import * as keyCodes from "../../../src/view/key-codes";
 import type {
   DraggableProvided,
   DroppableProvided,
   DragStart,
   DragUpdate,
   DropResult,
-} from '../../../src';
-import type { Responders } from '../../../src/types';
-import { DragDropContext, Droppable, Draggable } from '../../../src';
-import { simpleLift, keyboard } from './util/controls';
-import { withPoorDimensionMocks } from './util/helpers';
+} from "../../../src";
+import type { Responders } from "../../../src/types";
+import { DragDropContext, Droppable, Draggable } from "../../../src";
+import { simpleLift, keyboard } from "./util/controls";
+import { withPoorDimensionMocks } from "./util/helpers";
 
 interface State {
   isCombineEnabled: boolean;
@@ -94,7 +94,7 @@ afterEach(() => {
   jest.useRealTimers();
 });
 
-it('should allow the changing of combining in onDragStart', () => {
+it("should allow the changing of combining in onDragStart", () => {
   withPoorDimensionMocks(() => {
     const responders: Responders = {
       onDragStart: jest.fn(),
@@ -103,19 +103,19 @@ it('should allow the changing of combining in onDragStart', () => {
     };
     const { getByTestId } = render(<App {...responders} />);
 
-    const handle: HTMLElement = getByTestId('0');
+    const handle: HTMLElement = getByTestId("0");
     simpleLift(keyboard, handle);
     // flush onDragStart  responder
     jest.runOnlyPendingTimers();
 
     const start: DragStart = {
-      draggableId: '0',
+      draggableId: "0",
       source: {
-        droppableId: 'droppable',
+        droppableId: "droppable",
         index: 0,
       },
-      type: 'DEFAULT',
-      mode: 'SNAP',
+      type: "DEFAULT",
+      mode: "SNAP",
     };
     expect(responders.onDragStart).toHaveBeenCalledWith(start);
 
@@ -126,8 +126,8 @@ it('should allow the changing of combining in onDragStart', () => {
       ...start,
       destination: null,
       combine: {
-        draggableId: '1',
-        droppableId: 'droppable',
+        draggableId: "1",
+        droppableId: "droppable",
       },
     };
     expect(responders.onDragUpdate).toHaveBeenCalledWith(update);

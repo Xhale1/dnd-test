@@ -1,27 +1,27 @@
-import type { DraggableDimension, DimensionMap } from '../../../../src/types';
-import type { Store } from '../../../../src/state/store-types';
+import type { DraggableDimension, DimensionMap } from "../../../../src/types";
+import type { Store } from "../../../../src/state/store-types";
 import {
   flush,
   initialPublish,
   lift,
   beforeInitialCapture,
-} from '../../../../src/state/action-creators';
-import type { InitialPublishArgs } from '../../../../src/state/action-creators';
-import middleware from '../../../../src/state/middleware/lift';
-import createRegistry from '../../../../src/state/registry/create-registry';
-import { createMarshal } from '../../../util/dimension-marshal';
+} from "../../../../src/state/action-creators";
+import type { InitialPublishArgs } from "../../../../src/state/action-creators";
+import middleware from "../../../../src/state/middleware/lift";
+import createRegistry from "../../../../src/state/registry/create-registry";
+import { createMarshal } from "../../../util/dimension-marshal";
 import {
   copy,
   initialPublishArgs,
   beforeCaptureArgs,
   liftArgs,
   preset,
-} from '../../../util/preset-action-args';
-import { populate } from '../../../util/registry';
-import { resetViewport, setViewport } from '../../../util/viewport';
-import createStore from './util/create-store';
-import passThroughMiddleware from './util/pass-through-middleware';
-import type { Registry } from '../../../../src/state/registry/registry-types';
+} from "../../../util/preset-action-args";
+import { populate } from "../../../util/registry";
+import { resetViewport, setViewport } from "../../../util/viewport";
+import createStore from "./util/create-store";
+import passThroughMiddleware from "./util/pass-through-middleware";
+import type { Registry } from "../../../../src/state/registry/registry-types";
 
 const getPopulatedRegistry = (dimensions?: DimensionMap): Registry => {
   const registry: Registry = createRegistry();
@@ -40,8 +40,8 @@ afterEach(() => {
   jest.useRealTimers();
 });
 
-it('should log a warning if items are added that do not have consecutive indexes', () => {
-  const warn = jest.spyOn(console, 'warn').mockImplementation(() => {});
+it("should log a warning if items are added that do not have consecutive indexes", () => {
+  const warn = jest.spyOn(console, "warn").mockImplementation(() => {});
 
   const mock = jest.fn();
   const customInHome2: DraggableDimension = {
@@ -60,9 +60,9 @@ it('should log a warning if items are added that do not have consecutive indexes
       createMarshal(
         getPopulatedRegistry(copied),
         // lazy use of store.dispatch
-        (action) => store.dispatch(action),
-      ),
-    ),
+        (action) => store.dispatch(action)
+      )
+    )
   );
   const initial: InitialPublishArgs = {
     ...initialPublishArgs,
@@ -76,7 +76,7 @@ it('should log a warning if items are added that do not have consecutive indexes
   expect(mock).toHaveBeenCalledWith(beforeInitialCapture(beforeCaptureArgs));
   expect(mock).toHaveBeenCalledWith(initialPublish(initial));
   expect(mock).toHaveBeenCalledTimes(4);
-  expect(store.getState().phase).toBe('DRAGGING');
+  expect(store.getState().phase).toBe("DRAGGING");
 
   // a warning is logged
   expect(warn).toHaveBeenCalled();
@@ -86,14 +86,14 @@ it('should log a warning if items are added that do not have consecutive indexes
     // inHome3: index 2: boom
     // inHome4: index 3: all good (2 + 1)
     // inHome2: index 6: boom
-    expect.stringContaining(`0, [🔥2], 3, [🔥6]`),
+    expect.stringContaining(`0, [🔥2], 3, [🔥6]`)
   );
 
   warn.mockRestore();
 });
 
-it('should log a warning if items are added have duplicate indexes', () => {
-  const warn = jest.spyOn(console, 'warn').mockImplementation(() => {});
+it("should log a warning if items are added have duplicate indexes", () => {
+  const warn = jest.spyOn(console, "warn").mockImplementation(() => {});
 
   const mock = jest.fn();
   const customInHome4: DraggableDimension = {
@@ -113,9 +113,9 @@ it('should log a warning if items are added have duplicate indexes', () => {
       createMarshal(
         getPopulatedRegistry(dimensions),
         // lazy use of store.dispatch
-        (action) => store.dispatch(action),
-      ),
-    ),
+        (action) => store.dispatch(action)
+      )
+    )
   );
   const initial: InitialPublishArgs = {
     ...initialPublishArgs,
@@ -129,12 +129,12 @@ it('should log a warning if items are added have duplicate indexes', () => {
   expect(mock).toHaveBeenCalledWith(beforeInitialCapture(beforeCaptureArgs));
   expect(mock).toHaveBeenCalledWith(initialPublish(initial));
   expect(mock).toHaveBeenCalledTimes(4);
-  expect(store.getState().phase).toBe('DRAGGING');
+  expect(store.getState().phase).toBe("DRAGGING");
 
   // a warning is logged
   expect(warn).toHaveBeenCalled();
   expect(warn.mock.calls[0][0]).toEqual(
-    expect.stringContaining('0, 1, [🔥2], [🔥2]'),
+    expect.stringContaining("0, 1, [🔥2], [🔥2]")
   );
 
   warn.mockRestore();

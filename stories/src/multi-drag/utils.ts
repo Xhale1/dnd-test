@@ -1,8 +1,8 @@
-import type { DraggableLocation } from '@hello-pangea/dnd';
-import { invariant } from '../../../src/invariant';
-import reorder from '../reorder';
-import type { Id } from '../types';
-import type { Column, ColumnMap, Entities } from './types';
+import type { DraggableLocation } from "@hello-pangea/dnd";
+import { invariant } from "../../../src/invariant";
+import reorder from "../reorder";
+import type { Id } from "../types";
+import type { Column, ColumnMap, Entities } from "./types";
 
 interface Args {
   entities: Entities;
@@ -35,7 +35,7 @@ const reorderSingleDrag = ({
     const reordered: Id[] = reorder(
       column.taskIds,
       source.index,
-      destination.index,
+      destination.index
     );
 
     const updated: Entities = {
@@ -91,7 +91,7 @@ export const getHomeColumn = (entities: Entities, taskId: TaskId): Column => {
       return column.taskIds.includes(taskId);
     }) || null;
 
-  invariant(columnId, 'Count not find column for task');
+  invariant(columnId, "Count not find column for task");
 
   return entities.columns[columnId as Id];
 };
@@ -129,7 +129,7 @@ const reorderMultiDrag = ({
         // we need to account for this when inserting into the new location
         return previous + 1;
       },
-      0,
+      0
     );
 
     const result: number = destination.index - destinationIndexOffset;
@@ -169,13 +169,13 @@ const reorderMultiDrag = ({
 
       // remove the id's of the items that are selected
       const remainingTaskIds: TaskId[] = column.taskIds.filter(
-        (id: TaskId): boolean => !selectedTaskIds.includes(id),
+        (id: TaskId): boolean => !selectedTaskIds.includes(id)
       );
 
       previous[column.id] = withNewTaskIds(column, remainingTaskIds);
       return previous;
     },
-    entities.columns,
+    entities.columns
   );
 
   const final: Column = withRemovedTasks[destination.droppableId];
@@ -212,7 +212,7 @@ export const mutliDragAwareReorder = (args: Args): Result => {
 export const multiSelectTo = (
   entities: Entities,
   selectedTaskIds: Id[],
-  newTaskId: TaskId,
+  newTaskId: TaskId
 ): Id[] | undefined | null => {
   // Nothing already selected
   if (!selectedTaskIds.length) {

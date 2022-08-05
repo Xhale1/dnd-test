@@ -1,1 +1,1 @@
-export { default } from './connected-droppable';
+export { default } from "./connected-droppable";

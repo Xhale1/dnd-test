@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-import type { Action } from '../../state/store-types';
+import type { Action } from "../../state/store-types";
 
 interface Bucket {
   [key: string]: number[];
@@ -8,13 +8,13 @@ interface Bucket {
 const average = (values: number[]): number => {
   const sum: number = values.reduce(
     (previous: number, current: number) => previous + current,
-    0,
+    0
   );
   return sum / values.length;
 };
 
 export default (groupSize: number) => {
-  console.log('Starting average action timer middleware');
+  console.log("Starting average action timer middleware");
   console.log(`Will take an average every ${groupSize} actions`);
   const bucket: Bucket = {};
 
@@ -42,7 +42,7 @@ export default (groupSize: number) => {
 
       console.warn(
         `Average time for ${action.type}`,
-        average(bucket[action.type]),
+        average(bucket[action.type])
       );
 
       // reset

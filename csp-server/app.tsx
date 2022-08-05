@@ -3,8 +3,8 @@ import {
   Draggable,
   Droppable,
   DropResult,
-} from '@hello-pangea/dnd';
-import React, { Component } from 'react';
+} from "@hello-pangea/dnd";
+import React, { Component } from "react";
 
 // fake data generator
 const getItems = (count: number) =>
@@ -17,7 +17,7 @@ const getItems = (count: number) =>
 const reorder = <TList extends unknown[]>(
   list: TList,
   startIndex: number,
-  endIndex: number,
+  endIndex: number
 ): TList => {
   const result = Array.from(list) as TList;
   const [removed] = result.splice(startIndex, 1);
@@ -52,15 +52,15 @@ export default class App extends Component<AppProps, AppState> {
 
   componentDidMount() {
     document.addEventListener(
-      'securitypolicyviolation',
-      this.onSecurityPolicyViolation,
+      "securitypolicyviolation",
+      this.onSecurityPolicyViolation
     );
   }
 
   componentWillUnmount() {
     document.removeEventListener(
-      'securitypolicyviolation',
-      this.onSecurityPolicyViolation,
+      "securitypolicyviolation",
+      this.onSecurityPolicyViolation
     );
   }
 
@@ -73,7 +73,7 @@ export default class App extends Component<AppProps, AppState> {
     const items = reorder(
       this.state.items,
       result.source.index,
-      result.destination.index,
+      result.destination.index
     );
 
     this.setState((state) => ({
@@ -102,7 +102,7 @@ export default class App extends Component<AppProps, AppState> {
     return (
       <DragDropContext onDragEnd={this.onDragEnd} nonce={this.props.nonce}>
         <h1>
-          Content-Security-Policy error count:{' '}
+          Content-Security-Policy error count:{" "}
           <b id="cspErrors">{this.state.cspErrors.length}</b>
         </h1>
         <Droppable droppableId="droppable">

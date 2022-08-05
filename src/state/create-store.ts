@@ -1,23 +1,23 @@
 /* eslint-disable no-underscore-dangle */
-import { applyMiddleware, compose, createStore, StoreEnhancer } from 'redux';
-import type { Announce, Responders } from '../types';
-import type { FocusMarshal } from '../view/use-focus-marshal/focus-marshal-types';
-import type { StyleMarshal } from '../view/use-style-marshal/style-marshal-types';
-import type { AutoScroller } from './auto-scroller/auto-scroller-types';
-import type { DimensionMarshal } from './dimension-marshal/dimension-marshal-types';
-import autoScroll from './middleware/auto-scroll';
-import dimensionMarshalStopper from './middleware/dimension-marshal-stopper';
-import dropAnimationFinish from './middleware/drop/drop-animation-finish-middleware';
-import dropAnimationFlushOnScroll from './middleware/drop/drop-animation-flush-on-scroll-middleware';
-import drop from './middleware/drop/drop-middleware';
-import focus from './middleware/focus';
-import lift from './middleware/lift';
-import pendingDrop from './middleware/pending-drop';
-import responders from './middleware/responders/responders-middleware';
-import scrollListener from './middleware/scroll-listener';
-import style from './middleware/style';
-import reducer from './reducer';
-import type { Store } from './store-types';
+import { applyMiddleware, compose, createStore, StoreEnhancer } from "redux";
+import type { Announce, Responders } from "../types";
+import type { FocusMarshal } from "../view/use-focus-marshal/focus-marshal-types";
+import type { StyleMarshal } from "../view/use-style-marshal/style-marshal-types";
+import type { AutoScroller } from "./auto-scroller/auto-scroller-types";
+import type { DimensionMarshal } from "./dimension-marshal/dimension-marshal-types";
+import autoScroll from "./middleware/auto-scroll";
+import dimensionMarshalStopper from "./middleware/dimension-marshal-stopper";
+import dropAnimationFinish from "./middleware/drop/drop-animation-finish-middleware";
+import dropAnimationFlushOnScroll from "./middleware/drop/drop-animation-flush-on-scroll-middleware";
+import drop from "./middleware/drop/drop-middleware";
+import focus from "./middleware/focus";
+import lift from "./middleware/lift";
+import pendingDrop from "./middleware/pending-drop";
+import responders from "./middleware/responders/responders-middleware";
+import scrollListener from "./middleware/scroll-listener";
+import style from "./middleware/style";
+import reducer from "./reducer";
+import type { Store } from "./store-types";
 
 // For more config
 // See: https://github.com/reduxjs/redux-devtools/blob/main/packages/redux-devtools-extension/src/index.ts#L3
@@ -38,11 +38,11 @@ declare global {
 
 // See: https://github.com/reduxjs/redux-devtools/blob/main/packages/redux-devtools-extension/src/index.ts#L219-L222
 const composeEnhancers =
-  process.env.NODE_ENV !== 'production' &&
-  typeof window !== 'undefined' &&
+  process.env.NODE_ENV !== "production" &&
+  typeof window !== "undefined" &&
   window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
     ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({
-        name: '@hello-pangea/dnd',
+        name: "@hello-pangea/dnd",
       })
     : compose;
 
@@ -105,7 +105,7 @@ export default ({
         scrollListener,
         focus(focusMarshal),
         // Fire responders for consumers (after update to store)
-        responders(getResponders, announce),
-      ),
-    ),
+        responders(getResponders, announce)
+      )
+    )
   );

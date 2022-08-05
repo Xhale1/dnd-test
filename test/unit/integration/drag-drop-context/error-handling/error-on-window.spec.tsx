@@ -1,24 +1,24 @@
-import React from 'react';
-import { render } from '@testing-library/react';
-import { RbdInvariant } from '../../../../../src/invariant';
-import App from '../../util/app';
-import { simpleLift, keyboard } from '../../util/controls';
-import { isDragging } from '../../util/helpers';
-import { withError, withWarn, withoutError } from '../../../../util/console';
-import { getRuntimeError } from '../../../../util/cause-runtime-error';
+import React from "react";
+import { render } from "@testing-library/react";
+import { RbdInvariant } from "../../../../../src/invariant";
+import App from "../../util/app";
+import { simpleLift, keyboard } from "../../util/controls";
+import { isDragging } from "../../util/helpers";
+import { withError, withWarn, withoutError } from "../../../../util/console";
+import { getRuntimeError } from "../../../../util/cause-runtime-error";
 
 function getRbdErrorEvent(): Event {
-  return new window.ErrorEvent('error', {
-    error: new RbdInvariant('my invariant'),
+  return new window.ErrorEvent("error", {
+    error: new RbdInvariant("my invariant"),
     cancelable: true,
   });
 }
 
-it('should abort any active drag (rfd error)', () => {
+it("should abort any active drag (rfd error)", () => {
   const { getByTestId } = render(<App />);
 
-  simpleLift(keyboard, getByTestId('0'));
-  expect(isDragging(getByTestId('0'))).toBe(true);
+  simpleLift(keyboard, getByTestId("0"));
+  expect(isDragging(getByTestId("0"))).toBe(true);
   const event: Event = getRbdErrorEvent();
 
   withWarn(() => {
@@ -28,15 +28,15 @@ it('should abort any active drag (rfd error)', () => {
   });
 
   // drag aborted
-  expect(isDragging(getByTestId('0'))).toBe(false);
+  expect(isDragging(getByTestId("0"))).toBe(false);
   // error event prevented
   expect(event.defaultPrevented).toBe(true);
 });
 
-it('should abort any active drag (non-rfd error)', () => {
+it("should abort any active drag (non-rfd error)", () => {
   const { getByTestId } = render(<App />);
-  simpleLift(keyboard, getByTestId('0'));
-  expect(isDragging(getByTestId('0'))).toBe(true);
+  simpleLift(keyboard, getByTestId("0"));
+  expect(isDragging(getByTestId("0"))).toBe(true);
   const event: Event = getRuntimeError();
 
   // not logging the raw error
@@ -48,7 +48,7 @@ it('should abort any active drag (non-rfd error)', () => {
   });
 
   // drag aborted
-  expect(isDragging(getByTestId('0'))).toBe(false);
+  expect(isDragging(getByTestId("0"))).toBe(false);
   // error event not prevented
   expect(event.defaultPrevented).toBe(false);
 });

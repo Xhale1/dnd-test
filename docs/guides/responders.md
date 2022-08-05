@@ -106,7 +106,7 @@ type Announce = (message: string) => void;
 // While the return type is `mixed`, the return value is not used.
 type OnDragStartResponder = (
   start: DragStart,
-  provided: ResponderProvided,
+  provided: ResponderProvided
 ) => unknown;
 
 // supporting types
@@ -130,7 +130,7 @@ type DraggableId = Id;
 type DroppableId = Id;
 type TypeId = Id;
 
-type MovementMode = 'FLUID' | 'SNAP';
+type MovementMode = "FLUID" | "SNAP";
 ```
 
 - `start.draggableId`: the id of the `<Draggable />` that is now dragging
@@ -152,7 +152,7 @@ It is important that you not do too much work as a result of this function as it
 // The return value of `mixed` is not used
 type OnDragUpdateResponder = (
   update: DragUpdate,
-  provided: ResponderProvided,
+  provided: ResponderProvided
 ) => unknown;
 
 interface DragUpdate extends DragStart {
@@ -181,14 +181,14 @@ This function is _extremely_ important and has an critical role to play in the a
 ```ts
 type OragEndResponder = (
   result: DropResult,
-  provided: ResponderProvided,
+  provided: ResponderProvided
 ) => unknown;
 
 interface DropResult extends DragUpdate {
   reason: DropReason;
 }
 
-type DropReason = 'DROP' | 'CANCEL';
+type DropReason = "DROP" | "CANCEL";
 ```
 
 - `...DragUpdate`: _see above_

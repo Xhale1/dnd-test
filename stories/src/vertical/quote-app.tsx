@@ -1,11 +1,11 @@
-import styled from '@emotion/styled';
-import type { DropResult } from '@hello-pangea/dnd';
-import { DragDropContext } from '@hello-pangea/dnd';
-import React, { CSSProperties, ReactElement, useState } from 'react';
-import { grid } from '../constants';
-import QuoteList from '../primatives/quote-list';
-import reorder from '../reorder';
-import type { Quote } from '../types';
+import styled from "@emotion/styled";
+import type { DropResult } from "@hello-pangea/dnd";
+import { DragDropContext } from "@hello-pangea/dnd";
+import React, { CSSProperties, ReactElement, useState } from "react";
+import { grid } from "../constants";
+import QuoteList from "../primatives/quote-list";
+import reorder from "../reorder";
+import type { Quote } from "../types";
 
 const Root = styled.div`
   /* flexbox */
@@ -54,7 +54,7 @@ export default function QuoteApp(props: Props): ReactElement {
     const newQuotes = reorder(
       quotes,
       result.source.index,
-      result.destination.index,
+      result.destination.index
     );
 
     setQuotes(newQuotes);

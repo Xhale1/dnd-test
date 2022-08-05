@@ -1,7 +1,7 @@
-import type { Spacing } from 'css-box-model';
-import isPartiallyVisibleThroughFrame from '../../../../src/state/visibility/is-partially-visible-through-frame';
-import { offsetByPosition } from '../../../../src/state/spacing';
-import { expandBySpacing } from '../../../util/spacing';
+import type { Spacing } from "css-box-model";
+import isPartiallyVisibleThroughFrame from "../../../../src/state/visibility/is-partially-visible-through-frame";
+import { offsetByPosition } from "../../../../src/state/spacing";
+import { expandBySpacing } from "../../../util/spacing";
 
 const frame: Spacing = {
   top: 0,
@@ -10,10 +10,10 @@ const frame: Spacing = {
   bottom: 100,
 };
 
-describe('is partially visible through frame', () => {
-  describe('subject is smaller than frame', () => {
-    describe('completely outside frame', () => {
-      it('should return false if subject is outside frame on any side', () => {
+describe("is partially visible through frame", () => {
+  describe("subject is smaller than frame", () => {
+    describe("completely outside frame", () => {
+      it("should return false if subject is outside frame on any side", () => {
         const outside: Spacing[] = [
           // outside on top
           offsetByPosition(frame, { x: 0, y: -101 }),
@@ -31,8 +31,8 @@ describe('is partially visible through frame', () => {
       });
     });
 
-    describe('contained in frame', () => {
-      it('should return true when subject is contained within frame', () => {
+    describe("contained in frame", () => {
+      it("should return true when subject is contained within frame", () => {
         const subject: Spacing = {
           top: 10,
           left: 10,
@@ -44,8 +44,8 @@ describe('is partially visible through frame', () => {
       });
     });
 
-    describe('partially visible', () => {
-      it('should return true if partially visible horizontally and vertically', () => {
+    describe("partially visible", () => {
+      it("should return true if partially visible horizontally and vertically", () => {
         const subject: Spacing = {
           // visible
           top: 10,
@@ -62,17 +62,17 @@ describe('is partially visible through frame', () => {
     });
   });
 
-  describe('subject is equal to frame', () => {
-    it('should return true when the frame is equal to the subject', () => {
+  describe("subject is equal to frame", () => {
+    it("should return true when the frame is equal to the subject", () => {
       expect(isPartiallyVisibleThroughFrame(frame)(frame)).toBe(true);
       expect(isPartiallyVisibleThroughFrame(frame)({ ...frame })).toBe(true);
     });
   });
 
-  describe('subject is bigger than frame', () => {
+  describe("subject is bigger than frame", () => {
     const bigSubject: Spacing = expandBySpacing(frame, frame);
 
-    it('should return false if the subject has no overlap with the frame', () => {
+    it("should return false if the subject has no overlap with the frame", () => {
       const subject: Spacing = offsetByPosition(bigSubject, {
         x: 1000,
         y: 1000,
@@ -81,12 +81,12 @@ describe('is partially visible through frame', () => {
       expect(isPartiallyVisibleThroughFrame(frame)(subject)).toBe(false);
     });
 
-    it('should return true if subject is bigger on every side', () => {
+    it("should return true if subject is bigger on every side", () => {
       expect(isPartiallyVisibleThroughFrame(frame)(bigSubject)).toBe(true);
     });
 
-    describe('partially visible', () => {
-      it('should return true if partially visible horizontally and vertically on any side', () => {
+    describe("partially visible", () => {
+      it("should return true if partially visible horizontally and vertically on any side", () => {
         // bigger on every edge except one
         const subjects: Spacing[] = [
           // top is not above edge
@@ -104,7 +104,7 @@ describe('is partially visible through frame', () => {
         });
       });
 
-      it('should return false when only partially visible horizontally', () => {
+      it("should return false when only partially visible horizontally", () => {
         const subject: Spacing = {
           // not visible
           top: 101,
@@ -117,7 +117,7 @@ describe('is partially visible through frame', () => {
         expect(isPartiallyVisibleThroughFrame(frame)(subject)).toEqual(false);
       });
 
-      it('should return false when only partially visible vertically', () => {
+      it("should return false when only partially visible vertically", () => {
         const subject: Spacing = {
           // visible
           top: 1,

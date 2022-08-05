@@ -1,4 +1,4 @@
-import type { Position } from 'css-box-model';
+import type { Position } from "css-box-model";
 
 interface Options {
   shouldPublish: boolean;
@@ -10,13 +10,13 @@ const defaultOptions: Options = {
 
 const setWindowScroll = (
   point: Position,
-  options: Options = defaultOptions,
+  options: Options = defaultOptions
 ) => {
   window.pageXOffset = point.x;
   window.pageYOffset = point.y;
 
   if (options.shouldPublish) {
-    window.dispatchEvent(new Event('scroll'));
+    window.dispatchEvent(new Event("scroll"));
   }
 };
 

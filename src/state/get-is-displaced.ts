@@ -1,4 +1,4 @@
-import type { DisplacementGroups, DraggableId } from '../types';
+import type { DisplacementGroups, DraggableId } from "../types";
 
 interface Args {
   displaced: DisplacementGroups;

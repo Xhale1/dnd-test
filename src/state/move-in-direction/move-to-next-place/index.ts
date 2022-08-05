@@ -1,4 +1,4 @@
-import type { Position } from 'css-box-model';
+import type { Position } from "css-box-model";
 import type {
   DroppableDimension,
   DraggableDimension,
@@ -6,17 +6,17 @@ import type {
   DragImpact,
   Viewport,
   LiftEffect,
-} from '../../../types';
-import type { PublicResult } from '../move-in-direction-types';
-import getDraggablesInsideDroppable from '../../get-draggables-inside-droppable';
-import moveToNextCombine from './move-to-next-combine';
-import moveToNextIndex from './move-to-next-index';
-import isHomeOf from '../../droppable/is-home-of';
-import getPageBorderBoxCenter from '../../get-center-from-impact/get-page-border-box-center';
-import speculativelyIncrease from '../../update-displacement-visibility/speculatively-increase';
-import getClientFromPageBorderBoxCenter from '../../get-center-from-impact/get-client-border-box-center/get-client-from-page-border-box-center';
-import { subtract } from '../../position';
-import isTotallyVisibleInNewLocation from './is-totally-visible-in-new-location';
+} from "../../../types";
+import type { PublicResult } from "../move-in-direction-types";
+import getDraggablesInsideDroppable from "../../get-draggables-inside-droppable";
+import moveToNextCombine from "./move-to-next-combine";
+import moveToNextIndex from "./move-to-next-index";
+import isHomeOf from "../../droppable/is-home-of";
+import getPageBorderBoxCenter from "../../get-center-from-impact/get-page-border-box-center";
+import speculativelyIncrease from "../../update-displacement-visibility/speculatively-increase";
+import getClientFromPageBorderBoxCenter from "../../get-center-from-impact/get-client-border-box-center/get-client-from-page-border-box-center";
+import { subtract } from "../../position";
+import isTotallyVisibleInNewLocation from "./is-totally-visible-in-new-location";
 
 interface Args {
   isMovingForward: boolean;
@@ -47,7 +47,7 @@ export default ({
 
   const insideDestination: DraggableDimension[] = getDraggablesInsideDroppable(
     destination.descriptor.id,
-    draggables,
+    draggables
   );
   const isInHomeList: boolean = isHomeOf(draggable, destination);
 
@@ -112,7 +112,7 @@ export default ({
 
   const distance: Position = subtract(
     pageBorderBoxCenter,
-    previousPageBorderBoxCenter,
+    previousPageBorderBoxCenter
   );
 
   const cautious: DragImpact = speculativelyIncrease({

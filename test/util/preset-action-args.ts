@@ -1,4 +1,4 @@
-import type { Position } from 'css-box-model';
+import type { Position } from "css-box-model";
 import type {
   Critical,
   DropReason,
@@ -11,20 +11,20 @@ import type {
   Published,
   CompletedDrag,
   DraggableLocation,
-} from '../../src/types';
+} from "../../src/types";
 import type {
   DropCompleteArgs,
   InitialPublishArgs,
   BeforeInitialCaptureArgs,
   LiftArgs,
   AnimateDropArgs,
-} from '../../src/state/action-creators';
-import { getPreset, getDraggableDimension, makeScrollable } from './dimension';
-import { offsetByPosition } from '../../src/state/spacing';
-import getHomeLocation from '../../src/state/get-home-location';
-import getLiftEffect from '../../src/state/get-lift-effect';
-import getDropImpact from '../../src/state/middleware/drop/get-drop-impact';
-import { origin } from '../../src/state/position';
+} from "../../src/state/action-creators";
+import { getPreset, getDraggableDimension, makeScrollable } from "./dimension";
+import { offsetByPosition } from "../../src/state/spacing";
+import getHomeLocation from "../../src/state/get-home-location";
+import getLiftEffect from "../../src/state/get-lift-effect";
+import getDropImpact from "../../src/state/middleware/drop/get-drop-impact";
+import { origin } from "../../src/state/position";
 
 // In case a consumer needs the references
 export const preset = getPreset();
@@ -48,12 +48,12 @@ const clientSelection: Position = preset.inHome1.client.borderBox.center;
 export const liftArgs: LiftArgs = {
   id: critical.draggable.id,
   clientSelection,
-  movementMode: 'FLUID',
+  movementMode: "FLUID",
 };
 
 export const beforeCaptureArgs: BeforeInitialCaptureArgs = {
   draggableId: critical.draggable.id,
-  movementMode: 'FLUID',
+  movementMode: "FLUID",
 };
 
 export const initialPublishArgs: InitialPublishArgs = {
@@ -61,7 +61,7 @@ export const initialPublishArgs: InitialPublishArgs = {
   dimensions: preset.dimensions,
   clientSelection,
   viewport: preset.viewport,
-  movementMode: 'FLUID',
+  movementMode: "FLUID",
 };
 
 export const initialPublishWithScrollables: InitialPublishArgs = {
@@ -83,7 +83,7 @@ export const publishAdditionArgs: Published = (() => {
       ...preset.inHome4.descriptor,
       // adding to the end of the list
       index: preset.inHomeList.length,
-      id: 'addition',
+      id: "addition",
     },
     borderBox: offsetByPosition(preset.inHome4.client.borderBox, {
       x: 0,
@@ -102,13 +102,13 @@ export const getDragStart = (custom: Critical = critical): DragStart => ({
   draggableId: custom.draggable.id,
   type: custom.droppable.type,
   source: getHomeLocation(custom.draggable),
-  mode: 'FLUID',
+  mode: "FLUID",
 });
 
 const result: DropResult = {
   ...getDragStart(critical),
   destination: getHomeLocation(critical.draggable),
-  reason: 'DROP',
+  reason: "DROP",
   combine: null,
 };
 
@@ -131,7 +131,7 @@ export const getDropImpactForReason = (reason: DropReason): DragImpact =>
 
 export const getCompletedArgs = (reason: DropReason): DropCompleteArgs => {
   const destination: DraggableLocation | null =
-    reason === 'CANCEL' ? null : getDragStart().source;
+    reason === "CANCEL" ? null : getDragStart().source;
 
   const customResult: DropResult = {
     ...getDragStart(),
@@ -152,7 +152,7 @@ export const getCompletedArgs = (reason: DropReason): DropCompleteArgs => {
 
 const droppedOnHome: CompletedDrag = {
   result,
-  impact: getDropImpactForReason('DROP'),
+  impact: getDropImpactForReason("DROP"),
   critical,
   afterCritical,
 };
@@ -169,7 +169,7 @@ export const userCancelArgs: AnimateDropArgs = {
     ...droppedOnHome,
     result: {
       ...droppedOnHome.result,
-      reason: 'CANCEL',
+      reason: "CANCEL",
     },
   },
 };

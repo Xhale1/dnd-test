@@ -1,17 +1,17 @@
-import React from 'react';
-import { render } from '@testing-library/react';
-import { isDragging } from './util/helpers';
-import App from './util/app';
-import { forEachSensor, simpleLift } from './util/controls';
-import type { Control } from './util/controls';
-import getBodyElement from '../../../src/view/get-body-element';
+import React from "react";
+import { render } from "@testing-library/react";
+import { isDragging } from "./util/helpers";
+import App from "./util/app";
+import { forEachSensor, simpleLift } from "./util/controls";
+import type { Control } from "./util/controls";
+import getBodyElement from "../../../src/view/get-body-element";
 
-it('should have any errors when body is changed just before unmount', () => {
+it("should have any errors when body is changed just before unmount", () => {
   jest.useFakeTimers();
   const { unmount } = render(<App />);
 
   expect(() => {
-    getBodyElement().innerHTML = '';
+    getBodyElement().innerHTML = "";
     unmount();
     jest.runOnlyPendingTimers();
   }).not.toThrow();
@@ -20,16 +20,16 @@ it('should have any errors when body is changed just before unmount', () => {
 });
 
 forEachSensor((control: Control) => {
-  it('should have any errors when body is changed just before unmount: mid drag', () => {
+  it("should have any errors when body is changed just before unmount: mid drag", () => {
     const { unmount, getByText } = render(<App />);
-    const handle: HTMLElement = getByText('item: 0');
+    const handle: HTMLElement = getByText("item: 0");
 
     // mid drag
     simpleLift(control, handle);
     expect(isDragging(handle)).toEqual(true);
 
     expect(() => {
-      getBodyElement().innerHTML = '';
+      getBodyElement().innerHTML = "";
       unmount();
       jest.runOnlyPendingTimers();
     }).not.toThrow();

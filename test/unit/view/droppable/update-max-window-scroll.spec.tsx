@@ -1,18 +1,18 @@
-import { render } from '@testing-library/react';
-import React from 'react';
-import App from './util/app';
-import { homeOwnProps, isOverHome, isNotOverHome } from './util/get-props';
-import type { DispatchProps } from '../../../../src/view/droppable/droppable-types';
-import getMaxWindowScroll from '../../../../src/view/window/get-max-window-scroll';
+import { render } from "@testing-library/react";
+import React from "react";
+import App from "./util/app";
+import { homeOwnProps, isOverHome, isNotOverHome } from "./util/get-props";
+import type { DispatchProps } from "../../../../src/view/droppable/droppable-types";
+import getMaxWindowScroll from "../../../../src/view/window/get-max-window-scroll";
 
 // Spy Placeholder component
-jest.mock('../../../../src/view/placeholder', () => jest.fn());
+jest.mock("../../../../src/view/placeholder", () => jest.fn());
 // eslint-disable-next-line import/newline-after-import, import/first
-import _Placeholder from '../../../../src/view/placeholder';
+import _Placeholder from "../../../../src/view/placeholder";
 const Placeholder = jest.mocked(_Placeholder);
 const { default: OriginalPlaceholder } = jest.requireActual<{
   default: typeof _Placeholder;
-}>('../../../../src/view/placeholder');
+}>("../../../../src/view/placeholder");
 
 beforeEach(() => {
   Placeholder.mockImplementation((props: any) => {
@@ -20,7 +20,7 @@ beforeEach(() => {
   });
 });
 
-it('should update when a placeholder animation finishes', () => {
+it("should update when a placeholder animation finishes", () => {
   const dispatchProps: DispatchProps = {
     updateViewportMaxScroll: jest.fn(),
   };
@@ -30,7 +30,7 @@ it('should update when a placeholder animation finishes', () => {
       mapProps={isOverHome}
       dispatchProps={dispatchProps}
       isMovementAllowed={() => true}
-    />,
+    />
   );
 
   Placeholder.mock.calls[0][0].onTransitionEnd();
@@ -40,7 +40,7 @@ it('should update when a placeholder animation finishes', () => {
   });
 });
 
-it('should update when a placeholder finishes and the list is not dragged over', () => {
+it("should update when a placeholder finishes and the list is not dragged over", () => {
   const dispatchProps: DispatchProps = {
     updateViewportMaxScroll: jest.fn(),
   };
@@ -50,7 +50,7 @@ it('should update when a placeholder finishes and the list is not dragged over',
       mapProps={isNotOverHome}
       dispatchProps={dispatchProps}
       isMovementAllowed={() => true}
-    />,
+    />
   );
 
   Placeholder.mock.calls[0][0].onTransitionEnd();
@@ -60,7 +60,7 @@ it('should update when a placeholder finishes and the list is not dragged over',
   });
 });
 
-it('should not update when dropping', () => {
+it("should not update when dropping", () => {
   const dispatchProps: DispatchProps = {
     updateViewportMaxScroll: jest.fn(),
   };
@@ -71,7 +71,7 @@ it('should not update when dropping', () => {
       dispatchProps={dispatchProps}
       // when dropping there is no movement allowed
       isMovementAllowed={() => false}
-    />,
+    />
   );
 
   Placeholder.mock.calls[0][0].onTransitionEnd();

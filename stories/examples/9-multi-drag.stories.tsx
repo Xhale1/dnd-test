@@ -1,5 +1,5 @@
-import React from 'react';
-import { storiesOf } from '@storybook/react';
-import TaskApp from '../src/multi-drag/task-app';
+import React from "react";
+import { storiesOf } from "@storybook/react";
+import TaskApp from "../src/multi-drag/task-app";
 
-storiesOf('Examples/Multi drag', module).add('pattern', () => <TaskApp />);
+storiesOf("Examples/Multi drag", module).add("pattern", () => <TaskApp />);

@@ -1,17 +1,17 @@
-import { getRect, createBox } from 'css-box-model';
-import type { Spacing, Position, BoxModel, Rect } from 'css-box-model';
+import { getRect, createBox } from "css-box-model";
+import type { Spacing, Position, BoxModel, Rect } from "css-box-model";
 import type {
   Axis,
   DroppableSubject,
   Scrollable,
   ScrollSize,
-} from '../../../../src/types';
-import getSubject from '../../../../src/state/droppable/util/get-subject';
-import { withAssortedSpacing } from '../../../util/dimension';
-import { vertical, horizontal } from '../../../../src/state/axis';
-import { origin, negate, patch } from '../../../../src/state/position';
-import { offsetByPosition } from '../../../../src/state/spacing';
-import getMaxScroll from '../../../../src/state/get-max-scroll';
+} from "../../../../src/types";
+import getSubject from "../../../../src/state/droppable/util/get-subject";
+import { withAssortedSpacing } from "../../../util/dimension";
+import { vertical, horizontal } from "../../../../src/state/axis";
+import { origin, negate, patch } from "../../../../src/state/position";
+import { offsetByPosition } from "../../../../src/state/spacing";
+import getMaxScroll from "../../../../src/state/get-max-scroll";
 
 const borderBox: Spacing = {
   top: 0,
@@ -21,7 +21,7 @@ const borderBox: Spacing = {
 };
 const page: BoxModel = createBox({ borderBox, ...withAssortedSpacing() });
 
-it('should displace by the droppable scroll', () => {
+it("should displace by the droppable scroll", () => {
   const scroll: Position = { x: 10, y: 20 };
   const displacement: Position = negate(scroll);
   const scrollSize: ScrollSize = {
@@ -67,7 +67,7 @@ it('should displace by the droppable scroll', () => {
   expect(result).toEqual(expected);
 });
 
-it('should increase the subject by a placeholder', () => {
+it("should increase the subject by a placeholder", () => {
   [vertical, horizontal].forEach((axis: Axis) => {
     const increasedBy: Position = patch(axis.line, 100);
 
@@ -91,7 +91,7 @@ it('should increase the subject by a placeholder', () => {
 });
 
 // other clipping tests covered in 'clip.spec.js'
-it('should clip the subject by a frame', () => {
+it("should clip the subject by a frame", () => {
   // frame is smaller than pageMarginBox by 10px on every side
   const frameBorderBox: Rect = getRect({
     top: 10,
@@ -135,7 +135,7 @@ it('should clip the subject by a frame', () => {
   expect(result).toEqual(expected);
 });
 
-it('should do nothing if there is no scroll, placeholder or frame', () => {
+it("should do nothing if there is no scroll, placeholder or frame", () => {
   const result: DroppableSubject = getSubject({
     page,
     axis: vertical,

@@ -1,7 +1,7 @@
-import type { Position, Rect } from 'css-box-model';
-import type { Viewport } from '../../../types';
-import getScroll from './get-scroll';
-import { canScrollWindow } from '../can-scroll';
+import type { Position, Rect } from "css-box-model";
+import type { Viewport } from "../../../types";
+import getScroll from "./get-scroll";
+import { canScrollWindow } from "../can-scroll";
 
 interface Args {
   viewport: Viewport;

@@ -1,28 +1,28 @@
-import getStatePreset from '../../../util/get-simple-state-preset';
-import { makeMapStateToProps } from '../../../../src/view/droppable/connected-droppable';
+import getStatePreset from "../../../util/get-simple-state-preset";
+import { makeMapStateToProps } from "../../../../src/view/droppable/connected-droppable";
 import type {
   DraggingState,
   DragImpact,
   DisplacedBy,
   Combine,
-} from '../../../../src/types';
+} from "../../../../src/types";
 import type {
   Selector,
   MapProps,
-} from '../../../../src/view/droppable/droppable-types';
-import getOwnProps from './util/get-own-props';
-import { getPreset } from '../../../util/dimension';
-import { move, withImpact } from '../../../util/dragging-state';
-import type { IsDraggingState } from '../../../util/dragging-state';
-import noImpact, { emptyGroups } from '../../../../src/state/no-impact';
-import getDisplacedBy from '../../../../src/state/get-displaced-by';
-import withCombineImpact from './util/with-combine-impact';
-import restingProps from './util/resting-props';
+} from "../../../../src/view/droppable/droppable-types";
+import getOwnProps from "./util/get-own-props";
+import { getPreset } from "../../../util/dimension";
+import { move, withImpact } from "../../../util/dragging-state";
+import type { IsDraggingState } from "../../../util/dragging-state";
+import noImpact, { emptyGroups } from "../../../../src/state/no-impact";
+import getDisplacedBy from "../../../../src/state/get-displaced-by";
+import withCombineImpact from "./util/with-combine-impact";
+import restingProps from "./util/resting-props";
 
 const preset = getPreset();
 const state = getStatePreset();
 
-describe('home list', () => {
+describe("home list", () => {
   const ownProps = getOwnProps(preset.home);
   const isOverMapProps: MapProps = {
     placeholder: preset.inHome1.placeholder,
@@ -36,21 +36,21 @@ describe('home list', () => {
     useClone: null,
   };
 
-  describe('is dragging over', () => {
-    it('should indicate that it is being dragged over', () => {
+  describe("is dragging over", () => {
+    it("should indicate that it is being dragged over", () => {
       const selector: Selector = makeMapStateToProps();
       const props: MapProps = selector(
         state.dragging(preset.inHome1.descriptor.id),
-        ownProps,
+        ownProps
       );
 
       expect(props).toEqual(isOverMapProps);
     });
 
-    it('should indicate that it is being combined over', () => {
+    it("should indicate that it is being combined over", () => {
       const selector: Selector = makeMapStateToProps();
       const base: IsDraggingState = state.dragging(
-        preset.inHome1.descriptor.id,
+        preset.inHome1.descriptor.id
       );
       const combine: Combine = {
         draggableId: preset.inHome2.descriptor.id,
@@ -58,14 +58,14 @@ describe('home list', () => {
       };
       const withCombine: IsDraggingState = withImpact(
         base,
-        withCombineImpact(base.impact, combine),
+        withCombineImpact(base.impact, combine)
       );
       const props: MapProps = selector(withCombine, ownProps);
 
       expect(props).toEqual(isOverMapProps);
     });
 
-    it('should not break memoization between moves', () => {
+    it("should not break memoization between moves", () => {
       const selector: Selector = makeMapStateToProps();
       const base: DraggingState = state.dragging(preset.inHome1.descriptor.id);
 
@@ -78,7 +78,7 @@ describe('home list', () => {
       };
       const fourth: IsDraggingState = withImpact(
         third,
-        withCombineImpact(third.impact, combine),
+        withCombineImpact(third.impact, combine)
       );
       const props1: MapProps = selector(first, ownProps);
       const props2: MapProps = selector(second, ownProps);
@@ -93,7 +93,7 @@ describe('home list', () => {
     });
   });
 
-  describe('is not dragging over', () => {
+  describe("is not dragging over", () => {
     const getNoWhere = (): DraggingState => ({
       ...state.dragging(preset.inHome1.descriptor.id),
       impact: { ...noImpact },
@@ -111,27 +111,27 @@ describe('home list', () => {
       useClone: null,
     };
 
-    it('should indicate that it is not being dragged over', () => {
+    it("should indicate that it is not being dragged over", () => {
       const selector: Selector = makeMapStateToProps();
 
       const first: MapProps = selector(getNoWhere(), ownProps);
       expect(first).toEqual(isHomeButNotOver);
     });
 
-    it('should not break memoization between moves', () => {
+    it("should not break memoization between moves", () => {
       const selector: Selector = makeMapStateToProps();
 
       const first: MapProps = selector(getNoWhere(), ownProps);
       expect(first).toEqual(isHomeButNotOver);
 
       expect(selector(move(getNoWhere(), { x: 1, y: 1 }), ownProps)).toBe(
-        first,
+        first
       );
       expect(selector(move(getNoWhere(), { x: 1, y: 1 }), ownProps)).toBe(
-        first,
+        first
       );
       expect(selector(move(getNoWhere(), { x: 1, y: 1 }), ownProps)).toBe(
-        first,
+        first
       );
       const combine: Combine = {
         draggableId: preset.inForeign1.descriptor.id,
@@ -139,26 +139,26 @@ describe('home list', () => {
       };
       const withCombine: IsDraggingState = withImpact(
         state.dragging(),
-        withCombineImpact(state.dragging().impact, combine),
+        withCombineImpact(state.dragging().impact, combine)
       );
       expect(selector(withCombine, ownProps)).toBe(first);
     });
   });
 });
 
-describe('foreign list', () => {
+describe("foreign list", () => {
   const ownProps = getOwnProps(preset.foreign);
 
-  describe('is dragging over', () => {
+  describe("is dragging over", () => {
     const displacedBy: DisplacedBy = getDisplacedBy(
       preset.foreign.axis,
-      preset.inHome1.displaceBy,
+      preset.inHome1.displaceBy
     );
     const overForeign: DragImpact = {
       displaced: emptyGroups,
       displacedBy,
       at: {
-        type: 'REORDER',
+        type: "REORDER",
         destination: {
           index: 0,
           droppableId: preset.foreign.descriptor.id,
@@ -178,20 +178,20 @@ describe('foreign list', () => {
       useClone: null,
     };
 
-    it('should indicate that it is being dragged over', () => {
+    it("should indicate that it is being dragged over", () => {
       const selector: Selector = makeMapStateToProps();
       const current: IsDraggingState = withImpact(
         state.dragging(preset.inHome1.descriptor.id),
-        overForeign,
+        overForeign
       );
       const props: MapProps = selector(current, ownProps);
 
       expect(props).toEqual(isOverForeignMapProps);
     });
-    it('should indicate that it is being combined over', () => {
+    it("should indicate that it is being combined over", () => {
       const selector: Selector = makeMapStateToProps();
       const base: IsDraggingState = state.dragging(
-        preset.inHome1.descriptor.id,
+        preset.inHome1.descriptor.id
       );
       const combine: Combine = {
         draggableId: preset.inForeign1.descriptor.id,
@@ -199,17 +199,17 @@ describe('foreign list', () => {
       };
       const withCombine: IsDraggingState = withImpact(
         base,
-        withCombineImpact(base.impact, combine),
+        withCombineImpact(base.impact, combine)
       );
       const props: MapProps = selector(withCombine, ownProps);
       expect(props).toEqual(isOverForeignMapProps);
     });
 
-    it('should not break memoization between moves', () => {
+    it("should not break memoization between moves", () => {
       const selector: Selector = makeMapStateToProps();
       const base: IsDraggingState = withImpact(
         state.dragging(preset.inHome1.descriptor.id),
-        overForeign,
+        overForeign
       );
       const first: IsDraggingState = move(base, { x: 1, y: 1 });
       const second: IsDraggingState = move(first, { x: 0, y: 1 });
@@ -225,7 +225,7 @@ describe('foreign list', () => {
     });
   });
 
-  describe('is not dragging over', () => {
+  describe("is not dragging over", () => {
     const getNoWhere = (): DraggingState => ({
       ...state.dragging(preset.inHome1.descriptor.id),
       impact: { ...noImpact },
@@ -236,27 +236,27 @@ describe('foreign list', () => {
       shouldAnimatePlaceholder: true,
     };
 
-    it('should indicate that it is not being dragged over', () => {
+    it("should indicate that it is not being dragged over", () => {
       const selector: Selector = makeMapStateToProps();
 
       const first: MapProps = selector(getNoWhere(), ownProps);
       expect(first).toEqual(isNotOver);
     });
 
-    it('should not break memoization between moves', () => {
+    it("should not break memoization between moves", () => {
       const selector: Selector = makeMapStateToProps();
 
       const first: MapProps = selector(getNoWhere(), ownProps);
       expect(first).toEqual(isNotOver);
 
       expect(selector(move(getNoWhere(), { x: 1, y: 1 }), ownProps)).toBe(
-        first,
+        first
       );
       expect(selector(move(getNoWhere(), { x: 1, y: 1 }), ownProps)).toBe(
-        first,
+        first
       );
       expect(selector(move(getNoWhere(), { x: 1, y: 1 }), ownProps)).toBe(
-        first,
+        first
       );
     });
   });

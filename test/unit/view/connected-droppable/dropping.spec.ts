@@ -2,24 +2,24 @@ import type {
   DragImpact,
   DraggingState,
   DropAnimatingState,
-} from '../../../../src/types';
+} from "../../../../src/types";
 import type {
   Selector,
   MapProps,
-} from '../../../../src/view/droppable/droppable-types';
-import { makeMapStateToProps } from '../../../../src/view/droppable/connected-droppable';
-import getStatePreset from '../../../util/get-simple-state-preset';
-import getOwnProps from './util/get-own-props';
-import { withImpact } from '../../../util/dragging-state';
-import noImpact from '../../../../src/state/no-impact';
-import cloneImpact from '../../../util/clone-impact';
-import { tryGetDestination } from '../../../../src/state/get-impact-location';
+} from "../../../../src/view/droppable/droppable-types";
+import { makeMapStateToProps } from "../../../../src/view/droppable/connected-droppable";
+import getStatePreset from "../../../util/get-simple-state-preset";
+import getOwnProps from "./util/get-own-props";
+import { withImpact } from "../../../util/dragging-state";
+import noImpact from "../../../../src/state/no-impact";
+import cloneImpact from "../../../util/clone-impact";
+import { tryGetDestination } from "../../../../src/state/get-impact-location";
 
 const state = getStatePreset();
 const preset = state.preset;
 
-describe('home list', () => {
-  describe('was being dragged over', () => {
+describe("home list", () => {
+  describe("was being dragged over", () => {
     const isOverMapProps: MapProps = {
       placeholder: preset.inHome1.placeholder,
       shouldAnimatePlaceholder: false,
@@ -32,7 +32,7 @@ describe('home list', () => {
       useClone: null,
     };
 
-    it('should not break memoization from a reorder', () => {
+    it("should not break memoization from a reorder", () => {
       const ownProps = getOwnProps(preset.home);
       const selector: Selector = makeMapStateToProps();
 
@@ -44,13 +44,13 @@ describe('home list', () => {
       expect(whileDragging).toBe(whileDropping);
     });
 
-    it('should not break memoization from a combine', () => {
+    it("should not break memoization from a combine", () => {
       const ownProps = getOwnProps(preset.home);
       const selector: Selector = makeMapStateToProps();
       const combine: DragImpact = {
         ...state.dragging().impact,
         at: {
-          type: 'COMBINE',
+          type: "COMBINE",
           combine: {
             draggableId: preset.inHome2.descriptor.id,
             droppableId: preset.inHome2.descriptor.droppableId,
@@ -68,7 +68,7 @@ describe('home list', () => {
 
       const whileDragging: MapProps = selector(
         withImpact(state.dragging(), combine),
-        ownProps,
+        ownProps
       );
       const whileDropping: MapProps = selector(droppingState, ownProps);
 
@@ -77,14 +77,14 @@ describe('home list', () => {
       expect(whileDragging).toBe(whileDropping);
     });
 
-    it('should use the completed.result and not the completed.impact for determining if over', () => {
+    it("should use the completed.result and not the completed.impact for determining if over", () => {
       const ownProps = getOwnProps(preset.home);
       const selector: Selector = makeMapStateToProps();
 
       const stateWhenDropping: DropAnimatingState = state.userCancel();
       // the impact has the home destination
       expect(
-        tryGetDestination(stateWhenDropping.completed.impact),
+        tryGetDestination(stateWhenDropping.completed.impact)
       ).toBeTruthy();
       // the user facing result has been cleared
       expect(stateWhenDropping.completed.result.destination).toBe(null);
@@ -109,8 +109,8 @@ describe('home list', () => {
     });
   });
 
-  describe('was not being dragged over', () => {
-    it('should maintain a placeholder and not break memoization', () => {
+  describe("was not being dragged over", () => {
+    it("should maintain a placeholder and not break memoization", () => {
       const ownProps = getOwnProps(preset.home);
       const selector: Selector = makeMapStateToProps();
       const isHomeButNotOver: MapProps = {
@@ -153,7 +153,7 @@ describe('home list', () => {
   });
 });
 
-it('should return the dragging props for every dragging phase for a foreign list', () => {
+it("should return the dragging props for every dragging phase for a foreign list", () => {
   const ownProps = getOwnProps(preset.foreign);
   const selector: Selector = makeMapStateToProps();
   const defaultProps: MapProps = selector(state.idle, ownProps);

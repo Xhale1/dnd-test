@@ -1,5 +1,5 @@
-import type { LiftEffect } from '../../src/types';
-import { origin } from '../../src/state/position';
+import type { LiftEffect } from "../../src/types";
+import { origin } from "../../src/state/position";
 
 const noOnLift: LiftEffect = {
   effected: {},

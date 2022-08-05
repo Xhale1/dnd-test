@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
-import * as timings from '../timings';
-import type { Action } from '../../state/store-types';
+import * as timings from "../timings";
+import type { Action } from "../../state/store-types";
 
 export default () =>
   (next: (a: Action) => unknown) =>

@@ -4,12 +4,12 @@ import type {
   PreDragActions,
   SensorAPI,
   SnapDragActions,
-} from '@hello-pangea/dnd';
-import { DragDropContext } from '@hello-pangea/dnd';
-import React, { ReactElement, useCallback, useEffect, useState } from 'react';
-import QuoteList from '../primatives/quote-list';
-import reorder from '../reorder';
-import type { Quote } from '../types';
+} from "@hello-pangea/dnd";
+import { DragDropContext } from "@hello-pangea/dnd";
+import React, { ReactElement, useCallback, useEffect, useState } from "react";
+import QuoteList from "../primatives/quote-list";
+import reorder from "../reorder";
+import type { Quote } from "../types";
 
 function delay(fn: () => void, time = 300) {
   return new Promise<void>((resolve) => {
@@ -23,13 +23,13 @@ function delay(fn: () => void, time = 300) {
 function useDemoSensor(api: SensorAPI) {
   const start = useCallback(
     async function start() {
-      const preDrag: PreDragActions | undefined | null = api.tryGetLock('G1');
+      const preDrag: PreDragActions | undefined | null = api.tryGetLock("G1");
 
       if (!preDrag) {
-        console.warn('unable to start drag');
+        console.warn("unable to start drag");
         return;
       }
-      console.warn('starting drag');
+      console.warn("starting drag");
 
       const actions: SnapDragActions = preDrag.snapLift();
       const { moveDown, moveUp, drop } = actions;
@@ -47,7 +47,7 @@ function useDemoSensor(api: SensorAPI) {
       await delay(moveUp);
       await delay(drop);
     },
-    [api],
+    [api]
   );
 
   useEffect(() => {
@@ -76,12 +76,12 @@ export default function QuoteApp(props: Props): ReactElement {
       const newQuotes = reorder(
         quotes,
         result.source.index,
-        result.destination.index,
+        result.destination.index
       );
 
       setQuotes(newQuotes);
     },
-    [quotes],
+    [quotes]
   );
 
   return (

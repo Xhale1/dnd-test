@@ -3,12 +3,12 @@ import type {
   DraggingState,
   CollectingState,
   DropPendingState,
-} from '../types';
+} from "../types";
 
 export default function isDragging(
-  state: State,
+  state: State
 ): state is DraggingState | CollectingState | DropPendingState {
-  if (state.phase === 'IDLE' || state.phase === 'DROP_ANIMATING') {
+  if (state.phase === "IDLE" || state.phase === "DROP_ANIMATING") {
     return false;
   }
 

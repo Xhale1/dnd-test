@@ -1,7 +1,7 @@
-import type { Position } from 'css-box-model';
-import { bindActionCreators, Dispatch as ReduxDispatch } from 'redux';
-import type { Dispatch } from '../../src/state/store-types';
-import create from '../../src/state/dimension-marshal/dimension-marshal';
+import type { Position } from "css-box-model";
+import { bindActionCreators, Dispatch as ReduxDispatch } from "redux";
+import type { Dispatch } from "../../src/state/store-types";
+import create from "../../src/state/dimension-marshal/dimension-marshal";
 import type {
   CollectionStartingAction,
   PublishWhileDraggingAction,
@@ -12,25 +12,25 @@ import type {
   UpdateDroppableIsEnabledArgs,
   UpdateDroppableIsCombineEnabledAction,
   UpdateDroppableIsCombineEnabledArgs,
-} from '../../src/state/action-creators';
-import type { DroppableId, LiftRequest } from '../../src/types';
+} from "../../src/state/action-creators";
+import type { DroppableId, LiftRequest } from "../../src/types";
 import {
   collectionStarting,
   publishWhileDragging,
   updateDroppableScroll,
   updateDroppableIsEnabled,
   updateDroppableIsCombineEnabled,
-} from '../../src/state/action-creators';
+} from "../../src/state/action-creators";
 import type {
   DimensionMarshal,
   StartPublishingResult,
-} from '../../src/state/dimension-marshal/dimension-marshal-types';
-import type { Registry } from '../../src/state/registry/registry-types';
-import { critical, preset } from './preset-action-args';
+} from "../../src/state/dimension-marshal/dimension-marshal-types";
+import type { Registry } from "../../src/state/registry/registry-types";
+import { critical, preset } from "./preset-action-args";
 
 export const createMarshal = (
   registry: Registry,
-  dispatch: Dispatch,
+  dispatch: Dispatch
 ): DimensionMarshal => {
   const callbacks = bindActionCreators(
     {
@@ -53,7 +53,7 @@ export const createMarshal = (
     // ```
     //
     // See: https://github.com/reduxjs/redux/blob/83af794b06ca253c03235f28d1d3a33d8eba2b6f/index.d.ts#L568
-    dispatch as ReduxDispatch,
+    dispatch as ReduxDispatch
   );
 
   return create(registry, callbacks);

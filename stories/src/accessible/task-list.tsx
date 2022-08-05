@@ -1,12 +1,12 @@
-import { colors } from '@atlaskit/theme';
-import styled from '@emotion/styled';
-import type { DroppableProvided } from '@hello-pangea/dnd';
-import { Droppable } from '@hello-pangea/dnd';
-import React, { Component, ReactElement } from 'react';
-import { borderRadius, grid } from '../constants';
-import type { Task as TaskType } from '../types';
-import BlurContext from './blur-context';
-import Task from './task';
+import { colors } from "@atlaskit/theme";
+import styled from "@emotion/styled";
+import type { DroppableProvided } from "@hello-pangea/dnd";
+import { Droppable } from "@hello-pangea/dnd";
+import React, { Component, ReactElement } from "react";
+import { borderRadius, grid } from "../constants";
+import type { Task as TaskType } from "../types";
+import BlurContext from "./blur-context";
+import Task from "./task";
 
 interface Props {
   tasks: TaskType[];

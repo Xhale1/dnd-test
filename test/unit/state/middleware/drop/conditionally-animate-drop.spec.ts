@@ -1,5 +1,5 @@
-import type { Position } from 'css-box-model';
-import { invariant } from '../../../../../src/invariant';
+import type { Position } from "css-box-model";
+import { invariant } from "../../../../../src/invariant";
 import {
   animateDrop,
   flush,
@@ -10,15 +10,15 @@ import {
   moveDown,
   updateDroppableIsCombineEnabled,
   moveUp,
-} from '../../../../../src/state/action-creators';
+} from "../../../../../src/state/action-creators";
 import type {
   InitialPublishArgs,
   AnimateDropArgs,
-} from '../../../../../src/state/action-creators';
-import type { Store } from '../../../../../src/state/store-types';
-import middleware from '../../../../../src/state/middleware/drop';
-import getDropDuration from '../../../../../src/state/middleware/drop/get-drop-duration';
-import { add, origin } from '../../../../../src/state/position';
+} from "../../../../../src/state/action-creators";
+import type { Store } from "../../../../../src/state/store-types";
+import middleware from "../../../../../src/state/middleware/drop";
+import getDropDuration from "../../../../../src/state/middleware/drop/get-drop-duration";
+import { add, origin } from "../../../../../src/state/position";
 import {
   preset,
   getDragStart,
@@ -28,9 +28,9 @@ import {
   critical,
   getCompletedArgs,
   getDropImpactForReason,
-} from '../../../../util/preset-action-args';
-import createStore from '../util/create-store';
-import passThroughMiddleware from '../util/pass-through-middleware';
+} from "../../../../util/preset-action-args";
+import createStore from "../util/create-store";
+import passThroughMiddleware from "../util/pass-through-middleware";
 import type {
   DropResult,
   CompletedDrag,
@@ -39,20 +39,20 @@ import type {
   DragImpact,
   State,
   Combine,
-} from '../../../../../src/types';
-import getDropImpact from '../../../../../src/state/middleware/drop/get-drop-impact';
-import getNewHomeClientOffset from '../../../../../src/state/middleware/drop/get-new-home-client-offset';
-import { tryGetCombine } from '../../../../../src/state/get-impact-location';
+} from "../../../../../src/types";
+import getDropImpact from "../../../../../src/state/middleware/drop/get-drop-impact";
+import getNewHomeClientOffset from "../../../../../src/state/middleware/drop/get-new-home-client-offset";
+import { tryGetCombine } from "../../../../../src/state/get-impact-location";
 
-(['DROP', 'CANCEL'] as const).forEach((reason: DropReason) => {
+(["DROP", "CANCEL"] as const).forEach((reason: DropReason) => {
   describe(`with drop reason: ${reason}`, () => {
-    it('should fire a complete drop action is no drop animation is required', () => {
+    it("should fire a complete drop action is no drop animation is required", () => {
       const mock = jest.fn();
       const store: Store = createStore(passThroughMiddleware(mock), middleware);
 
       store.dispatch(flush());
       store.dispatch(initialPublish(initialPublishArgs));
-      expect(store.getState().phase).toBe('DRAGGING');
+      expect(store.getState().phase).toBe("DRAGGING");
 
       // no movement yet
       mock.mockReset();
@@ -63,30 +63,30 @@ import { tryGetCombine } from '../../../../../src/state/get-impact-location';
       expect(mock).toHaveBeenCalledTimes(2);
 
       // reset to initial phase
-      expect(store.getState().phase).toBe('IDLE');
+      expect(store.getState().phase).toBe("IDLE");
     });
 
-    it('should fire an animate drop action if a drop animation movement is required', () => {
+    it("should fire an animate drop action if a drop animation movement is required", () => {
       const mock = jest.fn();
       const store: Store = createStore(passThroughMiddleware(mock), middleware);
 
       store.dispatch(initialPublish(initialPublishArgs));
-      expect(store.getState().phase).toBe('DRAGGING');
+      expect(store.getState().phase).toBe("DRAGGING");
 
       // moving a little bit so that a drop animation will be needed
       const shift: Position = { x: 1, y: 1 };
       store.dispatch(
         move({
           client: add(initialPublishArgs.clientSelection, shift),
-        }),
+        })
       );
       const current: State = store.getState();
-      invariant(current.phase !== 'IDLE');
-      invariant(current.phase !== 'DROP_ANIMATING');
+      invariant(current.phase !== "IDLE");
+      invariant(current.phase !== "DROP_ANIMATING");
       invariant(current.isDragging);
       // impact is cleared when cancelling
       const destination: DraggableLocation | null =
-        reason === 'DROP' ? getDragStart().source : null;
+        reason === "DROP" ? getDragStart().source : null;
 
       mock.mockReset();
       store.dispatch(drop({ reason }));
@@ -115,31 +115,31 @@ import { tryGetCombine } from '../../../../../src/state/get-impact-location';
       expect(mock).toHaveBeenCalledWith(drop({ reason }));
       expect(mock).toHaveBeenCalledWith(animateDrop(args));
       expect(mock).toHaveBeenCalledTimes(2);
-      expect(store.getState().phase).toBe('DROP_ANIMATING');
+      expect(store.getState().phase).toBe("DROP_ANIMATING");
     });
 
-    it('should fire an animate drop action if combining', () => {
+    it("should fire an animate drop action if combining", () => {
       const mock = jest.fn();
       const store: Store = createStore(passThroughMiddleware(mock), middleware);
 
       const inSnapMode: InitialPublishArgs = {
         ...initialPublishArgs,
-        movementMode: 'SNAP',
+        movementMode: "SNAP",
       };
       store.dispatch(initialPublish(inSnapMode));
       store.dispatch(
         updateDroppableIsCombineEnabled({
           id: inSnapMode.critical.droppable.id,
           isCombineEnabled: true,
-        }),
+        })
       );
       {
         const current: State = store.getState();
-        invariant(current.phase === 'DRAGGING');
-        invariant(current.movementMode === 'SNAP');
+        invariant(current.phase === "DRAGGING");
+        invariant(current.movementMode === "SNAP");
         invariant(
           current.dimensions.droppables[inSnapMode.critical.droppable.id]
-            .isCombineEnabled,
+            .isCombineEnabled
         );
       }
       // combine
@@ -151,8 +151,8 @@ import { tryGetCombine } from '../../../../../src/state/get-impact-location';
       mock.mockReset();
 
       const current: State = store.getState();
-      invariant(current.phase !== 'IDLE');
-      invariant(current.phase !== 'DROP_ANIMATING');
+      invariant(current.phase !== "IDLE");
+      invariant(current.phase !== "DROP_ANIMATING");
       invariant(current.isDragging);
 
       // if (reason === 'DROP') {
@@ -183,9 +183,9 @@ import { tryGetCombine } from '../../../../../src/state/get-impact-location';
         result: {
           ...getDragStart(),
           // we are using snap movements
-          mode: 'SNAP',
+          mode: "SNAP",
           destination: null,
-          combine: reason === 'DROP' ? combine : null,
+          combine: reason === "DROP" ? combine : null,
           reason,
         },
       };
@@ -204,7 +204,7 @@ import { tryGetCombine } from '../../../../../src/state/get-impact-location';
       expect(mock).toHaveBeenCalledWith(drop({ reason }));
       expect(mock).toHaveBeenCalledWith(animateDrop(args));
       expect(mock).toHaveBeenCalledTimes(2);
-      expect(store.getState().phase).toBe('DROP_ANIMATING');
+      expect(store.getState().phase).toBe("DROP_ANIMATING");
     });
   });
 });

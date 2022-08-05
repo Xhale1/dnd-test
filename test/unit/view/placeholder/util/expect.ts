@@ -1,12 +1,12 @@
-import { placeholder } from './data';
+import { placeholder } from "./data";
 
 export const expectIsEmpty = (style: CSSStyleDeclaration | null): void => {
-  expect(style?.width).toBe('0px');
-  expect(style?.height).toBe('0px');
-  expect(style?.marginTop).toBe('0px');
-  expect(style?.marginRight).toBe('0px');
-  expect(style?.marginBottom).toBe('0px');
-  expect(style?.marginLeft).toBe('0px');
+  expect(style?.width).toBe("0px");
+  expect(style?.height).toBe("0px");
+  expect(style?.marginTop).toBe("0px");
+  expect(style?.marginRight).toBe("0px");
+  expect(style?.marginBottom).toBe("0px");
+  expect(style?.marginLeft).toBe("0px");
 };
 
 export const expectIsFull = (style: CSSStyleDeclaration | null): void => {

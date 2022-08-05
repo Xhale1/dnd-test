@@ -1,9 +1,9 @@
-import { colors } from '@atlaskit/theme';
-import styled from '@emotion/styled';
-import type { DraggableProvided } from '@hello-pangea/dnd';
-import React, { CSSProperties } from 'react';
-import { borderRadius, grid } from '../constants';
-import type { AuthorColors, Quote } from '../types';
+import { colors } from "@atlaskit/theme";
+import styled from "@emotion/styled";
+import type { DraggableProvided } from "@hello-pangea/dnd";
+import React, { CSSProperties } from "react";
+import { borderRadius, grid } from "../constants";
+import type { AuthorColors, Quote } from "../types";
 
 interface Props {
   quote: Quote;
@@ -18,7 +18,7 @@ interface Props {
 const getBackgroundColor = (
   isDragging: boolean,
   isGroupedOver: boolean,
-  authorColors: AuthorColors,
+  authorColors: AuthorColors
 ) => {
   if (isDragging) {
     return authorColors.soft;
@@ -32,7 +32,7 @@ const getBackgroundColor = (
 };
 
 const getBorderColor = (isDragging: boolean, authorColors: AuthorColors) =>
-  isDragging ? authorColors.hard : 'transparent';
+  isDragging ? authorColors.hard : "transparent";
 
 const imageSize = 40;
 
@@ -69,7 +69,7 @@ const Container = styled.a<ContainerProps>`
   background-color: ${(props) =>
     getBackgroundColor(props.isDragging, props.isGroupedOver, props.colors)};
   box-shadow: ${({ isDragging }) =>
-    isDragging ? `2px 2px 1px ${colors.N70}` : 'none'};
+    isDragging ? `2px 2px 1px ${colors.N70}` : "none"};
   box-sizing: border-box;
   padding: ${grid}px;
   min-height: ${imageSize}px;

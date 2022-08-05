@@ -1,7 +1,7 @@
-import { fireEvent, act } from '@testing-library/react';
-import { sloppyClickThreshold } from '../../../../src/view/use-sensor-marshal/sensors/use-mouse-sensor';
-import { timeForLongPress } from '../../../../src/view/use-sensor-marshal/sensors/use-touch-sensor';
-import * as keyCodes from '../../../../src/view/key-codes';
+import { fireEvent, act } from "@testing-library/react";
+import { sloppyClickThreshold } from "../../../../src/view/use-sensor-marshal/sensors/use-mouse-sensor";
+import { timeForLongPress } from "../../../../src/view/use-sensor-marshal/sensors/use-touch-sensor";
+import * as keyCodes from "../../../../src/view/key-codes";
 
 export interface Control {
   name: string;
@@ -17,8 +17,8 @@ export function simpleLift(control: Control, handle: HTMLElement) {
   control.lift(handle);
 }
 
-export function getTransitionEnd(propertyName = 'transform'): TransitionEvent {
-  const event = new Event('transitionend', {
+export function getTransitionEnd(propertyName = "transform"): TransitionEvent {
+  const event = new Event("transitionend", {
     bubbles: true,
     cancelable: true,
   }) as TransitionEvent;
@@ -29,7 +29,7 @@ export function getTransitionEnd(propertyName = 'transform'): TransitionEvent {
   return event;
 }
 export const mouse: Control = {
-  name: 'mouse',
+  name: "mouse",
   preLift: (handle: HTMLElement) => {
     fireEvent.mouseDown(handle);
   },
@@ -57,7 +57,7 @@ export const mouse: Control = {
 };
 
 export const keyboard: Control = {
-  name: 'keyboard',
+  name: "keyboard",
   preLift: () => {},
   lift: (handle: HTMLElement) => {
     fireEvent.keyDown(handle, { keyCode: keyCodes.space });
@@ -77,7 +77,7 @@ export const keyboard: Control = {
 };
 
 export const touch: Control = {
-  name: 'touch',
+  name: "touch",
   preLift: (handle: HTMLElement) => {
     fireEvent.touchStart(handle, { touches: [{ clientX: 0, clientY: 0 }] });
   },

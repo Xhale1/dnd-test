@@ -1,26 +1,26 @@
-import { colors } from '@atlaskit/theme';
-import styled from '@emotion/styled';
-import type { DropResult } from '@hello-pangea/dnd';
-import { DragDropContext } from '@hello-pangea/dnd';
-import React, { Component, ReactElement } from 'react';
-import { invariant } from '../../../src/invariant';
-import { grid } from '../constants';
-import { getQuotes } from '../data';
-import reorder from '../reorder';
-import type { Quote } from '../types';
-import QuoteList from './quote-list';
-import type { NestedQuoteList } from './types';
+import { colors } from "@atlaskit/theme";
+import styled from "@emotion/styled";
+import type { DropResult } from "@hello-pangea/dnd";
+import { DragDropContext } from "@hello-pangea/dnd";
+import React, { Component, ReactElement } from "react";
+import { invariant } from "../../../src/invariant";
+import { grid } from "../constants";
+import { getQuotes } from "../data";
+import reorder from "../reorder";
+import type { Quote } from "../types";
+import QuoteList from "./quote-list";
+import type { NestedQuoteList } from "./types";
 
 const quotes: Quote[] = getQuotes(10);
 
 const initialList: NestedQuoteList = {
-  id: 'first-level',
-  title: 'top level',
+  id: "first-level",
+  title: "top level",
   children: [
     ...quotes.slice(0, 2),
     {
-      id: 'second-level',
-      title: 'second level',
+      id: "second-level",
+      title: "second level",
       children: quotes.slice(3, 5),
     },
     ...quotes.slice(6, 9),
@@ -56,11 +56,11 @@ export default class QuoteApp extends Component<unknown, State> {
       return;
     }
 
-    if (result.type === 'first-level') {
+    if (result.type === "first-level") {
       const children = reorder(
         this.state.list.children,
         result.source.index,
-        result.destination.index,
+        result.destination.index
       );
 
       const list: NestedQuoteList = {
@@ -75,21 +75,21 @@ export default class QuoteApp extends Component<unknown, State> {
       return;
     }
 
-    if (result.type === 'second-level') {
+    if (result.type === "second-level") {
       const nested: NestedQuoteList | undefined | null = (
         this.state.list.children.filter((item): boolean =>
-          Object.prototype.hasOwnProperty.call(item, 'children'),
+          Object.prototype.hasOwnProperty.call(item, "children")
         ) as NestedQuoteList[]
       )[0];
 
-      invariant(nested, 'could not find nested list');
+      invariant(nested, "could not find nested list");
 
       const updated: NestedQuoteList = {
         ...nested,
         children: reorder(
           nested.children,
           result.source.index,
-          result.destination.index,
+          result.destination.index
         ),
       };
 

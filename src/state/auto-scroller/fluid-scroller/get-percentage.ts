@@ -1,4 +1,4 @@
-import { warning } from '../../../dev-warning';
+import { warning } from "../../../dev-warning";
 
 interface Args {
   startOfRange: number;

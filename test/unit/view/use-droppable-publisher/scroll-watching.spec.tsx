@@ -1,42 +1,42 @@
-import { render } from '@testing-library/react';
-import React from 'react';
-import type { Position } from 'css-box-model';
-import { invariant } from '../../../../src/invariant';
-import { getMarshalStub } from '../../../util/dimension-marshal';
-import { setViewport } from '../../../util/viewport';
+import { render } from "@testing-library/react";
+import React from "react";
+import type { Position } from "css-box-model";
+import { invariant } from "../../../../src/invariant";
+import { getMarshalStub } from "../../../util/dimension-marshal";
+import { setViewport } from "../../../util/viewport";
 import {
   immediate,
   preset,
   scheduled,
   ScrollableItem,
   WithAppContext,
-} from './util/shared';
+} from "./util/shared";
 import type {
   Registry,
   DroppableCallbacks,
-} from '../../../../src/state/registry/registry-types';
-import createRegistry from '../../../../src/state/registry/create-registry';
+} from "../../../../src/state/registry/registry-types";
+import createRegistry from "../../../../src/state/registry/create-registry";
 
 const scroll = (el: HTMLElement, target: Position) => {
   el.scrollTop = target.y;
   el.scrollLeft = target.x;
-  el.dispatchEvent(new Event('scroll'));
+  el.dispatchEvent(new Event("scroll"));
 };
 
 setViewport(preset.viewport);
 
-describe('should immediately publish updates', () => {
-  it('should immediately publish the scroll offset of the closest scrollable', () => {
+describe("should immediately publish updates", () => {
+  it("should immediately publish the scroll offset of the closest scrollable", () => {
     const marshal = getMarshalStub();
     const registry: Registry = createRegistry();
-    const registerSpy = jest.spyOn(registry.droppable, 'register');
+    const registerSpy = jest.spyOn(registry.droppable, "register");
     const { container } = render(
       <WithAppContext marshal={marshal} registry={registry}>
         <ScrollableItem />
-      </WithAppContext>,
+      </WithAppContext>
     );
     const scrollContainer = container.querySelector(
-      '.scroll-container',
+      ".scroll-container"
     ) as HTMLElement;
     invariant(scrollContainer);
 
@@ -50,22 +50,22 @@ describe('should immediately publish updates', () => {
 
     expect(marshal.updateDroppableScroll).toHaveBeenCalledWith(
       preset.home.descriptor.id,
-      { x: 500, y: 1000 },
+      { x: 500, y: 1000 }
     );
   });
 
-  it('should not fire a scroll if the value has not changed since the previous call', () => {
+  it("should not fire a scroll if the value has not changed since the previous call", () => {
     // this can happen if you scroll backward and forward super quick
     const marshal = getMarshalStub();
     const registry: Registry = createRegistry();
-    const registerSpy = jest.spyOn(registry.droppable, 'register');
+    const registerSpy = jest.spyOn(registry.droppable, "register");
     const { container } = render(
       <WithAppContext marshal={marshal} registry={registry}>
         <ScrollableItem />
-      </WithAppContext>,
+      </WithAppContext>
     );
     const scrollContainer = container.querySelector(
-      '.scroll-container',
+      ".scroll-container"
     ) as HTMLElement;
     invariant(scrollContainer);
     // tell the droppable to watch for scrolling
@@ -80,7 +80,7 @@ describe('should immediately publish updates', () => {
     expect(marshal.updateDroppableScroll).toHaveBeenCalledTimes(1);
     expect(marshal.updateDroppableScroll).toHaveBeenCalledWith(
       preset.home.descriptor.id,
-      { x: 500, y: 1000 },
+      { x: 500, y: 1000 }
     );
     // $ExpectError
     marshal.updateDroppableScroll.mockReset();
@@ -93,23 +93,23 @@ describe('should immediately publish updates', () => {
     scroll(scrollContainer, { x: 500, y: 1001 });
     expect(marshal.updateDroppableScroll).toHaveBeenCalledWith(
       preset.home.descriptor.id,
-      { x: 500, y: 1001 },
+      { x: 500, y: 1001 }
     );
   });
 });
 
-describe('should schedule publish updates', () => {
-  it('should publish the scroll offset of the closest scrollable', () => {
+describe("should schedule publish updates", () => {
+  it("should publish the scroll offset of the closest scrollable", () => {
     const marshal = getMarshalStub();
     const registry: Registry = createRegistry();
-    const registerSpy = jest.spyOn(registry.droppable, 'register');
+    const registerSpy = jest.spyOn(registry.droppable, "register");
     const { container } = render(
       <WithAppContext marshal={marshal} registry={registry}>
         <ScrollableItem />
-      </WithAppContext>,
+      </WithAppContext>
     );
     const scrollContainer = container.querySelector(
-      '.scroll-container',
+      ".scroll-container"
     ) as HTMLElement;
     invariant(scrollContainer);
 
@@ -125,21 +125,21 @@ describe('should schedule publish updates', () => {
 
     expect(marshal.updateDroppableScroll).toHaveBeenCalledWith(
       preset.home.descriptor.id,
-      { x: 500, y: 1000 },
+      { x: 500, y: 1000 }
     );
   });
 
-  it('should throttle multiple scrolls into a animation frame', () => {
+  it("should throttle multiple scrolls into a animation frame", () => {
     const marshal = getMarshalStub();
     const registry: Registry = createRegistry();
-    const registerSpy = jest.spyOn(registry.droppable, 'register');
+    const registerSpy = jest.spyOn(registry.droppable, "register");
     const { container } = render(
       <WithAppContext marshal={marshal} registry={registry}>
         <ScrollableItem />
-      </WithAppContext>,
+      </WithAppContext>
     );
     const scrollContainer = container.querySelector(
-      '.scroll-container',
+      ".scroll-container"
     ) as HTMLElement;
     invariant(scrollContainer);
     // tell the droppable to watch for scrolling
@@ -160,7 +160,7 @@ describe('should schedule publish updates', () => {
     expect(marshal.updateDroppableScroll).toHaveBeenCalledTimes(1);
     expect(marshal.updateDroppableScroll).toHaveBeenCalledWith(
       preset.home.descriptor.id,
-      { x: 200, y: 800 },
+      { x: 200, y: 800 }
     );
 
     // also checking that no loose frames are stored up
@@ -168,18 +168,18 @@ describe('should schedule publish updates', () => {
     expect(marshal.updateDroppableScroll).toHaveBeenCalledTimes(1);
   });
 
-  it('should not fire a scroll if the value has not changed since the previous frame', () => {
+  it("should not fire a scroll if the value has not changed since the previous frame", () => {
     // this can happen if you scroll backward and forward super quick
     const marshal = getMarshalStub();
     const registry: Registry = createRegistry();
-    const registerSpy = jest.spyOn(registry.droppable, 'register');
+    const registerSpy = jest.spyOn(registry.droppable, "register");
     const { container } = render(
       <WithAppContext marshal={marshal} registry={registry}>
         <ScrollableItem />
-      </WithAppContext>,
+      </WithAppContext>
     );
     const scrollContainer = container.querySelector(
-      '.scroll-container',
+      ".scroll-container"
     ) as HTMLElement;
     invariant(scrollContainer);
     // tell the droppable to watch for scrolling
@@ -196,7 +196,7 @@ describe('should schedule publish updates', () => {
     expect(marshal.updateDroppableScroll).toHaveBeenCalledTimes(1);
     expect(marshal.updateDroppableScroll).toHaveBeenCalledWith(
       preset.home.descriptor.id,
-      { x: 500, y: 1000 },
+      { x: 500, y: 1000 }
     );
     // $ExpectError
     marshal.updateDroppableScroll.mockReset();
@@ -212,17 +212,17 @@ describe('should schedule publish updates', () => {
     expect(marshal.updateDroppableScroll).not.toHaveBeenCalled();
   });
 
-  it('should not publish a scroll update after requested not to update while an animation frame is occurring', () => {
+  it("should not publish a scroll update after requested not to update while an animation frame is occurring", () => {
     const marshal = getMarshalStub();
     const registry: Registry = createRegistry();
-    const registerSpy = jest.spyOn(registry.droppable, 'register');
+    const registerSpy = jest.spyOn(registry.droppable, "register");
     const { container } = render(
       <WithAppContext marshal={marshal} registry={registry}>
         <ScrollableItem />
-      </WithAppContext>,
+      </WithAppContext>
     );
     const scrollContainer = container.querySelector(
-      '.scroll-container',
+      ".scroll-container"
     ) as HTMLElement;
     invariant(scrollContainer);
     // tell the droppable to watch for scrolling
@@ -252,18 +252,18 @@ describe('should schedule publish updates', () => {
   });
 });
 
-it('should stop watching scroll when no longer required to publish', () => {
+it("should stop watching scroll when no longer required to publish", () => {
   // this can happen if you scroll backward and forward super quick
   const marshal = getMarshalStub();
   const registry: Registry = createRegistry();
-  const registerSpy = jest.spyOn(registry.droppable, 'register');
+  const registerSpy = jest.spyOn(registry.droppable, "register");
   const { container } = render(
     <WithAppContext marshal={marshal} registry={registry}>
       <ScrollableItem />
-    </WithAppContext>,
+    </WithAppContext>
   );
   const scrollContainer = container.querySelector(
-    '.scroll-container',
+    ".scroll-container"
   ) as HTMLElement;
   invariant(scrollContainer);
   // tell the droppable to watch for scrolling
@@ -285,20 +285,20 @@ it('should stop watching scroll when no longer required to publish', () => {
   expect(marshal.updateDroppableScroll).not.toHaveBeenCalled();
 });
 
-it('should stop watching for scroll events when the component is unmounted', () => {
+it("should stop watching for scroll events when the component is unmounted", () => {
   const consoleWarnSpy = jest
-    .spyOn(console, 'warn')
+    .spyOn(console, "warn")
     .mockImplementation(() => {});
   const marshal = getMarshalStub();
   const registry: Registry = createRegistry();
-  const registerSpy = jest.spyOn(registry.droppable, 'register');
+  const registerSpy = jest.spyOn(registry.droppable, "register");
   const { container, unmount } = render(
     <WithAppContext marshal={marshal} registry={registry}>
       <ScrollableItem />
-    </WithAppContext>,
+    </WithAppContext>
   );
   const scrollContainer = container.querySelector(
-    '.scroll-container',
+    ".scroll-container"
   ) as HTMLElement;
   invariant(scrollContainer);
   // tell the droppable to watch for scrolling
@@ -317,14 +317,14 @@ it('should stop watching for scroll events when the component is unmounted', () 
   consoleWarnSpy.mockRestore();
 });
 
-it('should throw an error if asked to watch a scroll when already listening for scroll changes', () => {
+it("should throw an error if asked to watch a scroll when already listening for scroll changes", () => {
   const marshal = getMarshalStub();
   const registry: Registry = createRegistry();
-  const registerSpy = jest.spyOn(registry.droppable, 'register');
+  const registerSpy = jest.spyOn(registry.droppable, "register");
   const { unmount } = render(
     <WithAppContext marshal={marshal} registry={registry}>
       <ScrollableItem />
-    </WithAppContext>,
+    </WithAppContext>
   );
   // tell the droppable to watch for scrolling
   const callbacks: DroppableCallbacks = registerSpy.mock.calls[0][0].callbacks;
@@ -341,23 +341,23 @@ it('should throw an error if asked to watch a scroll when already listening for 
 });
 
 // if this is not the case then it will break in IE11
-it('should add and remove events with the same event options', () => {
+it("should add and remove events with the same event options", () => {
   const marshal = getMarshalStub();
   const registry: Registry = createRegistry();
-  const registerSpy = jest.spyOn(registry.droppable, 'register');
+  const registerSpy = jest.spyOn(registry.droppable, "register");
   const { container } = render(
     <WithAppContext marshal={marshal} registry={registry}>
       <ScrollableItem />
-    </WithAppContext>,
+    </WithAppContext>
   );
   const scrollContainer = container.querySelector(
-    '.scroll-container',
+    ".scroll-container"
   ) as HTMLElement;
   invariant(scrollContainer);
-  const addEventListenerSpy = jest.spyOn(scrollContainer, 'addEventListener');
+  const addEventListenerSpy = jest.spyOn(scrollContainer, "addEventListener");
   const removeEventListenerSpy = jest.spyOn(
     scrollContainer,
-    'removeEventListener',
+    "removeEventListener"
   );
 
   // tell the droppable to watch for scrolling
@@ -371,9 +371,9 @@ it('should add and remove events with the same event options', () => {
     passive: true,
   };
   expect(addEventListenerSpy).toHaveBeenCalledWith(
-    'scroll',
+    "scroll",
     expect.any(Function),
-    expectedOptions,
+    expectedOptions
   );
   expect(removeEventListenerSpy).not.toHaveBeenCalled();
   addEventListenerSpy.mockReset();
@@ -383,9 +383,9 @@ it('should add and remove events with the same event options', () => {
 
   // assertion
   expect(removeEventListenerSpy).toHaveBeenCalledWith(
-    'scroll',
+    "scroll",
     expect.any(Function),
-    expectedOptions,
+    expectedOptions
   );
   expect(removeEventListenerSpy).toHaveBeenCalledTimes(1);
   expect(addEventListenerSpy).not.toHaveBeenCalled();

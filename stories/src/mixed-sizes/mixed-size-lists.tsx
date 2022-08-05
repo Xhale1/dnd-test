@@ -1,19 +1,19 @@
-import { colors } from '@atlaskit/theme';
-import styled from '@emotion/styled';
-import type { DropResult } from '@hello-pangea/dnd';
-import { DragDropContext, Draggable, Droppable } from '@hello-pangea/dnd';
-import React, { ReactElement, useState } from 'react';
-import { useMemo } from 'use-memo-one';
-import { grid } from '../constants';
-import { authorQuoteMap } from '../data';
-import reorder, { reorderQuoteMap } from '../reorder';
-import type { Quote } from '../types';
+import { colors } from "@atlaskit/theme";
+import styled from "@emotion/styled";
+import type { DropResult } from "@hello-pangea/dnd";
+import { DragDropContext, Draggable, Droppable } from "@hello-pangea/dnd";
+import React, { ReactElement, useState } from "react";
+import { useMemo } from "use-memo-one";
+import { grid } from "../constants";
+import { authorQuoteMap } from "../data";
+import reorder, { reorderQuoteMap } from "../reorder";
+import type { Quote } from "../types";
 
 const Parent = styled.div`
   display: flex;
 `;
 
-type Width = 'small' | 'large';
+type Width = "small" | "large";
 
 interface ItemProps {
   quote: Quote;
@@ -70,19 +70,19 @@ const StyledList = styled.div<StyledListProps>`
   padding: ${grid}px;
   box-sizing: border-box;
   background-color: ${(props) =>
-    props.isDraggingOver ? colors.B100 : 'inherit'};
-  width: ${(props) => (props.width === 'large' ? 800 : 200)}px;
+    props.isDraggingOver ? colors.B100 : "inherit"};
+  width: ${(props) => (props.width === "large" ? 800 : 200)}px;
 `;
 
 function List(props: ListProps) {
-  const [width, setWidth] = useState<Width>('small');
+  const [width, setWidth] = useState<Width>("small");
   return (
     <ListContainer>
       <Controls>
-        <button type="button" onClick={() => setWidth('small')}>
+        <button type="button" onClick={() => setWidth("small")}>
           Small
         </button>
-        <button type="button" onClick={() => setWidth('large')}>
+        <button type="button" onClick={() => setWidth("large")}>
           Large
         </button>
       </Controls>
@@ -121,7 +121,7 @@ export default function App(): ReactElement {
       const newQuotes: Quote[] = reorder(
         columns[source.droppableId],
         source.index,
-        destination.index,
+        destination.index
       );
       setColumns({
         ...columns,

@@ -1,8 +1,8 @@
-import React from 'react';
+import React from "react";
 import type {
   DroppableStateSnapshot,
   DroppableProvided,
-} from '../../../../../src/view/droppable/droppable-types';
+} from "../../../../../src/view/droppable/droppable-types";
 
 export default (mock = (arg: unknown) => {}) =>
   class Stubber extends React.Component<{

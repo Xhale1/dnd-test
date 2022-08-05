@@ -1,5 +1,5 @@
-import { expand, getRect } from 'css-box-model';
-import type { Rect, Spacing } from 'css-box-model';
+import { expand, getRect } from "css-box-model";
+import type { Rect, Spacing } from "css-box-model";
 import type {
   DraggableId,
   Displacement,
@@ -7,8 +7,8 @@ import type {
   DroppableDimension,
   DisplacementGroups,
   DisplacedBy,
-} from '../types';
-import { isPartiallyVisible } from './visibility/is-visible';
+} from "../types";
+import { isPartiallyVisible } from "./visibility/is-visible";
 
 interface Args {
   afterDragging: DraggableDimension[];
@@ -22,10 +22,10 @@ interface Args {
 const getShouldAnimate = (
   id: DraggableId,
   last?: DisplacementGroups | null,
-  forceShouldAnimate?: boolean | null,
+  forceShouldAnimate?: boolean | null
 ) => {
   // Use a forced value if provided
-  if (typeof forceShouldAnimate === 'boolean') {
+  if (typeof forceShouldAnimate === "boolean") {
     return forceShouldAnimate;
   }
 
@@ -52,7 +52,7 @@ const getShouldAnimate = (
 
 function getTarget(
   draggable: DraggableDimension,
-  displacedBy: DisplacedBy,
+  displacedBy: DisplacedBy
 ): Rect {
   const marginBox: Rect = draggable.page.marginBox;
 
@@ -86,7 +86,7 @@ export default function getDisplacementGroups({
   return afterDragging.reduce(
     function process(
       groups: DisplacementGroups,
-      draggable: DraggableDimension,
+      draggable: DraggableDimension
     ): DisplacementGroups {
       const target: Rect = getTarget(draggable, displacedBy);
       const id: DraggableId = draggable.descriptor.id;
@@ -110,7 +110,7 @@ export default function getDisplacementGroups({
       const shouldAnimate: boolean = getShouldAnimate(
         id,
         last,
-        forceShouldAnimate,
+        forceShouldAnimate
       );
 
       const displacement: Displacement = {
@@ -125,6 +125,6 @@ export default function getDisplacementGroups({
       all: [],
       visible: {},
       invisible: {},
-    },
+    }
   );
 }

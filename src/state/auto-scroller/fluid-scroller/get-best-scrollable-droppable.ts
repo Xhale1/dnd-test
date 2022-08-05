@@ -1,13 +1,13 @@
-import memoizeOne from 'memoize-one';
-import type { Position } from 'css-box-model';
+import memoizeOne from "memoize-one";
+import type { Position } from "css-box-model";
 import type {
   DroppableDimension,
   DroppableDimensionMap,
   DroppableId,
-} from '../../../types';
-import { invariant } from '../../../invariant';
-import isPositionInFrame from '../../visibility/is-position-in-frame';
-import { toDroppableList } from '../../dimension-structures';
+} from "../../../types";
+import { invariant } from "../../../invariant";
+import isPositionInFrame from "../../visibility/is-position-in-frame";
+import { toDroppableList } from "../../dimension-structures";
 
 const getScrollableDroppables = memoizeOne(
   (droppables: DroppableDimensionMap): DroppableDimension[] =>
@@ -24,21 +24,21 @@ const getScrollableDroppables = memoizeOne(
         }
 
         return true;
-      },
-    ),
+      }
+    )
 );
 
 const getScrollableDroppableOver = (
   target: Position,
-  droppables: DroppableDimensionMap,
+  droppables: DroppableDimensionMap
 ): DroppableDimension | null => {
   const maybe =
     getScrollableDroppables(droppables).find(
       (droppable: DroppableDimension): boolean => {
-        invariant(droppable.frame, 'Invalid result');
+        invariant(droppable.frame, "Invalid result");
 
         return isPositionInFrame(droppable.frame.pageMarginBox)(target);
-      },
+      }
     ) || null;
 
   return maybe;
@@ -69,7 +69,7 @@ export default ({
   // 2. If we are not over a droppable - are we over a droppable frame?
   const dimension: DroppableDimension | null = getScrollableDroppableOver(
     center,
-    droppables,
+    droppables
   );
 
   return dimension;

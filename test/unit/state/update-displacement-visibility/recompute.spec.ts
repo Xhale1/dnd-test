@@ -1,16 +1,16 @@
-import type { DisplacedBy, Axis, DragImpact } from '../../../../src/types';
-import { getPreset } from '../../../util/dimension';
-import getDisplacedBy from '../../../../src/state/get-displaced-by';
-import recompute from '../../../../src/state/update-displacement-visibility/recompute';
-import { horizontal, vertical } from '../../../../src/state/axis';
-import { getForcedDisplacement } from '../../../util/impact';
+import type { DisplacedBy, Axis, DragImpact } from "../../../../src/types";
+import { getPreset } from "../../../util/dimension";
+import getDisplacedBy from "../../../../src/state/get-displaced-by";
+import recompute from "../../../../src/state/update-displacement-visibility/recompute";
+import { horizontal, vertical } from "../../../../src/state/axis";
+import { getForcedDisplacement } from "../../../util/impact";
 
 [horizontal, vertical].forEach((axis: Axis) => {
   describe(`on ${axis.direction} axis`, () => {
     const preset = getPreset(axis);
     const displacedBy: DisplacedBy = getDisplacedBy(
       axis,
-      preset.inHome1.displaceBy,
+      preset.inHome1.displaceBy
     );
     // moving inHome1 down past inHome2 and inHome3
     const impact: DragImpact = {
@@ -20,7 +20,7 @@ import { getForcedDisplacement } from '../../../util/impact';
       }),
       displacedBy,
       at: {
-        type: 'REORDER',
+        type: "REORDER",
         destination: {
           droppableId: preset.home.descriptor.id,
           index: preset.inHome3.descriptor.index,
@@ -28,7 +28,7 @@ import { getForcedDisplacement } from '../../../util/impact';
       },
     };
 
-    it('should recompute a displacement', () => {
+    it("should recompute a displacement", () => {
       const recomputed: DragImpact = recompute({
         impact,
         viewport: preset.viewport,
@@ -50,7 +50,7 @@ import { getForcedDisplacement } from '../../../util/impact';
       expect(recomputed).toEqual(expected);
     });
 
-    it('should allow the displacement animation to be forced', () => {
+    it("should allow the displacement animation to be forced", () => {
       const recomputed: DragImpact = recompute({
         impact,
         viewport: preset.viewport,

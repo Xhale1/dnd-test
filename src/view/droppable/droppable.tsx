@@ -1,32 +1,32 @@
-import ReactDOM from 'react-dom';
-import { useMemo, useCallback } from 'use-memo-one';
-import React, { useRef, useContext, FunctionComponent } from 'react';
-import type { ReactNode } from 'react';
-import { invariant } from '../../invariant';
-import type { DraggableId } from '../../types';
-import type { Props, DroppableProvided } from './droppable-types';
-import useDroppablePublisher from '../use-droppable-publisher';
-import Placeholder from '../placeholder';
-import AppContext from '../context/app-context';
-import type { AppContextValue } from '../context/app-context';
-import DroppableContext from '../context/droppable-context';
-import type { DroppableContextValue } from '../context/droppable-context';
+import ReactDOM from "react-dom";
+import { useMemo, useCallback } from "use-memo-one";
+import React, { useRef, useContext, FunctionComponent } from "react";
+import type { ReactNode } from "react";
+import { invariant } from "../../invariant";
+import type { DraggableId } from "../../types";
+import type { Props, DroppableProvided } from "./droppable-types";
+import useDroppablePublisher from "../use-droppable-publisher";
+import Placeholder from "../placeholder";
+import AppContext from "../context/app-context";
+import type { AppContextValue } from "../context/app-context";
+import DroppableContext from "../context/droppable-context";
+import type { DroppableContextValue } from "../context/droppable-context";
 // import useAnimateInOut from '../use-animate-in-out/use-animate-in-out';
-import getMaxWindowScroll from '../window/get-max-window-scroll';
-import useValidation from './use-validation';
+import getMaxWindowScroll from "../window/get-max-window-scroll";
+import useValidation from "./use-validation";
 import type {
   DraggableStateSnapshot,
   DraggableProvided,
-} from '../draggable/draggable-types';
-import AnimateInOut from '../animate-in-out/animate-in-out';
-import type { AnimateProvided } from '../animate-in-out/animate-in-out';
-import { PrivateDraggable } from '../draggable/draggable-api';
+} from "../draggable/draggable-types";
+import AnimateInOut from "../animate-in-out/animate-in-out";
+import type { AnimateProvided } from "../animate-in-out/animate-in-out";
+import { PrivateDraggable } from "../draggable/draggable-api";
 
 const Droppable: FunctionComponent<Props> = (props) => {
   const appContext: AppContextValue | null = useContext<AppContextValue | null>(
-    AppContext,
+    AppContext
   );
-  invariant(appContext, 'Could not find app context');
+  invariant(appContext, "Could not find app context");
   const { contextId, isMovementAllowed } = appContext;
   const droppableRef = useRef<HTMLElement | null>(null);
   const placeholderRef = useRef<HTMLElement | null>(null);
@@ -53,14 +53,14 @@ const Droppable: FunctionComponent<Props> = (props) => {
 
   const getDroppableRef = useCallback(
     (): HTMLElement | null => droppableRef.current,
-    [],
+    []
   );
   const setDroppableRef = useCallback((value: HTMLElement | null = null) => {
     droppableRef.current = value;
   }, []);
   const getPlaceholderRef = useCallback(
     (): HTMLElement | null => placeholderRef.current,
-    [],
+    []
   );
   const setPlaceholderRef = useCallback((value: HTMLElement | null = null) => {
     placeholderRef.current = value;
@@ -114,7 +114,7 @@ const Droppable: FunctionComponent<Props> = (props) => {
       props.placeholder,
       props.shouldAnimatePlaceholder,
       setPlaceholderRef,
-    ],
+    ]
   );
 
   const provided: DroppableProvided = useMemo(
@@ -123,11 +123,11 @@ const Droppable: FunctionComponent<Props> = (props) => {
       placeholder,
 
       droppableProps: {
-        'data-rfd-droppable-id': droppableId,
-        'data-rfd-droppable-context-id': contextId,
+        "data-rfd-droppable-id": droppableId,
+        "data-rfd-droppable-context-id": contextId,
       },
     }),
-    [contextId, droppableId, placeholder, setDroppableRef],
+    [contextId, droppableId, placeholder, setDroppableRef]
   );
 
   const isUsingCloneFor: DraggableId | null = useClone
@@ -140,7 +140,7 @@ const Droppable: FunctionComponent<Props> = (props) => {
       type,
       isUsingCloneFor,
     }),
-    [droppableId, isUsingCloneFor, type],
+    [droppableId, isUsingCloneFor, type]
   );
 
   function getClone(): ReactNode | null {
@@ -161,7 +161,7 @@ const Droppable: FunctionComponent<Props> = (props) => {
       >
         {(
           draggableProvided: DraggableProvided,
-          draggableSnapshot: DraggableStateSnapshot,
+          draggableSnapshot: DraggableStateSnapshot
         ) => render(draggableProvided, draggableSnapshot, dragging)}
       </PrivateDraggable>
     );

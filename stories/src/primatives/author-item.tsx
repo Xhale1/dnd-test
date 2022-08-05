@@ -1,12 +1,12 @@
-import { colors } from '@atlaskit/theme';
-import styled from '@emotion/styled';
+import { colors } from "@atlaskit/theme";
+import styled from "@emotion/styled";
 import type {
   DraggableProvided,
   DraggableStateSnapshot,
-} from '@hello-pangea/dnd';
-import React, { Component, ReactElement } from 'react';
-import { grid } from '../constants';
-import type { Author } from '../types';
+} from "@hello-pangea/dnd";
+import React, { Component, ReactElement } from "react";
+import { grid } from "../constants";
+import type { Author } from "../types";
 
 interface AvatarProps {
   isDragging: boolean;
@@ -22,7 +22,7 @@ const Avatar = styled.img<AvatarProps>`
   border-style: solid;
   border-width: ${grid}px;
   box-shadow: ${({ isDragging }) =>
-    isDragging ? `2px 2px 1px ${colors.N200}` : 'none'};
+    isDragging ? `2px 2px 1px ${colors.N200}` : "none"};
 
   &:focus {
     /* disable standard focus color */

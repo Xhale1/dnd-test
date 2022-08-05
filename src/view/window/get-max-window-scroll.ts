@@ -1,6 +1,6 @@
-import type { Position } from 'css-box-model';
-import getMaxScroll from '../../state/get-max-scroll';
-import getDocumentElement from '../get-document-element';
+import type { Position } from "css-box-model";
+import getMaxScroll from "../../state/get-max-scroll";
+import getDocumentElement from "../get-document-element";
 
 export default (): Position => {
   const doc: HTMLElement = getDocumentElement();

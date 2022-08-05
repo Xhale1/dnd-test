@@ -1,12 +1,12 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
-import { render } from '@testing-library/react';
-import React from 'react';
-import App from './util/app';
-import { homeOwnProps as defaultOwnProps } from './util/get-props';
-import { withError } from '../../../util/console';
+import { render } from "@testing-library/react";
+import React from "react";
+import App from "./util/app";
+import { homeOwnProps as defaultOwnProps } from "./util/get-props";
+import { withError } from "../../../util/console";
 
 beforeAll(() => {
-  jest.spyOn(console, 'error').mockImplementation(() => {});
+  jest.spyOn(console, "error").mockImplementation(() => {});
 });
 
 afterAll(() => {
@@ -17,7 +17,7 @@ afterAll(() => {
   }
 });
 
-it('should throw if no droppableId is provided', () => {
+it("should throw if no droppableId is provided", () => {
   const ownProps = {
     ...defaultOwnProps,
   };
@@ -41,7 +41,7 @@ it('should throw if no droppableId is provided', () => {
   });
 });
 
-it('should throw if isDropDisabled is set to null', () => {
+it("should throw if isDropDisabled is set to null", () => {
   const ownProps = {
     ...defaultOwnProps,
   };
@@ -52,7 +52,7 @@ it('should throw if isDropDisabled is set to null', () => {
   });
 });
 
-it('should throw if isCombineEnabled is set to null', () => {
+it("should throw if isCombineEnabled is set to null", () => {
   const ownProps = {
     ...defaultOwnProps,
   };
@@ -63,7 +63,7 @@ it('should throw if isCombineEnabled is set to null', () => {
   });
 });
 
-it('should throw if ignoreContainerClipping is set to null', () => {
+it("should throw if ignoreContainerClipping is set to null", () => {
   const ownProps = {
     ...defaultOwnProps,
   };

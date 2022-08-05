@@ -1,12 +1,12 @@
-import React from 'react';
-import { storiesOf } from '@storybook/react';
+import React from "react";
+import { storiesOf } from "@storybook/react";
 import {
   DragDropContext,
   Droppable,
   Draggable,
   DraggingStyle,
   NotDraggingStyle,
-} from '../../src';
+} from "../../src";
 
 import type {
   DropResult,
@@ -14,7 +14,7 @@ import type {
   DraggableStateSnapshot,
   DroppableProvided,
   DroppableStateSnapshot,
-} from '../../src';
+} from "../../src";
 
 interface Item {
   id: string;
@@ -33,7 +33,7 @@ const getItems = (count: number): Item[] =>
 function reorder<TItem>(
   list: TItem[],
   startIndex: number,
-  endIndex: number,
+  endIndex: number
 ): TItem[] {
   const result = [...list];
   const [removed] = result.splice(startIndex, 1);
@@ -46,24 +46,24 @@ const grid = 8;
 
 const getItemStyle = (
   isDragging: boolean,
-  draggableStyle: DraggingStyle | NotDraggingStyle | undefined,
+  draggableStyle: DraggingStyle | NotDraggingStyle | undefined
 ) => ({
   // some basic styles to make the items look a bit nicer
-  userSelect: 'none' as const,
+  userSelect: "none" as const,
   padding: grid * 2,
   margin: `0 ${grid}px 0 0`,
 
   // change background colour if dragging
-  background: isDragging ? 'lightgreen' : 'grey',
+  background: isDragging ? "lightgreen" : "grey",
 
   // styles we need to apply on draggables
   ...draggableStyle,
 });
 
 const getListStyle = (isDraggingOver: boolean) => ({
-  background: isDraggingOver ? 'lightblue' : 'lightgrey',
+  background: isDraggingOver ? "lightblue" : "lightgrey",
   padding: grid,
-  overflow: 'auto',
+  overflow: "auto",
 });
 
 interface State {
@@ -90,7 +90,7 @@ class App extends React.Component<unknown, State> {
     const items = reorder(
       this.state.items,
       result.source.index,
-      result.destination.index,
+      result.destination.index
     );
 
     this.setState({
@@ -120,7 +120,7 @@ class App extends React.Component<unknown, State> {
                 <Draggable key={item.id} draggableId={item.id} index={index}>
                   {(
                     draggableProvided: DraggableProvided,
-                    draggableSnapshot: DraggableStateSnapshot,
+                    draggableSnapshot: DraggableStateSnapshot
                   ) => (
                     <div
                       ref={draggableProvided.innerRef}
@@ -128,7 +128,7 @@ class App extends React.Component<unknown, State> {
                       {...draggableProvided.dragHandleProps}
                       style={getItemStyle(
                         draggableSnapshot.isDragging,
-                        draggableProvided.draggableProps.style,
+                        draggableProvided.draggableProps.style
                       )}
                     >
                       {item.content}
@@ -141,14 +141,14 @@ class App extends React.Component<unknown, State> {
           )}
         </Droppable>
         <div style={{ marginTop: grid * 2 }}>
-          Is drop disabled? {this.state.isDropDisabled ? 'yes' : 'no'}
+          Is drop disabled? {this.state.isDropDisabled ? "yes" : "no"}
         </div>
       </DragDropContext>
     );
   }
 }
 
-storiesOf('Examples/onDragStart', module).add(
-  'toggle isDropDisabled onDragStart',
-  () => <App />,
+storiesOf("Examples/onDragStart", module).add(
+  "toggle isDropDisabled onDragStart",
+  () => <App />
 );

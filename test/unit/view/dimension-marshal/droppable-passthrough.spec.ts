@@ -1,23 +1,23 @@
-import createDimensionMarshal from '../../../../src/state/dimension-marshal/dimension-marshal';
-import { getPreset } from '../../../util/dimension';
-import type { DimensionMarshal } from '../../../../src/state/dimension-marshal/dimension-marshal-types';
-import { getCallbacksStub } from '../../../util/dimension-marshal';
-import { critical, defaultRequest, justCritical } from './util';
-import createRegistry from '../../../../src/state/registry/create-registry';
-import type { Registry } from '../../../../src/state/registry/registry-types';
-import { populate } from '../../../util/registry';
+import createDimensionMarshal from "../../../../src/state/dimension-marshal/dimension-marshal";
+import { getPreset } from "../../../util/dimension";
+import type { DimensionMarshal } from "../../../../src/state/dimension-marshal/dimension-marshal-types";
+import { getCallbacksStub } from "../../../util/dimension-marshal";
+import { critical, defaultRequest, justCritical } from "./util";
+import createRegistry from "../../../../src/state/registry/create-registry";
+import type { Registry } from "../../../../src/state/registry/registry-types";
+import { populate } from "../../../util/registry";
 
-import type { DimensionWatcher } from '../../../util/registry';
+import type { DimensionWatcher } from "../../../util/registry";
 
 const preset = getPreset();
 
-describe('force scrolling a droppable', () => {
-  it('should scroll the droppable', () => {
+describe("force scrolling a droppable", () => {
+  it("should scroll the droppable", () => {
     const registry: Registry = createRegistry();
     const callbacks = getCallbacksStub();
     const marshal: DimensionMarshal = createDimensionMarshal(
       registry,
-      callbacks,
+      callbacks
     );
     const watcher: DimensionWatcher = populate(registry);
 
@@ -29,16 +29,16 @@ describe('force scrolling a droppable', () => {
     marshal.scrollDroppable(critical.droppable.id, { x: 10, y: 20 });
     expect(watcher.droppable.scroll).toHaveBeenCalledWith(
       critical.droppable.id,
-      { x: 10, y: 20 },
+      { x: 10, y: 20 }
     );
   });
 
-  it('should throw if the droppable cannot be found', () => {
+  it("should throw if the droppable cannot be found", () => {
     const callbacks = getCallbacksStub();
     const registry: Registry = createRegistry();
     const marshal: DimensionMarshal = createDimensionMarshal(
       registry,
-      callbacks,
+      callbacks
     );
     populate(registry, justCritical);
 
@@ -51,12 +51,12 @@ describe('force scrolling a droppable', () => {
     }).toThrow();
   });
 
-  it('should not scroll the droppable if no collection is occurring', () => {
+  it("should not scroll the droppable if no collection is occurring", () => {
     const callbacks = getCallbacksStub();
     const registry: Registry = createRegistry();
     const marshal: DimensionMarshal = createDimensionMarshal(
       registry,
-      callbacks,
+      callbacks
     );
     const watcher: DimensionWatcher = populate(registry);
 
@@ -65,13 +65,13 @@ describe('force scrolling a droppable', () => {
   });
 });
 
-describe('responding to scroll changes', () => {
-  it('should let consumers know', () => {
+describe("responding to scroll changes", () => {
+  it("should let consumers know", () => {
     const callbacks = getCallbacksStub();
     const registry: Registry = createRegistry();
     const marshal: DimensionMarshal = createDimensionMarshal(
       registry,
-      callbacks,
+      callbacks
     );
     const watcher: DimensionWatcher = populate(registry);
 
@@ -86,12 +86,12 @@ describe('responding to scroll changes', () => {
     });
   });
 
-  it('should throw if the droppable cannot be found', () => {
+  it("should throw if the droppable cannot be found", () => {
     const callbacks = getCallbacksStub();
     const registry: Registry = createRegistry();
     const marshal: DimensionMarshal = createDimensionMarshal(
       registry,
-      callbacks,
+      callbacks
     );
     populate(registry, justCritical);
 
@@ -105,16 +105,16 @@ describe('responding to scroll changes', () => {
         y: 20,
       });
     }).toThrow(
-      'Invariant failed: Cannot update the scroll on Droppable foreign as it is not registered',
+      "Invariant failed: Cannot update the scroll on Droppable foreign as it is not registered"
     );
   });
 
-  it('should not let consumers know if know drag is occurring', () => {
+  it("should not let consumers know if know drag is occurring", () => {
     const callbacks = getCallbacksStub();
     const registry: Registry = createRegistry();
     const marshal: DimensionMarshal = createDimensionMarshal(
       registry,
-      callbacks,
+      callbacks
     );
     populate(registry, justCritical);
 
@@ -123,13 +123,13 @@ describe('responding to scroll changes', () => {
   });
 });
 
-describe('is enabled changes', () => {
-  it('should let consumers know', () => {
+describe("is enabled changes", () => {
+  it("should let consumers know", () => {
     const callbacks = getCallbacksStub();
     const registry: Registry = createRegistry();
     const marshal: DimensionMarshal = createDimensionMarshal(
       registry,
-      callbacks,
+      callbacks
     );
     populate(registry);
 
@@ -144,12 +144,12 @@ describe('is enabled changes', () => {
     });
   });
 
-  it('should throw if the droppable cannot be found', () => {
+  it("should throw if the droppable cannot be found", () => {
     const callbacks = getCallbacksStub();
     const registry: Registry = createRegistry();
     const marshal: DimensionMarshal = createDimensionMarshal(
       registry,
-      callbacks,
+      callbacks
     );
     populate(registry, justCritical);
 
@@ -158,18 +158,18 @@ describe('is enabled changes', () => {
     expect(callbacks.updateDroppableIsEnabled).not.toHaveBeenCalled();
 
     expect(() =>
-      marshal.updateDroppableIsEnabled(preset.foreign.descriptor.id, false),
+      marshal.updateDroppableIsEnabled(preset.foreign.descriptor.id, false)
     ).toThrow(
-      'Invariant failed: Cannot update is enabled flag of Droppable foreign as it is not registered',
+      "Invariant failed: Cannot update is enabled flag of Droppable foreign as it is not registered"
     );
   });
 
-  it('should not let consumers know if no collection is occurring', () => {
+  it("should not let consumers know if no collection is occurring", () => {
     const callbacks = getCallbacksStub();
     const registry: Registry = createRegistry();
     const marshal: DimensionMarshal = createDimensionMarshal(
       registry,
-      callbacks,
+      callbacks
     );
     populate(registry, justCritical);
 

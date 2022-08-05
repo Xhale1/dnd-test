@@ -1,10 +1,10 @@
-import { getPreset } from '../../../../util/dimension';
+import { getPreset } from "../../../../util/dimension";
 import type {
   MapProps,
   DroppableProps,
   DispatchProps,
-} from '../../../../../src/view/droppable/droppable-types';
-import getBodyElement from '../../../../../src/view/get-body-element';
+} from "../../../../../src/view/droppable/droppable-types";
+import getBodyElement from "../../../../../src/view/get-body-element";
 
 export const preset = getPreset();
 

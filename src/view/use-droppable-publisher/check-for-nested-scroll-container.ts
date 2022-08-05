@@ -1,5 +1,5 @@
-import getClosestScrollable from './get-closest-scrollable';
-import { warning } from '../../dev-warning';
+import getClosestScrollable from "./get-closest-scrollable";
+import { warning } from "../../dev-warning";
 
 // We currently do not support nested scroll containers
 // But will hopefully support this soon!
@@ -9,7 +9,7 @@ export default (scrollable?: Element | null) => {
   }
 
   const anotherScrollParent: Element | null = getClosestScrollable(
-    scrollable.parentElement,
+    scrollable.parentElement
   );
 
   if (!anotherScrollParent) {

@@ -1,19 +1,19 @@
 const supportedMatchesName:
-  | 'matches'
-  | 'msMatchesSelector'
-  | 'webkitMatchesSelector' = (() => {
-  const base = 'matches' as const;
+  | "matches"
+  | "msMatchesSelector"
+  | "webkitMatchesSelector" = (() => {
+  const base = "matches" as const;
 
   // Server side rendering
-  if (typeof document === 'undefined') {
+  if (typeof document === "undefined") {
     return base;
   }
 
   // See https://developer.mozilla.org/en-US/docs/Web/API/Page_Visibility_API
   const candidates = [
     base,
-    'msMatchesSelector' as const,
-    'webkitMatchesSelector' as const,
+    "msMatchesSelector" as const,
+    "webkitMatchesSelector" as const,
   ];
 
   const value = candidates.find((name): boolean => name in Element.prototype);
@@ -28,7 +28,7 @@ function closestPonyfill(el: Element | null, selector: string): null | Element {
 
   // Element.prototype.matches is supported in ie11 with a different name
   // https://caniuse.com/#feat=matchesselector
-  if (el[supportedMatchesName as 'matches'](selector)) {
+  if (el[supportedMatchesName as "matches"](selector)) {
     return el;
   }
 

@@ -4,8 +4,8 @@ import {
   DraggableStyle,
   Droppable,
   DropResult,
-} from '@hello-pangea/dnd';
-import React, { Component } from 'react';
+} from "@hello-pangea/dnd";
+import React, { Component } from "react";
 
 // fake data generator
 const getItems = (count: number) =>
@@ -18,7 +18,7 @@ const getItems = (count: number) =>
 const reorder = <TList extends unknown[]>(
   list: TList,
   startIndex: number,
-  endIndex: number,
+  endIndex: number
 ): TList => {
   const result = Array.from(list) as TList;
   const [removed] = result.splice(startIndex, 1);
@@ -40,8 +40,8 @@ const withAssortedSpacing = () => ({
   paddingLeft: 30,
   paddingRight: 40,
   // border
-  borderStyle: 'solid',
-  borderColor: 'purple',
+  borderStyle: "solid",
+  borderColor: "purple",
   borderTopWidth: 2,
   borderBottomWidth: 4,
   borderLeftWidth: 6,
@@ -50,14 +50,14 @@ const withAssortedSpacing = () => ({
 
 const getItemStyle = (
   isDragging: boolean,
-  draggableStyle: DraggableStyle = {},
+  draggableStyle: DraggableStyle = {}
 ) => ({
   // some basic styles to make the items look a bit nicer
-  userSelect: 'none' as const,
+  userSelect: "none" as const,
   ...withAssortedSpacing(),
 
   // change background colour if dragging
-  background: isDragging ? 'lightgreen' : 'pink',
+  background: isDragging ? "lightgreen" : "pink",
 
   // styles we need to apply on draggables
   ...draggableStyle,
@@ -92,7 +92,7 @@ export default class App extends Component<AppProps, AppState> {
     const items = reorder(
       this.state.items,
       result.source.index,
-      result.destination.index,
+      result.destination.index
     );
 
     this.setState({
@@ -111,7 +111,7 @@ export default class App extends Component<AppProps, AppState> {
               ref={droppableProvided.innerRef}
               style={{
                 width: 250,
-                background: 'lightblue',
+                background: "lightblue",
 
                 ...withAssortedSpacing(),
                 // no margin collapsing
@@ -127,7 +127,7 @@ export default class App extends Component<AppProps, AppState> {
                       {...draggableProvided.dragHandleProps}
                       style={getItemStyle(
                         draggableSnapshot.isDragging,
-                        draggableProvided.draggableProps.style,
+                        draggableProvided.draggableProps.style
                       )}
                     >
                       {item.content}

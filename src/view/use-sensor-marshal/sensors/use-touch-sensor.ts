@@ -1,48 +1,48 @@
-import { useRef } from 'react';
-import { useCallback, useMemo } from 'use-memo-one';
-import type { Position } from 'css-box-model';
-import { invariant } from '../../../invariant';
+import { useRef } from "react";
+import { useCallback, useMemo } from "use-memo-one";
+import type { Position } from "css-box-model";
+import { invariant } from "../../../invariant";
 import type {
   DraggableId,
   SensorAPI,
   PreDragActions,
   FluidDragActions,
-} from '../../../types';
+} from "../../../types";
 import type {
   AnyEventBinding,
   EventOptions,
   TouchEventBinding,
-} from '../../event-bindings/event-types';
-import bindEvents from '../../event-bindings/bind-events';
-import * as keyCodes from '../../key-codes';
-import supportedPageVisibilityEventName from './util/supported-page-visibility-event-name';
-import { noop } from '../../../empty';
-import useLayoutEffect from '../../use-isomorphic-layout-effect';
+} from "../../event-bindings/event-types";
+import bindEvents from "../../event-bindings/bind-events";
+import * as keyCodes from "../../key-codes";
+import supportedPageVisibilityEventName from "./util/supported-page-visibility-event-name";
+import { noop } from "../../../empty";
+import useLayoutEffect from "../../use-isomorphic-layout-effect";
 
 type TouchWithForce = Touch & {
   force: number;
 };
 
 interface Idle {
-  type: 'IDLE';
+  type: "IDLE";
 }
 
 interface Pending {
-  type: 'PENDING';
+  type: "PENDING";
   point: Position;
   actions: PreDragActions;
   longPressTimerId: TimeoutID;
 }
 
 interface Dragging {
-  type: 'DRAGGING';
+  type: "DRAGGING";
   actions: FluidDragActions;
   hasMoved: boolean;
 }
 
 type Phase = Idle | Pending | Dragging;
 
-const idle: Idle = { type: 'IDLE' };
+const idle: Idle = { type: "IDLE" };
 // Decreased from 150 as a work around for an issue for forcepress on iOS
 // https://github.com/atlassian/react-beautiful-dnd/issues/1401
 export const timeForLongPress = 120;
@@ -62,18 +62,18 @@ function getWindowBindings({
     // If the orientation of the device changes - kill the drag
     // https://davidwalsh.name/orientation-change
     {
-      eventName: 'orientationchange',
+      eventName: "orientationchange",
       fn: cancel,
     },
     // some devices fire resize if the orientation changes
     {
-      eventName: 'resize',
+      eventName: "resize",
       fn: cancel,
     },
     // Long press can bring up a context menu
     // need to opt out of this behavior
     {
-      eventName: 'contextmenu',
+      eventName: "contextmenu",
       fn: (event: Event) => {
         // always opting out of context menu events
         event.preventDefault();
@@ -82,9 +82,9 @@ function getWindowBindings({
     // On some devices it is possible to have a touch interface with a keyboard.
     // On any keyboard event we cancel a touch drag
     {
-      eventName: 'keydown',
+      eventName: "keydown",
       fn: (event: KeyboardEvent) => {
-        if (getPhase().type !== 'DRAGGING') {
+        if (getPhase().type !== "DRAGGING") {
           cancel();
           return;
         }
@@ -116,7 +116,7 @@ function getHandleBindings({
 }: GetBindingArgs): AnyEventBinding[] {
   return [
     {
-      eventName: 'touchmove',
+      eventName: "touchmove",
       // Opting out of passive touchmove (default) so as to prevent scrolling while moving
       // Not worried about performance as effect of move is throttled in requestAnimationFrame
       // Using `capture: false` due to a recent horrible firefox bug: https://twitter.com/alexandereardon/status/1125904207184187393
@@ -124,7 +124,7 @@ function getHandleBindings({
       fn: (event: TouchEvent) => {
         const phase: Phase = getPhase();
         // Drag has not yet started and we are waiting for a long press.
-        if (phase.type !== 'DRAGGING') {
+        if (phase.type !== "DRAGGING") {
           cancel();
           return;
         }
@@ -147,11 +147,11 @@ function getHandleBindings({
       },
     },
     {
-      eventName: 'touchend',
+      eventName: "touchend",
       fn: (event: TouchEvent) => {
         const phase: Phase = getPhase();
         // drag had not started yet - do not prevent the default action
-        if (phase.type !== 'DRAGGING') {
+        if (phase.type !== "DRAGGING") {
           cancel();
           return;
         }
@@ -163,10 +163,10 @@ function getHandleBindings({
       },
     },
     {
-      eventName: 'touchcancel',
+      eventName: "touchcancel",
       fn: (event: TouchEvent) => {
         // drag had not started yet - do not prevent the default action
-        if (getPhase().type !== 'DRAGGING') {
+        if (getPhase().type !== "DRAGGING") {
           cancel();
           return;
         }
@@ -180,12 +180,12 @@ function getHandleBindings({
     // Only for webkit which has decided to introduce its own custom way of doing things
     // https://developer.apple.com/library/content/documentation/AppleApplications/Conceptual/SafariJSProgTopics/RespondingtoForceTouchEventsfromJavaScript.html
     {
-      eventName: 'touchforcechange',
+      eventName: "touchforcechange",
       fn: (event: TouchEvent) => {
         const phase: Phase = getPhase();
 
         // needed to use phase.actions
-        invariant(phase.type !== 'IDLE');
+        invariant(phase.type !== "IDLE");
 
         // This is not fantastic logic, but it is done to account for
         // and issue with forcepress on iOS
@@ -206,7 +206,7 @@ function getHandleBindings({
 
         const shouldRespect: boolean = phase.actions.shouldRespectForcePress();
 
-        if (phase.type === 'PENDING') {
+        if (phase.type === "PENDING") {
           if (shouldRespect) {
             cancel();
           }
@@ -257,7 +257,7 @@ export default function useTouchSensor(api: SensorAPI) {
 
   const startCaptureBinding: TouchEventBinding = useMemo(
     () => ({
-      eventName: 'touchstart',
+      eventName: "touchstart",
       fn: function onTouchStart(event: TouchEvent) {
         // Event already used by something else
         if (event.defaultPrevented) {
@@ -279,7 +279,7 @@ export default function useTouchSensor(api: SensorAPI) {
           draggableId,
           // eslint-disable-next-line @typescript-eslint/no-use-before-define
           stop,
-          { sourceEvent: event },
+          { sourceEvent: event }
         );
 
         // could not start a drag
@@ -303,7 +303,7 @@ export default function useTouchSensor(api: SensorAPI) {
     }),
     // not including stop or startPendingDrag as it is not defined initially
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [api],
+    [api]
   );
 
   const listenForCapture = useCallback(
@@ -316,20 +316,20 @@ export default function useTouchSensor(api: SensorAPI) {
       unbindEventsRef.current = bindEvents(
         window,
         [startCaptureBinding],
-        options,
+        options
       );
     },
-    [startCaptureBinding],
+    [startCaptureBinding]
   );
 
   const stop = useCallback(() => {
     const current: Phase = phaseRef.current;
-    if (current.type === 'IDLE') {
+    if (current.type === "IDLE") {
       return;
     }
 
     // aborting any pending drag
-    if (current.type === 'PENDING') {
+    if (current.type === "PENDING") {
       clearTimeout(current.longPressTimerId);
     }
 
@@ -342,10 +342,10 @@ export default function useTouchSensor(api: SensorAPI) {
   const cancel = useCallback(() => {
     const phase: Phase = phaseRef.current;
     stop();
-    if (phase.type === 'DRAGGING') {
+    if (phase.type === "DRAGGING") {
       phase.actions.cancel({ shouldBlockNextClick: true });
     }
-    if (phase.type === 'PENDING') {
+    if (phase.type === "PENDING") {
       phase.actions.abort();
     }
   }, [stop]);
@@ -375,42 +375,42 @@ export default function useTouchSensor(api: SensorAPI) {
         unbindWindow();
       };
     },
-    [cancel, getPhase, stop],
+    [cancel, getPhase, stop]
   );
 
   const startDragging = useCallback(
     function startDragging() {
       const phase: Phase = getPhase();
       invariant(
-        phase.type === 'PENDING',
-        `Cannot start dragging from phase ${phase.type}`,
+        phase.type === "PENDING",
+        `Cannot start dragging from phase ${phase.type}`
       );
 
       const actions: FluidDragActions = phase.actions.fluidLift(phase.point);
 
       setPhase({
-        type: 'DRAGGING',
+        type: "DRAGGING",
         actions,
         hasMoved: false,
       });
     },
-    [getPhase, setPhase],
+    [getPhase, setPhase]
   );
 
   const startPendingDrag = useCallback(
     function startPendingDrag(actions: PreDragActions, point: Position) {
       invariant(
-        getPhase().type === 'IDLE',
-        'Expected to move from IDLE to PENDING drag',
+        getPhase().type === "IDLE",
+        "Expected to move from IDLE to PENDING drag"
       );
 
       const longPressTimerId: TimeoutID = setTimeout(
         startDragging,
-        timeForLongPress,
+        timeForLongPress
       );
 
       setPhase({
-        type: 'PENDING',
+        type: "PENDING",
         point,
         actions,
         longPressTimerId,
@@ -418,7 +418,7 @@ export default function useTouchSensor(api: SensorAPI) {
 
       bindCapturingEvents();
     },
-    [bindCapturingEvents, getPhase, setPhase, startDragging],
+    [bindCapturingEvents, getPhase, setPhase, startDragging]
   );
 
   useLayoutEffect(
@@ -431,13 +431,13 @@ export default function useTouchSensor(api: SensorAPI) {
 
         // need to kill any pending drag start timer
         const phase: Phase = getPhase();
-        if (phase.type === 'PENDING') {
+        if (phase.type === "PENDING") {
           clearTimeout(phase.longPressTimerId);
           setPhase(idle);
         }
       };
     },
-    [getPhase, listenForCapture, setPhase],
+    [getPhase, listenForCapture, setPhase]
   );
 
   // This is needed for safari
@@ -448,7 +448,7 @@ export default function useTouchSensor(api: SensorAPI) {
   useLayoutEffect(function webkitHack() {
     const unbind = bindEvents(window, [
       {
-        eventName: 'touchmove',
+        eventName: "touchmove",
         // using a new noop function for each usage as a single `removeEventListener()`
         // call will remove all handlers with the same reference
         // https://codesandbox.io/s/removing-multiple-handlers-with-same-reference-fxe15

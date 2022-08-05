@@ -1,6 +1,6 @@
-import { invariant } from '../../invariant';
-import { warning } from '../../dev-warning';
-import getBodyElement from '../get-body-element';
+import { invariant } from "../../invariant";
+import { warning } from "../../dev-warning";
+import getBodyElement from "../get-body-element";
 
 interface Overflow {
   overflowX: string;
@@ -11,9 +11,9 @@ const isEqual =
   (base: string) =>
   (value: string): boolean =>
     base === value;
-const isScroll = isEqual('scroll');
-const isAuto = isEqual('auto');
-const isVisible = isEqual('visible');
+const isScroll = isEqual("scroll");
+const isAuto = isEqual("auto");
+const isVisible = isEqual("visible");
 const isEither = (overflow: Overflow, fn: (value: string) => boolean) =>
   fn(overflow.overflowX) || fn(overflow.overflowY);
 const isBoth = (overflow: Overflow, fn: (value: string) => boolean) =>
@@ -33,7 +33,7 @@ const isElementScrollable = (el: Element): boolean => {
 // Playground: https://codepen.io/alexreardon/pen/ZmyLgX?editors=1111
 const isBodyScrollable = (): boolean => {
   // Because we always return false for now, we can skip any actual processing in production
-  if (process.env.NODE_ENV === 'production') {
+  if (process.env.NODE_ENV === "production") {
     return false;
   }
 

@@ -1,12 +1,12 @@
-import type { Position } from 'css-box-model';
+import type { Position } from "css-box-model";
 import type {
   Viewport,
   DragImpact,
   DraggingState,
   DroppableDimension,
   DimensionMap,
-} from '../../../../../../src/types';
-import patchDimensionMap from '../../../../../../src/state/patch-dimension-map';
+} from "../../../../../../src/types";
+import patchDimensionMap from "../../../../../../src/state/patch-dimension-map";
 
 interface DragToArgs {
   selection: Position;
@@ -29,7 +29,7 @@ export default ({
   const base: DraggingState = state.dragging(
     state.preset.inHome1.descriptor.id,
     selection,
-    viewport,
+    viewport
   );
 
   const dimensions: DimensionMap = (() => {

@@ -1,13 +1,13 @@
-import { colors } from '@atlaskit/theme';
-import styled from '@emotion/styled';
-import type { DraggableLocation, DropResult } from '@hello-pangea/dnd';
-import { DragDropContext } from '@hello-pangea/dnd';
-import React, { Component, ReactElement } from 'react';
-import { grid } from '../constants';
-import QuoteList from '../primatives/quote-list';
-import type { ReorderQuoteMapResult } from '../reorder';
-import { reorderQuoteMap } from '../reorder';
-import type { QuoteMap } from '../types';
+import { colors } from "@atlaskit/theme";
+import styled from "@emotion/styled";
+import type { DraggableLocation, DropResult } from "@hello-pangea/dnd";
+import { DragDropContext } from "@hello-pangea/dnd";
+import React, { Component, ReactElement } from "react";
+import { grid } from "../constants";
+import QuoteList from "../primatives/quote-list";
+import type { ReorderQuoteMapResult } from "../reorder";
+import { reorderQuoteMap } from "../reorder";
+import type { QuoteMap } from "../types";
 
 const Root = styled.div`
   background-color: ${colors.B200};
@@ -77,7 +77,7 @@ export default class QuoteApp extends Component<Props, State> {
         quoteMap: this.state.quoteMap,
         source,
         destination,
-      }),
+      })
     );
   };
 
@@ -88,7 +88,7 @@ export default class QuoteApp extends Component<Props, State> {
       return null;
     }
 
-    const droppables: string[] = ['alpha', 'beta', 'gamma', 'delta'];
+    const droppables: string[] = ["alpha", "beta", "gamma", "delta"];
     const sourceIndex = droppables.indexOf(sourceDroppable);
     const disabledDroppableIndex = (sourceIndex + 1) % droppables.length;
 
@@ -97,7 +97,7 @@ export default class QuoteApp extends Component<Props, State> {
 
   render(): ReactElement {
     const { quoteMap } = this.state;
-    const disabledDroppable = 'TODO' as string;
+    const disabledDroppable = "TODO" as string;
 
     return (
       <DragDropContext onDragEnd={this.onDragEnd}>
@@ -108,7 +108,7 @@ export default class QuoteApp extends Component<Props, State> {
                 title="alpha"
                 listId="alpha"
                 listType="card"
-                isDropDisabled={disabledDroppable === 'alpha'}
+                isDropDisabled={disabledDroppable === "alpha"}
                 quotes={quoteMap.alpha}
               />
             </Column>
@@ -117,7 +117,7 @@ export default class QuoteApp extends Component<Props, State> {
                 title="beta"
                 listId="beta"
                 listType="card"
-                isDropDisabled={disabledDroppable === 'beta'}
+                isDropDisabled={disabledDroppable === "beta"}
                 quotes={quoteMap.beta}
               />
             </Column>
@@ -126,7 +126,7 @@ export default class QuoteApp extends Component<Props, State> {
                 title="gamma"
                 listId="gamma"
                 listType="card"
-                isDropDisabled={disabledDroppable === 'gamma'}
+                isDropDisabled={disabledDroppable === "gamma"}
                 quotes={quoteMap.gamma}
               />
             </Column>
@@ -137,7 +137,7 @@ export default class QuoteApp extends Component<Props, State> {
               title="delta"
               listId="delta"
               listType="card"
-              isDropDisabled={disabledDroppable === 'delta'}
+              isDropDisabled={disabledDroppable === "delta"}
               quotes={quoteMap.delta}
             />
             <QuoteList
@@ -145,7 +145,7 @@ export default class QuoteApp extends Component<Props, State> {
               listId="epsilon"
               listType="card"
               internalScroll
-              isDropDisabled={disabledDroppable === 'epsilon'}
+              isDropDisabled={disabledDroppable === "epsilon"}
               quotes={quoteMap.epsilon}
             />
           </Column>
@@ -155,7 +155,7 @@ export default class QuoteApp extends Component<Props, State> {
                 title="zeta"
                 listId="zeta"
                 listType="card"
-                isDropDisabled={disabledDroppable === 'zeta'}
+                isDropDisabled={disabledDroppable === "zeta"}
                 quotes={quoteMap.zeta}
               />
             </Column>
@@ -164,7 +164,7 @@ export default class QuoteApp extends Component<Props, State> {
                 title="eta"
                 listId="eta"
                 listType="card"
-                isDropDisabled={disabledDroppable === 'eta'}
+                isDropDisabled={disabledDroppable === "eta"}
                 quotes={quoteMap.eta}
               />
             </Column>
@@ -173,7 +173,7 @@ export default class QuoteApp extends Component<Props, State> {
                 title="theta"
                 listId="theta"
                 listType="card"
-                isDropDisabled={disabledDroppable === 'theta'}
+                isDropDisabled={disabledDroppable === "theta"}
                 quotes={quoteMap.theta}
               />
             </Column>
@@ -183,7 +183,7 @@ export default class QuoteApp extends Component<Props, State> {
               title="iota"
               listId="iota"
               listType="card"
-              isDropDisabled={disabledDroppable === 'iota'}
+              isDropDisabled={disabledDroppable === "iota"}
               quotes={quoteMap.iota}
             />
           </Column>
@@ -193,7 +193,7 @@ export default class QuoteApp extends Component<Props, State> {
               listId="kappa"
               listType="card"
               internalScroll
-              isDropDisabled={disabledDroppable === 'kappa'}
+              isDropDisabled={disabledDroppable === "kappa"}
               quotes={quoteMap.kappa}
             />
           </Column>

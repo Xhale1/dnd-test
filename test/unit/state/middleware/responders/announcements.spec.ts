@@ -1,32 +1,32 @@
-import { invariant } from '../../../../../src/invariant';
+import { invariant } from "../../../../../src/invariant";
 import {
   completeDrop,
   initialPublish,
   moveDown,
   updateDroppableIsCombineEnabled,
-} from '../../../../../src/state/action-creators';
-import middleware from '../../../../../src/state/middleware/responders';
-import messagePreset from '../../../../../src/screen-reader-message-preset';
+} from "../../../../../src/state/action-creators";
+import middleware from "../../../../../src/state/middleware/responders";
+import messagePreset from "../../../../../src/screen-reader-message-preset";
 import {
   preset,
   getDragStart,
   initialPublishArgs,
-} from '../../../../util/preset-action-args';
-import createStore from '../util/create-store';
+} from "../../../../util/preset-action-args";
+import createStore from "../util/create-store";
 import type {
   Announce,
   Responders,
   DragUpdate,
   DropResult,
   ResponderProvided,
-} from '../../../../../src/types';
-import type { Store, Dispatch } from '../../../../../src/state/store-types';
-import createResponders from './util/get-responders-stub';
-import getAnnounce from './util/get-announce-stub';
-import getCompletedWithResult from './util/get-completed-with-result';
+} from "../../../../../src/types";
+import type { Store, Dispatch } from "../../../../../src/state/store-types";
+import createResponders from "./util/get-responders-stub";
+import getAnnounce from "./util/get-announce-stub";
+import getCompletedWithResult from "./util/get-completed-with-result";
 
 beforeEach(() => {
-  jest.useFakeTimers('legacy');
+  jest.useFakeTimers("legacy");
 });
 
 afterEach(() => {
@@ -34,7 +34,7 @@ afterEach(() => {
 });
 
 interface Case {
-  responder: 'onDragStart' | 'onDragUpdate' | 'onDragEnd';
+  responder: "onDragStart" | "onDragUpdate" | "onDragEnd";
   description?: string;
   execute: (store: Store) => void;
   defaultMessage: string;
@@ -73,18 +73,18 @@ const update = (dispatch: Dispatch) => {
 const end = (store: Store) => {
   const result: DropResult = {
     ...moveForwardUpdate,
-    reason: 'DROP',
+    reason: "DROP",
   };
   store.dispatch(
     completeDrop({
       completed: getCompletedWithResult(result, store.getState()),
-    }),
+    })
   );
 };
 
 const cases: Case[] = [
   {
-    responder: 'onDragStart',
+    responder: "onDragStart",
     execute: (store: Store) => {
       start(store.dispatch);
     },
@@ -92,8 +92,8 @@ const cases: Case[] = [
   },
   {
     // a reorder upate
-    responder: 'onDragUpdate',
-    description: 'a reorder update',
+    responder: "onDragUpdate",
+    description: "a reorder update",
     execute: (store: Store) => {
       start(store.dispatch);
       update(store.dispatch);
@@ -102,22 +102,22 @@ const cases: Case[] = [
   },
   {
     // a combine update
-    responder: 'onDragUpdate',
-    description: 'a combine update',
+    responder: "onDragUpdate",
+    description: "a combine update",
     execute: (store: Store) => {
       start(store.dispatch);
       store.dispatch(
         updateDroppableIsCombineEnabled({
           id: initialPublishArgs.critical.droppable.id,
           isCombineEnabled: true,
-        }),
+        })
       );
       update(store.dispatch);
     },
     defaultMessage: messagePreset.onDragUpdate(combineUpdate),
   },
   {
-    responder: 'onDragEnd',
+    responder: "onDragEnd",
     execute: (store: Store) => {
       start(store.dispatch);
       update(store.dispatch);
@@ -125,14 +125,14 @@ const cases: Case[] = [
     },
     defaultMessage: messagePreset.onDragEnd({
       ...moveForwardUpdate,
-      reason: 'DROP',
+      reason: "DROP",
     }),
   },
 ];
 
 cases.forEach((current: Case) => {
   describe(`for responder: ${current.responder}${
-    current.description ? `: ${current.description}` : ''
+    current.description ? `: ${current.description}` : ""
   }`, () => {
     let responders: Responders;
     let announce: jest.MockedFunction<Announce>;
@@ -144,9 +144,9 @@ cases.forEach((current: Case) => {
       store = createStore(middleware(() => responders, announce));
     });
 
-    it('should announce with the default message if no responder is provided', () => {
+    it("should announce with the default message if no responder is provided", () => {
       // This test is not relevant for onDragEnd as it must always be provided
-      if (current.responder === 'onDragEnd') {
+      if (current.responder === "onDragEnd") {
         // eslint-disable-next-line jest/no-conditional-expect
         expect(true).toBe(true);
         return;
@@ -157,34 +157,34 @@ cases.forEach((current: Case) => {
       expect(announce).toHaveBeenCalledWith(current.defaultMessage);
     });
 
-    it('should announce with the default message if the responder does not announce', () => {
+    it("should announce with the default message if the responder does not announce", () => {
       current.execute(store);
       expect(announce).toHaveBeenCalledWith(current.defaultMessage);
     });
 
-    it('should not announce twice if the responder makes an announcement', () => {
+    it("should not announce twice if the responder makes an announcement", () => {
       responders[current.responder] = jest.fn(
         (data: any, provided: ResponderProvided) => {
           announce.mockReset();
-          provided.announce('hello');
-          expect(announce).toHaveBeenCalledWith('hello');
+          provided.announce("hello");
+          expect(announce).toHaveBeenCalledWith("hello");
           // asserting there was no double call
           expect(announce).toHaveBeenCalledTimes(1);
-        },
+        }
       );
 
       current.execute(store);
     });
 
-    it('should prevent async announcements', () => {
-      const warn = jest.spyOn(console, 'warn').mockImplementation(() => {});
+    it("should prevent async announcements", () => {
+      const warn = jest.spyOn(console, "warn").mockImplementation(() => {});
 
       let provided: ResponderProvided;
       responders[current.responder] = jest.fn(
         (data: any, supplied: ResponderProvided) => {
           announce.mockReset();
           provided = supplied;
-        },
+        }
       );
 
       current.execute(store);
@@ -196,7 +196,7 @@ cases.forEach((current: Case) => {
       announce.mockReset();
 
       // perform an async message
-      setTimeout(() => provided.announce('async message'));
+      setTimeout(() => provided.announce("async message"));
       jest.runOnlyPendingTimers();
 
       expect(announce).not.toHaveBeenCalled();
@@ -206,27 +206,27 @@ cases.forEach((current: Case) => {
       warn.mockRestore();
     });
 
-    it('should prevent multiple announcement calls from a consumer', () => {
-      const warn = jest.spyOn(console, 'warn').mockImplementation(() => {});
+    it("should prevent multiple announcement calls from a consumer", () => {
+      const warn = jest.spyOn(console, "warn").mockImplementation(() => {});
 
       const responderSpy = jest
         .spyOn(responders, current.responder)
         .mockImplementation((data: unknown, supplied: ResponderProvided) => {
           announce.mockReset();
-          supplied.announce('hello');
+          supplied.announce("hello");
         });
 
       current.execute(store);
 
-      expect(announce).toHaveBeenCalledWith('hello');
+      expect(announce).toHaveBeenCalledWith("hello");
       expect(announce).toHaveBeenCalledTimes(1);
       expect(warn).not.toHaveBeenCalled();
       announce.mockReset();
 
       // perform another announcement
       const provided = responderSpy.mock.calls[0]?.[1];
-      invariant(provided, 'provided is not set');
-      provided.announce('another one');
+      invariant(provided, "provided is not set");
+      provided.announce("another one");
 
       expect(announce).not.toHaveBeenCalled();
       expect(warn).toHaveBeenCalled();

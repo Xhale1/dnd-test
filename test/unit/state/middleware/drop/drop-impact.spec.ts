@@ -1,12 +1,12 @@
-import type { DisplacedBy, DragImpact } from '../../../../../src/types';
-import getDropImpact from '../../../../../src/state/middleware/drop/get-drop-impact';
-import type { Result } from '../../../../../src/state/middleware/drop/get-drop-impact';
-import noImpact, { emptyGroups } from '../../../../../src/state/no-impact';
-import getLiftEffect from '../../../../../src/state/get-lift-effect';
-import { getPreset } from '../../../../util/dimension';
-import getDisplacedBy from '../../../../../src/state/get-displaced-by';
-import { vertical } from '../../../../../src/state/axis';
-import { getForcedDisplacement } from '../../../../util/impact';
+import type { DisplacedBy, DragImpact } from "../../../../../src/types";
+import getDropImpact from "../../../../../src/state/middleware/drop/get-drop-impact";
+import type { Result } from "../../../../../src/state/middleware/drop/get-drop-impact";
+import noImpact, { emptyGroups } from "../../../../../src/state/no-impact";
+import getLiftEffect from "../../../../../src/state/get-lift-effect";
+import { getPreset } from "../../../../util/dimension";
+import getDisplacedBy from "../../../../../src/state/get-displaced-by";
+import { vertical } from "../../../../../src/state/axis";
+import { getForcedDisplacement } from "../../../../util/impact";
 
 const preset = getPreset();
 
@@ -18,7 +18,7 @@ const { afterCritical, impact: homeImpact } = getLiftEffect({
 });
 const displacedBy: DisplacedBy = getDisplacedBy(
   vertical,
-  preset.inHome1.displaceBy,
+  preset.inHome1.displaceBy
 );
 
 const recomputedHomeImpact: DragImpact = {
@@ -35,9 +35,9 @@ const recomputedHomeImpact: DragImpact = {
   at: homeImpact.at,
 };
 
-it('should recompute the home impact when not dropped in a list', () => {
+it("should recompute the home impact when not dropped in a list", () => {
   const result: Result = getDropImpact({
-    reason: 'DROP',
+    reason: "DROP",
     lastImpact: noImpact,
     home: preset.home,
     viewport: preset.viewport,
@@ -53,9 +53,9 @@ it('should recompute the home impact when not dropped in a list', () => {
   expect(result).toEqual(expected);
 });
 
-it('should recompute the home impact when the drag is cancelled', () => {
+it("should recompute the home impact when the drag is cancelled", () => {
   const result: Result = getDropImpact({
-    reason: 'CANCEL',
+    reason: "CANCEL",
     // was over home
     lastImpact: homeImpact,
     home: preset.home,
@@ -72,7 +72,7 @@ it('should recompute the home impact when the drag is cancelled', () => {
   expect(result).toEqual(expected);
 });
 
-it('should use the existing impact when reordering', () => {
+it("should use the existing impact when reordering", () => {
   // inHome1 moved into position of inHome2
   const lastImpact: DragImpact = {
     displaced: getForcedDisplacement({
@@ -84,7 +84,7 @@ it('should use the existing impact when reordering', () => {
     }),
     displacedBy,
     at: {
-      type: 'REORDER',
+      type: "REORDER",
       destination: {
         index: preset.inHome2.descriptor.index,
         droppableId: preset.home.descriptor.id,
@@ -93,7 +93,7 @@ it('should use the existing impact when reordering', () => {
   };
 
   const result: Result = getDropImpact({
-    reason: 'DROP',
+    reason: "DROP",
     lastImpact,
     home: preset.home,
     viewport: preset.viewport,
@@ -109,7 +109,7 @@ it('should use the existing impact when reordering', () => {
   expect(result).toEqual(expected);
 });
 
-it('should remove any movement when merging so items will collapse', () => {
+it("should remove any movement when merging so items will collapse", () => {
   // inHome1 moved forward and merged with inHome3
   // inHome2 has been moved past
   const lastImpact: DragImpact = {
@@ -122,7 +122,7 @@ it('should remove any movement when merging so items will collapse', () => {
     }),
     displacedBy,
     at: {
-      type: 'COMBINE',
+      type: "COMBINE",
       combine: {
         droppableId: preset.home.descriptor.id,
         draggableId: preset.inHome3.descriptor.id,
@@ -131,7 +131,7 @@ it('should remove any movement when merging so items will collapse', () => {
   };
 
   const result: Result = getDropImpact({
-    reason: 'DROP',
+    reason: "DROP",
     lastImpact,
     home: preset.home,
     viewport: preset.viewport,

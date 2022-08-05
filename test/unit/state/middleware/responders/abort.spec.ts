@@ -2,24 +2,24 @@ import type {
   DraggableLocation,
   State,
   DropResult,
-} from '../../../../../src/types';
-import { invariant } from '../../../../../src/invariant';
-import type { Store } from '../../../../../src/state/store-types';
+} from "../../../../../src/types";
+import { invariant } from "../../../../../src/invariant";
+import type { Store } from "../../../../../src/state/store-types";
 import {
   flush,
   completeDrop,
   initialPublish,
-} from '../../../../../src/state/action-creators';
-import middleware from '../../../../../src/state/middleware/responders';
+} from "../../../../../src/state/action-creators";
+import middleware from "../../../../../src/state/middleware/responders";
 import {
   getDragStart,
   initialPublishArgs,
-} from '../../../../util/preset-action-args';
-import createStore from '../util/create-store';
-import getAnnounce from './util/get-announce-stub';
-import createResponders from './util/get-responders-stub';
-import getCompletedWithResult from './util/get-completed-with-result';
-import { tryGetDestination } from '../../../../../src/state/get-impact-location';
+} from "../../../../util/preset-action-args";
+import createStore from "../util/create-store";
+import getAnnounce from "./util/get-announce-stub";
+import createResponders from "./util/get-responders-stub";
+import getCompletedWithResult from "./util/get-completed-with-result";
+import { tryGetDestination } from "../../../../../src/state/get-impact-location";
 
 beforeEach(() => {
   jest.useFakeTimers();
@@ -29,7 +29,7 @@ afterEach(() => {
   jest.useRealTimers();
 });
 
-it('should call onDragEnd with the last published critical descriptor', () => {
+it("should call onDragEnd with the last published critical descriptor", () => {
   const responders = createResponders();
   const store: Store = createStore(middleware(() => responders, getAnnounce()));
 
@@ -43,15 +43,15 @@ it('should call onDragEnd with the last published critical descriptor', () => {
     ...getDragStart(),
     destination: null,
     combine: null,
-    reason: 'CANCEL',
+    reason: "CANCEL",
   };
   expect(responders.onDragEnd).toHaveBeenCalledWith(
     expected,
-    expect.any(Object),
+    expect.any(Object)
   );
 });
 
-it('should publish an onDragEnd with no destination even if there is a current destination', () => {
+it("should publish an onDragEnd with no destination even if there is a current destination", () => {
   const responders = createResponders();
   const store: Store = createStore(middleware(() => responders, getAnnounce()));
 
@@ -60,7 +60,7 @@ it('should publish an onDragEnd with no destination even if there is a current d
   jest.runOnlyPendingTimers();
 
   const state: State = store.getState();
-  invariant(state.phase === 'DRAGGING');
+  invariant(state.phase === "DRAGGING");
   // in home location
   const home: DraggableLocation = {
     droppableId: initialPublishArgs.critical.droppable.id,
@@ -74,15 +74,15 @@ it('should publish an onDragEnd with no destination even if there is a current d
     // destination has been cleared
     destination: null,
     combine: null,
-    reason: 'CANCEL',
+    reason: "CANCEL",
   };
   expect(responders.onDragEnd).toHaveBeenCalledWith(
     expected,
-    expect.any(Object),
+    expect.any(Object)
   );
 });
 
-it('should not publish an onDragEnd if aborted after a drop', () => {
+it("should not publish an onDragEnd if aborted after a drop", () => {
   const responders = createResponders();
   const store: Store = createStore(middleware(() => responders, getAnnounce()));
 
@@ -97,12 +97,12 @@ it('should not publish an onDragEnd if aborted after a drop', () => {
     ...getDragStart(),
     destination: null,
     combine: null,
-    reason: 'CANCEL',
+    reason: "CANCEL",
   };
   store.dispatch(
     completeDrop({
       completed: getCompletedWithResult(result, store.getState()),
-    }),
+    })
   );
   expect(responders.onDragEnd).toHaveBeenCalledTimes(1);
 
@@ -113,7 +113,7 @@ it('should not publish an onDragEnd if aborted after a drop', () => {
   expect(responders.onDragEnd).not.toHaveBeenCalled();
 });
 
-it('should publish an on drag end if aborted before the publish of an onDragStart', () => {
+it("should publish an on drag end if aborted before the publish of an onDragStart", () => {
   const responders = createResponders();
   const store: Store = createStore(middleware(() => responders, getAnnounce()));
 
@@ -128,12 +128,12 @@ it('should publish an on drag end if aborted before the publish of an onDragStar
     ...getDragStart(),
     destination: null,
     combine: null,
-    reason: 'CANCEL',
+    reason: "CANCEL",
   };
   store.dispatch(
     completeDrop({
       completed: getCompletedWithResult(result, store.getState()),
-    }),
+    })
   );
   expect(responders.onDragEnd).toHaveBeenCalledTimes(1);
 

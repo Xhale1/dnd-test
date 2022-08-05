@@ -103,7 +103,7 @@ You control the message printed to the user through the `<DragDropContext />` | 
 
 ```ts
 onDragStart = (start: DragStart, provided: ResponderProvided) => {
-  provided.announce('My super cool message');
+  provided.announce("My super cool message");
 };
 ```
 
@@ -115,7 +115,7 @@ We can control the announcement through the `<DragDropContext />` | `onDragUpdat
 
 ```ts
 onDragUpdate = (update: DragUpdate, provided: ResponderProvided) => {
-  provided.announce('Update message');
+  provided.announce("Update message");
 };
 ```
 
@@ -174,8 +174,8 @@ A `DropResult` object has a `reason` property which can either be `DROP` or `CAN
 
 ```ts
 onDragEnd = (result: DropResult, provided: ResponderProvided) => {
-  if (result.reason === 'CANCEL') {
-    provided.announce('Your cancel message');
+  if (result.reason === "CANCEL") {
+    provided.announce("Your cancel message");
     return;
   }
 };

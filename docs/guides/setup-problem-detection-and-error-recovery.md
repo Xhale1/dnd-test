@@ -43,7 +43,7 @@ If you want to disable the warnings in _development_, you just need to update a 
 
 ```js
 // disable all @hello-pangea/dnd development warnings
-window['__@hello-pangea/dnd-disable-dev-warnings'] = true;
+window["__@hello-pangea/dnd-disable-dev-warnings"] = true;
 ```
 
 Note: this will not strip the messages from your production builds. See above for how to do that

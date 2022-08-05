@@ -76,7 +76,7 @@ class App extends React.Component {
 
     if (this.divRef) {
       // div ref is a HTMLElement
-      this.divRef.style.backgroundColor = 'lightgreen';
+      this.divRef.style.backgroundColor = "lightgreen";
     }
   };
   render() {

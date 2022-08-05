@@ -1,5 +1,5 @@
-import type { Position } from 'css-box-model';
-import { BeforeCapture } from '../../types';
+import type { Position } from "css-box-model";
+import { BeforeCapture } from "../../types";
 
 export interface EventOptions {
   passive?: boolean;

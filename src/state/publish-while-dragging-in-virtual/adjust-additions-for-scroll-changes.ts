@@ -1,4 +1,4 @@
-import type { Position } from 'css-box-model';
+import type { Position } from "css-box-model";
 import type {
   Viewport,
   DraggableDimension,
@@ -6,10 +6,10 @@ import type {
   Scrollable,
   DroppableDimensionMap,
   DroppableId,
-} from '../../types';
-import { add } from '../position';
-import offsetDraggable from './offset-draggable';
-import getFrame from '../get-frame';
+} from "../../types";
+import { add } from "../position";
+import offsetDraggable from "./offset-draggable";
+import getFrame from "../get-frame";
 
 interface Args {
   additions: DraggableDimension[];
@@ -43,7 +43,7 @@ export default ({
 
     const totalChange: Position = add(
       windowScrollChange,
-      droppableScrollChange,
+      droppableScrollChange
     );
 
     const moved: DraggableDimension = offsetDraggable({

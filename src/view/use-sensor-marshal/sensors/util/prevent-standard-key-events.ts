@@ -1,4 +1,4 @@
-import * as keyCodes from '../../../key-codes';
+import * as keyCodes from "../../../key-codes";
 
 interface KeyMap {
   [key: number]: true;

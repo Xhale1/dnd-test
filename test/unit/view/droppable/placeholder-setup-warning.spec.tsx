@@ -1,14 +1,14 @@
-import { render } from '@testing-library/react';
-import React from 'react';
-import type { DroppableProvided } from '../../../../src/view/droppable/droppable-types';
+import { render } from "@testing-library/react";
+import React from "react";
+import type { DroppableProvided } from "../../../../src/view/droppable/droppable-types";
 import {
   homeAtRest,
   foreignOwnProps,
   isOverForeign,
   isNotOverForeign,
-} from './util/get-props';
-import App from './util/app';
-import { disableWarn } from '../../../util/console';
+} from "./util/get-props";
+import App from "./util/app";
+import { disableWarn } from "../../../util/console";
 
 class WithNoPlaceholder extends React.Component<{
   provided: DroppableProvided;
@@ -27,14 +27,14 @@ class WithNoPlaceholder extends React.Component<{
 
 disableWarn();
 
-describe('is over foreign', () => {
-  it('should log a warning when mounting', () => {
+describe("is over foreign", () => {
+  it("should log a warning when mounting", () => {
     const { unmount } = render(
       <App
         ownProps={foreignOwnProps}
         mapProps={isOverForeign}
         WrappedComponent={WithNoPlaceholder}
-      />,
+      />
     );
 
     expect(console.warn).toHaveBeenCalled();
@@ -42,13 +42,13 @@ describe('is over foreign', () => {
     unmount();
   });
 
-  it('should log a warning when updating', () => {
+  it("should log a warning when updating", () => {
     const { rerender, unmount } = render(
       <App
         ownProps={foreignOwnProps}
         mapProps={homeAtRest}
         WrappedComponent={WithNoPlaceholder}
-      />,
+      />
     );
     expect(console.warn).not.toHaveBeenCalled();
 
@@ -57,7 +57,7 @@ describe('is over foreign', () => {
         ownProps={foreignOwnProps}
         mapProps={isOverForeign}
         WrappedComponent={WithNoPlaceholder}
-      />,
+      />
     );
     expect(console.warn).toHaveBeenCalled();
 
@@ -65,14 +65,14 @@ describe('is over foreign', () => {
   });
 });
 
-describe('is not over foreign', () => {
-  it('should not log a warning when mounting', () => {
+describe("is not over foreign", () => {
+  it("should not log a warning when mounting", () => {
     const { unmount } = render(
       <App
         ownProps={foreignOwnProps}
         mapProps={isNotOverForeign}
         WrappedComponent={WithNoPlaceholder}
-      />,
+      />
     );
 
     expect(console.warn).not.toHaveBeenCalled();
@@ -80,13 +80,13 @@ describe('is not over foreign', () => {
     unmount();
   });
 
-  it('should not log a warning when updating', () => {
+  it("should not log a warning when updating", () => {
     const { rerender, unmount } = render(
       <App
         ownProps={foreignOwnProps}
         mapProps={homeAtRest}
         WrappedComponent={WithNoPlaceholder}
-      />,
+      />
     );
     expect(console.warn).not.toHaveBeenCalled();
 
@@ -95,7 +95,7 @@ describe('is not over foreign', () => {
         ownProps={foreignOwnProps}
         mapProps={isNotOverForeign}
         WrappedComponent={WithNoPlaceholder}
-      />,
+      />
     );
     expect(console.warn).not.toHaveBeenCalled();
 

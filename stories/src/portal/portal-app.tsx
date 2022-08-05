@@ -1,19 +1,19 @@
-import { colors } from '@atlaskit/theme';
-import styled from '@emotion/styled';
+import { colors } from "@atlaskit/theme";
+import styled from "@emotion/styled";
 import type {
   DraggableProvided,
   DraggableStateSnapshot,
   DroppableProvided,
   DropResult,
-} from '@hello-pangea/dnd';
-import { DragDropContext, Draggable, Droppable } from '@hello-pangea/dnd';
-import type { ReactNode } from 'react';
-import React, { Component, ReactElement } from 'react';
-import ReactDOM from 'react-dom';
-import { invariant } from '../../../src/invariant';
-import { grid } from '../constants';
-import reorder from '../reorder';
-import type { Quote } from '../types';
+} from "@hello-pangea/dnd";
+import { DragDropContext, Draggable, Droppable } from "@hello-pangea/dnd";
+import type { ReactNode } from "react";
+import React, { Component, ReactElement } from "react";
+import ReactDOM from "react-dom";
+import { invariant } from "../../../src/invariant";
+import { grid } from "../constants";
+import reorder from "../reorder";
+import type { Quote } from "../types";
 
 interface ItemProps {
   provided: DraggableProvided;
@@ -21,10 +21,10 @@ interface ItemProps {
   quote: Quote;
 }
 
-const portal: HTMLElement = document.createElement('div');
-portal.classList.add('my-super-cool-portal');
+const portal: HTMLElement = document.createElement("div");
+portal.classList.add("my-super-cool-portal");
 
-invariant(document.body, 'body not ready for portal creation!');
+invariant(document.body, "body not ready for portal creation!");
 
 document.body.appendChild(portal);
 
@@ -55,7 +55,7 @@ const SimpleQuote = styled.div<SimpleQuoteProps>`
       content: "in portal";
     }
   `
-      : ''}/* stylelint-enable */;
+      : ""}/* stylelint-enable */;
 `;
 
 class PortalAwareItem extends Component<ItemProps> {
@@ -121,7 +121,7 @@ export default class PortalApp extends Component<AppProps, AppState> {
     const quotes = reorder(
       this.state.quotes,
       result.source.index,
-      result.destination.index,
+      result.destination.index
     );
 
     this.setState({
@@ -142,7 +142,7 @@ export default class PortalApp extends Component<AppProps, AppState> {
                 <Draggable draggableId={quote.id} index={index} key={quote.id}>
                   {(
                     draggableProvided: DraggableProvided,
-                    draggableSnapshot: DraggableStateSnapshot,
+                    draggableSnapshot: DraggableStateSnapshot
                   ) => (
                     <PortalAwareItem
                       quote={quote}

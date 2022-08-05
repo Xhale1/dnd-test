@@ -1,10 +1,10 @@
-import { useRef } from 'react';
-import { useMemo, useCallback } from 'use-memo-one';
-import type { DraggableId, ContextId } from '../../types';
-import type { FocusMarshal, Unregister } from './focus-marshal-types';
-import { dragHandle as dragHandleAttr } from '../data-attributes';
-import useLayoutEffect from '../use-isomorphic-layout-effect';
-import findDragHandle from '../get-elements/find-drag-handle';
+import { useRef } from "react";
+import { useMemo, useCallback } from "use-memo-one";
+import type { DraggableId, ContextId } from "../../types";
+import type { FocusMarshal, Unregister } from "./focus-marshal-types";
+import { dragHandle as dragHandleAttr } from "../data-attributes";
+import useLayoutEffect from "../use-isomorphic-layout-effect";
+import findDragHandle from "../get-elements/find-drag-handle";
 
 interface Entry {
   id: DraggableId;
@@ -23,7 +23,7 @@ export default function useFocusMarshal(contextId: ContextId): FocusMarshal {
 
   const register = useCallback(function register(
     id: DraggableId,
-    focus: () => void,
+    focus: () => void
   ): Unregister {
     const entry: Entry = { id, focus };
     entriesRef.current[id] = entry;
@@ -43,19 +43,19 @@ export default function useFocusMarshal(contextId: ContextId): FocusMarshal {
     function tryGiveFocus(tryGiveFocusTo: DraggableId) {
       const handle: HTMLElement | null = findDragHandle(
         contextId,
-        tryGiveFocusTo,
+        tryGiveFocusTo
       );
 
       if (handle && handle !== document.activeElement) {
         handle.focus();
       }
     },
-    [contextId],
+    [contextId]
   );
 
   const tryShiftRecord = useCallback(function tryShiftRecord(
     previous: DraggableId,
-    redirectTo: DraggableId,
+    redirectTo: DraggableId
   ) {
     if (recordRef.current === previous) {
       recordRef.current = redirectTo;
@@ -84,7 +84,7 @@ export default function useFocusMarshal(contextId: ContextId): FocusMarshal {
         }
       });
     },
-    [tryGiveFocus],
+    [tryGiveFocus]
   );
 
   const tryRecordFocus = useCallback(function tryRecordFocus(id: DraggableId) {
@@ -124,7 +124,7 @@ export default function useFocusMarshal(contextId: ContextId): FocusMarshal {
       tryRestoreFocusRecorded,
       tryShiftRecord,
     }),
-    [register, tryRecordFocus, tryRestoreFocusRecorded, tryShiftRecord],
+    [register, tryRecordFocus, tryRestoreFocusRecorded, tryShiftRecord]
   );
 
   return marshal;

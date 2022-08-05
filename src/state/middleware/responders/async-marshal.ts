@@ -1,4 +1,4 @@
-import { invariant } from '../../../invariant';
+import { invariant } from "../../../invariant";
 
 interface Entry {
   timerId: TimeoutID;
@@ -15,9 +15,9 @@ export default () => {
 
   const execute = (timerId: TimeoutID) => {
     const index: number = entries.findIndex(
-      (item): boolean => item.timerId === timerId,
+      (item): boolean => item.timerId === timerId
     );
-    invariant(index !== -1, 'Could not find timer');
+    invariant(index !== -1, "Could not find timer");
     // delete in place
     const [entry] = entries.splice(index, 1);
     entry.callback();

@@ -1,11 +1,11 @@
-import React from 'react';
-import { createEvent, fireEvent, render } from '@testing-library/react';
-import * as keyCodes from '../../../../../src/view/key-codes';
-import App from '../../util/app';
-import { simpleLift, keyboard } from '../../util/controls';
-import { isDragging } from '../../util/helpers';
+import React from "react";
+import { createEvent, fireEvent, render } from "@testing-library/react";
+import * as keyCodes from "../../../../../src/view/key-codes";
+import App from "../../util/app";
+import { simpleLift, keyboard } from "../../util/controls";
+import { isDragging } from "../../util/helpers";
 
-it('should prevent using keyboard keys that modify scroll', () => {
+it("should prevent using keyboard keys that modify scroll", () => {
   const keys: number[] = [
     keyCodes.pageUp,
     keyCodes.pageDown,
@@ -13,7 +13,7 @@ it('should prevent using keyboard keys that modify scroll', () => {
     keyCodes.end,
   ];
   const { getByText } = render(<App />);
-  const handle: HTMLElement = getByText('item: 0');
+  const handle: HTMLElement = getByText("item: 0");
 
   simpleLift(keyboard, handle);
 

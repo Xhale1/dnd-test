@@ -1,14 +1,14 @@
-import React from 'react';
-import { getRect } from 'css-box-model';
-import { render } from '@testing-library/react';
-import { invariant } from '../../../src/invariant';
-import { DragDropContext, Draggable, Droppable } from '../../../src';
-import { getComputedSpacing } from '../../util/dimension';
-import setDOMRect from '../../util/set-dom-rect';
-import type { DraggableProvided } from '../../../src/view/draggable/draggable-types';
-import type { DroppableProvided } from '../../../src/view/droppable/droppable-types';
-import type { Responders } from '../../../src/types';
-import { simpleLift, keyboard } from './util/controls';
+import React from "react";
+import { getRect } from "css-box-model";
+import { render } from "@testing-library/react";
+import { invariant } from "../../../src/invariant";
+import { DragDropContext, Draggable, Droppable } from "../../../src";
+import { getComputedSpacing } from "../../util/dimension";
+import setDOMRect from "../../util/set-dom-rect";
+import type { DraggableProvided } from "../../../src/view/draggable/draggable-types";
+import type { DroppableProvided } from "../../../src/view/droppable/droppable-types";
+import type { Responders } from "../../../src/types";
+import { simpleLift, keyboard } from "./util/controls";
 
 interface ItemProps {
   provided: DraggableProvided;
@@ -33,35 +33,35 @@ class Item extends React.Component<ItemProps> {
 }
 
 beforeEach(() => {
-  jest.useFakeTimers('legacy');
+  jest.useFakeTimers("legacy");
 });
 
 afterEach(() => {
   jest.useRealTimers();
 });
 
-it('should call the onBeforeDragStart before connected components are updated, and onDragStart after', () => {
+it("should call the onBeforeDragStart before connected components are updated, and onDragStart after", () => {
   let onBeforeDragStartTime: DOMHighResTimeStamp | null = null;
   let onDragStartTime: DOMHighResTimeStamp | null = null;
   let renderTime: DOMHighResTimeStamp | null = null;
   const responders: Responders = {
     onBeforeDragStart: jest.fn().mockImplementation(() => {
-      invariant(!onBeforeDragStartTime, 'onBeforeDragStartTime already set');
+      invariant(!onBeforeDragStartTime, "onBeforeDragStartTime already set");
       onBeforeDragStartTime = performance.now();
     }),
     onDragStart: jest.fn().mockImplementation(() => {
-      invariant(!onDragStartTime, 'onDragStartTime already set');
+      invariant(!onDragStartTime, "onDragStartTime already set");
       onDragStartTime = performance.now();
     }),
     onDragEnd: jest.fn(),
   };
   const onItemRender = jest.fn().mockImplementation(() => {
-    invariant(!renderTime, 'renderTime already set');
+    invariant(!renderTime, "renderTime already set");
     renderTime = performance.now();
   });
   // Both list and item will have the same dimensions
   jest
-    .spyOn(Element.prototype, 'getBoundingClientRect')
+    .spyOn(Element.prototype, "getBoundingClientRect")
     .mockImplementation(() =>
       setDOMRect(
         getRect({
@@ -69,13 +69,13 @@ it('should call the onBeforeDragStart before connected components are updated, a
           left: 0,
           right: 100,
           bottom: 100,
-        }),
-      ),
+        })
+      )
     );
 
   // Stubbing out totally - not including margins in this
   jest
-    .spyOn(window, 'getComputedStyle')
+    .spyOn(window, "getComputedStyle")
     .mockImplementation(() => getComputedSpacing({}));
   const { getByTestId, unmount } = render(
     <DragDropContext {...responders}>
@@ -95,7 +95,7 @@ it('should call the onBeforeDragStart before connected components are updated, a
           </div>
         )}
       </Droppable>
-    </DragDropContext>,
+    </DragDropContext>
   );
 
   // clearing the initial render before a drag
@@ -104,15 +104,15 @@ it('should call the onBeforeDragStart before connected components are updated, a
   onItemRender.mockClear();
 
   // start a drag
-  const handle: HTMLElement = getByTestId('drag-handle');
+  const handle: HTMLElement = getByTestId("drag-handle");
   simpleLift(keyboard, handle);
   // flushing onDragStart
   jest.runOnlyPendingTimers();
 
   // checking values are set
-  invariant(onBeforeDragStartTime, 'onBeforeDragStartTime should be set');
-  invariant(onDragStartTime, 'onDragStartTime should be set');
-  invariant(renderTime, 'renderTime should be set');
+  invariant(onBeforeDragStartTime, "onBeforeDragStartTime should be set");
+  invariant(onDragStartTime, "onDragStartTime should be set");
+  invariant(renderTime, "renderTime should be set");
 
   // expected order
   // 1. onBeforeDragStart

@@ -1,25 +1,25 @@
-import { getRect } from 'css-box-model';
-import type { Position, Rect, Spacing } from 'css-box-model';
+import { getRect } from "css-box-model";
+import type { Position, Rect, Spacing } from "css-box-model";
 import type {
   Axis,
   DraggableDimension,
   DroppableDimension,
   Viewport,
-} from '../../../../../../src/types';
-import { horizontal, vertical } from '../../../../../../src/state/axis';
-import { toDraggableMap } from '../../../../../../src/state/dimension-structures';
-import getLiftEffect from '../../../../../../src/state/get-lift-effect';
-import getClosestDraggable from '../../../../../../src/state/move-in-direction/move-cross-axis/get-closest-draggable';
-import { negate, patch } from '../../../../../../src/state/position';
-import scrollViewport from '../../../../../../src/state/scroll-viewport';
-import { offsetByPosition } from '../../../../../../src/state/spacing';
-import { isTotallyVisible } from '../../../../../../src/state/visibility/is-visible';
-import getViewport from '../../../../../../src/view/window/get-viewport';
+} from "../../../../../../src/types";
+import { horizontal, vertical } from "../../../../../../src/state/axis";
+import { toDraggableMap } from "../../../../../../src/state/dimension-structures";
+import getLiftEffect from "../../../../../../src/state/get-lift-effect";
+import getClosestDraggable from "../../../../../../src/state/move-in-direction/move-cross-axis/get-closest-draggable";
+import { negate, patch } from "../../../../../../src/state/position";
+import scrollViewport from "../../../../../../src/state/scroll-viewport";
+import { offsetByPosition } from "../../../../../../src/state/spacing";
+import { isTotallyVisible } from "../../../../../../src/state/visibility/is-visible";
+import getViewport from "../../../../../../src/view/window/get-viewport";
 import {
   getDraggableDimension,
   getDroppableDimension,
-} from '../../../../../util/dimension';
-import { noAfterCritical } from '../../../../../../src/state/no-impact';
+} from "../../../../../util/dimension";
+import { noAfterCritical } from "../../../../../../src/state/no-impact";
 
 const viewport: Viewport = getViewport();
 
@@ -40,9 +40,9 @@ const viewport: Viewport = getViewport();
 
     const home: DroppableDimension = getDroppableDimension({
       descriptor: {
-        id: 'home',
-        type: 'TYPE',
-        mode: 'standard',
+        id: "home",
+        type: "TYPE",
+        mode: "standard",
       },
       direction: axis.direction,
       borderBox,
@@ -51,7 +51,7 @@ const viewport: Viewport = getViewport();
     // dragging item
     const inHome1: DraggableDimension = getDraggableDimension({
       descriptor: {
-        id: 'inHome1',
+        id: "inHome1",
         droppableId: home.descriptor.id,
         type: home.descriptor.type,
         index: 2,
@@ -66,7 +66,7 @@ const viewport: Viewport = getViewport();
 
     const inHome2: DraggableDimension = getDraggableDimension({
       descriptor: {
-        id: 'inHome2',
+        id: "inHome2",
         droppableId: home.descriptor.id,
         type: home.descriptor.type,
         index: 2,
@@ -81,7 +81,7 @@ const viewport: Viewport = getViewport();
 
     const inHome3: DraggableDimension = getDraggableDimension({
       descriptor: {
-        id: 'inHome3',
+        id: "inHome3",
         droppableId: home.descriptor.id,
         type: home.descriptor.type,
         index: 2,
@@ -102,11 +102,11 @@ const viewport: Viewport = getViewport();
       draggables: toDraggableMap(insideDestination),
     });
 
-    it('should find the closest draggable based on the items visible position (without initial displacement)', () => {
+    it("should find the closest draggable based on the items visible position (without initial displacement)", () => {
       const center: Position = patch(
         axis.line,
         inHome2.page.borderBox.center[axis.line],
-        100,
+        100
       );
 
       {
@@ -132,11 +132,11 @@ const viewport: Viewport = getViewport();
       }
     });
 
-    it('should ignore draggables backward that have no total visibility', () => {
+    it("should ignore draggables backward that have no total visibility", () => {
       const center: Position = patch(
         axis.line,
         inHome1.page.borderBox.center[axis.line],
-        100,
+        100
       );
       const scrolled: Viewport = scrollViewport(viewport, patch(axis.line, 1));
 
@@ -158,12 +158,12 @@ const viewport: Viewport = getViewport();
             destination: home,
             viewport: scrolled.frame,
             withDroppableDisplacement: true,
-          }),
+          })
         ).toBe(true);
 
         const inVisibleLocation: Spacing = offsetByPosition(
           inHome2.page.borderBox,
-          negate(afterCritical.displacedBy.point),
+          negate(afterCritical.displacedBy.point)
         );
         // visible when not scrolled
         expect(
@@ -172,7 +172,7 @@ const viewport: Viewport = getViewport();
             destination: home,
             viewport: viewport.frame,
             withDroppableDisplacement: true,
-          }),
+          })
         ).toBe(true);
         // not visible when scrolled
         expect(
@@ -181,7 +181,7 @@ const viewport: Viewport = getViewport();
             destination: home,
             viewport: scrolled.frame,
             withDroppableDisplacement: true,
-          }),
+          })
         ).toBe(false);
       }
 

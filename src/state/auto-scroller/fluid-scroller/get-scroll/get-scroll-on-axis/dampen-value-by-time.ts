@@ -1,6 +1,6 @@
-import getPercentage from '../../get-percentage';
-import config from '../../config';
-import minScroll from './min-scroll';
+import getPercentage from "../../get-percentage";
+import config from "../../config";
+import minScroll from "./min-scroll";
 
 const accelerateAt: number = config.durationDampening.accelerateAt;
 const stopAt: number = config.durationDampening.stopDampeningAt;

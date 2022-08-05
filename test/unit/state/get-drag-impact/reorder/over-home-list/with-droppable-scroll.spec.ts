@@ -1,4 +1,4 @@
-import type { Position } from 'css-box-model';
+import type { Position } from "css-box-model";
 import type {
   Axis,
   DisplacedBy,
@@ -6,16 +6,16 @@ import type {
   DroppableDimensionMap,
   DragImpact,
   Viewport,
-} from '../../../../../../src/types';
-import { horizontal, vertical } from '../../../../../../src/state/axis';
-import scrollDroppable from '../../../../../../src/state/droppable/scroll-droppable';
-import getDisplacedBy from '../../../../../../src/state/get-displaced-by';
-import getDragImpact from '../../../../../../src/state/get-drag-impact';
-import { patch, origin } from '../../../../../../src/state/position';
-import getViewport from '../../../../../../src/view/window/get-viewport';
-import { getPreset, makeScrollable } from '../../../../../util/dimension';
-import getLiftEffect from '../../../../../../src/state/get-lift-effect';
-import { getForcedDisplacement } from '../../../../../util/impact';
+} from "../../../../../../src/types";
+import { horizontal, vertical } from "../../../../../../src/state/axis";
+import scrollDroppable from "../../../../../../src/state/droppable/scroll-droppable";
+import getDisplacedBy from "../../../../../../src/state/get-displaced-by";
+import getDragImpact from "../../../../../../src/state/get-drag-impact";
+import { patch, origin } from "../../../../../../src/state/position";
+import getViewport from "../../../../../../src/view/window/get-viewport";
+import { getPreset, makeScrollable } from "../../../../../util/dimension";
+import getLiftEffect from "../../../../../../src/state/get-lift-effect";
+import { getForcedDisplacement } from "../../../../../util/impact";
 
 const viewport: Viewport = getViewport();
 
@@ -30,7 +30,7 @@ const viewport: Viewport = getViewport();
     };
 
     // moving inHome1 past inHome2 by scrolling the dimension
-    describe('moving beyond start position with own scroll', () => {
+    describe("moving beyond start position with own scroll", () => {
       const { afterCritical, impact: homeImpact } = getLiftEffect({
         draggable: preset.inHome1,
         home: scrollableHome,
@@ -38,17 +38,17 @@ const viewport: Viewport = getViewport();
         viewport,
       });
 
-      it('should move past other draggables', () => {
+      it("should move past other draggables", () => {
         const centerOfInHome2: number =
           preset.inHome2.page.borderBox.center[axis.line];
         const distanceNeeded: Position = patch(
           axis.line,
-          centerOfInHome2 - preset.inHome1.page.borderBox[axis.end] + 1,
+          centerOfInHome2 - preset.inHome1.page.borderBox[axis.end] + 1
         );
 
         const scrolledHome: DroppableDimension = scrollDroppable(
           scrollableHome,
-          distanceNeeded,
+          distanceNeeded
         );
         const updatedDroppables: DroppableDimensionMap = {
           ...withScrollableHome,
@@ -57,7 +57,7 @@ const viewport: Viewport = getViewport();
         // moving forward over inHome2
         const displacedBy: DisplacedBy = getDisplacedBy(
           axis,
-          preset.inHome1.displaceBy,
+          preset.inHome1.displaceBy
         );
         const impact: DragImpact = getDragImpact({
           pageOffset: origin,
@@ -80,7 +80,7 @@ const viewport: Viewport = getViewport();
           }),
           displacedBy,
           at: {
-            type: 'REORDER',
+            type: "REORDER",
             destination: {
               // now in position of inHome2 as it has moved backwards (it started displaced)
               droppableId: preset.home.descriptor.id,
@@ -93,7 +93,7 @@ const viewport: Viewport = getViewport();
     });
 
     // moving inHome4 back past inHome2
-    describe('moving back past start position with own scroll', () => {
+    describe("moving back past start position with own scroll", () => {
       const { afterCritical, impact: homeImpact } = getLiftEffect({
         draggable: preset.inHome4,
         home: scrollableHome,
@@ -102,21 +102,21 @@ const viewport: Viewport = getViewport();
       });
       const displacedBy: DisplacedBy = getDisplacedBy(
         axis,
-        preset.inHome4.displaceBy,
+        preset.inHome4.displaceBy
       );
 
-      it('should move back past inHome2', () => {
+      it("should move back past inHome2", () => {
         const centerOfInHome2: number =
           preset.inHome2.page.borderBox.center[axis.line];
 
         // Displacement will end when start goes past the displaced center of inHome2
         const distanceNeeded: Position = patch(
           axis.line,
-          centerOfInHome2 - preset.inHome4.page.borderBox[axis.start] - 1,
+          centerOfInHome2 - preset.inHome4.page.borderBox[axis.start] - 1
         );
         const scrolledHome: DroppableDimension = scrollDroppable(
           scrollableHome,
-          distanceNeeded,
+          distanceNeeded
         );
         const updatedDroppables: DroppableDimensionMap = {
           ...withScrollableHome,
@@ -145,7 +145,7 @@ const viewport: Viewport = getViewport();
           }),
           displacedBy,
           at: {
-            type: 'REORDER',
+            type: "REORDER",
             destination: {
               // is now in place of inHome2
               droppableId: preset.home.descriptor.id,

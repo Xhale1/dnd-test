@@ -1,16 +1,16 @@
-import { colors } from '@atlaskit/theme';
-import styled from '@emotion/styled';
+import { colors } from "@atlaskit/theme";
+import styled from "@emotion/styled";
 import type {
   DroppableProvided,
   DroppableStateSnapshot,
-} from '@hello-pangea/dnd';
-import { Droppable } from '@hello-pangea/dnd';
-import memoizeOne from 'memoize-one';
-import React, { Component, ReactElement } from 'react';
-import { borderRadius, grid } from '../constants';
-import type { Id, Task as TaskType } from '../types';
-import Task from './task';
-import type { Column as ColumnType } from './types';
+} from "@hello-pangea/dnd";
+import { Droppable } from "@hello-pangea/dnd";
+import memoizeOne from "memoize-one";
+import React, { Component, ReactElement } from "react";
+import { borderRadius, grid } from "../constants";
+import type { Id, Task as TaskType } from "../types";
+import Task from "./task";
+import type { Column as ColumnType } from "./types";
 
 interface Props {
   column: ColumnType;
@@ -49,7 +49,7 @@ const TaskList = styled.div<TaskListProps>`
   flex-grow: 1;
   transition: background-color 0.2s ease;
   ${(props) =>
-    props.isDraggingOver ? `background-color: ${colors.N200}` : ''};
+    props.isDraggingOver ? `background-color: ${colors.N200}` : ""};
 `;
 
 type TaskIdMap = {
@@ -60,7 +60,7 @@ const getSelectedMap = memoizeOne((selectedTaskIds: Id[]) =>
   selectedTaskIds.reduce((previous: TaskIdMap, current: Id): TaskIdMap => {
     previous[current] = true;
     return previous;
-  }, {}),
+  }, {})
 );
 
 export default class Column extends Component<Props> {
@@ -81,7 +81,7 @@ export default class Column extends Component<Props> {
             >
               {tasks.map((task: TaskType, index: number) => {
                 const isSelected = Boolean(
-                  getSelectedMap(selectedTaskIds)[task.id],
+                  getSelectedMap(selectedTaskIds)[task.id]
                 );
                 const isGhosting: boolean =
                   isSelected &&

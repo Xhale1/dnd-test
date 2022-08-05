@@ -1,18 +1,18 @@
-import type { Position } from 'css-box-model';
+import type { Position } from "css-box-model";
 import type {
   Viewport,
   Axis,
   DragImpact,
   DisplacedBy,
-} from '../../../../../../src/types';
-import { invariant } from '../../../../../../src/invariant';
-import { vertical, horizontal } from '../../../../../../src/state/axis';
-import getDisplacedBy from '../../../../../../src/state/get-displaced-by';
-import getLiftEffect from '../../../../../../src/state/get-lift-effect';
-import moveToNewDroppable from '../../../../../../src/state/move-in-direction/move-cross-axis/move-to-new-droppable';
-import { getPreset } from '../../../../../util/dimension';
-import { getForcedDisplacement } from '../../../../../util/impact';
-import { emptyGroups } from '../../../../../../src/state/no-impact';
+} from "../../../../../../src/types";
+import { invariant } from "../../../../../../src/invariant";
+import { vertical, horizontal } from "../../../../../../src/state/axis";
+import getDisplacedBy from "../../../../../../src/state/get-displaced-by";
+import getLiftEffect from "../../../../../../src/state/get-lift-effect";
+import moveToNewDroppable from "../../../../../../src/state/move-in-direction/move-cross-axis/move-to-new-droppable";
+import { getPreset } from "../../../../../util/dimension";
+import { getForcedDisplacement } from "../../../../../util/impact";
+import { emptyGroups } from "../../../../../../src/state/no-impact";
 
 const dontCare: Position = { x: 0, y: 0 };
 
@@ -21,7 +21,7 @@ const dontCare: Position = { x: 0, y: 0 };
     const preset = getPreset(axis);
     const viewport: Viewport = preset.viewport;
 
-    it('should not to anything if there is not target (can happen if invisible)', () => {
+    it("should not to anything if there is not target (can happen if invisible)", () => {
       const { afterCritical } = getLiftEffect({
         draggable: preset.inHome2,
         home: preset.home,
@@ -39,12 +39,12 @@ const dontCare: Position = { x: 0, y: 0 };
           moveRelativeTo: null,
           viewport,
           afterCritical,
-        }),
+        })
       ).toBe(null);
     });
 
-    describe('moving back into original index', () => {
-      it('should return a home impact with the original location', () => {
+    describe("moving back into original index", () => {
+      it("should return a home impact with the original location", () => {
         // the second draggable is moving back into its preset.home
         const { afterCritical } = getLiftEffect({
           draggable: preset.inHome2,
@@ -54,7 +54,7 @@ const dontCare: Position = { x: 0, y: 0 };
         });
         const displacedBy: DisplacedBy = getDisplacedBy(
           axis,
-          preset.inHome2.displaceBy,
+          preset.inHome2.displaceBy
         );
 
         const result: DragImpact | null = moveToNewDroppable({
@@ -79,7 +79,7 @@ const dontCare: Position = { x: 0, y: 0 };
           }),
           displacedBy,
           at: {
-            type: 'REORDER',
+            type: "REORDER",
             destination: {
               droppableId: preset.home.descriptor.id,
               index: preset.inHome2.descriptor.index,
@@ -90,8 +90,8 @@ const dontCare: Position = { x: 0, y: 0 };
       });
     });
 
-    describe('moving before the original index', () => {
-      it('should move the everything after the target index forward', () => {
+    describe("moving before the original index", () => {
+      it("should move the everything after the target index forward", () => {
         // moving preset.inHome4 into the preset.inHome2 position
         const { afterCritical } = getLiftEffect({
           draggable: preset.inHome4,
@@ -101,7 +101,7 @@ const dontCare: Position = { x: 0, y: 0 };
         });
         const displacedBy: DisplacedBy = getDisplacedBy(
           axis,
-          preset.inHome4.displaceBy,
+          preset.inHome4.displaceBy
         );
 
         const result: DragImpact | null = moveToNewDroppable({
@@ -126,7 +126,7 @@ const dontCare: Position = { x: 0, y: 0 };
           }),
           displacedBy,
           at: {
-            type: 'REORDER',
+            type: "REORDER",
             destination: {
               droppableId: preset.home.descriptor.id,
               index: preset.inHome2.descriptor.index,
@@ -137,8 +137,8 @@ const dontCare: Position = { x: 0, y: 0 };
       });
     });
 
-    describe('moving after the original index', () => {
-      it('should move the everything from the target index to the original index forward', () => {
+    describe("moving after the original index", () => {
+      it("should move the everything from the target index to the original index forward", () => {
         // moving inHome1 after inHome4
         const { afterCritical } = getLiftEffect({
           draggable: preset.inHome1,
@@ -148,7 +148,7 @@ const dontCare: Position = { x: 0, y: 0 };
         });
         const displacedBy: DisplacedBy = getDisplacedBy(
           axis,
-          preset.inHome1.displaceBy,
+          preset.inHome1.displaceBy
         );
         const result: DragImpact | null = moveToNewDroppable({
           previousPageBorderBoxCenter: dontCare,
@@ -166,7 +166,7 @@ const dontCare: Position = { x: 0, y: 0 };
           displaced: emptyGroups,
           displacedBy,
           at: {
-            type: 'REORDER',
+            type: "REORDER",
             destination: {
               droppableId: preset.home.descriptor.id,
               index: preset.inHome4.descriptor.index,

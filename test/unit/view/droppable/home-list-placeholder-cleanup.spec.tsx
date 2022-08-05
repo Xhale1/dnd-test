@@ -1,22 +1,22 @@
-import { act, render } from '@testing-library/react';
-import React from 'react';
-import App from './util/app';
-import getStubber from './util/get-stubber';
+import { act, render } from "@testing-library/react";
+import React from "react";
+import App from "./util/app";
+import getStubber from "./util/get-stubber";
 import {
   homeOwnProps,
   isNotOverHome,
   homeAtRest,
   homePostDropAnimation,
-} from './util/get-props';
+} from "./util/get-props";
 
 // Spy Placeholder component
-jest.mock('../../../../src/view/placeholder', () => jest.fn());
+jest.mock("../../../../src/view/placeholder", () => jest.fn());
 // eslint-disable-next-line import/newline-after-import, import/first
-import _Placeholder from '../../../../src/view/placeholder';
+import _Placeholder from "../../../../src/view/placeholder";
 const Placeholder = jest.mocked(_Placeholder);
 const { default: OriginalPlaceholder } = jest.requireActual<{
   default: typeof _Placeholder;
-}>('../../../../src/view/placeholder');
+}>("../../../../src/view/placeholder");
 
 beforeEach(() => {
   Placeholder.mockImplementation((props: any) => {
@@ -24,7 +24,7 @@ beforeEach(() => {
   });
 });
 
-it('should not display a placeholder after a flushed drag end in the home list', async () => {
+it("should not display a placeholder after a flushed drag end in the home list", async () => {
   const WrappedComponent = getStubber();
   // dropping
   const { rerender, container } = render(
@@ -32,11 +32,11 @@ it('should not display a placeholder after a flushed drag end in the home list',
       ownProps={homeOwnProps}
       mapProps={isNotOverHome}
       WrappedComponent={WrappedComponent}
-    />,
+    />
   );
 
   expect(
-    container.querySelectorAll('[data-rfd-placeholder-context-id]'),
+    container.querySelectorAll("[data-rfd-placeholder-context-id]")
   ).toHaveLength(1);
 
   rerender(
@@ -45,15 +45,15 @@ it('should not display a placeholder after a flushed drag end in the home list',
       mapProps={isNotOverHome}
       WrappedComponent={WrappedComponent}
       overwriteProps={homeAtRest}
-    />,
+    />
   );
 
   expect(
-    container.querySelectorAll('[data-rfd-placeholder-context-id]'),
+    container.querySelectorAll("[data-rfd-placeholder-context-id]")
   ).toHaveLength(0);
 });
 
-it('should animate a placeholder closed in a home list after a drag', () => {
+it("should animate a placeholder closed in a home list after a drag", () => {
   const WrappedComponent = getStubber();
   // dropping
   const { rerender, container } = render(
@@ -61,11 +61,11 @@ it('should animate a placeholder closed in a home list after a drag', () => {
       ownProps={homeOwnProps}
       mapProps={isNotOverHome}
       WrappedComponent={WrappedComponent}
-    />,
+    />
   );
 
   expect(
-    container.querySelectorAll('[data-rfd-placeholder-context-id]'),
+    container.querySelectorAll("[data-rfd-placeholder-context-id]")
   ).toHaveLength(1);
 
   rerender(
@@ -74,11 +74,11 @@ it('should animate a placeholder closed in a home list after a drag', () => {
       mapProps={isNotOverHome}
       WrappedComponent={WrappedComponent}
       overwriteProps={homePostDropAnimation}
-    />,
+    />
   );
 
   expect(
-    container.querySelectorAll('[data-rfd-placeholder-context-id]'),
+    container.querySelectorAll("[data-rfd-placeholder-context-id]")
   ).toHaveLength(1);
   expect(homePostDropAnimation.shouldAnimatePlaceholder).toBe(true);
 
@@ -89,6 +89,6 @@ it('should animate a placeholder closed in a home list after a drag', () => {
 
   // placeholder is now gone
   expect(
-    container.querySelectorAll('[data-rfd-placeholder-context-id]'),
+    container.querySelectorAll("[data-rfd-placeholder-context-id]")
   ).toHaveLength(0);
 });

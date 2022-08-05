@@ -1,4 +1,4 @@
-import type JSDOMEnvironment from 'jest-environment-jsdom';
+import type JSDOMEnvironment from "jest-environment-jsdom";
 
 /**
  * @testing-library/dom and jsdom do not properly implement
@@ -19,13 +19,13 @@ export default function transitionEventPolyfill(this: JSDOMEnvironment) {
 
     constructor(
       type: string,
-      transitionEventInitDict: TransitionEventInit = {},
+      transitionEventInitDict: TransitionEventInit = {}
     ) {
       super(type, transitionEventInitDict);
 
       this.elapsedTime = transitionEventInitDict.elapsedTime || 0.0;
-      this.propertyName = transitionEventInitDict.propertyName || '';
-      this.pseudoElement = transitionEventInitDict.pseudoElement || '';
+      this.propertyName = transitionEventInitDict.propertyName || "";
+      this.pseudoElement = transitionEventInitDict.pseudoElement || "";
     }
   }
 

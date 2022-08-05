@@ -20,7 +20,7 @@ yarn add @hello-pangea/dnd
 2. Use the package
 
 ```js
-import { DragDropContext } from '@hello-pangea/dnd';
+import { DragDropContext } from "@hello-pangea/dnd";
 ```
 
 3. Profit 🕺
@@ -61,7 +61,7 @@ You can use the UMD to run `@hello-pangea/dnd` directly in the browser.
   }
 
   // You can use JSX if your environment supports it
-  ReactDOM.render(React.createElement(App), document.getElementById('app'));
+  ReactDOM.render(React.createElement(App), document.getElementById("app"));
 </script>
 ```
 

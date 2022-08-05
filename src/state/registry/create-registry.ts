@@ -1,5 +1,5 @@
-import { invariant } from '../../invariant';
-import type { TypeId, DraggableId, DroppableId } from '../../types';
+import { invariant } from "../../invariant";
+import type { TypeId, DraggableId, DroppableId } from "../../types";
 import type {
   Registry,
   DraggableAPI,
@@ -11,7 +11,7 @@ import type {
   Unsubscribe,
   DraggableEntryMap,
   DroppableEntryMap,
-} from './registry-types';
+} from "./registry-types";
 
 interface EntryMap {
   draggables: DraggableEntryMap;
@@ -60,7 +60,7 @@ export default function createRegistry(): Registry {
   const draggableAPI: DraggableAPI = {
     register: (entry: DraggableEntry) => {
       entries.draggables[entry.descriptor.id] = entry;
-      notify({ type: 'ADDITION', value: entry });
+      notify({ type: "ADDITION", value: entry });
     },
     update: (entry: DraggableEntry, last: DraggableEntry) => {
       const current: DraggableEntry | null =
@@ -95,14 +95,14 @@ export default function createRegistry(): Registry {
       }
 
       delete entries.draggables[draggableId];
-      notify({ type: 'REMOVAL', value: entry });
+      notify({ type: "REMOVAL", value: entry });
     },
     getById: getDraggableById,
     findById: findDraggableById,
     exists: (id: DraggableId): boolean => Boolean(findDraggableById(id)),
     getAllByType: (type: TypeId): DraggableEntry[] =>
       Object.values(entries.draggables).filter(
-        (entry: DraggableEntry): boolean => entry.descriptor.type === type,
+        (entry: DraggableEntry): boolean => entry.descriptor.type === type
       ),
   };
 
@@ -122,7 +122,7 @@ export default function createRegistry(): Registry {
     },
     unregister: (entry: DroppableEntry) => {
       const current: DroppableEntry | null = findDroppableById(
-        entry.descriptor.id,
+        entry.descriptor.id
       );
 
       // can occur if cleaned before an unregistry
@@ -142,7 +142,7 @@ export default function createRegistry(): Registry {
     exists: (id: DroppableId): boolean => Boolean(findDroppableById(id)),
     getAllByType: (type: TypeId): DroppableEntry[] =>
       Object.values(entries.droppables).filter(
-        (entry: DroppableEntry): boolean => entry.descriptor.type === type,
+        (entry: DroppableEntry): boolean => entry.descriptor.type === type
       ),
   };
 

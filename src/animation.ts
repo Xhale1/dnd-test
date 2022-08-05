@@ -1,9 +1,9 @@
-import type { Position } from 'css-box-model';
-import { isEqual, origin } from './state/position';
+import type { Position } from "css-box-model";
+import { isEqual, origin } from "./state/position";
 
 export const curves = {
-  outOfTheWay: 'cubic-bezier(0.2, 0, 0, 1)',
-  drop: 'cubic-bezier(.2,1,.1,1)',
+  outOfTheWay: "cubic-bezier(0.2, 0, 0, 1)",
+  drop: "cubic-bezier(.2,1,.1,1)",
 };
 
 export const combine = {

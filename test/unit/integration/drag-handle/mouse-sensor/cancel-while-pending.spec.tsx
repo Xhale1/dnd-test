@@ -1,17 +1,17 @@
-import React from 'react';
-import { fireEvent, render } from '@testing-library/react';
-import { sloppyClickThreshold } from '../../../../../src/view/use-sensor-marshal/sensors/use-mouse-sensor';
-import App from '../../util/app';
-import { isDragging } from '../../util/helpers';
-import supportedEventName from '../../../../../src/view/use-sensor-marshal/sensors/util/supported-page-visibility-event-name';
-import { mouse } from '../../util/controls';
+import React from "react";
+import { fireEvent, render } from "@testing-library/react";
+import { sloppyClickThreshold } from "../../../../../src/view/use-sensor-marshal/sensors/use-mouse-sensor";
+import App from "../../util/app";
+import { isDragging } from "../../util/helpers";
+import supportedEventName from "../../../../../src/view/use-sensor-marshal/sensors/util/supported-page-visibility-event-name";
+import { mouse } from "../../util/controls";
 
-const events: string[] = ['keydown', 'resize', supportedEventName];
+const events: string[] = ["keydown", "resize", supportedEventName];
 
-it(`should cancel a pending drag on events: [${events.join(', ')}]`, () => {
+it(`should cancel a pending drag on events: [${events.join(", ")}]`, () => {
   events.forEach((eventName: string) => {
     const { getByText, unmount } = render(<App />);
-    const handle: HTMLElement = getByText('item: 0');
+    const handle: HTMLElement = getByText("item: 0");
 
     mouse.preLift(handle);
 
@@ -34,14 +34,14 @@ it(`should cancel a pending drag on events: [${events.join(', ')}]`, () => {
   });
 });
 
-it('should abort when there is a window scroll', () => {
+it("should abort when there is a window scroll", () => {
   const { getByText } = render(<App />);
-  const handle: HTMLElement = getByText('item: 0');
+  const handle: HTMLElement = getByText("item: 0");
 
   fireEvent.mouseDown(handle);
 
   // abort
-  const event: Event = new Event('scroll', {
+  const event: Event = new Event("scroll", {
     bubbles: true,
     cancelable: true,
   });

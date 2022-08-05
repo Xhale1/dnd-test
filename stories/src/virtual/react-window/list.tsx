@@ -1,6 +1,6 @@
-import { DragDropContext, Draggable, Droppable } from '@hello-pangea/dnd';
-import React, { CSSProperties, ReactElement, useState } from 'react';
-import { areEqual, FixedSizeList as List } from 'react-window';
+import { DragDropContext, Draggable, Droppable } from "@hello-pangea/dnd";
+import React, { CSSProperties, ReactElement, useState } from "react";
+import { areEqual, FixedSizeList as List } from "react-window";
 
 import type {
   DraggableProvided,
@@ -8,11 +8,11 @@ import type {
   DraggableStateSnapshot,
   DroppableProvided,
   DropResult,
-} from '@hello-pangea/dnd';
-import type { Quote } from '../../types';
+} from "@hello-pangea/dnd";
+import type { Quote } from "../../types";
 
-import QuoteItem from '../../primatives/quote-item';
-import reorder from '../../reorder';
+import QuoteItem from "../../primatives/quote-item";
+import reorder from "../../reorder";
 
 interface Props {
   initial: Quote[];
@@ -57,7 +57,7 @@ function App(props: Props): ReactElement {
     const newQuotes: Quote[] = reorder(
       quotes,
       result.source.index,
-      result.destination.index,
+      result.destination.index
     );
     setQuotes(newQuotes);
   }
@@ -70,7 +70,7 @@ function App(props: Props): ReactElement {
         renderClone={(
           provided: DraggableProvided,
           snapshot: DraggableStateSnapshot,
-          rubric: DraggableRubric,
+          rubric: DraggableRubric
         ) => (
           <QuoteItem
             provided={provided}

@@ -1,9 +1,9 @@
-import type { Position } from 'css-box-model';
+import type { Position } from "css-box-model";
 import type {
   ReactNode,
   DragEventHandler,
   TransitionEventHandler,
-} from 'react';
+} from "react";
 import type {
   DraggableId,
   DroppableId,
@@ -13,14 +13,14 @@ import type {
   ContextId,
   ElementId,
   DraggableRubric,
-} from '../../types';
-import { dropAnimationFinished } from '../../state/action-creators';
+} from "../../types";
+import { dropAnimationFinished } from "../../state/action-creators";
 
 export interface DraggingStyle {
-  position: 'fixed';
+  position: "fixed";
   top: number;
   left: number;
-  boxSizing: 'border-box';
+  boxSizing: "border-box";
   width: number;
   height: number;
   transition: string;
@@ -33,14 +33,14 @@ export interface DraggingStyle {
   // During a drop it prevents a draggable from being dragged.
   // canStartDrag() will prevent drags in some cases for non primary draggable.
   // It is also a minor performance optimisation
-  pointerEvents: 'none';
+  pointerEvents: "none";
 }
 
 export interface NotDraggingStyle {
   transform?: string;
   // null: use the global animation style
   // none: skip animation (used in certain displacement situations)
-  transition?: 'none';
+  transition?: "none";
 }
 
 export type DraggableStyle = DraggingStyle | NotDraggingStyle;
@@ -55,18 +55,18 @@ export interface DraggableProvidedDraggableProps {
   // inline style
   style?: DraggableStyle;
   // used for shared global styles
-  'data-rfd-draggable-context-id': ContextId;
+  "data-rfd-draggable-context-id": ContextId;
   // used for lookups
-  'data-rfd-draggable-id': DraggableId;
+  "data-rfd-draggable-id": DraggableId;
   // used to know when a transition ends
   onTransitionEnd?: TransitionEventHandler;
 }
 
 export interface DraggableProvidedDragHandleProps {
   // what draggable the handle belongs to
-  'data-rfd-drag-handle-draggable-id': DraggableId;
+  "data-rfd-drag-handle-draggable-id": DraggableId;
   // What DragDropContext the drag handle is in
-  'data-rfd-drag-handle-context-id': ContextId;
+  "data-rfd-drag-handle-context-id": ContextId;
   // We need a drag handle to be a widget in order to correctly set accessibility properties
   // Note: JAWS and VoiceOver don't need the element to be a 'widget' to read the accessibility properties, but NVDA does
   // Using `role="button"` but leaving the public API as a string to allow for changing without a major
@@ -77,7 +77,7 @@ export interface DraggableProvidedDragHandleProps {
   // 'aria-roledescription': string,
 
   // Using the description property of the drag handle to provide usage instructions
-  'aria-describedby': ElementId;
+  "aria-describedby": ElementId;
   // Allow tabbing to this element
   // Adding a tab index marks the element as interactive content: https://www.w3.org/TR/html51/dom.html#kinds-of-content-interactive-content
   tabIndex: number;
@@ -122,7 +122,7 @@ export interface DispatchProps {
 }
 
 export interface DraggingMapProps {
-  type: 'DRAGGING';
+  type: "DRAGGING";
   offset: Position;
   mode: MovementMode;
   dropping: DropAnimation | null;
@@ -134,7 +134,7 @@ export interface DraggingMapProps {
 }
 
 export interface SecondaryMapProps {
-  type: 'SECONDARY';
+  type: "SECONDARY";
   offset: Position;
   combineTargetFor: DraggableId | null;
   shouldAnimateDisplacement: boolean;
@@ -154,7 +154,7 @@ export interface MapProps {
 export type DraggableChildrenFn = (
   provided: DraggableProvided,
   snapshot: DraggableStateSnapshot,
-  rubic: DraggableRubric,
+  rubic: DraggableRubric
 ) => ReactNode | null;
 
 export interface DraggableProps {

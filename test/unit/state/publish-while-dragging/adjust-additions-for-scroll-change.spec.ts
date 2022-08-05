@@ -1,5 +1,5 @@
-import { offset } from 'css-box-model';
-import type { Position } from 'css-box-model';
+import { offset } from "css-box-model";
+import type { Position } from "css-box-model";
 import type {
   Published,
   DraggableDimension,
@@ -8,25 +8,25 @@ import type {
   CollectingState,
   Viewport,
   DroppableDimension,
-} from '../../../../src/types';
-import { invariant } from '../../../../src/invariant';
-import publish from '../../../../src/state/publish-while-dragging-in-virtual';
+} from "../../../../src/types";
+import { invariant } from "../../../../src/invariant";
+import publish from "../../../../src/state/publish-while-dragging-in-virtual";
 import {
   getPreset,
   getDraggableDimension,
   addDroppable,
   getFrame,
-} from '../../../util/dimension';
-import getStatePreset from '../../../util/get-simple-state-preset';
-import { empty, withVirtuals, virtualHome } from './util';
-import { add, negate, origin } from '../../../../src/state/position';
-import scrollViewport from '../../../../src/state/scroll-viewport';
-import scrollDroppable from '../../../../src/state/droppable/scroll-droppable';
+} from "../../../util/dimension";
+import getStatePreset from "../../../util/get-simple-state-preset";
+import { empty, withVirtuals, virtualHome } from "./util";
+import { add, negate, origin } from "../../../../src/state/position";
+import scrollViewport from "../../../../src/state/scroll-viewport";
+import scrollDroppable from "../../../../src/state/droppable/scroll-droppable";
 
 const state = getStatePreset();
 const preset = getPreset();
 
-it('should shift added draggables to account for change in page scroll since start of drag', () => {
+it("should shift added draggables to account for change in page scroll since start of drag", () => {
   // change in scroll
   const scrollChange: Position = { x: 20, y: 40 };
   // the displacement caused to draggables as a result of the change
@@ -37,7 +37,7 @@ it('should shift added draggables to account for change in page scroll since sta
   const added: DraggableDimension = getDraggableDimension({
     descriptor: {
       index: 0,
-      id: 'added',
+      id: "added",
       droppableId: preset.home.descriptor.id,
       type: preset.home.descriptor.type,
     },
@@ -60,8 +60,8 @@ it('should shift added draggables to account for change in page scroll since sta
     state.collecting(
       preset.inHome1.descriptor.id,
       preset.inHome1.client.borderBox.center,
-      scrolledViewport,
-    ),
+      scrolledViewport
+    )
   );
 
   const result: DraggingState | DropPendingState = publish({
@@ -69,17 +69,17 @@ it('should shift added draggables to account for change in page scroll since sta
     published,
   });
 
-  invariant(result.phase === 'DRAGGING');
+  invariant(result.phase === "DRAGGING");
   expect(result.dimensions.draggables[added.descriptor.id]).toEqual(unshifted);
 });
 
-it('should shift added draggables to account for change in droppable scroll since start of drag', () => {
+it("should shift added draggables to account for change in droppable scroll since start of drag", () => {
   // Scroll droppable
   const scrollChange: Position = { x: 20, y: 40 };
   const scrollDisplacement: Position = negate(scrollChange);
   const newScroll: Position = add(
     getFrame(virtualHome).scroll.initial,
-    scrollChange,
+    scrollChange
   );
   const scrolled: DroppableDimension = scrollDroppable(virtualHome, newScroll);
   // validation
@@ -88,7 +88,7 @@ it('should shift added draggables to account for change in droppable scroll sinc
   const added: DraggableDimension = getDraggableDimension({
     descriptor: {
       index: 0,
-      id: 'added',
+      id: "added",
       droppableId: preset.home.descriptor.id,
       type: preset.home.descriptor.type,
     },
@@ -108,11 +108,11 @@ it('should shift added draggables to account for change in droppable scroll sinc
     modified: [{ droppableId: scrolled.descriptor.id, scroll: newScroll }],
   };
   const original: CollectingState = state.collecting(
-    preset.inHome1.descriptor.id,
+    preset.inHome1.descriptor.id
   );
   const withScrolled: CollectingState = addDroppable(
     original as any,
-    scrolled,
+    scrolled
   ) as any;
 
   const result: DraggingState | DropPendingState = publish({
@@ -120,6 +120,6 @@ it('should shift added draggables to account for change in droppable scroll sinc
     published,
   });
 
-  invariant(result.phase === 'DRAGGING');
+  invariant(result.phase === "DRAGGING");
   expect(result.dimensions.draggables[added.descriptor.id]).toEqual(unshifted);
 });

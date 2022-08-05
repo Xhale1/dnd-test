@@ -1,9 +1,9 @@
-import React from 'react';
-import { storiesOf } from '@storybook/react';
-import styled from '@emotion/styled';
-import QuoteApp from '../src/vertical/quote-app';
-import { getQuotes } from '../src/data';
-import { grid } from '../src/constants';
+import React from "react";
+import { storiesOf } from "@storybook/react";
+import styled from "@emotion/styled";
+import QuoteApp from "../src/vertical/quote-app";
+import { getQuotes } from "../src/data";
+import { grid } from "../src/constants";
 
 const generateData = {
   small: () => getQuotes(),
@@ -26,41 +26,41 @@ const Title = styled.h4`
   margin-bottom: ${grid}px;
 `;
 
-storiesOf('Examples/single vertical list', module)
-  .add('basic', () => <QuoteApp initial={generateData.small()} />)
-  .add('large data set', () => <QuoteApp initial={generateData.large()} />, {
+storiesOf("Examples/single vertical list", module)
+  .add("basic", () => <QuoteApp initial={generateData.small()} />)
+  .add("large data set", () => <QuoteApp initial={generateData.large()} />, {
     chromatic: {
       // This is to make sure we do not reach
       // the 25,000,000px limit of the snapshot.
       viewports: [320],
     },
   })
-  .add('Droppable is a scroll container', () => (
+  .add("Droppable is a scroll container", () => (
     <QuoteApp
       initial={generateData.medium()}
       listStyle={{
-        overflowY: 'scroll',
-        maxHeight: '80vh',
-        position: 'relative',
+        overflowY: "scroll",
+        maxHeight: "80vh",
+        position: "relative",
       }}
     />
   ))
-  .add('window scrolling and a Droppable scroll container', () => (
+  .add("window scrolling and a Droppable scroll container", () => (
     <QuoteApp
       initial={generateData.medium()}
       listStyle={{
-        overflowY: 'scroll',
-        maxHeight: '120vh',
-        position: 'relative',
+        overflowY: "scroll",
+        maxHeight: "120vh",
+        position: "relative",
       }}
     />
   ))
-  .add('within a larger scroll container', () => (
+  .add("within a larger scroll container", () => (
     <ScrollContainer>
       <Title>List is within a larger scroll container</Title>
       <QuoteApp initial={generateData.medium()} />
     </ScrollContainer>
   ))
-  .add('with combine enabled', () => (
+  .add("with combine enabled", () => (
     <QuoteApp initial={generateData.small()} isCombineEnabled />
   ));

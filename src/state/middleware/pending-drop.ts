@@ -1,12 +1,12 @@
-import { drop } from '../action-creators';
-import type { State } from '../../types';
-import type { Middleware } from '../store-types';
+import { drop } from "../action-creators";
+import type { State } from "../../types";
+import type { Middleware } from "../store-types";
 
 const pendingDrop: Middleware = (store) => (next) => (action) => {
   // Always let the action go through first
   next(action);
 
-  if (action.type !== 'PUBLISH_WHILE_DRAGGING') {
+  if (action.type !== "PUBLISH_WHILE_DRAGGING") {
     return;
   }
 
@@ -17,7 +17,7 @@ const pendingDrop: Middleware = (store) => (next) => (action) => {
   const postActionState: State = store.getState();
 
   // no pending drop after the publish
-  if (postActionState.phase !== 'DROP_PENDING') {
+  if (postActionState.phase !== "DROP_PENDING") {
     return;
   }
 
@@ -29,7 +29,7 @@ const pendingDrop: Middleware = (store) => (next) => (action) => {
   store.dispatch(
     drop({
       reason: postActionState.reason,
-    }),
+    })
   );
 };
 

@@ -1,8 +1,8 @@
-import { dropAnimationFinished } from '../../action-creators';
-import type { State } from '../../../types';
-import type { Middleware } from '../../store-types';
-import type { EventBinding } from '../../../view/event-bindings/event-types';
-import bindEvents from '../../../view/event-bindings/bind-events';
+import { dropAnimationFinished } from "../../action-creators";
+import type { State } from "../../../types";
+import type { Middleware } from "../../store-types";
+import type { EventBinding } from "../../../view/event-bindings/event-types";
+import bindEvents from "../../../view/event-bindings/bind-events";
 
 const dropAnimationFlushOnScrollMiddleware: Middleware = (store) => {
   let unbind: (() => void) | null = null;
@@ -22,27 +22,27 @@ const dropAnimationFlushOnScrollMiddleware: Middleware = (store) => {
 
   return (next) => (action) => {
     if (
-      action.type === 'FLUSH' ||
-      action.type === 'DROP_COMPLETE' ||
-      action.type === 'DROP_ANIMATION_FINISHED'
+      action.type === "FLUSH" ||
+      action.type === "DROP_COMPLETE" ||
+      action.type === "DROP_ANIMATION_FINISHED"
     ) {
       clear();
     }
 
     next(action);
 
-    if (action.type !== 'DROP_ANIMATE') {
+    if (action.type !== "DROP_ANIMATE") {
       return;
     }
 
     const binding: EventBinding = {
-      eventName: 'scroll',
+      eventName: "scroll",
       // capture: true will catch all scroll events, event from scroll containers
       // once: just in case, we only want to ever fire one
       options: { capture: true, passive: false, once: true },
       fn: function flushDropAnimation() {
         const state: State = store.getState();
-        if (state.phase === 'DROP_ANIMATING') {
+        if (state.phase === "DROP_ANIMATING") {
           store.dispatch(dropAnimationFinished());
         }
       },

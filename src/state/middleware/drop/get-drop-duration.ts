@@ -1,7 +1,7 @@
-import type { Position } from 'css-box-model';
-import { distance as getDistance } from '../../position';
-import { timings } from '../../../animation';
-import type { DropReason } from '../../../types';
+import type { Position } from "css-box-model";
+import { distance as getDistance } from "../../position";
+import { timings } from "../../../animation";
+import type { DropReason } from "../../../types";
 
 interface GetDropDurationArgs {
   current: Position;
@@ -40,7 +40,7 @@ export default ({
   const duration: number = minDropTime + dropTimeRange * percentage;
 
   const withDuration: number =
-    reason === 'CANCEL' ? duration * cancelDropModifier : duration;
+    reason === "CANCEL" ? duration * cancelDropModifier : duration;
   // To two decimal points by converting to string and back
   return Number(withDuration.toFixed(2));
 };

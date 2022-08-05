@@ -1,4 +1,4 @@
-import type { ScrollOptions } from '../../types';
+import type { ScrollOptions } from "../../types";
 
 const immediate = {
   passive: false,

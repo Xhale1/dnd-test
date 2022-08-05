@@ -1,8 +1,8 @@
-import { createBox } from 'css-box-model';
-import type { BoxModel } from 'css-box-model';
-import type { DroppableDimension } from '../../../../../../src/types';
-import { origin } from '../../../../../../src/state/position';
-import { getDroppableDimension } from '../../../../../util/dimension';
+import { createBox } from "css-box-model";
+import type { BoxModel } from "css-box-model";
+import type { DroppableDimension } from "../../../../../../src/types";
+import { origin } from "../../../../../../src/state/position";
+import { getDroppableDimension } from "../../../../../util/dimension";
 
 export default (preset: any) => {
   const scrollableScrollSize = {

@@ -1,6 +1,6 @@
-import type { DroppableDimension } from '../../../../../src/types';
-import type { InternalOwnProps } from '../../../../../src/view/droppable/droppable-types';
-import getBodyElement from '../../../../../src/view/get-body-element';
+import type { DroppableDimension } from "../../../../../src/types";
+import type { InternalOwnProps } from "../../../../../src/view/droppable/droppable-types";
+import getBodyElement from "../../../../../src/view/get-body-element";
 
 export default (dimension: DroppableDimension): InternalOwnProps => ({
   droppableId: dimension.descriptor.id,
@@ -11,6 +11,6 @@ export default (dimension: DroppableDimension): InternalOwnProps => ({
   ignoreContainerClipping: false,
   children: () => null,
   getContainerForClone: getBodyElement,
-  mode: 'standard',
+  mode: "standard",
   renderClone: null,
 });

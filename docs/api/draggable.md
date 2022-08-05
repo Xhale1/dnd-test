@@ -5,7 +5,7 @@
 Every `<Draggable />` has a _drag handle_. A _drag handle_ is the element that the user interacts with in order to drag a `<Draggable />`. A _drag handle_ can be the `<Draggable />` element itself, or a child of the `<Draggable />`. Note that by default a _drag handle_ cannot be an interactive element, since [event handlers are blocked on nested interactive elements](#interactive-child-elements-within-a-draggable-). Proper semantics for accessibility are added to the _drag handle_ element. If you wish to use an interactive element, `disableInteractiveElementBlocking` must be set.
 
 ```js
-import { Draggable } from '@hello-pangea/dnd';
+import { Draggable } from "@hello-pangea/dnd";
 
 <Draggable draggableId="draggable-1" index={0}>
   {(provided, snapshot) => (
@@ -97,7 +97,7 @@ The `React` children of a `<Draggable />` must be a function that returns a `Rea
 type DraggableChildrenFn = (
   DraggableProvided,
   DraggableStateSnapshot,
-  DraggableRubric,
+  DraggableRubric
 ) => ReactNode | null;
 ```
 
@@ -142,8 +142,8 @@ interface DraggableProps {
   // inline style
   style?: DraggableStyle;
   // used for shared global styles
-  'data-rfd-draggable-context-id': ContextId;
-  'data-rfd-draggable-id': DraggableId; // used to know when a transition ends
+  "data-rfd-draggable-context-id": ContextId;
+  "data-rfd-draggable-id": DraggableId; // used to know when a transition ends
   onTransitionEnd?: TransitionEventHandler;
 }
 ```
@@ -253,7 +253,7 @@ If you are overriding inline styles be sure to do it after you spread the `provi
   {(provided, snapshot) => {
     // extending the DraggableStyle with our own inline styles
     const style = {
-      backgroundColor: snapshot.isDragging ? 'blue' : 'white',
+      backgroundColor: snapshot.isDragging ? "blue" : "white",
       fontSize: 18,
       ...provided.draggableProps.style,
     };
@@ -324,14 +324,14 @@ It is an assumption that `<Draggable />`s are _visible siblings_ of one another.
 ```ts
 interface DragHandleProps {
   // what draggable the handle belongs to
-  'data-rfd-drag-handle-draggable-id': DraggableId;
+  "data-rfd-drag-handle-draggable-id": DraggableId;
 
   // What DragDropContext the drag handle is in
-  'data-rfd-drag-handle-context-id': ContextId;
+  "data-rfd-drag-handle-context-id": ContextId;
 
   role: string;
   // Id of hidden element that contains the lift instruction (nicer screen reader text)
-  'aria-labelledby': ElementId;
+  "aria-labelledby": ElementId;
 
   // Allow tabbing to this element
   tabIndex: number;
@@ -408,7 +408,7 @@ The `children` function is also provided with a small amount of state relating t
 <Draggable draggableId="draggable-1" index={0}>
   {(provided, snapshot) => {
     const style = {
-      backgroundColor: snapshot.isDragging ? 'blue' : 'grey',
+      backgroundColor: snapshot.isDragging ? "blue" : "grey",
       ...provided.draggableProps.style,
     };
 

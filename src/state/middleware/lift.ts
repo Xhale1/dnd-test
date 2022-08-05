@@ -1,20 +1,20 @@
-import { invariant } from '../../invariant';
-import type { DimensionMarshal } from '../dimension-marshal/dimension-marshal-types';
-import type { State, ScrollOptions, LiftRequest } from '../../types';
-import type { Middleware } from '../store-types';
+import { invariant } from "../../invariant";
+import type { DimensionMarshal } from "../dimension-marshal/dimension-marshal-types";
+import type { State, ScrollOptions, LiftRequest } from "../../types";
+import type { Middleware } from "../store-types";
 import {
   completeDrop,
   initialPublish,
   flush,
   beforeInitialCapture,
-} from '../action-creators';
-import validateDimensions from './util/validate-dimensions';
+} from "../action-creators";
+import validateDimensions from "./util/validate-dimensions";
 
 export default (marshal: DimensionMarshal): Middleware =>
   ({ getState, dispatch }) =>
   (next) =>
   (action) => {
-    if (action.type !== 'LIFT') {
+    if (action.type !== "LIFT") {
       next(action);
       return;
     }
@@ -25,11 +25,11 @@ export default (marshal: DimensionMarshal): Middleware =>
     // this can change the descriptor of the dragging item
     // Will call the onDragEnd responders
 
-    if (initial.phase === 'DROP_ANIMATING') {
+    if (initial.phase === "DROP_ANIMATING") {
       dispatch(completeDrop({ completed: initial.completed }));
     }
 
-    invariant(getState().phase === 'IDLE', 'Unexpected phase to start a drag');
+    invariant(getState().phase === "IDLE", "Unexpected phase to start a drag");
 
     // Removing any placeholders before we capture any starting dimensions
     dispatch(flush());
@@ -41,7 +41,7 @@ export default (marshal: DimensionMarshal): Middleware =>
 
     // will communicate with the marshal to start requesting dimensions
     const scrollOptions: ScrollOptions = {
-      shouldPublishImmediately: movementMode === 'SNAP',
+      shouldPublishImmediately: movementMode === "SNAP",
     };
     const request: LiftRequest = {
       draggableId: id,
@@ -60,6 +60,6 @@ export default (marshal: DimensionMarshal): Middleware =>
         clientSelection,
         movementMode,
         viewport,
-      }),
+      })
     );
   };

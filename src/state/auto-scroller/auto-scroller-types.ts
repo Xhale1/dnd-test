@@ -1,4 +1,4 @@
-import type { State, DraggingState } from '../../types';
+import type { State, DraggingState } from "../../types";
 
 export interface AutoScroller {
   start: (state: DraggingState) => void;

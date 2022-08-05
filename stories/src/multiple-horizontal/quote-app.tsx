@@ -1,13 +1,13 @@
-import { colors } from '@atlaskit/theme';
-import styled from '@emotion/styled';
-import type { DropResult } from '@hello-pangea/dnd';
-import { DragDropContext } from '@hello-pangea/dnd';
-import React, { Component, ReactElement } from 'react';
-import { grid } from '../constants';
-import AuthorList from '../primatives/author-list';
-import type { ReorderQuoteMapResult } from '../reorder';
-import { reorderQuoteMap } from '../reorder';
-import type { QuoteMap } from '../types';
+import { colors } from "@atlaskit/theme";
+import styled from "@emotion/styled";
+import type { DropResult } from "@hello-pangea/dnd";
+import { DragDropContext } from "@hello-pangea/dnd";
+import React, { Component, ReactElement } from "react";
+import { grid } from "../constants";
+import AuthorList from "../primatives/author-list";
+import type { ReorderQuoteMapResult } from "../reorder";
+import { reorderQuoteMap } from "../reorder";
+import type { QuoteMap } from "../types";
 
 const Root = styled.div`
   background-color: ${colors.B200};
@@ -44,7 +44,7 @@ export default class QuoteApp extends Component<Props, State> {
         quoteMap: this.state.quoteMap,
         source: result.source,
         destination: result.destination,
-      }),
+      })
     );
   };
 

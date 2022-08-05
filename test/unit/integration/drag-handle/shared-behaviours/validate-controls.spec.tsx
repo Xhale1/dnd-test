@@ -1,19 +1,19 @@
-import React from 'react';
-import { render } from '@testing-library/react';
-import { isDragging, getDropReason } from '../../util/helpers';
-import App from '../../util/app';
-import { forEachSensor } from '../../util/controls';
+import React from "react";
+import { render } from "@testing-library/react";
+import { isDragging, getDropReason } from "../../util/helpers";
+import App from "../../util/app";
+import { forEachSensor } from "../../util/controls";
 
-import type { Control } from '../../util/controls';
+import type { Control } from "../../util/controls";
 
 forEachSensor((control: Control) => {
-  it('should control a successful drag through the sensor', () => {
+  it("should control a successful drag through the sensor", () => {
     const onDragStart = jest.fn();
     const onDragEnd = jest.fn();
     const { getByText } = render(
-      <App onDragStart={onDragStart} onDragEnd={onDragEnd} />,
+      <App onDragStart={onDragStart} onDragEnd={onDragEnd} />
     );
-    const handle: HTMLElement = getByText('item: 0');
+    const handle: HTMLElement = getByText("item: 0");
 
     Array.from({ length: 4 }).forEach(() => {
       control.preLift(handle);
@@ -37,19 +37,19 @@ forEachSensor((control: Control) => {
       expect(isDragging(handle)).toBe(false);
 
       expect(onDragEnd).toHaveBeenCalledTimes(1);
-      expect(getDropReason(onDragEnd)).toBe('DROP');
+      expect(getDropReason(onDragEnd)).toBe("DROP");
 
       onDragEnd.mockClear();
     });
   });
 
-  it('should control a cancel through the sensor', () => {
+  it("should control a cancel through the sensor", () => {
     const onDragStart = jest.fn();
     const onDragEnd = jest.fn();
     const { getByText } = render(
-      <App onDragStart={onDragStart} onDragEnd={onDragEnd} />,
+      <App onDragStart={onDragStart} onDragEnd={onDragEnd} />
     );
-    const handle: HTMLElement = getByText('item: 0');
+    const handle: HTMLElement = getByText("item: 0");
 
     Array.from({ length: 4 }).forEach(() => {
       control.preLift(handle);
@@ -70,7 +70,7 @@ forEachSensor((control: Control) => {
 
       expect(isDragging(handle)).toBe(false);
       expect(onDragEnd).toHaveBeenCalledTimes(1);
-      expect(getDropReason(onDragEnd)).toBe('CANCEL');
+      expect(getDropReason(onDragEnd)).toBe("CANCEL");
 
       onDragEnd.mockClear();
     });

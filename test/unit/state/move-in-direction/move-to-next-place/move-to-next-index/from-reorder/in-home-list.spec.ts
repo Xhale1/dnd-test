@@ -2,23 +2,23 @@ import type {
   Axis,
   DragImpact,
   DisplacedBy,
-} from '../../../../../../../src/types';
-import { invariant } from '../../../../../../../src/invariant';
-import { vertical, horizontal } from '../../../../../../../src/state/axis';
-import { getPreset } from '../../../../../../util/dimension';
-import moveToNextIndex from '../../../../../../../src/state/move-in-direction/move-to-next-place/move-to-next-index';
-import getDisplacedBy from '../../../../../../../src/state/get-displaced-by';
-import getLiftEffect from '../../../../../../../src/state/get-lift-effect';
-import { getForcedDisplacement } from '../../../../../../util/impact';
-import { emptyGroups } from '../../../../../../../src/state/no-impact';
+} from "../../../../../../../src/types";
+import { invariant } from "../../../../../../../src/invariant";
+import { vertical, horizontal } from "../../../../../../../src/state/axis";
+import { getPreset } from "../../../../../../util/dimension";
+import moveToNextIndex from "../../../../../../../src/state/move-in-direction/move-to-next-place/move-to-next-index";
+import getDisplacedBy from "../../../../../../../src/state/get-displaced-by";
+import getLiftEffect from "../../../../../../../src/state/get-lift-effect";
+import { getForcedDisplacement } from "../../../../../../util/impact";
+import { emptyGroups } from "../../../../../../../src/state/no-impact";
 
 [vertical, horizontal].forEach((axis: Axis) => {
   const preset = getPreset(axis);
   describe(`on ${axis.direction} axis`, () => {
-    it('should update the impact when moving with items that started displaced', () => {
+    it("should update the impact when moving with items that started displaced", () => {
       const displacedBy: DisplacedBy = getDisplacedBy(
         axis,
-        preset.inHome2.displaceBy,
+        preset.inHome2.displaceBy
       );
       const { afterCritical, impact: homeImpact } = getLiftEffect({
         draggable: preset.inHome2,
@@ -46,7 +46,7 @@ import { emptyGroups } from '../../../../../../../src/state/no-impact';
           }),
           displacedBy,
           at: {
-            type: 'REORDER',
+            type: "REORDER",
             destination: {
               index: preset.inHome3.descriptor.index,
               droppableId: preset.home.descriptor.id,
@@ -72,7 +72,7 @@ import { emptyGroups } from '../../../../../../../src/state/no-impact';
           displaced: emptyGroups,
           displacedBy,
           at: {
-            type: 'REORDER',
+            type: "REORDER",
             destination: {
               index: preset.inHome4.descriptor.index,
               droppableId: preset.home.descriptor.id,
@@ -101,7 +101,7 @@ import { emptyGroups } from '../../../../../../../src/state/no-impact';
           }),
           displacedBy,
           at: {
-            type: 'REORDER',
+            type: "REORDER",
             destination: {
               index: preset.inHome3.descriptor.index,
               droppableId: preset.home.descriptor.id,
@@ -133,7 +133,7 @@ import { emptyGroups } from '../../../../../../../src/state/no-impact';
           }),
           displacedBy,
           at: {
-            type: 'REORDER',
+            type: "REORDER",
             destination: {
               index: preset.inHome2.descriptor.index,
               droppableId: preset.home.descriptor.id,
@@ -166,7 +166,7 @@ import { emptyGroups } from '../../../../../../../src/state/no-impact';
           }),
           displacedBy,
           at: {
-            type: 'REORDER',
+            type: "REORDER",
             destination: {
               index: preset.inHome1.descriptor.index,
               droppableId: preset.home.descriptor.id,
@@ -177,11 +177,11 @@ import { emptyGroups } from '../../../../../../../src/state/no-impact';
       }
     });
 
-    it('should update the impact when moving with items that did not start displaced', () => {
+    it("should update the impact when moving with items that did not start displaced", () => {
       // dragging inHome3 backwards away from the start
       const displacedBy: DisplacedBy = getDisplacedBy(
         axis,
-        preset.inHome3.displaceBy,
+        preset.inHome3.displaceBy
       );
       const { afterCritical, impact: homeImpact } = getLiftEffect({
         draggable: preset.inHome3,
@@ -213,7 +213,7 @@ import { emptyGroups } from '../../../../../../../src/state/no-impact';
           }),
           displacedBy,
           at: {
-            type: 'REORDER',
+            type: "REORDER",
             destination: {
               droppableId: preset.home.descriptor.id,
               index: preset.inHome2.descriptor.index,
@@ -258,7 +258,7 @@ import { emptyGroups } from '../../../../../../../src/state/no-impact';
           }),
           displacedBy,
           at: {
-            type: 'REORDER',
+            type: "REORDER",
             destination: {
               droppableId: preset.home.descriptor.id,
               index: preset.inHome1.descriptor.index,
@@ -298,7 +298,7 @@ import { emptyGroups } from '../../../../../../../src/state/no-impact';
           }),
           displacedBy,
           at: {
-            type: 'REORDER',
+            type: "REORDER",
             destination: {
               droppableId: preset.home.descriptor.id,
               index: preset.inHome2.descriptor.index,
@@ -327,7 +327,7 @@ import { emptyGroups } from '../../../../../../../src/state/no-impact';
           }),
           displacedBy,
           at: {
-            type: 'REORDER',
+            type: "REORDER",
             destination: {
               droppableId: preset.home.descriptor.id,
               index: preset.inHome3.descriptor.index,
@@ -353,7 +353,7 @@ import { emptyGroups } from '../../../../../../../src/state/no-impact';
           displaced: emptyGroups,
           displacedBy,
           at: {
-            type: 'REORDER',
+            type: "REORDER",
             destination: {
               droppableId: preset.home.descriptor.id,
               index: preset.inHome4.descriptor.index,

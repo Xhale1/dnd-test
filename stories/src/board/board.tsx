@@ -1,16 +1,16 @@
-import { colors } from '@atlaskit/theme';
-import { css, Global } from '@emotion/react';
-import styled from '@emotion/styled';
+import { colors } from "@atlaskit/theme";
+import { css, Global } from "@emotion/react";
+import styled from "@emotion/styled";
 import type {
   DraggableLocation,
   DroppableProvided,
   DropResult,
-} from '@hello-pangea/dnd';
-import { DragDropContext, Droppable } from '@hello-pangea/dnd';
-import React, { Component, ReactElement } from 'react';
-import reorder, { reorderQuoteMap } from '../reorder';
-import type { Quote, QuoteMap } from '../types';
-import Column from './column';
+} from "@hello-pangea/dnd";
+import { DragDropContext, Droppable } from "@hello-pangea/dnd";
+import React, { Component, ReactElement } from "react";
+import reorder, { reorderQuoteMap } from "../reorder";
+import type { Quote, QuoteMap } from "../types";
+import Column from "./column";
 
 interface ParentContainerProps {
   height: string;
@@ -56,7 +56,7 @@ export default class Board extends Component<Props, State> {
 
   onDragEnd = (result: DropResult): void => {
     if (result.combine) {
-      if (result.type === 'COLUMN') {
+      if (result.type === "COLUMN") {
         const shallow: string[] = [...this.state.ordered];
         shallow.splice(result.source.index, 1);
         this.setState({ ordered: shallow });
@@ -91,11 +91,11 @@ export default class Board extends Component<Props, State> {
     }
 
     // reordering column
-    if (result.type === 'COLUMN') {
+    if (result.type === "COLUMN") {
       const ordered: string[] = reorder(
         this.state.ordered,
         source.index,
-        destination.index,
+        destination.index
       );
 
       this.setState({

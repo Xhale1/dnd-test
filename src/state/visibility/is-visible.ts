@@ -1,10 +1,10 @@
-import type { Position, Spacing, Rect } from 'css-box-model';
-import type { DroppableDimension } from '../../types';
-import isPartiallyVisibleThroughFrame from './is-partially-visible-through-frame';
-import isTotallyVisibleThroughFrame from './is-totally-visible-through-frame';
-import isTotallyVisibleThroughFrameOnAxis from './is-totally-visible-through-frame-on-axis';
-import { offsetByPosition } from '../spacing';
-import { origin } from '../position';
+import type { Position, Spacing, Rect } from "css-box-model";
+import type { DroppableDimension } from "../../types";
+import isPartiallyVisibleThroughFrame from "./is-partially-visible-through-frame";
+import isTotallyVisibleThroughFrame from "./is-totally-visible-through-frame";
+import isTotallyVisibleThroughFrameOnAxis from "./is-totally-visible-through-frame-on-axis";
+import { offsetByPosition } from "../spacing";
+import { origin } from "../position";
 
 export interface Args {
   target: Spacing;
@@ -16,7 +16,7 @@ export interface Args {
 }
 
 type IsVisibleThroughFrameFn = (
-  frame: Spacing,
+  frame: Spacing
 ) => (subject: Spacing) => boolean;
 
 interface InternalArgs extends Args {
@@ -25,7 +25,7 @@ interface InternalArgs extends Args {
 
 const getDroppableDisplaced = (
   target: Spacing,
-  destination: DroppableDimension,
+  destination: DroppableDimension
 ): Spacing => {
   const displacement: Position = destination.frame
     ? destination.frame.scroll.diff.displacement
@@ -37,7 +37,7 @@ const getDroppableDisplaced = (
 const isVisibleInDroppable = (
   target: Spacing,
   destination: DroppableDimension,
-  isVisibleThroughFrameFn: IsVisibleThroughFrameFn,
+  isVisibleThroughFrameFn: IsVisibleThroughFrameFn
 ): boolean => {
   // destination subject is totally hidden by frame
   // this should never happen - but just guarding against it
@@ -56,7 +56,7 @@ const isVisibleInDroppable = (
 const isVisibleInViewport = (
   target: Spacing,
   viewport: Rect,
-  isVisibleThroughFrameFn: IsVisibleThroughFrameFn,
+  isVisibleThroughFrameFn: IsVisibleThroughFrameFn
 ): boolean => isVisibleThroughFrameFn(viewport)(target);
 
 const isVisible = ({
@@ -74,7 +74,7 @@ const isVisible = ({
     isVisibleInDroppable(
       displacedTarget,
       destination,
-      isVisibleThroughFrameFn,
+      isVisibleThroughFrameFn
     ) && isVisibleInViewport(displacedTarget, viewport, isVisibleThroughFrameFn)
   );
 };
@@ -95,6 +95,6 @@ export const isTotallyVisibleOnAxis = (args: Args): boolean =>
   isVisible({
     ...args,
     isVisibleThroughFrameFn: isTotallyVisibleThroughFrameOnAxis(
-      args.destination.axis,
+      args.destination.axis
     ),
   });

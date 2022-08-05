@@ -1,11 +1,11 @@
-import { getRect } from 'css-box-model';
-import type { Rect, Spacing } from 'css-box-model';
-import type { DroppableDimension, Axis } from '../../../../src/types';
-import { isTotallyVisibleOnAxis } from '../../../../src/state/visibility/is-visible';
-import { getDroppableDimension } from '../../../util/dimension';
-import { vertical, horizontal } from '../../../../src/state/axis';
-import { offsetByPosition } from '../../../../src/state/spacing';
-import { patch } from '../../../../src/state/position';
+import { getRect } from "css-box-model";
+import type { Rect, Spacing } from "css-box-model";
+import type { DroppableDimension, Axis } from "../../../../src/types";
+import { isTotallyVisibleOnAxis } from "../../../../src/state/visibility/is-visible";
+import { getDroppableDimension } from "../../../util/dimension";
+import { vertical, horizontal } from "../../../../src/state/axis";
+import { offsetByPosition } from "../../../../src/state/spacing";
+import { patch } from "../../../../src/state/position";
 
 // These tests are an extension of the standard
 
@@ -27,15 +27,15 @@ const inViewport: Spacing = {
   describe(`on the ${axis.direction} axis`, () => {
     const destination: DroppableDimension = getDroppableDimension({
       descriptor: {
-        id: 'subset',
-        type: 'TYPE',
-        mode: 'standard',
+        id: "subset",
+        type: "TYPE",
+        mode: "standard",
       },
       borderBox: inViewport,
       direction: axis.direction,
     });
 
-    it('should return true when visible on the main axis, even if not on the cross axis', () => {
+    it("should return true when visible on the main axis, even if not on the cross axis", () => {
       const targets: Spacing[] = [
         // not totally visible on the crossAxisStart
         offsetByPosition(inViewport, patch(axis.crossAxisLine, -1)),
@@ -54,7 +54,7 @@ const inViewport: Spacing = {
       });
     });
 
-    it('should return false when visible on the main axis, even if visible on the main axis', () => {
+    it("should return false when visible on the main axis, even if visible on the main axis", () => {
       const targets: Spacing[] = [
         // not totally visible on the mainAxisStart
         offsetByPosition(inViewport, patch(axis.line, -1)),

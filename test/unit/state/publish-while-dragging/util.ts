@@ -1,14 +1,14 @@
-import { createBox } from 'css-box-model';
-import type { BoxModel, Position } from 'css-box-model';
-import { getPreset, addDroppable, makeVirtual } from '../../../util/dimension';
+import { createBox } from "css-box-model";
+import type { BoxModel, Position } from "css-box-model";
+import { getPreset, addDroppable, makeVirtual } from "../../../util/dimension";
 import type {
   Published,
   DraggableDimension,
   DroppableDimension,
   CollectingState,
   LiftEffect,
-} from '../../../../src/types';
-import offsetDraggable from '../../../../src/state/publish-while-dragging-in-virtual/offset-draggable';
+} from "../../../../src/types";
+import offsetDraggable from "../../../../src/state/publish-while-dragging-in-virtual/offset-draggable";
 
 const preset = getPreset();
 
@@ -52,7 +52,7 @@ export const virtualForeign: DroppableDimension = makeVirtual(preset.foreign);
 export const withVirtuals = (state: CollectingState): CollectingState => {
   const base: CollectingState = addDroppable(
     addDroppable(state, virtualHome),
-    virtualForeign,
+    virtualForeign
   );
   const afterCritical: LiftEffect = {
     ...base.afterCritical,

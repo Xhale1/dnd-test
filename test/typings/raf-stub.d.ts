@@ -1,4 +1,4 @@
-declare module 'raf-stub' {
+declare module "raf-stub" {
   interface Stub {
     add: (cb: () => void) => number;
     remove: (id: number) => void;

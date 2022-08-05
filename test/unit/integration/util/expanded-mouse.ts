@@ -1,11 +1,11 @@
-import type { Position } from 'css-box-model';
-import { fireEvent, act } from '@testing-library/react';
-import { mouse, getTransitionEnd } from './controls';
-import { sloppyClickThreshold } from '../../../../src/view/use-sensor-marshal/sensors/use-mouse-sensor';
+import type { Position } from "css-box-model";
+import { fireEvent, act } from "@testing-library/react";
+import { mouse, getTransitionEnd } from "./controls";
+import { sloppyClickThreshold } from "../../../../src/view/use-sensor-marshal/sensors/use-mouse-sensor";
 
 // Not a 'control'. A little more extensible
 const expandedMouse = {
-  name: 'mouse',
+  name: "mouse",
   powerLift: (handle: HTMLElement, point: Position) => {
     fireEvent.mouseDown(handle, { clientX: point.x, clientY: point.y });
     fireEvent.mouseMove(handle, {
@@ -15,7 +15,7 @@ const expandedMouse = {
   },
   // no batching of events with .act by testing libray
   rawPowerLift: (handle: HTMLElement, point: Position) => {
-    const mousedown: MouseEvent = new MouseEvent('mousedown', {
+    const mousedown: MouseEvent = new MouseEvent("mousedown", {
       bubbles: true,
       cancelable: true,
       clientX: point.x,
@@ -24,7 +24,7 @@ const expandedMouse = {
 
     handle.dispatchEvent(mousedown);
 
-    const mousemove: MouseEvent = new MouseEvent('mousemove', {
+    const mousemove: MouseEvent = new MouseEvent("mousemove", {
       bubbles: true,
       cancelable: true,
       clientX: point.x,

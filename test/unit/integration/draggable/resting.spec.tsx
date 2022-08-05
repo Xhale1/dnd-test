@@ -1,42 +1,42 @@
-import React from 'react';
-import { render } from '@testing-library/react';
-import App from '../util/app';
-import type { RenderItem, Item } from '../util/app';
-import type { DraggableRubric } from '../../../../src';
+import React from "react";
+import { render } from "@testing-library/react";
+import App from "../util/app";
+import type { RenderItem, Item } from "../util/app";
+import type { DraggableRubric } from "../../../../src";
 import {
   renderItemAndSpy,
   atRest,
   getSnapshotsFor,
   getRubricsFor,
-} from '../util/helpers';
+} from "../util/helpers";
 
-it('should have no movement when at rest', () => {
+it("should have no movement when at rest", () => {
   const { getByText } = render(<App />);
-  const handle: HTMLElement = getByText('item: 0');
+  const handle: HTMLElement = getByText("item: 0");
 
-  expect(handle.style.transform).toBe('');
-  expect(handle.style.transition).toBe('');
-  expect(handle.style.zIndex).toBe('');
+  expect(handle.style.transform).toBe("");
+  expect(handle.style.transition).toBe("");
+  expect(handle.style.zIndex).toBe("");
 });
 
-it('should have a resting snapshot', () => {
+it("should have a resting snapshot", () => {
   const snapshotSpy = jest.fn();
   const renderItem: RenderItem = renderItemAndSpy(snapshotSpy);
 
   render(<App renderItem={renderItem} />);
 
-  const snapshots = getSnapshotsFor('0', snapshotSpy);
+  const snapshots = getSnapshotsFor("0", snapshotSpy);
   expect(snapshots).toHaveLength(1);
   expect(snapshots[0]).toEqual(atRest);
 });
 
-it('should be provided with its rubric', () => {
+it("should be provided with its rubric", () => {
   const watcher = jest.fn();
   const items = Array.from(
     { length: 3 },
     (v, k): Item => ({
       id: `${k}`,
-    }),
+    })
   );
   const renderItem: RenderItem = renderItemAndSpy(watcher);
 
@@ -45,9 +45,9 @@ it('should be provided with its rubric', () => {
   items.forEach((item: Item, index: number) => {
     const expected: DraggableRubric = {
       draggableId: item.id,
-      type: 'DEFAULT',
+      type: "DEFAULT",
       source: {
-        droppableId: 'droppable',
+        droppableId: "droppable",
         index,
       },
     };

@@ -1,10 +1,10 @@
-import type { Config } from '@jest/types';
-import type { EnvironmentContext } from '@jest/environment';
-import JSDOMEnvironment from 'jest-environment-jsdom';
-import { TextDecoder, TextEncoder } from 'util';
+import type { Config } from "@jest/types";
+import type { EnvironmentContext } from "@jest/environment";
+import JSDOMEnvironment from "jest-environment-jsdom";
+import { TextDecoder, TextEncoder } from "util";
 
-import attachRafStub from './attach-raf-stub';
-import transitionEventPolyfill from './transition-event-polyfill';
+import attachRafStub from "./attach-raf-stub";
+import transitionEventPolyfill from "./transition-event-polyfill";
 
 declare global {
   interface ProcessEnv {

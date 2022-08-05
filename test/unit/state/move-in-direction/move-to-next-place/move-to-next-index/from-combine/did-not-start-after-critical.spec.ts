@@ -2,13 +2,13 @@ import type {
   Axis,
   DragImpact,
   DroppableDimension,
-} from '../../../../../../../src/types';
-import { vertical, horizontal } from '../../../../../../../src/state/axis';
-import { getPreset } from '../../../../../../util/dimension';
-import moveToNextIndex from '../../../../../../../src/state/move-in-direction/move-to-next-place/move-to-next-index/index';
-import getDisplacedBy from '../../../../../../../src/state/get-displaced-by';
-import getLiftEffect from '../../../../../../../src/state/get-lift-effect';
-import { getForcedDisplacement } from '../../../../../../util/impact';
+} from "../../../../../../../src/types";
+import { vertical, horizontal } from "../../../../../../../src/state/axis";
+import { getPreset } from "../../../../../../util/dimension";
+import moveToNextIndex from "../../../../../../../src/state/move-in-direction/move-to-next-place/move-to-next-index/index";
+import getDisplacedBy from "../../../../../../../src/state/get-displaced-by";
+import getLiftEffect from "../../../../../../../src/state/get-lift-effect";
+import { getForcedDisplacement } from "../../../../../../util/impact";
 
 const enableCombine = (droppable: DroppableDimension): DroppableDimension => ({
   ...droppable,
@@ -18,7 +18,7 @@ const enableCombine = (droppable: DroppableDimension): DroppableDimension => ({
 [vertical, horizontal].forEach((axis: Axis) => {
   const preset = getPreset(axis);
   describe(`on ${axis.direction} axis`, () => {
-    it('should move forward off combining with is displaced', () => {
+    it("should move forward off combining with is displaced", () => {
       // Setup: inHome1 combining with inForeign1 and then moving forward past it
       // Expected: inHome1 moves after inForeign1 and inForeign1 is no longer displaced
       const { afterCritical } = getLiftEffect({
@@ -38,7 +38,7 @@ const enableCombine = (droppable: DroppableDimension): DroppableDimension => ({
         }),
         displacedBy: getDisplacedBy(axis, preset.inHome1.displaceBy),
         at: {
-          type: 'COMBINE',
+          type: "COMBINE",
           combine: {
             draggableId: preset.inForeign1.descriptor.id,
             droppableId: preset.foreign.descriptor.id,
@@ -69,7 +69,7 @@ const enableCombine = (droppable: DroppableDimension): DroppableDimension => ({
         }),
         displacedBy: getDisplacedBy(axis, preset.inHome1.displaceBy),
         at: {
-          type: 'REORDER',
+          type: "REORDER",
           destination: {
             index: preset.inForeign2.descriptor.index,
             droppableId: preset.foreign.descriptor.id,
@@ -79,7 +79,7 @@ const enableCombine = (droppable: DroppableDimension): DroppableDimension => ({
       expect(result).toEqual(expected);
     });
 
-    it('should move backward off combining with is displaced', () => {
+    it("should move backward off combining with is displaced", () => {
       // Setup: inHome1 combining with inForeign1 and then moving backward before it
       // Expected: inHome1 goes before inForeign1 and displacement is not changed
       const { afterCritical } = getLiftEffect({
@@ -99,7 +99,7 @@ const enableCombine = (droppable: DroppableDimension): DroppableDimension => ({
         }),
         displacedBy: getDisplacedBy(axis, preset.inHome1.displaceBy),
         at: {
-          type: 'COMBINE',
+          type: "COMBINE",
           combine: {
             draggableId: preset.inForeign1.descriptor.id,
             droppableId: preset.foreign.descriptor.id,
@@ -122,7 +122,7 @@ const enableCombine = (droppable: DroppableDimension): DroppableDimension => ({
       const expected: DragImpact = {
         ...combining,
         at: {
-          type: 'REORDER',
+          type: "REORDER",
           destination: {
             index: preset.inForeign1.descriptor.index,
             droppableId: preset.foreign.descriptor.id,
@@ -132,7 +132,7 @@ const enableCombine = (droppable: DroppableDimension): DroppableDimension => ({
       expect(result).toEqual(expected);
     });
 
-    it('should move forward off combining with a non-displaced item', () => {
+    it("should move forward off combining with a non-displaced item", () => {
       // Setup
       // - inHome1 past inForeign1
       // - inHome1 moves backwards onto inForeign1
@@ -158,7 +158,7 @@ const enableCombine = (droppable: DroppableDimension): DroppableDimension => ({
         displacedBy: getDisplacedBy(axis, preset.inHome1.displaceBy),
         // moved backward onto inForeign1
         at: {
-          type: 'COMBINE',
+          type: "COMBINE",
           combine: {
             draggableId: preset.inForeign1.descriptor.id,
             droppableId: preset.foreign.descriptor.id,
@@ -189,7 +189,7 @@ const enableCombine = (droppable: DroppableDimension): DroppableDimension => ({
         }),
         displacedBy: getDisplacedBy(axis, preset.inHome1.displaceBy),
         at: {
-          type: 'REORDER',
+          type: "REORDER",
           destination: {
             index: preset.inForeign2.descriptor.index,
             droppableId: preset.foreign.descriptor.id,
@@ -200,7 +200,7 @@ const enableCombine = (droppable: DroppableDimension): DroppableDimension => ({
       expect(result).toEqual(expected);
     });
 
-    it('should move backward off combining with a non-displaced item', () => {
+    it("should move backward off combining with a non-displaced item", () => {
       // Setup
       // - inHome1 past inForeign1
       // - inHome1 moves backwards onto inForeign1
@@ -226,7 +226,7 @@ const enableCombine = (droppable: DroppableDimension): DroppableDimension => ({
         displacedBy: getDisplacedBy(axis, preset.inHome1.displaceBy),
         at: {
           // moved backward onto inForeign1
-          type: 'COMBINE',
+          type: "COMBINE",
           combine: {
             draggableId: preset.inForeign1.descriptor.id,
             droppableId: preset.foreign.descriptor.id,
@@ -258,7 +258,7 @@ const enableCombine = (droppable: DroppableDimension): DroppableDimension => ({
         }),
         displacedBy: getDisplacedBy(axis, preset.inHome1.displaceBy),
         at: {
-          type: 'REORDER',
+          type: "REORDER",
           destination: {
             index: preset.inForeign1.descriptor.index,
             droppableId: preset.foreign.descriptor.id,

@@ -1,12 +1,12 @@
 import type {
   DraggableStateSnapshot,
   DropAnimation,
-} from '../../../../../src/view/draggable/draggable-types';
+} from "../../../../../src/view/draggable/draggable-types";
 import type {
   MovementMode,
   DroppableId,
   DraggableId,
-} from '../../../../../src/types';
+} from "../../../../../src/types";
 
 interface GetDraggingSnapshotArgs {
   mode: MovementMode;

@@ -1,4 +1,4 @@
-import { getRect, Spacing } from 'css-box-model';
+import { getRect, Spacing } from "css-box-model";
 import type {
   Axis,
   DragImpact,
@@ -9,26 +9,26 @@ import type {
   DroppableDimension,
   DisplacedBy,
   DraggableDimensionMap,
-} from '../../../../src/types';
+} from "../../../../src/types";
 import {
   getPreset,
   getDraggableDimension,
   getDroppableDimension,
-} from '../../../util/dimension';
-import speculativelyIncrease from '../../../../src/state/update-displacement-visibility/speculatively-increase';
-import noImpact from '../../../../src/state/no-impact';
-import { createViewport } from '../../../util/viewport';
-import { origin, patch } from '../../../../src/state/position';
-import { vertical, horizontal } from '../../../../src/state/axis';
-import { toDraggableMap } from '../../../../src/state/dimension-structures';
-import getDisplacedBy from '../../../../src/state/get-displaced-by';
-import { isPartiallyVisible } from '../../../../src/state/visibility/is-visible';
-import getLiftEffect from '../../../../src/state/get-lift-effect';
-import { getForcedDisplacement } from '../../../util/impact';
+} from "../../../util/dimension";
+import speculativelyIncrease from "../../../../src/state/update-displacement-visibility/speculatively-increase";
+import noImpact from "../../../../src/state/no-impact";
+import { createViewport } from "../../../util/viewport";
+import { origin, patch } from "../../../../src/state/position";
+import { vertical, horizontal } from "../../../../src/state/axis";
+import { toDraggableMap } from "../../../../src/state/dimension-structures";
+import getDisplacedBy from "../../../../src/state/get-displaced-by";
+import { isPartiallyVisible } from "../../../../src/state/visibility/is-visible";
+import getLiftEffect from "../../../../src/state/get-lift-effect";
+import { getForcedDisplacement } from "../../../util/impact";
 
 [vertical, horizontal].forEach((axis: Axis) => {
   describe(`on ${axis.direction} axis`, () => {
-    it('should do nothing when there is no displacement', () => {
+    it("should do nothing when there is no displacement", () => {
       const preset = getPreset(axis);
       const { impact: homeImpact } = getLiftEffect({
         draggable: preset.inHome1,
@@ -56,8 +56,8 @@ import { getForcedDisplacement } from '../../../util/impact';
       expect(impact2).toEqual(noImpact);
     });
 
-    const foreignId: DroppableId = 'foreign';
-    const typeId: TypeId = 'our-type';
+    const foreignId: DroppableId = "foreign";
+    const typeId: TypeId = "our-type";
     const homeCrossAxisStart = 0;
     const homeCrossAxisEnd = 100;
     const foreignCrossAxisStart = 100;
@@ -66,9 +66,9 @@ import { getForcedDisplacement } from '../../../util/impact';
 
     const home: DroppableDimension = getDroppableDimension({
       descriptor: {
-        id: 'home',
+        id: "home",
         type: typeId,
-        mode: 'standard',
+        mode: "standard",
       },
       direction: axis.direction,
       borderBox: {
@@ -80,7 +80,7 @@ import { getForcedDisplacement } from '../../../util/impact';
     });
     const inHome1: DraggableDimension = getDraggableDimension({
       descriptor: {
-        id: 'inhome1',
+        id: "inhome1",
         type: home.descriptor.type,
         droppableId: home.descriptor.id,
         index: 0,
@@ -94,7 +94,7 @@ import { getForcedDisplacement } from '../../../util/impact';
     });
     const inForeign1: DraggableDimension = getDraggableDimension({
       descriptor: {
-        id: 'inForeign1',
+        id: "inForeign1",
         type: typeId,
         droppableId: foreignId,
         index: 0,
@@ -108,7 +108,7 @@ import { getForcedDisplacement } from '../../../util/impact';
     });
     const inForeign2: DraggableDimension = getDraggableDimension({
       descriptor: {
-        id: 'inForeign2',
+        id: "inForeign2",
         type: typeId,
         droppableId: foreignId,
         index: 1,
@@ -122,7 +122,7 @@ import { getForcedDisplacement } from '../../../util/impact';
     });
     const inForeign3: DraggableDimension = getDraggableDimension({
       descriptor: {
-        id: 'inForeign3',
+        id: "inForeign3",
         type: typeId,
         droppableId: foreignId,
         index: 2,
@@ -136,7 +136,7 @@ import { getForcedDisplacement } from '../../../util/impact';
     });
     const inForeign4: DraggableDimension = getDraggableDimension({
       descriptor: {
-        id: 'inForeign4',
+        id: "inForeign4",
         type: typeId,
         droppableId: foreignId,
         index: 3,
@@ -150,7 +150,7 @@ import { getForcedDisplacement } from '../../../util/impact';
     });
     const inForeign5: DraggableDimension = getDraggableDimension({
       descriptor: {
-        id: 'inForeign5',
+        id: "inForeign5",
         type: typeId,
         droppableId: foreignId,
         index: 4,
@@ -171,12 +171,12 @@ import { getForcedDisplacement } from '../../../util/impact';
       inForeign5,
     ]);
 
-    it('should increase the visible displacement in the window by the amount of the max scroll change', () => {
+    it("should increase the visible displacement in the window by the amount of the max scroll change", () => {
       const foreign: DroppableDimension = getDroppableDimension({
         descriptor: {
           id: foreignId,
-          type: 'huge',
-          mode: 'standard',
+          type: "huge",
+          mode: "standard",
         },
         direction: axis.direction,
         borderBox: {
@@ -209,7 +209,7 @@ import { getForcedDisplacement } from '../../../util/impact';
           destination: foreign,
           viewport: viewport.frame,
           withDroppableDisplacement: true,
-        }),
+        })
       ).toBe(true);
       expect(
         isPartiallyVisible({
@@ -217,7 +217,7 @@ import { getForcedDisplacement } from '../../../util/impact';
           destination: foreign,
           viewport: viewport.frame,
           withDroppableDisplacement: true,
-        }),
+        })
       ).toBe(true);
       // the rest should be invisible
       expect(
@@ -226,7 +226,7 @@ import { getForcedDisplacement } from '../../../util/impact';
           destination: foreign,
           viewport: viewport.frame,
           withDroppableDisplacement: true,
-        }),
+        })
       ).toBe(false);
       expect(
         isPartiallyVisible({
@@ -234,7 +234,7 @@ import { getForcedDisplacement } from '../../../util/impact';
           destination: foreign,
           viewport: viewport.frame,
           withDroppableDisplacement: true,
-        }),
+        })
       ).toBe(false);
       expect(
         isPartiallyVisible({
@@ -242,7 +242,7 @@ import { getForcedDisplacement } from '../../../util/impact';
           destination: foreign,
           viewport: viewport.frame,
           withDroppableDisplacement: true,
-        }),
+        })
       ).toBe(false);
 
       // inHome1 has moved into the foreign list below inForeign1
@@ -257,7 +257,7 @@ import { getForcedDisplacement } from '../../../util/impact';
         }),
         displacedBy,
         at: {
-          type: 'REORDER',
+          type: "REORDER",
           destination: {
             droppableId: foreign.descriptor.id,
             index: inForeign2.descriptor.index,
@@ -291,7 +291,7 @@ import { getForcedDisplacement } from '../../../util/impact';
       expect(result).toEqual(expected);
     });
 
-    it('should increase the visible displacement in the droppable by the amount of the max scroll change', () => {
+    it("should increase the visible displacement in the droppable by the amount of the max scroll change", () => {
       // when moving into the foreign list there will be enough room for inHome1 and inForeign1
       // inHome1 and inForeign1 can be visible in the viewport at the same time
       const sizeOfDroppable: number = itemSize + itemSize - 1;
@@ -299,8 +299,8 @@ import { getForcedDisplacement } from '../../../util/impact';
       const foreign: DroppableDimension = getDroppableDimension({
         descriptor: {
           id: foreignId,
-          type: 'huge',
-          mode: 'standard',
+          type: "huge",
+          mode: "standard",
         },
         direction: axis.direction,
         // large subject
@@ -346,7 +346,7 @@ import { getForcedDisplacement } from '../../../util/impact';
           destination: foreign,
           viewport: viewport.frame,
           withDroppableDisplacement: true,
-        }),
+        })
       ).toBe(true);
       expect(
         isPartiallyVisible({
@@ -354,7 +354,7 @@ import { getForcedDisplacement } from '../../../util/impact';
           destination: foreign,
           viewport: viewport.frame,
           withDroppableDisplacement: true,
-        }),
+        })
       ).toBe(true);
       // the rest should be invisible
       expect(
@@ -363,7 +363,7 @@ import { getForcedDisplacement } from '../../../util/impact';
           destination: foreign,
           viewport: viewport.frame,
           withDroppableDisplacement: true,
-        }),
+        })
       ).toBe(false);
       expect(
         isPartiallyVisible({
@@ -371,7 +371,7 @@ import { getForcedDisplacement } from '../../../util/impact';
           destination: foreign,
           viewport: viewport.frame,
           withDroppableDisplacement: true,
-        }),
+        })
       ).toBe(false);
       expect(
         isPartiallyVisible({
@@ -379,7 +379,7 @@ import { getForcedDisplacement } from '../../../util/impact';
           destination: foreign,
           viewport: viewport.frame,
           withDroppableDisplacement: true,
-        }),
+        })
       ).toBe(false);
 
       // inHome1 has moved into the foreign list below inForeign1
@@ -394,7 +394,7 @@ import { getForcedDisplacement } from '../../../util/impact';
         }),
         displacedBy,
         at: {
-          type: 'REORDER',
+          type: "REORDER",
           destination: {
             droppableId: foreign.descriptor.id,
             index: inForeign2.descriptor.index,

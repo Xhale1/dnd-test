@@ -1,23 +1,23 @@
-import type { Position } from 'css-box-model';
-import getDragImpact from '../../../../../../src/state/get-drag-impact';
-import { add } from '../../../../../../src/state/position';
-import { vertical, horizontal } from '../../../../../../src/state/axis';
-import { getPreset } from '../../../../../util/dimension';
-import getDisplacedBy from '../../../../../../src/state/get-displaced-by';
+import type { Position } from "css-box-model";
+import getDragImpact from "../../../../../../src/state/get-drag-impact";
+import { add } from "../../../../../../src/state/position";
+import { vertical, horizontal } from "../../../../../../src/state/axis";
+import { getPreset } from "../../../../../util/dimension";
+import getDisplacedBy from "../../../../../../src/state/get-displaced-by";
 import type {
   Axis,
   DragImpact,
   Viewport,
   DisplacedBy,
-} from '../../../../../../src/types';
-import getLiftEffect from '../../../../../../src/state/get-lift-effect';
-import afterPoint from '../../../../../util/after-point';
-import beforePoint from '../../../../../util/before-point';
-import { getForcedDisplacement } from '../../../../../util/impact';
+} from "../../../../../../src/types";
+import getLiftEffect from "../../../../../../src/state/get-lift-effect";
+import afterPoint from "../../../../../util/after-point";
+import beforePoint from "../../../../../util/before-point";
+import { getForcedDisplacement } from "../../../../../util/impact";
 import {
   getOffsetForStartEdge,
   getOffsetForEndEdge,
-} from '../../util/get-offset-for-edge';
+} from "../../util/get-offset-for-edge";
 
 [vertical, horizontal].forEach((axis: Axis) => {
   describe(`on ${axis.direction} axis`, () => {
@@ -26,7 +26,7 @@ import {
 
     const displacedBy: DisplacedBy = getDisplacedBy(
       axis,
-      preset.inHome1.displaceBy,
+      preset.inHome1.displaceBy
     );
     const { afterCritical, impact: homeImpact } = getLiftEffect({
       draggable: preset.inHome1,
@@ -51,7 +51,7 @@ import {
       afterCritical,
     });
 
-    it('should displace items when moving backwards past their bottom edge', () => {
+    it("should displace items when moving backwards past their bottom edge", () => {
       {
         const impact: DragImpact = getDragImpact({
           pageOffset: offsetForStartOnInForeign2Center,
@@ -74,7 +74,7 @@ import {
           }),
           displacedBy,
           at: {
-            type: 'REORDER',
+            type: "REORDER",
             destination: {
               // is now in position of inForeign3
               droppableId: preset.foreign.descriptor.id,
@@ -97,7 +97,7 @@ import {
         }),
         displacedBy,
         at: {
-          type: 'REORDER',
+          type: "REORDER",
           destination: {
             // is now in position of inForeign2
             droppableId: preset.inForeign2.descriptor.droppableId,
@@ -108,7 +108,7 @@ import {
       expect(goingBackwards).toEqual(expected);
     });
 
-    it('should end displacement if moving forward over the displaced center', () => {
+    it("should end displacement if moving forward over the displaced center", () => {
       const offsetForEndOnInForeign2Center: Position = getOffsetForEndEdge({
         endEdgeOn: preset.inForeign2.page.borderBox.center,
         dragging: preset.inHome1.page.borderBox,
@@ -116,7 +116,7 @@ import {
       });
       const displaced: Position = add(
         offsetForEndOnInForeign2Center,
-        displacedBy.point,
+        displacedBy.point
       );
 
       // still not far enough
@@ -154,7 +154,7 @@ import {
           }),
           displacedBy,
           at: {
-            type: 'REORDER',
+            type: "REORDER",
             destination: {
               // is now in position of inForeign3
               droppableId: preset.inForeign3.descriptor.droppableId,

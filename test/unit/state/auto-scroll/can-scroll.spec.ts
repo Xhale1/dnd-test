@@ -1,6 +1,6 @@
-import { getRect } from 'css-box-model';
-import type { Position } from 'css-box-model';
-import type { DroppableDimension, Viewport } from '../../../../src/types';
+import { getRect } from "css-box-model";
+import type { Position } from "css-box-model";
+import type { DroppableDimension, Viewport } from "../../../../src/types";
 import {
   canPartiallyScroll,
   getOverlap,
@@ -8,16 +8,16 @@ import {
   getDroppableOverlap,
   canScrollWindow,
   canScrollDroppable,
-} from '../../../../src/state/auto-scroller/can-scroll';
-import { add, subtract } from '../../../../src/state/position';
+} from "../../../../src/state/auto-scroller/can-scroll";
+import { add, subtract } from "../../../../src/state/position";
 import {
   getPreset,
   getDroppableDimension,
   getFrame,
-} from '../../../util/dimension';
-import scrollDroppable from '../../../../src/state/droppable/scroll-droppable';
-import { createViewport } from '../../../util/viewport';
-import getMaxScroll from '../../../../src/state/get-max-scroll';
+} from "../../../util/dimension";
+import scrollDroppable from "../../../../src/state/droppable/scroll-droppable";
+import { createViewport } from "../../../util/viewport";
+import getMaxScroll from "../../../../src/state/get-max-scroll";
 
 const origin: Position = { x: 0, y: 0 };
 const preset = getPreset();
@@ -29,9 +29,9 @@ const scrollableScrollSize = {
 
 const scrollable: DroppableDimension = getDroppableDimension({
   descriptor: {
-    id: 'drop-1',
-    type: 'TYPE',
-    mode: 'standard',
+    id: "drop-1",
+    type: "TYPE",
+    mode: "standard",
   },
   borderBox: {
     top: 0,
@@ -68,8 +68,8 @@ const customViewport: Viewport = createViewport({
   scrollWidth: 100,
 });
 
-describe('can partially scroll', () => {
-  it('should return true if not scrolling anywhere', () => {
+describe("can partially scroll", () => {
+  it("should return true if not scrolling anywhere", () => {
     const result: boolean = canPartiallyScroll({
       max: { x: 100, y: 100 },
       current: { x: 0, y: 0 },
@@ -80,7 +80,7 @@ describe('can partially scroll', () => {
     expect(result).toBe(true);
   });
 
-  it('should return true if scrolling to a boundary', () => {
+  it("should return true if scrolling to a boundary", () => {
     const current: Position = origin;
     const max: Position = { x: 100, y: 200 };
 
@@ -106,7 +106,7 @@ describe('can partially scroll', () => {
     });
   });
 
-  it('should return true if moving in any direction within the allowable scroll region', () => {
+  it("should return true if moving in any direction within the allowable scroll region", () => {
     const max: Position = { x: 100, y: 100 };
     const current: Position = { x: 50, y: 50 };
 
@@ -133,7 +133,7 @@ describe('can partially scroll', () => {
     });
   });
 
-  it('should return true if able to partially move in both directions', () => {
+  it("should return true if able to partially move in both directions", () => {
     const max: Position = { x: 100, y: 100 };
     const current: Position = { x: 50, y: 50 };
 
@@ -165,7 +165,7 @@ describe('can partially scroll', () => {
     change: Position;
   }
 
-  it('should return true if can only partially move in one direction', () => {
+  it("should return true if can only partially move in one direction", () => {
     const max: Position = { x: 100, y: 200 };
 
     const changes: Item[] = [
@@ -202,7 +202,7 @@ describe('can partially scroll', () => {
     });
   });
 
-  it('should return false if on the min point and move backward in any direction', () => {
+  it("should return false if on the min point and move backward in any direction", () => {
     const current: Position = origin;
     const max: Position = { x: 100, y: 200 };
     const tooFarBack: Position[] = [
@@ -221,7 +221,7 @@ describe('can partially scroll', () => {
     });
   });
 
-  it('should return false if on the max point and move forward in any direction', () => {
+  it("should return false if on the max point and move forward in any direction", () => {
     const max: Position = { x: 100, y: 200 };
     const current: Position = max;
     const tooFarForward: Position[] = [
@@ -242,7 +242,7 @@ describe('can partially scroll', () => {
 
   // It is possible in certain situations for the max scroll to exceed the current scroll.
   // In this case we allow the movement backwards even though it is still above the max scroll point
-  it('should return true if moving backwards and the current scroll is greater than the max scroll', () => {
+  it("should return true if moving backwards and the current scroll is greater than the max scroll", () => {
     const max: Position = { x: 100, y: 200 };
     const current: Position = { x: 110, y: 220 };
     // Small changes that would still result in a current scroll greater than the max scroll
@@ -262,7 +262,7 @@ describe('can partially scroll', () => {
     });
   });
 
-  it('should return false if moving forwards and the current scroll is greater than the max scroll', () => {
+  it("should return false if moving forwards and the current scroll is greater than the max scroll", () => {
     const max: Position = { x: 100, y: 200 };
     const current: Position = { x: 110, y: 220 };
     const forwards: Position[] = [
@@ -282,8 +282,8 @@ describe('can partially scroll', () => {
   });
 });
 
-describe('get overlap', () => {
-  describe('returning the remainder', () => {
+describe("get overlap", () => {
+  describe("returning the remainder", () => {
     const max: Position = { x: 100, y: 100 };
     const current: Position = { x: 50, y: 50 };
 
@@ -292,7 +292,7 @@ describe('get overlap', () => {
       expected: Position;
     }
 
-    it('should return overlap on a single axis', () => {
+    it("should return overlap on a single axis", () => {
       const items: Item[] = [
         // too far back: top
         {
@@ -327,7 +327,7 @@ describe('get overlap', () => {
       });
     });
 
-    it('should return overlap on two axis in the same direction', () => {
+    it("should return overlap on two axis in the same direction", () => {
       const items: Item[] = [
         // too far back: top
         {
@@ -362,7 +362,7 @@ describe('get overlap', () => {
       });
     });
 
-    it('should return overlap on two axis in different directions', () => {
+    it("should return overlap on two axis in different directions", () => {
       const items: Item[] = [
         // too far back: vertical
         // too far forward: horizontal
@@ -389,7 +389,7 @@ describe('get overlap', () => {
       });
     });
 
-    it('should trim values that can be scrolled', () => {
+    it("should trim values that can be scrolled", () => {
       const items: Item[] = [
         // too far back: top
         {
@@ -434,28 +434,28 @@ describe('get overlap', () => {
   });
 });
 
-describe('can scroll droppable', () => {
-  it('should return false if the droppable is not scrollable', () => {
+describe("can scroll droppable", () => {
+  it("should return false if the droppable is not scrollable", () => {
     const result: boolean = canScrollDroppable(preset.home, { x: 1, y: 1 });
 
     expect(result).toBe(false);
   });
 
-  it('should return true if the droppable is able to be scrolled', () => {
+  it("should return true if the droppable is able to be scrolled", () => {
     const result: boolean = canScrollDroppable(scrollable, { x: 0, y: 20 });
 
     expect(result).toBe(true);
   });
 
-  it('should return false if the droppable is not able to be scrolled', () => {
+  it("should return false if the droppable is not able to be scrolled", () => {
     const result: boolean = canScrollDroppable(scrollable, { x: -1, y: 0 });
 
     expect(result).toBe(false);
   });
 });
 
-describe('can scroll window', () => {
-  it('should return true if the window is able to be scrolled', () => {
+describe("can scroll window", () => {
+  it("should return true if the window is able to be scrolled", () => {
     const viewport: Viewport = createViewport({
       frame: customViewport.frame,
       scrollHeight: 200,
@@ -468,7 +468,7 @@ describe('can scroll window', () => {
     expect(result).toBe(true);
   });
 
-  it('should return false if the window is not able to be scrolled', () => {
+  it("should return false if the window is not able to be scrolled", () => {
     const viewport: Viewport = createViewport({
       frame: customViewport.frame,
       scrollHeight: 200,
@@ -486,8 +486,8 @@ describe('can scroll window', () => {
   });
 });
 
-describe('get droppable overlap', () => {
-  it('should return null if there is no scroll container', () => {
+describe("get droppable overlap", () => {
+  it("should return null if there is no scroll container", () => {
     const result: Position | null = getDroppableOverlap(preset.home, {
       x: 1,
       y: 1,
@@ -496,7 +496,7 @@ describe('get droppable overlap', () => {
     expect(result).toBe(null);
   });
 
-  it('should return null if the droppable cannot be scrolled', () => {
+  it("should return null if the droppable cannot be scrolled", () => {
     // end of the scrollable area
     const scroll: Position = {
       x: 0,
@@ -512,7 +512,7 @@ describe('get droppable overlap', () => {
   });
 
   // tested in get remainder
-  it('should return the overlap', () => {
+  it("should return the overlap", () => {
     // how far the droppable has already
     const scroll: Position = {
       x: 10,
@@ -533,7 +533,7 @@ describe('get droppable overlap', () => {
     expect(result).toEqual(expectedOverlap);
   });
 
-  it('should return null if there is no overlap', () => {
+  it("should return null if there is no overlap", () => {
     const change: Position = { x: 0, y: 1 };
 
     const result: Position | null = getDroppableOverlap(scrollable, change);
@@ -545,8 +545,8 @@ describe('get droppable overlap', () => {
   });
 });
 
-describe('get window overlap', () => {
-  it('should return null if the window cannot be scrolled', () => {
+describe("get window overlap", () => {
+  it("should return null if the window cannot be scrolled", () => {
     const viewport: Viewport = createViewport({
       frame: customViewport.frame,
       scrollHeight: 200,
@@ -567,7 +567,7 @@ describe('get window overlap', () => {
   });
 
   // tested in get remainder
-  it('should return the overlap', () => {
+  it("should return the overlap", () => {
     const viewport: Viewport = createViewport({
       frame: customViewport.frame,
       scrollHeight: 200,
@@ -600,7 +600,7 @@ describe('get window overlap', () => {
     expect(result).toEqual(expectedOverlap);
   });
 
-  it('should return null if there is no overlap', () => {
+  it("should return null if there is no overlap", () => {
     const viewport: Viewport = createViewport({
       frame: customViewport.frame,
       scrollHeight: 200,

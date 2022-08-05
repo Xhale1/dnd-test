@@ -1,6 +1,6 @@
-import { withScroll, offset as offsetBox } from 'css-box-model';
-import type { Position, BoxModel } from 'css-box-model';
-import type { DraggableDimension } from '../../types';
+import { withScroll, offset as offsetBox } from "css-box-model";
+import type { Position, BoxModel } from "css-box-model";
+import type { DraggableDimension } from "../../types";
 
 interface Args {
   draggable: DraggableDimension;

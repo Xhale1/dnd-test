@@ -1,23 +1,23 @@
-import type { Position } from 'css-box-model';
+import type { Position } from "css-box-model";
 import type {
   Axis,
   DragImpact,
   Viewport,
   DisplacedBy,
-} from '../../../../../../src/types';
-import { horizontal, vertical } from '../../../../../../src/state/axis';
-import getDisplacedBy from '../../../../../../src/state/get-displaced-by';
-import getDragImpact from '../../../../../../src/state/get-drag-impact';
-import getLiftEffect from '../../../../../../src/state/get-lift-effect';
-import { getPreset } from '../../../../../util/dimension';
-import { emptyGroups } from '../../../../../../src/state/no-impact';
-import { getForcedDisplacement } from '../../../../../util/impact';
-import beforePoint from '../../../../../util/before-point';
-import { getOffsetForStartEdge } from '../../util/get-offset-for-edge';
+} from "../../../../../../src/types";
+import { horizontal, vertical } from "../../../../../../src/state/axis";
+import getDisplacedBy from "../../../../../../src/state/get-displaced-by";
+import getDragImpact from "../../../../../../src/state/get-drag-impact";
+import getLiftEffect from "../../../../../../src/state/get-lift-effect";
+import { getPreset } from "../../../../../util/dimension";
+import { emptyGroups } from "../../../../../../src/state/no-impact";
+import { getForcedDisplacement } from "../../../../../util/impact";
+import beforePoint from "../../../../../util/before-point";
+import { getOffsetForStartEdge } from "../../util/get-offset-for-edge";
 
 [vertical, horizontal].forEach((axis: Axis) => {
   describe(`on ${axis.direction} axis`, () => {
-    it('should allow movement past from last item', () => {
+    it("should allow movement past from last item", () => {
       const preset = getPreset(axis);
       const viewport: Viewport = preset.viewport;
       const { afterCritical } = getLiftEffect({
@@ -28,14 +28,14 @@ import { getOffsetForStartEdge } from '../../util/get-offset-for-edge';
       });
       const displacedBy: DisplacedBy = getDisplacedBy(
         axis,
-        preset.inHome1.displaceBy,
+        preset.inHome1.displaceBy
       );
 
       const inLastSpot: DragImpact = {
         displaced: emptyGroups,
         displacedBy,
         at: {
-          type: 'REORDER',
+          type: "REORDER",
           // after last item
           destination: {
             index: preset.inForeign4.descriptor.index + 1,
@@ -66,7 +66,7 @@ import { getOffsetForStartEdge } from '../../util/get-offset-for-edge';
         }),
         displacedBy,
         at: {
-          type: 'REORDER',
+          type: "REORDER",
           // now in visual spot of inForeign4
           destination: {
             index: preset.inForeign4.descriptor.index,

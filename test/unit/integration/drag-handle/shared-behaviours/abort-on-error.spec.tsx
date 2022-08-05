@@ -1,12 +1,12 @@
-import React, { useState, useRef } from 'react';
-import { render, act } from '@testing-library/react';
-import { invariant } from '../../../../../src/invariant';
-import { isDragging, getOffset } from '../../util/helpers';
-import App from '../../util/app';
-import { withError, withWarn } from '../../../../util/console';
-import { forEachSensor, simpleLift } from '../../util/controls';
-import type { Control } from '../../util/controls';
-import causeRuntimeError from '../../../../util/cause-runtime-error';
+import React, { useState, useRef } from "react";
+import { render, act } from "@testing-library/react";
+import { invariant } from "../../../../../src/invariant";
+import { isDragging, getOffset } from "../../util/helpers";
+import App from "../../util/app";
+import { withError, withWarn } from "../../../../util/console";
+import { forEachSensor, simpleLift } from "../../util/controls";
+import type { Control } from "../../util/controls";
+import causeRuntimeError from "../../../../util/cause-runtime-error";
 
 interface Props {
   throw: () => void;
@@ -46,7 +46,7 @@ function getThrower(): Thrower {
   function execute() {
     withError(() => {
       act(() => {
-        invariant(current, 'Expected throw callback to be set');
+        invariant(current, "Expected throw callback to be set");
         current();
       });
     });
@@ -56,28 +56,28 @@ function getThrower(): Thrower {
 }
 
 forEachSensor((control: Control) => {
-  it('should abort a drag if an invariant error occurs in the application', () => {
+  it("should abort a drag if an invariant error occurs in the application", () => {
     const thrower: Thrower = getThrower();
     const { getByText } = render(
       <App
         anotherChild={
           <Vomit
             throw={() =>
-              invariant(false, 'Do not pass go, do not collect $200')
+              invariant(false, "Do not pass go, do not collect $200")
             }
             setForceThrow={thrower.setForceThrow}
           />
         }
-      />,
+      />
     );
-    const handle: HTMLElement = getByText('item: 0');
+    const handle: HTMLElement = getByText("item: 0");
 
     simpleLift(control, handle);
     expect(isDragging(handle)).toBe(true);
 
     thrower.execute();
 
-    const newHandle: HTMLElement = getByText('item: 0');
+    const newHandle: HTMLElement = getByText("item: 0");
     // handle is now a new element
     expect(handle).not.toBe(newHandle);
     expect(isDragging(newHandle)).toBe(false);
@@ -91,21 +91,21 @@ forEachSensor((control: Control) => {
     }).not.toThrow();
   });
 
-  it('should abort a drag if an a non-invariant error occurs in the application', () => {
+  it("should abort a drag if an a non-invariant error occurs in the application", () => {
     const thrower: Thrower = getThrower();
     const { getByText, queryByText } = render(
       <App
         anotherChild={
           <Vomit
             throw={() => {
-              throw new Error('Raw error throw');
+              throw new Error("Raw error throw");
             }}
             setForceThrow={thrower.setForceThrow}
           />
         }
-      />,
+      />
     );
-    const handle: HTMLElement = getByText('item: 0');
+    const handle: HTMLElement = getByText("item: 0");
 
     simpleLift(control, handle);
     expect(isDragging(handle)).toBe(true);
@@ -115,7 +115,7 @@ forEachSensor((control: Control) => {
     }).toThrow();
 
     // handle is gone
-    expect(queryByText('item: 0')).toBe(null);
+    expect(queryByText("item: 0")).toBe(null);
 
     // strange - but firing events on old handle
     expect(() => {
@@ -124,7 +124,7 @@ forEachSensor((control: Control) => {
     }).not.toThrow();
   });
 
-  it('should abort a drag if a runtime error occurs', () => {
+  it("should abort a drag if a runtime error occurs", () => {
     const thrower: Thrower = getThrower();
     const { getByText } = render(
       <App
@@ -136,23 +136,23 @@ forEachSensor((control: Control) => {
             setForceThrow={thrower.setForceThrow}
           />
         }
-      />,
+      />
     );
-    const handle: HTMLElement = getByText('item: 0');
+    const handle: HTMLElement = getByText("item: 0");
 
     simpleLift(control, handle);
     expect(isDragging(handle)).toBe(true);
 
     return new Promise<void>((resolve) => {
       withWarn(() => {
-        window.addEventListener('error', () => {
+        window.addEventListener("error", () => {
           resolve();
         });
 
         thrower.execute();
       });
 
-      expect(isDragging(getByText('item: 0'))).toBe(false);
+      expect(isDragging(getByText("item: 0"))).toBe(false);
     });
   });
 });

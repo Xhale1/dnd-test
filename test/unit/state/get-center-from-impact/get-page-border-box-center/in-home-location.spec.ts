@@ -1,9 +1,9 @@
-import type { Position } from 'css-box-model';
-import { vertical, horizontal } from '../../../../../src/state/axis';
-import getPageBorderBoxCenter from '../../../../../src/state/get-center-from-impact/get-page-border-box-center';
-import getLiftEffect from '../../../../../src/state/get-lift-effect';
-import { getPreset } from '../../../../util/dimension';
-import type { Axis } from '../../../../../src/types';
+import type { Position } from "css-box-model";
+import { vertical, horizontal } from "../../../../../src/state/axis";
+import getPageBorderBoxCenter from "../../../../../src/state/get-center-from-impact/get-page-border-box-center";
+import getLiftEffect from "../../../../../src/state/get-lift-effect";
+import { getPreset } from "../../../../util/dimension";
+import type { Axis } from "../../../../../src/types";
 
 [vertical, horizontal].forEach((axis: Axis) => {
   describe(`on ${axis.direction} axis`, () => {
@@ -16,7 +16,7 @@ import type { Axis } from '../../../../../src/types';
       viewport: preset.viewport,
     });
 
-    it('should return original center when not over anything', () => {
+    it("should return original center when not over anything", () => {
       const result: Position = getPageBorderBoxCenter({
         impact: homeImpact,
         draggable: preset.inHome1,

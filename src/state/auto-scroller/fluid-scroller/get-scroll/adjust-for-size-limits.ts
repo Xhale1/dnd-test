@@ -1,4 +1,4 @@
-import type { Rect, Position } from 'css-box-model';
+import type { Rect, Position } from "css-box-model";
 
 interface Args {
   container: Rect;

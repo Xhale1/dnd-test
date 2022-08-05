@@ -3,24 +3,24 @@ import type {
   CompletedDrag,
   State,
   DraggableLocation,
-} from '../../../../../src/types';
-import { invariant } from '../../../../../src/invariant';
-import type { Store } from '../../../../../src/state/store-types';
-import middleware from '../../../../../src/state/middleware/responders';
-import createStore from '../util/create-store';
+} from "../../../../../src/types";
+import { invariant } from "../../../../../src/invariant";
+import type { Store } from "../../../../../src/state/store-types";
+import middleware from "../../../../../src/state/middleware/responders";
+import createStore from "../util/create-store";
 import {
   initialPublishArgs,
   getDragStart,
-} from '../../../../util/preset-action-args';
+} from "../../../../util/preset-action-args";
 import {
   initialPublish,
   completeDrop,
-} from '../../../../../src/state/action-creators';
-import getResponders from './util/get-responders-stub';
-import getAnnounce from './util/get-announce-stub';
-import getCompletedWithResult from './util/get-completed-with-result';
-import getSimpleStatePreset from '../../../../util/get-simple-state-preset';
-import { tryGetDestination } from '../../../../../src/state/get-impact-location';
+} from "../../../../../src/state/action-creators";
+import getResponders from "./util/get-responders-stub";
+import getAnnounce from "./util/get-announce-stub";
+import getCompletedWithResult from "./util/get-completed-with-result";
+import getSimpleStatePreset from "../../../../util/get-simple-state-preset";
+import { tryGetDestination } from "../../../../../src/state/get-impact-location";
 
 const result: DropResult = {
   ...getDragStart(),
@@ -29,7 +29,7 @@ const result: DropResult = {
     index: 2,
   },
   combine: null,
-  reason: 'DROP',
+  reason: "DROP",
 };
 
 beforeEach(() => {
@@ -40,7 +40,7 @@ afterEach(() => {
   jest.useRealTimers();
 });
 
-it('should call the onDragEnd responder when a DROP_COMPLETE action occurs', () => {
+it("should call the onDragEnd responder when a DROP_COMPLETE action occurs", () => {
   const responders = getResponders();
   const store: Store = createStore(middleware(() => responders, getAnnounce()));
 
@@ -51,12 +51,12 @@ it('should call the onDragEnd responder when a DROP_COMPLETE action occurs', () 
   store.dispatch(
     completeDrop({
       completed: getCompletedWithResult(result, store.getState()),
-    }),
+    })
   );
   expect(responders.onDragEnd).toHaveBeenCalledWith(result, expect.any(Object));
 });
 
-it('should throw an exception if there was no drag start published', () => {
+it("should throw an exception if there was no drag start published", () => {
   const responders = getResponders();
   const store: Store = createStore(middleware(() => responders, getAnnounce()));
 
@@ -68,12 +68,12 @@ it('should throw an exception if there was no drag start published', () => {
     store.dispatch(
       completeDrop({
         completed: borrowed,
-      }),
-    ),
-  ).toThrow('Can only flush responders while dragging');
+      })
+    )
+  ).toThrow("Can only flush responders while dragging");
 });
 
-it('should use the drop result and not the final impact', () => {
+it("should use the drop result and not the final impact", () => {
   const responders = getResponders();
   const store: Store = createStore(middleware(() => responders, getAnnounce()));
 
@@ -82,7 +82,7 @@ it('should use the drop result and not the final impact', () => {
   expect(responders.onDragStart).toHaveBeenCalledTimes(1);
 
   const state: State = store.getState();
-  invariant(state.phase === 'DRAGGING');
+  invariant(state.phase === "DRAGGING");
   const destination: DraggableLocation | null = tryGetDestination(state.impact);
   invariant(destination);
   const fakeResult: DropResult = {
@@ -94,16 +94,16 @@ it('should use the drop result and not the final impact', () => {
       index: destination.index + 1,
     },
     combine: null,
-    reason: 'DROP',
+    reason: "DROP",
   };
 
   store.dispatch(
     completeDrop({
       completed: getCompletedWithResult(fakeResult, store.getState()),
-    }),
+    })
   );
   expect(responders.onDragEnd).toHaveBeenCalledWith(
     fakeResult,
-    expect.any(Object),
+    expect.any(Object)
   );
 });

@@ -1,10 +1,10 @@
-import { act, render } from '@testing-library/react';
-import { fireEvent } from '@testing-library/dom';
-import React from 'react';
-import Placeholder from '../../../../src/view/placeholder';
-import { expectIsFull } from './util/expect';
-import getPlaceholderStyle from './util/get-placeholder-style';
-import { placeholder } from './util/data';
+import { act, render } from "@testing-library/react";
+import { fireEvent } from "@testing-library/dom";
+import React from "react";
+import Placeholder from "../../../../src/view/placeholder";
+import { expectIsFull } from "./util/expect";
+import getPlaceholderStyle from "./util/get-placeholder-style";
+import { placeholder } from "./util/data";
 
 beforeEach(() => {
   jest.useFakeTimers();
@@ -14,7 +14,7 @@ afterEach(() => {
   jest.useRealTimers();
 });
 
-it('should only fire a single transitionend event a single time when transitioning multiple properties', () => {
+it("should only fire a single transitionend event a single time when transitioning multiple properties", () => {
   const onTransitionEnd = jest.fn();
   const onClose = jest.fn();
 
@@ -25,7 +25,7 @@ it('should only fire a single transitionend event a single time when transitioni
       onClose={onClose}
       onTransitionEnd={onTransitionEnd}
       contextId="hey"
-    />,
+    />
   );
   // finish the animate open timer
   act(() => {
@@ -36,12 +36,12 @@ it('should only fire a single transitionend event a single time when transitioni
   // first event: a 'height' event will trigger the handler
 
   const placholder = container.querySelector(
-    '[data-rfd-placeholder-context-id]',
+    "[data-rfd-placeholder-context-id]"
   ) as HTMLElement;
 
   // not a complete event
   const height: Partial<TransitionEvent> = {
-    propertyName: 'height',
+    propertyName: "height",
   };
   fireEvent.transitionEnd(placholder, height);
   expect(onTransitionEnd).toHaveBeenCalledTimes(1);
@@ -51,11 +51,11 @@ it('should only fire a single transitionend event a single time when transitioni
 
   // not a complete event
   const margin: Partial<TransitionEvent> = {
-    propertyName: 'margin',
+    propertyName: "margin",
   };
   // not a complete event
   const width: Partial<TransitionEvent> = {
-    propertyName: 'width',
+    propertyName: "width",
   };
   fireEvent.transitionEnd(placholder, margin);
   fireEvent.transitionEnd(placholder, width);

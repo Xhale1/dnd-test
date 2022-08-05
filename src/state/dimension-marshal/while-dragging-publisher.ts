@@ -1,4 +1,4 @@
-import type { Position } from 'css-box-model';
+import type { Position } from "css-box-model";
 import type {
   DraggableId,
   DroppableId,
@@ -8,15 +8,15 @@ import type {
   DroppablePublish,
   DroppableIdMap,
   DraggableIdMap,
-} from '../../types';
+} from "../../types";
 import type {
   DroppableEntry,
   Registry,
   DraggableEntry,
   DraggableEntryMap,
-} from '../registry/registry-types';
-import * as timings from '../../debug/timings';
-import { origin } from '../position';
+} from "../registry/registry-types";
+import * as timings from "../../debug/timings";
+import { origin } from "../position";
 
 export interface WhileDraggingPublisher {
   add: (entry: DraggableEntry) => void;
@@ -46,7 +46,7 @@ const clean = (): Staging => ({
   modified: {},
 });
 
-const timingKey = 'Publish collection from DOM';
+const timingKey = "Publish collection from DOM";
 
 export default function createPublisher({
   registry,
@@ -71,13 +71,13 @@ export default function createPublisher({
         .map(
           // Using the origin as the window scroll. This will be adjusted when processing the published values
           (id: DraggableId): DraggableDimension =>
-            registry.draggable.getById(id).getDimension(origin),
+            registry.draggable.getById(id).getDimension(origin)
         )
         // Dimensions are not guarenteed to be ordered in the same order as keys
         // So we need to sort them so they are in the correct order
         .sort(
           (a: DraggableDimension, b: DraggableDimension): number =>
-            a.descriptor.index - b.descriptor.index,
+            a.descriptor.index - b.descriptor.index
         );
 
       const updated: DroppablePublish[] = Object.keys(modified).map(
@@ -89,7 +89,7 @@ export default function createPublisher({
             droppableId: id,
             scroll,
           };
-        },
+        }
       );
 
       const result: Published = {

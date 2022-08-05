@@ -1,7 +1,7 @@
 // This file exists to avoid a circular dependency between types.js and action-creators.js
-import type { Store as ReduxStore, Dispatch as ReduxDispatch } from 'redux';
-import type { Action } from './action-creators';
-import type { State } from '../types';
+import type { Store as ReduxStore, Dispatch as ReduxDispatch } from "redux";
+import type { Action } from "./action-creators";
+import type { State } from "../types";
 
 export type {
   // Actions
@@ -51,7 +51,7 @@ export type {
   CancelActionCreator,
   DropPendingActionCreator,
   DropAnimationFinishedActionCreator,
-} from './action-creators';
+} from "./action-creators";
 
 export type Dispatch = ReduxDispatch<Action>;
 export type Store = ReduxStore<State, Action>;

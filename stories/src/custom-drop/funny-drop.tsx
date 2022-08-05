@@ -1,5 +1,5 @@
-import { colors } from '@atlaskit/theme';
-import styled from '@emotion/styled';
+import { colors } from "@atlaskit/theme";
+import styled from "@emotion/styled";
 import type {
   DraggableProvided,
   DraggableStateSnapshot,
@@ -8,11 +8,11 @@ import type {
   DroppableProvided,
   DropResult,
   NotDraggingStyle,
-} from '@hello-pangea/dnd';
-import { DragDropContext, Draggable, Droppable } from '@hello-pangea/dnd';
-import React, { CSSProperties, ReactElement } from 'react';
-import { grid } from '../constants';
-import reorder from '../reorder';
+} from "@hello-pangea/dnd";
+import { DragDropContext, Draggable, Droppable } from "@hello-pangea/dnd";
+import React, { CSSProperties, ReactElement } from "react";
+import { grid } from "../constants";
+import reorder from "../reorder";
 
 interface Task {
   id: string;
@@ -37,7 +37,7 @@ const Canvas = styled.div<CanvasProps>`
 
 const getStyle = (
   style: DraggingStyle | NotDraggingStyle | undefined,
-  snapshot: DraggableStateSnapshot,
+  snapshot: DraggableStateSnapshot
 ): CSSProperties => {
   const dropping: DropAnimation | undefined | null = snapshot.dropAnimation;
   if (!dropping) {
@@ -45,7 +45,7 @@ const getStyle = (
   }
   const { moveTo, curve, duration } = dropping;
   const translate = `translate(${moveTo.x}px, ${moveTo.y}px)`;
-  const rotate = 'rotate(1turn)';
+  const rotate = "rotate(1turn)";
   return {
     ...style,
     transform: `${translate} ${rotate}`,
@@ -87,7 +87,7 @@ const initial: Task[] = Array.from(
   (v, k): Task => ({
     id: `task-${k}`,
     content: `Task ${k}`,
-  }),
+  })
 );
 
 interface State {
@@ -107,7 +107,7 @@ export default class App extends React.Component<unknown, State> {
       tasks: reorder(
         this.state.tasks,
         result.source.index,
-        result.destination.index,
+        result.destination.index
       ),
     });
   };

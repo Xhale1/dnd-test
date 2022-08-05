@@ -1,5 +1,5 @@
-import type { Position } from 'css-box-model';
-import { invariant } from '../../../invariant';
+import type { Position } from "css-box-model";
+import { invariant } from "../../../invariant";
 import type {
   State,
   DropReason,
@@ -10,22 +10,22 @@ import type {
   Combine,
   DimensionMap,
   DraggableDimension,
-} from '../../../types';
-import type { Middleware } from '../../store-types';
-import { animateDrop, completeDrop, dropPending } from '../../action-creators';
-import type { AnimateDropArgs } from '../../action-creators';
-import { isEqual } from '../../position';
-import getDropDuration from './get-drop-duration';
-import getNewHomeClientOffset from './get-new-home-client-offset';
-import getDropImpact from './get-drop-impact';
-import type { Result } from './get-drop-impact';
-import { tryGetCombine, tryGetDestination } from '../../get-impact-location';
+} from "../../../types";
+import type { Middleware } from "../../store-types";
+import { animateDrop, completeDrop, dropPending } from "../../action-creators";
+import type { AnimateDropArgs } from "../../action-creators";
+import { isEqual } from "../../position";
+import getDropDuration from "./get-drop-duration";
+import getNewHomeClientOffset from "./get-new-home-client-offset";
+import getDropImpact from "./get-drop-impact";
+import type { Result } from "./get-drop-impact";
+import { tryGetCombine, tryGetDestination } from "../../get-impact-location";
 
 const dropMiddleware: Middleware =
   ({ getState, dispatch }) =>
   (next) =>
   (action) => {
-    if (action.type !== 'DROP') {
+    if (action.type !== "DROP") {
       next(action);
       return;
     }
@@ -35,28 +35,28 @@ const dropMiddleware: Middleware =
 
     // Still waiting for a bulk collection to publish
     // We are now shifting the application into the 'DROP_PENDING' phase
-    if (state.phase === 'COLLECTING') {
+    if (state.phase === "COLLECTING") {
       dispatch(dropPending({ reason }));
       return;
     }
 
     // Could have occurred in response to an error
-    if (state.phase === 'IDLE') {
+    if (state.phase === "IDLE") {
       return;
     }
 
     // Still waiting for our drop pending to end
     // TODO: should this throw?
     const isWaitingForDrop: boolean =
-      state.phase === 'DROP_PENDING' && state.isWaiting;
+      state.phase === "DROP_PENDING" && state.isWaiting;
     invariant(
       !isWaitingForDrop,
-      'A DROP action occurred while DROP_PENDING and still waiting',
+      "A DROP action occurred while DROP_PENDING and still waiting"
     );
 
     invariant(
-      state.phase === 'DRAGGING' || state.phase === 'DROP_PENDING',
-      `Cannot drop in phase: ${state.phase}`,
+      state.phase === "DRAGGING" || state.phase === "DROP_PENDING",
+      `Cannot drop in phase: ${state.phase}`
     );
     // We are now in the DRAGGING or DROP_PENDING phase
 

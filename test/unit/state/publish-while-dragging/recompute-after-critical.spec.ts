@@ -1,5 +1,5 @@
-import { invariant } from '../../../../src/invariant';
-import getStatePreset from '../../../util/get-simple-state-preset';
+import { invariant } from "../../../../src/invariant";
+import getStatePreset from "../../../util/get-simple-state-preset";
 import type {
   Published,
   DraggableDimension,
@@ -10,29 +10,29 @@ import type {
   DisplacedBy,
   CollectingState,
   LiftEffect,
-} from '../../../../src/types';
-import publish from '../../../../src/state/publish-while-dragging-in-virtual';
-import { getPreset } from '../../../util/dimension';
-import { empty, withVirtuals, virtualHome } from './util';
-import getDisplacedBy from '../../../../src/state/get-displaced-by';
-import { vertical } from '../../../../src/state/axis';
-import { origin } from '../../../../src/state/position';
-import { getForcedDisplacement } from '../../../util/impact';
+} from "../../../../src/types";
+import publish from "../../../../src/state/publish-while-dragging-in-virtual";
+import { getPreset } from "../../../util/dimension";
+import { empty, withVirtuals, virtualHome } from "./util";
+import getDisplacedBy from "../../../../src/state/get-displaced-by";
+import { vertical } from "../../../../src/state/axis";
+import { origin } from "../../../../src/state/position";
+import { getForcedDisplacement } from "../../../util/impact";
 
 const state = getStatePreset();
 const preset = getPreset(vertical);
 
-it('should recalculate after critical (something added)', () => {
+it("should recalculate after critical (something added)", () => {
   const displacedBy: DisplacedBy = getDisplacedBy(
     vertical,
-    preset.inHome1.displaceBy,
+    preset.inHome1.displaceBy
   );
   const added: DraggableDimension = {
     ...preset.inHome4,
     descriptor: {
       ...preset.inHome4.descriptor,
       index: preset.inHome4.descriptor.index + 1,
-      id: 'added',
+      id: "added",
     },
   };
   const published: Published = {
@@ -47,7 +47,7 @@ it('should recalculate after critical (something added)', () => {
     published,
   });
 
-  invariant(result.phase === 'DRAGGING');
+  invariant(result.phase === "DRAGGING");
 
   {
     const expected: LiftEffect = {
@@ -84,10 +84,10 @@ it('should recalculate after critical (something added)', () => {
   }
 });
 
-it('should recalculate after critical (something removed)', () => {
+it("should recalculate after critical (something removed)", () => {
   const displacedBy: DisplacedBy = getDisplacedBy(
     vertical,
-    preset.inHome1.displaceBy,
+    preset.inHome1.displaceBy
   );
   const published: Published = {
     removals: [preset.inHome4.descriptor.id],
@@ -101,7 +101,7 @@ it('should recalculate after critical (something removed)', () => {
     published,
   });
 
-  invariant(result.phase === 'DRAGGING');
+  invariant(result.phase === "DRAGGING");
 
   {
     const expected: LiftEffect = {

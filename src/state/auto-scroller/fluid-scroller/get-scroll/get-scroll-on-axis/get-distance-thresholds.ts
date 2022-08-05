@@ -1,6 +1,6 @@
-import type { Rect } from 'css-box-model';
-import config from '../../config';
-import type { Axis } from '../../../../../types';
+import type { Rect } from "css-box-model";
+import config from "../../config";
+import type { Axis } from "../../../../../types";
 
 // all in pixels
 export interface DistanceThresholds {

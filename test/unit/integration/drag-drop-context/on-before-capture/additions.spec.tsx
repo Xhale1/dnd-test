@@ -1,14 +1,14 @@
-import React, { useState } from 'react';
-import { render } from '@testing-library/react';
-import App from '../../util/app';
-import { Droppable, Draggable, DragDropContext } from '../../../../../src';
-import type { DragStart } from '../../../../../src';
-import expandedMouse from '../../util/expanded-mouse';
-import { isDragging } from '../../util/helpers';
-import { withError } from '../../../../util/console';
-import { noop } from '../../../../../src/empty';
+import React, { useState } from "react";
+import { render } from "@testing-library/react";
+import App from "../../util/app";
+import { Droppable, Draggable, DragDropContext } from "../../../../../src";
+import type { DragStart } from "../../../../../src";
+import expandedMouse from "../../util/expanded-mouse";
+import { isDragging } from "../../util/helpers";
+import { withError } from "../../../../util/console";
+import { noop } from "../../../../../src/empty";
 
-it('should allow for additions to be made', () => {
+it("should allow for additions to be made", () => {
   // adding a new Droppable and Draggable
   function AnotherChunk() {
     return (
@@ -51,7 +51,7 @@ it('should allow for additions to be made', () => {
   }
 
   const { getByTestId } = render(<Root />);
-  const handle: HTMLElement = getByTestId('0');
+  const handle: HTMLElement = getByTestId("0");
 
   // act(() => {}); is joining the two into one update which is
   // causing unexpected mounting behaviour
@@ -63,7 +63,7 @@ it('should allow for additions to be made', () => {
 });
 
 function getIndex(el: HTMLElement): number {
-  return Number(el.getAttribute('data-index'));
+  return Number(el.getAttribute("data-index"));
 }
 
 beforeEach(() => {
@@ -74,16 +74,16 @@ afterEach(() => {
   jest.useRealTimers();
 });
 
-it('should adjust captured values for any changes that impact that dragging item', () => {
+it("should adjust captured values for any changes that impact that dragging item", () => {
   // 1. Changing the `type` of the Droppable
   // 2. Adding and item before the dragging item to impact it's index
   const onDragStart = jest.fn();
 
   function Root() {
-    const [items, setItems] = useState(['initial']);
+    const [items, setItems] = useState(["initial"]);
     function onBeforeCapture() {
       // adding the first item
-      setItems(['first', 'initial']);
+      setItems(["first", "initial"]);
     }
 
     return (
@@ -123,12 +123,12 @@ it('should adjust captured values for any changes that impact that dragging item
   }
 
   const { getByTestId, queryByTestId } = render(<Root />);
-  const initial: HTMLElement = getByTestId('initial');
+  const initial: HTMLElement = getByTestId("initial");
 
   // initially it had an index of 1
   expect(getIndex(initial)).toBe(0);
   // first item does not exist yet
-  expect(queryByTestId('first')).toBe(null);
+  expect(queryByTestId("first")).toBe(null);
 
   // act(() => {}); is joining the two into one update which is
   // causing unexpected mounting behaviour
@@ -137,7 +137,7 @@ it('should adjust captured values for any changes that impact that dragging item
   });
 
   // first item has been added
-  expect(queryByTestId('first')).toBeTruthy();
+  expect(queryByTestId("first")).toBeTruthy();
   // initial is now dragging
   expect(isDragging(initial)).toBe(true);
   // initial index accounts for addition
@@ -148,12 +148,12 @@ it('should adjust captured values for any changes that impact that dragging item
 
   // onDragStart called with correct new index
   const expected: DragStart = {
-    draggableId: 'initial',
-    mode: 'FLUID',
-    type: 'DEFAULT',
+    draggableId: "initial",
+    mode: "FLUID",
+    type: "DEFAULT",
     source: {
       index: 1,
-      droppableId: 'droppable',
+      droppableId: "droppable",
     },
   };
   expect(onDragStart.mock.calls[0][0]).toEqual(expected);

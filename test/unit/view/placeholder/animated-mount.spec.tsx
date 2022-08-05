@@ -1,10 +1,10 @@
-import { act, render } from '@testing-library/react';
-import React from 'react';
-import Placeholder from '../../../../src/view/placeholder';
-import { expectIsEmpty, expectIsFull } from './util/expect';
-import { placeholder } from './util/data';
-import getPlaceholderStyle from './util/get-placeholder-style';
-import * as attributes from '../../../../src/view/data-attributes';
+import { act, render } from "@testing-library/react";
+import React from "react";
+import Placeholder from "../../../../src/view/placeholder";
+import { expectIsEmpty, expectIsFull } from "./util/expect";
+import { placeholder } from "./util/data";
+import getPlaceholderStyle from "./util/get-placeholder-style";
+import * as attributes from "../../../../src/view/data-attributes";
 
 beforeEach(() => {
   jest.useFakeTimers();
@@ -14,12 +14,12 @@ afterEach(() => {
   jest.useRealTimers();
 });
 
-const contextId = 'hello-there';
+const contextId = "hello-there";
 
 let spy: jest.SpiedFunction<typeof React.createElement>;
 
 beforeEach(() => {
-  spy = jest.spyOn(React, 'createElement');
+  spy = jest.spyOn(React, "createElement");
 });
 
 afterEach(() => {
@@ -34,7 +34,7 @@ const getCreatePlaceholderCalls = () => {
   });
 };
 
-it('should animate a mount', () => {
+it("should animate a mount", () => {
   const onClose = jest.fn();
   const onTransitionEnd = jest.fn();
   const { container } = render(
@@ -44,7 +44,7 @@ it('should animate a mount', () => {
       placeholder={placeholder}
       onClose={onClose}
       onTransitionEnd={onTransitionEnd}
-    />,
+    />
   );
 
   expect(getCreatePlaceholderCalls().length).toBe(1);
@@ -62,7 +62,7 @@ it('should animate a mount', () => {
   expectIsFull(postMount);
 });
 
-it('should not animate a mount if interrupted', () => {
+it("should not animate a mount if interrupted", () => {
   const onClose = jest.fn();
   const onTransitionEnd = jest.fn();
   const { container, rerender } = render(
@@ -72,7 +72,7 @@ it('should not animate a mount if interrupted', () => {
       placeholder={placeholder}
       onClose={onClose}
       onTransitionEnd={onTransitionEnd}
-    />,
+    />
   );
   const onMount = getPlaceholderStyle(container);
   expectIsEmpty(onMount);
@@ -87,7 +87,7 @@ it('should not animate a mount if interrupted', () => {
       placeholder={placeholder}
       onClose={onClose}
       onTransitionEnd={onTransitionEnd}
-    />,
+    />
   );
 
   // render 1: normal
@@ -108,16 +108,16 @@ it('should not animate a mount if interrupted', () => {
       placeholder={placeholder}
       onClose={onClose}
       onTransitionEnd={onTransitionEnd}
-    />,
+    />
   );
   expectIsFull(getPlaceholderStyle(container));
   expect(getCreatePlaceholderCalls()).toHaveLength(0);
 });
 
-it('should not animate in if unmounted', () => {
+it("should not animate in if unmounted", () => {
   const onClose = jest.fn();
   const onTransitionEnd = jest.fn();
-  const error = jest.spyOn(console, 'error');
+  const error = jest.spyOn(console, "error");
 
   const { container, unmount } = render(
     <Placeholder
@@ -126,7 +126,7 @@ it('should not animate in if unmounted', () => {
       placeholder={placeholder}
       onClose={onClose}
       onTransitionEnd={onTransitionEnd}
-    />,
+    />
   );
   expectIsEmpty(getPlaceholderStyle(container));
 

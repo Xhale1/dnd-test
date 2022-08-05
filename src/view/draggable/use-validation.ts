@@ -1,16 +1,16 @@
-import { useRef } from 'react';
-import { invariant } from '../../invariant';
-import type { DraggableId, ContextId } from '../../types';
-import type { Props } from './draggable-types';
-import checkIsValidInnerRef from '../check-is-valid-inner-ref';
-import findDragHandle from '../get-elements/find-drag-handle';
-import useDevSetupWarning from '../use-dev-setup-warning';
-import useDev from '../use-dev';
+import { useRef } from "react";
+import { invariant } from "../../invariant";
+import type { DraggableId, ContextId } from "../../types";
+import type { Props } from "./draggable-types";
+import checkIsValidInnerRef from "../check-is-valid-inner-ref";
+import findDragHandle from "../get-elements/find-drag-handle";
+import useDevSetupWarning from "../use-dev-setup-warning";
+import useDev from "../use-dev";
 
 export function useValidation(
   props: Props,
   contextId: ContextId,
-  getRef: () => HTMLElement | null,
+  getRef: () => HTMLElement | null
 ) {
   // running after every update in development
   useDevSetupWarning(() => {
@@ -20,19 +20,19 @@ export function useValidation(
 
     // wrapping entire block for better minification
     const id: DraggableId | null = props.draggableId;
-    invariant(id, 'Draggable requires a draggableId');
+    invariant(id, "Draggable requires a draggableId");
     invariant(
-      typeof id === 'string',
+      typeof id === "string",
       `Draggable requires a [string] draggableId.
-      Provided: [type: ${typeof id}] (value: ${id})`,
+      Provided: [type: ${typeof id}] (value: ${id})`
     );
 
     invariant(
       Number.isInteger(props.index),
-      `${prefix(id)} requires an integer index prop`,
+      `${prefix(id)} requires an integer index prop`
     );
 
-    if (props.mapped.type === 'DRAGGING') {
+    if (props.mapped.type === "DRAGGING") {
       return;
     }
 
@@ -45,7 +45,7 @@ export function useValidation(
     if (props.isEnabled) {
       invariant(
         findDragHandle(contextId, id),
-        `${prefix(id)} Unable to find drag handle`,
+        `${prefix(id)} Unable to find drag handle`
       );
     }
   });
@@ -61,7 +61,7 @@ export function useClonePropValidation(isClone: boolean) {
     useDevSetupWarning(() => {
       invariant(
         isClone === initialRef.current,
-        'Draggable isClone prop value changed during component life',
+        "Draggable isClone prop value changed during component life"
       );
     }, [isClone]);
   });

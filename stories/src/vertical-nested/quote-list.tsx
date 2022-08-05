@@ -1,18 +1,18 @@
-import { colors } from '@atlaskit/theme';
-import styled from '@emotion/styled';
+import { colors } from "@atlaskit/theme";
+import styled from "@emotion/styled";
 import type {
   DraggableProvided,
   DraggableStateSnapshot,
   DroppableProvided,
   DroppableStateSnapshot,
-} from '@hello-pangea/dnd';
-import { Draggable, Droppable } from '@hello-pangea/dnd';
-import React, { Component, ReactElement } from 'react';
-import { grid } from '../constants';
-import QuoteItem from '../primatives/quote-item';
-import Title from '../primatives/title';
-import type { Quote } from '../types';
-import type { NestedQuoteList } from './types';
+} from "@hello-pangea/dnd";
+import { Draggable, Droppable } from "@hello-pangea/dnd";
+import React, { Component, ReactElement } from "react";
+import { grid } from "../constants";
+import QuoteItem from "../primatives/quote-item";
+import Title from "../primatives/title";
+import type { Quote } from "../types";
+import type { NestedQuoteList } from "./types";
 
 const Root = styled.div`
   width: 250px;
@@ -58,7 +58,7 @@ export default class QuoteList extends Component<{
     <Droppable droppableId={list.id} type={list.id} key={list.id}>
       {(
         dropProvided: DroppableProvided,
-        dropSnapshot: DroppableStateSnapshot,
+        dropSnapshot: DroppableStateSnapshot
       ) => (
         <Container
           ref={dropProvided.innerRef}
@@ -68,7 +68,7 @@ export default class QuoteList extends Component<{
           <Title>{list.title}</Title>
           {list.children.map(
             (item: Quote | NestedQuoteList, index: number): ReactElement =>
-              !Object.prototype.hasOwnProperty.call(item, 'children') ? (
+              !Object.prototype.hasOwnProperty.call(item, "children") ? (
                 this.renderQuote(item as Quote, index)
               ) : (
                 <Draggable draggableId={item.id} key={item.id} index={index}>
@@ -82,7 +82,7 @@ export default class QuoteList extends Component<{
                     </NestedContainer>
                   )}
                 </Draggable>
-              ),
+              )
           )}
           {dropProvided.placeholder}
         </Container>

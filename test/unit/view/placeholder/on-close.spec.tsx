@@ -1,12 +1,12 @@
-import { render } from '@testing-library/react';
-import { fireEvent } from '@testing-library/dom';
-import React from 'react';
-import Placeholder from '../../../../src/view/placeholder';
-import { expectIsFull } from './util/expect';
-import getPlaceholderStyle from './util/get-placeholder-style';
-import { placeholder } from './util/data';
+import { render } from "@testing-library/react";
+import { fireEvent } from "@testing-library/dom";
+import React from "react";
+import Placeholder from "../../../../src/view/placeholder";
+import { expectIsFull } from "./util/expect";
+import getPlaceholderStyle from "./util/get-placeholder-style";
+import { placeholder } from "./util/data";
 
-it('should only fire a single onClose event', () => {
+it("should only fire a single onClose event", () => {
   const onClose = jest.fn();
   const onTransitionEnd = jest.fn();
 
@@ -17,7 +17,7 @@ it('should only fire a single onClose event', () => {
       placeholder={placeholder}
       onClose={onClose}
       onTransitionEnd={onTransitionEnd}
-    />,
+    />
   );
   expectIsFull(getPlaceholderStyle(container));
 
@@ -28,16 +28,16 @@ it('should only fire a single onClose event', () => {
       placeholder={placeholder}
       onClose={onClose}
       onTransitionEnd={onTransitionEnd}
-    />,
+    />
   );
 
   const placholder = container.querySelector(
-    '[data-rfd-placeholder-context-id]',
+    "[data-rfd-placeholder-context-id]"
   ) as HTMLElement;
 
   // not a complete event
   const height: Partial<TransitionEvent> = {
-    propertyName: 'height',
+    propertyName: "height",
   };
   fireEvent.transitionEnd(placholder, height);
   expect(onClose).toHaveBeenCalledTimes(1);
@@ -47,18 +47,18 @@ it('should only fire a single onClose event', () => {
 
   // not a complete event
   const margin: Partial<TransitionEvent> = {
-    propertyName: 'margin',
+    propertyName: "margin",
   };
   // not a complete event
   const width: Partial<TransitionEvent> = {
-    propertyName: 'width',
+    propertyName: "width",
   };
   fireEvent.transitionEnd(placholder, margin);
   fireEvent.transitionEnd(placholder, width);
   expect(onClose).not.toHaveBeenCalled();
 });
 
-it('should not fire an onClose if not closing when a transitionend occurs', () => {
+it("should not fire an onClose if not closing when a transitionend occurs", () => {
   const onClose = jest.fn();
   const onTransitionEnd = jest.fn();
 
@@ -69,15 +69,15 @@ it('should not fire an onClose if not closing when a transitionend occurs', () =
       placeholder={placeholder}
       onClose={onClose}
       onTransitionEnd={onTransitionEnd}
-    />,
+    />
   );
   const placholder = container.querySelector(
-    '[data-rfd-placeholder-context-id]',
+    "[data-rfd-placeholder-context-id]"
   ) as HTMLElement;
   const assert = () => {
     // not a complete event
     const height: Partial<TransitionEvent> = {
-      propertyName: 'height',
+      propertyName: "height",
     };
     fireEvent.transitionEnd(placholder, height);
     expect(onClose).not.toHaveBeenCalled();
@@ -94,7 +94,7 @@ it('should not fire an onClose if not closing when a transitionend occurs', () =
       placeholder={placeholder}
       onClose={onClose}
       onTransitionEnd={onTransitionEnd}
-    />,
+    />
   );
   assert();
 });

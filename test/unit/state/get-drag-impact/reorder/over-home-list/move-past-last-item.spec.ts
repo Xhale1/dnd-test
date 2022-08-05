@@ -1,17 +1,17 @@
-import type { Position } from 'css-box-model';
-import type { Axis, DragImpact, Viewport } from '../../../../../../src/types';
-import { horizontal, vertical } from '../../../../../../src/state/axis';
-import getDisplacedBy from '../../../../../../src/state/get-displaced-by';
-import getDragImpact from '../../../../../../src/state/get-drag-impact';
-import getLiftEffect from '../../../../../../src/state/get-lift-effect';
-import { getPreset } from '../../../../../util/dimension';
-import { emptyGroups } from '../../../../../../src/state/no-impact';
-import afterPoint from '../../../../../util/after-point';
-import { getOffsetForEndEdge } from '../../util/get-offset-for-edge';
+import type { Position } from "css-box-model";
+import type { Axis, DragImpact, Viewport } from "../../../../../../src/types";
+import { horizontal, vertical } from "../../../../../../src/state/axis";
+import getDisplacedBy from "../../../../../../src/state/get-displaced-by";
+import getDragImpact from "../../../../../../src/state/get-drag-impact";
+import getLiftEffect from "../../../../../../src/state/get-lift-effect";
+import { getPreset } from "../../../../../util/dimension";
+import { emptyGroups } from "../../../../../../src/state/no-impact";
+import afterPoint from "../../../../../util/after-point";
+import { getOffsetForEndEdge } from "../../util/get-offset-for-edge";
 
 [vertical, horizontal].forEach((axis: Axis) => {
   describe(`on ${axis.direction} axis`, () => {
-    it('should allow movement past the last item', () => {
+    it("should allow movement past the last item", () => {
       const preset = getPreset(axis);
       const viewport: Viewport = preset.viewport;
       const { afterCritical, impact: homeImpact } = getLiftEffect({
@@ -40,7 +40,7 @@ import { getOffsetForEndEdge } from '../../util/get-offset-for-edge';
         displaced: emptyGroups,
         displacedBy: getDisplacedBy(axis, preset.inHome1.displaceBy),
         at: {
-          type: 'REORDER',
+          type: "REORDER",
           // in the visual position of the last itme
           destination: {
             index: preset.inHome4.descriptor.index,

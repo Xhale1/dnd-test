@@ -3,14 +3,14 @@ import {
   toDraggableMap,
   toDroppableMap,
   toDroppableList,
-} from '../../../src/state/dimension-structures';
-import { getPreset } from '../../util/dimension';
+} from "../../../src/state/dimension-structures";
+import { getPreset } from "../../util/dimension";
 import type {
   DraggableDimension,
   DroppableDimension,
   DraggableDimensionMap,
   DroppableDimensionMap,
-} from '../../../src/types';
+} from "../../../src/types";
 
 const preset = getPreset();
 
@@ -27,18 +27,18 @@ const droppableMap: DroppableDimensionMap = {
   [preset.foreign.descriptor.id]: preset.foreign,
 };
 
-it('should convert a draggable list to a map', () => {
+it("should convert a draggable list to a map", () => {
   expect(toDraggableMap(draggables)).toEqual(draggableMap);
 });
 
-it('should convert a droppable list to a map', () => {
+it("should convert a droppable list to a map", () => {
   expect(toDroppableMap(droppables)).toEqual(droppableMap);
 });
 
-it('should convert a draggable map to a list', () => {
+it("should convert a draggable map to a list", () => {
   expect(toDraggableList(draggableMap)).toEqual(draggables);
 });
 
-it('should convert a droppable map to a list', () => {
+it("should convert a droppable map to a list", () => {
   expect(toDroppableList(droppableMap)).toEqual(droppables);
 });

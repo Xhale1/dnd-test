@@ -1,19 +1,19 @@
-import React, { useRef, DragEvent, TransitionEvent } from 'react';
-import { useMemo, useCallback } from 'use-memo-one';
-import type { DraggableRubric, DraggableDescriptor } from '../../types';
-import getStyle from './get-style';
-import useDraggablePublisher from '../use-draggable-publisher/use-draggable-publisher';
-import type { Args as PublisherArgs } from '../use-draggable-publisher/use-draggable-publisher';
-import AppContext from '../context/app-context';
-import DroppableContext from '../context/droppable-context';
+import React, { useRef, DragEvent, TransitionEvent } from "react";
+import { useMemo, useCallback } from "use-memo-one";
+import type { DraggableRubric, DraggableDescriptor } from "../../types";
+import getStyle from "./get-style";
+import useDraggablePublisher from "../use-draggable-publisher/use-draggable-publisher";
+import type { Args as PublisherArgs } from "../use-draggable-publisher/use-draggable-publisher";
+import AppContext from "../context/app-context";
+import DroppableContext from "../context/droppable-context";
 import type {
   Props,
   DraggableProvided,
   DraggableStyle,
   DraggableProvidedDragHandleProps,
-} from './draggable-types';
-import { useValidation, useClonePropValidation } from './use-validation';
-import useRequiredContext from '../use-required-context';
+} from "./draggable-types";
+import { useValidation, useClonePropValidation } from "./use-validation";
+import useRequiredContext from "../use-required-context";
 
 function preventHtml5Dnd(event: DragEvent) {
   event.preventDefault();
@@ -39,7 +39,7 @@ const Draggable: React.FunctionComponent<Props> = (props) => {
       type,
       droppableId,
     }),
-    [props.draggableId, props.index, type, droppableId],
+    [props.draggableId, props.index, type, droppableId]
   );
 
   // props
@@ -87,7 +87,7 @@ const Draggable: React.FunctionComponent<Props> = (props) => {
         canDragInteractiveElements,
         shouldRespectForcePress,
         isEnabled,
-      ],
+      ]
     );
     useDraggablePublisher(forPublisher);
   }
@@ -99,20 +99,20 @@ const Draggable: React.FunctionComponent<Props> = (props) => {
         ? {
             // See `draggable-types` for an explanation of why these are used
             tabIndex: 0,
-            role: 'button',
-            'aria-describedby': dragHandleUsageInstructionsId,
-            'data-rfd-drag-handle-draggable-id': draggableId,
-            'data-rfd-drag-handle-context-id': contextId,
+            role: "button",
+            "aria-describedby": dragHandleUsageInstructionsId,
+            "data-rfd-drag-handle-draggable-id": draggableId,
+            "data-rfd-drag-handle-context-id": contextId,
             draggable: false,
             onDragStart: preventHtml5Dnd,
           }
         : null,
-    [contextId, dragHandleUsageInstructionsId, draggableId, isEnabled],
+    [contextId, dragHandleUsageInstructionsId, draggableId, isEnabled]
   );
 
   const onMoveEnd = useCallback(
     (event: TransitionEvent) => {
-      if (mapped.type !== 'DRAGGING') {
+      if (mapped.type !== "DRAGGING") {
         return;
       }
 
@@ -122,25 +122,25 @@ const Draggable: React.FunctionComponent<Props> = (props) => {
 
       // There might be other properties on the element that are
       // being transitioned. We do not want those to end a drop animation!
-      if (event.propertyName !== 'transform') {
+      if (event.propertyName !== "transform") {
         return;
       }
 
       dropAnimationFinishedAction();
     },
-    [dropAnimationFinishedAction, mapped],
+    [dropAnimationFinishedAction, mapped]
   );
 
   const provided: DraggableProvided = useMemo(() => {
     const style: DraggableStyle = getStyle(mapped);
     const onTransitionEnd =
-      mapped.type === 'DRAGGING' && mapped.dropping ? onMoveEnd : undefined;
+      mapped.type === "DRAGGING" && mapped.dropping ? onMoveEnd : undefined;
 
     const result: DraggableProvided = {
       innerRef: setRef,
       draggableProps: {
-        'data-rfd-draggable-context-id': contextId,
-        'data-rfd-draggable-id': draggableId,
+        "data-rfd-draggable-context-id": contextId,
+        "data-rfd-draggable-id": draggableId,
         style,
         onTransitionEnd,
       },
@@ -159,7 +159,7 @@ const Draggable: React.FunctionComponent<Props> = (props) => {
         droppableId: descriptor.droppableId,
       },
     }),
-    [descriptor.droppableId, descriptor.id, descriptor.index, descriptor.type],
+    [descriptor.droppableId, descriptor.id, descriptor.index, descriptor.type]
   );
 
   return <>{children(provided, mapped.snapshot, rubric)}</>;

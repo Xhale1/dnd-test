@@ -1,26 +1,26 @@
-import { useRef } from 'react';
-import { useCallback, useMemo } from 'use-memo-one';
-import type { Position } from 'css-box-model';
-import { invariant } from '../../../invariant';
+import { useRef } from "react";
+import { useCallback, useMemo } from "use-memo-one";
+import type { Position } from "css-box-model";
+import { invariant } from "../../../invariant";
 import type {
   PreDragActions,
   FluidDragActions,
   DraggableId,
   SensorAPI,
   DraggableOptions,
-} from '../../../types';
+} from "../../../types";
 import type {
   AnyEventBinding,
   EventBinding,
   EventOptions,
   MouseEventBinding,
-} from '../../event-bindings/event-types';
-import bindEvents from '../../event-bindings/bind-events';
-import * as keyCodes from '../../key-codes';
-import preventStandardKeyEvents from './util/prevent-standard-key-events';
-import supportedPageVisibilityEventName from './util/supported-page-visibility-event-name';
-import useLayoutEffect from '../../use-isomorphic-layout-effect';
-import { noop } from '../../../empty';
+} from "../../event-bindings/event-types";
+import bindEvents from "../../event-bindings/bind-events";
+import * as keyCodes from "../../key-codes";
+import preventStandardKeyEvents from "./util/prevent-standard-key-events";
+import supportedPageVisibilityEventName from "./util/supported-page-visibility-event-name";
+import useLayoutEffect from "../../use-isomorphic-layout-effect";
+import { noop } from "../../../empty";
 
 // https://developer.mozilla.org/en-US/docs/Web/API/MouseEvent/button
 export const primaryButton = 0;
@@ -28,7 +28,7 @@ export const sloppyClickThreshold = 5;
 
 function isSloppyClickThresholdExceeded(
   original: Position,
-  current: Position,
+  current: Position
 ): boolean {
   return (
     Math.abs(current.x - original.x) >= sloppyClickThreshold ||
@@ -37,23 +37,23 @@ function isSloppyClickThresholdExceeded(
 }
 
 interface Idle {
-  type: 'IDLE';
+  type: "IDLE";
 }
 
 interface Pending {
-  type: 'PENDING';
+  type: "PENDING";
   point: Position;
   actions: PreDragActions;
 }
 
 interface Dragging {
-  type: 'DRAGGING';
+  type: "DRAGGING";
   actions: FluidDragActions;
 }
 
 type Phase = Idle | Pending | Dragging;
 
-const idle: Idle = { type: 'IDLE' };
+const idle: Idle = { type: "IDLE" };
 
 interface GetCaptureArgs {
   cancel: () => void;
@@ -70,7 +70,7 @@ function getCaptureBindings({
 }: GetCaptureArgs): AnyEventBinding[] {
   return [
     {
-      eventName: 'mousemove',
+      eventName: "mousemove",
       fn: (event: MouseEvent) => {
         const { button, clientX, clientY } = event;
         if (button !== primaryButton) {
@@ -85,7 +85,7 @@ function getCaptureBindings({
         const phase: Phase = getPhase();
 
         // Already dragging
-        if (phase.type === 'DRAGGING') {
+        if (phase.type === "DRAGGING") {
           // preventing default as we are using this event
           event.preventDefault();
           phase.actions.move(point);
@@ -93,7 +93,7 @@ function getCaptureBindings({
         }
 
         // There should be a pending drag at this point
-        invariant(phase.type === 'PENDING', 'Cannot be IDLE');
+        invariant(phase.type === "PENDING", "Cannot be IDLE");
         const pending: Position = phase.point;
 
         // threshold not yet exceeded
@@ -109,17 +109,17 @@ function getCaptureBindings({
         const actions: FluidDragActions = phase.actions.fluidLift(point);
 
         setPhase({
-          type: 'DRAGGING',
+          type: "DRAGGING",
           actions,
         });
       },
     },
     {
-      eventName: 'mouseup',
+      eventName: "mouseup",
       fn: (event: MouseEvent) => {
         const phase: Phase = getPhase();
 
-        if (phase.type !== 'DRAGGING') {
+        if (phase.type !== "DRAGGING") {
           cancel();
           return;
         }
@@ -131,11 +131,11 @@ function getCaptureBindings({
       },
     },
     {
-      eventName: 'mousedown',
+      eventName: "mousedown",
       fn: (event: MouseEvent) => {
         // this can happen during a drag when the user clicks a button
         // other than the primary mouse button
-        if (getPhase().type === 'DRAGGING') {
+        if (getPhase().type === "DRAGGING") {
           event.preventDefault();
         }
 
@@ -143,11 +143,11 @@ function getCaptureBindings({
       },
     },
     {
-      eventName: 'keydown',
+      eventName: "keydown",
       fn: (event: KeyboardEvent) => {
         const phase: Phase = getPhase();
         // Abort if any keystrokes while a drag is pending
-        if (phase.type === 'PENDING') {
+        if (phase.type === "PENDING") {
           cancel();
           return;
         }
@@ -163,15 +163,15 @@ function getCaptureBindings({
       },
     },
     {
-      eventName: 'resize',
+      eventName: "resize",
       fn: cancel,
     },
     {
-      eventName: 'scroll',
+      eventName: "scroll",
       // kill a pending drag if there is a window scroll
       options: { passive: true, capture: false },
       fn: () => {
-        if (getPhase().type === 'PENDING') {
+        if (getPhase().type === "PENDING") {
           cancel();
         }
       },
@@ -181,12 +181,12 @@ function getCaptureBindings({
     // Only for safari which has decided to introduce its own custom way of doing things
     // https://developer.apple.com/library/content/documentation/AppleApplications/Conceptual/SafariJSProgTopics/RespondingtoForceTouchEventsfromJavaScript.html
     {
-      eventName: 'webkitmouseforcedown',
+      eventName: "webkitmouseforcedown",
       // it is considered a indirect cancel so we do not
       // prevent default in any situation.
       fn: (event: Event) => {
         const phase: Phase = getPhase();
-        invariant(phase.type !== 'IDLE', 'Unexpected phase');
+        invariant(phase.type !== "IDLE", "Unexpected phase");
 
         if (phase.actions.shouldRespectForcePress()) {
           cancel();
@@ -214,7 +214,7 @@ export default function useMouseSensor(api: SensorAPI) {
 
   const startCaptureBinding: MouseEventBinding = useMemo(
     () => ({
-      eventName: 'mousedown',
+      eventName: "mousedown",
       fn: function onMouseDown(event: MouseEvent) {
         // Event already used
         if (event.defaultPrevented) {
@@ -242,7 +242,7 @@ export default function useMouseSensor(api: SensorAPI) {
           // stop is defined later
           // eslint-disable-next-line @typescript-eslint/no-use-before-define
           stop,
-          { sourceEvent: event },
+          { sourceEvent: event }
         );
 
         if (!actions) {
@@ -266,12 +266,12 @@ export default function useMouseSensor(api: SensorAPI) {
     }),
     // not including startPendingDrag as it is not defined initially
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [api],
+    [api]
   );
 
   const preventForcePressBinding: EventBinding = useMemo(
     () => ({
-      eventName: 'webkitmouseforcewillbegin',
+      eventName: "webkitmouseforcewillbegin",
       fn: (event: Event) => {
         if (event.defaultPrevented) {
           return;
@@ -301,7 +301,7 @@ export default function useMouseSensor(api: SensorAPI) {
         event.preventDefault();
       },
     }),
-    [api],
+    [api]
   );
 
   const listenForCapture = useCallback(
@@ -314,15 +314,15 @@ export default function useMouseSensor(api: SensorAPI) {
       unbindEventsRef.current = bindEvents(
         window,
         [preventForcePressBinding, startCaptureBinding],
-        options,
+        options
       );
     },
-    [preventForcePressBinding, startCaptureBinding],
+    [preventForcePressBinding, startCaptureBinding]
   );
 
   const stop = useCallback(() => {
     const current: Phase = phaseRef.current;
-    if (current.type === 'IDLE') {
+    if (current.type === "IDLE") {
       return;
     }
 
@@ -335,10 +335,10 @@ export default function useMouseSensor(api: SensorAPI) {
   const cancel = useCallback(() => {
     const phase: Phase = phaseRef.current;
     stop();
-    if (phase.type === 'DRAGGING') {
+    if (phase.type === "DRAGGING") {
       phase.actions.cancel({ shouldBlockNextClick: true });
     }
-    if (phase.type === 'PENDING') {
+    if (phase.type === "PENDING") {
       phase.actions.abort();
     }
   }, [stop]);
@@ -357,23 +357,23 @@ export default function useMouseSensor(api: SensorAPI) {
 
       unbindEventsRef.current = bindEvents(window, bindings, options);
     },
-    [cancel, stop],
+    [cancel, stop]
   );
 
   const startPendingDrag = useCallback(
     function startPendingDrag(actions: PreDragActions, point: Position) {
       invariant(
-        phaseRef.current.type === 'IDLE',
-        'Expected to move from IDLE to PENDING drag',
+        phaseRef.current.type === "IDLE",
+        "Expected to move from IDLE to PENDING drag"
       );
       phaseRef.current = {
-        type: 'PENDING',
+        type: "PENDING",
         point,
         actions,
       };
       bindCapturingEvents();
     },
-    [bindCapturingEvents],
+    [bindCapturingEvents]
   );
 
   useLayoutEffect(
@@ -385,6 +385,6 @@ export default function useMouseSensor(api: SensorAPI) {
         unbindEventsRef.current();
       };
     },
-    [listenForCapture],
+    [listenForCapture]
   );
 }

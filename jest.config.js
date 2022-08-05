@@ -1,21 +1,21 @@
 const config = {
   clearMocks: true,
-  modulePathIgnorePatterns: ['/dist/'],
+  modulePathIgnorePatterns: ["/dist/"],
   resetMocks: true,
   resetModules: true,
   restoreMocks: true,
-  setupFiles: ['./test/setup/env-setup.ts'],
-  setupFilesAfterEnv: ['./test/setup/test-setup.ts'],
-  testEnvironment: './test/setup/environment.ts',
+  setupFiles: ["./test/setup/env-setup.ts"],
+  setupFilesAfterEnv: ["./test/setup/test-setup.ts"],
+  testEnvironment: "./test/setup/environment.ts",
   // node_modules is default.
-  testPathIgnorePatterns: ['/node_modules/', '/cypress/'],
+  testPathIgnorePatterns: ["/node_modules/", "/cypress/"],
   transform: {
-    '\\.[jt]sx?$': 'babel-jest',
+    "\\.[jt]sx?$": "babel-jest",
   },
   verbose: true,
   watchPlugins: [
-    'jest-watch-typeahead/filename',
-    'jest-watch-typeahead/testname',
+    "jest-watch-typeahead/filename",
+    "jest-watch-typeahead/testname",
   ],
 };
 

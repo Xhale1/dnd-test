@@ -1,21 +1,21 @@
-import { createBox, withScroll } from 'css-box-model';
-import type { BoxModel, Spacing, Position } from 'css-box-model';
-import { invariant } from '../../../../src/invariant';
-import getDroppableDimension from '../../../../src/state/droppable/get-droppable';
-import { noSpacing } from '../../../../src/state/spacing';
-import getMaxScroll from '../../../../src/state/get-max-scroll';
-import { expandBySpacing } from '../../../util/spacing';
+import { createBox, withScroll } from "css-box-model";
+import type { BoxModel, Spacing, Position } from "css-box-model";
+import { invariant } from "../../../../src/invariant";
+import getDroppableDimension from "../../../../src/state/droppable/get-droppable";
+import { noSpacing } from "../../../../src/state/spacing";
+import getMaxScroll from "../../../../src/state/get-max-scroll";
+import { expandBySpacing } from "../../../util/spacing";
 import type {
   DroppableDescriptor,
   DroppableDimension,
   ScrollSize,
   Scrollable,
-} from '../../../../src/types';
+} from "../../../../src/types";
 
 const descriptor: DroppableDescriptor = {
-  id: 'drop-1',
-  type: 'TYPE',
-  mode: 'standard',
+  id: "drop-1",
+  type: "TYPE",
+  mode: "standard",
 };
 
 const margin: Spacing = {
@@ -61,9 +61,9 @@ const ten: Spacing = {
   left: 10,
 };
 
-describe('closest scrollable', () => {
-  describe('no closest scrollable', () => {
-    it('should not have a closest scrollable if there is no closest scrollable', () => {
+describe("closest scrollable", () => {
+  describe("no closest scrollable", () => {
+    it("should not have a closest scrollable if there is no closest scrollable", () => {
       const dimension: DroppableDimension = getDroppableDimension({
         descriptor,
         isEnabled: true,
@@ -71,7 +71,7 @@ describe('closest scrollable', () => {
         isFixedOnPage: false,
         client,
         page,
-        direction: 'vertical',
+        direction: "vertical",
         closest: null,
       });
 
@@ -79,13 +79,13 @@ describe('closest scrollable', () => {
     });
   });
 
-  describe('with a closest scrollable', () => {
+  describe("with a closest scrollable", () => {
     const dimension: DroppableDimension = getDroppableDimension({
       descriptor,
       isEnabled: true,
       client,
       page,
-      direction: 'vertical',
+      direction: "vertical",
       isCombineEnabled: false,
       isFixedOnPage: false,
       closest: {
@@ -100,12 +100,12 @@ describe('closest scrollable', () => {
       },
     });
 
-    it('should offset the frame client by the window scroll', () => {
+    it("should offset the frame client by the window scroll", () => {
       invariant(dimension.frame);
       expect(dimension.frame.pageMarginBox).toEqual(page.marginBox);
     });
 
-    it('should capture the frame information', () => {
+    it("should capture the frame information", () => {
       const scrollSize: ScrollSize = {
         scrollHeight: client.paddingBox.height,
         scrollWidth: client.paddingBox.width,
@@ -137,7 +137,7 @@ describe('closest scrollable', () => {
     });
   });
 
-  describe('frame clipping', () => {
+  describe("frame clipping", () => {
     const frameClient: BoxModel = createBox({
       // bigger on every side by 10px
       borderBox: expandBySpacing(client.borderBox, ten),
@@ -155,7 +155,7 @@ describe('closest scrollable', () => {
 
     const getWithClient = (
       customClient: BoxModel,
-      options: Options = defaultOptions,
+      options: Options = defaultOptions
     ): DroppableDimension =>
       getDroppableDimension({
         descriptor,
@@ -164,7 +164,7 @@ describe('closest scrollable', () => {
         page: withScroll(customClient, windowScroll),
         isCombineEnabled: false,
         isFixedOnPage: false,
-        direction: 'vertical',
+        direction: "vertical",
         closest: {
           client: frameClient,
           page: framePage,
@@ -177,7 +177,7 @@ describe('closest scrollable', () => {
         },
       });
 
-    it('should not clip the frame if requested not to', () => {
+    it("should not clip the frame if requested not to", () => {
       const expandedClient: BoxModel = createBox({
         borderBox: expandBySpacing(frameClient.borderBox, ten),
         margin,
@@ -202,16 +202,16 @@ describe('closest scrollable', () => {
       expect(droppable.frame.shouldClipSubject).toBe(false);
     });
 
-    describe('frame is the same size as the subject', () => {
-      it('should not clip the subject', () => {
+    describe("frame is the same size as the subject", () => {
+      it("should not clip the subject", () => {
         const droppable: DroppableDimension = getWithClient(frameClient);
 
         expect(droppable.subject.active).toEqual(framePage.marginBox);
       });
     });
 
-    describe('frame is smaller than subject', () => {
-      it('should clip the subject to the size of the frame', () => {
+    describe("frame is smaller than subject", () => {
+      it("should clip the subject to the size of the frame", () => {
         const bigClient: BoxModel = createBox({
           // expanding by 10px on each side
           borderBox: expandBySpacing(frameClient.borderBox, ten),
@@ -226,8 +226,8 @@ describe('closest scrollable', () => {
       });
     });
 
-    describe('frame is larger than subject', () => {
-      it('should return a clipped size that is equal to that of the subject', () => {
+    describe("frame is larger than subject", () => {
+      it("should return a clipped size that is equal to that of the subject", () => {
         // client is already smaller than frame
         const droppable: DroppableDimension = getWithClient(client);
 
@@ -235,7 +235,7 @@ describe('closest scrollable', () => {
       });
     });
 
-    describe('subject clipped on one side by frame', () => {
+    describe("subject clipped on one side by frame", () => {
       // FIXME: This test seems to be broken, because noSpacing includes top, left,
       //        bottom and right. Each changes ends up being equal to noSpacing.
       //
@@ -246,7 +246,7 @@ describe('closest scrollable', () => {
       //          { bottom: 0, top: 0, right: 0, left: 0 },
       //          { right: 0, top: 0, bottom: 0, left: 0 }
       //        ]
-      it.skip('should clip on all sides', () => {
+      it.skip("should clip on all sides", () => {
         // each of these subjects bleeds out past the frame in one direction
         const changes: Spacing[] = [
           // eslint-disable-next-line @typescript-eslint/ban-ts-comment

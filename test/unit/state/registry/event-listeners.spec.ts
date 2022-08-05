@@ -1,14 +1,14 @@
 import type {
   Registry,
   DraggableEntry,
-} from '../../../../src/state/registry/registry-types';
-import createRegistry from '../../../../src/state/registry/create-registry';
-import { getPreset } from '../../../util/dimension';
-import { getDraggableEntry } from '../../../util/registry';
+} from "../../../../src/state/registry/registry-types";
+import createRegistry from "../../../../src/state/registry/create-registry";
+import { getPreset } from "../../../util/dimension";
+import { getDraggableEntry } from "../../../util/registry";
 
 const preset = getPreset();
 
-it('should allow adding event listeners', () => {
+it("should allow adding event listeners", () => {
   const listener1 = jest.fn();
   const listener2 = jest.fn();
   const registry: Registry = createRegistry();
@@ -17,16 +17,16 @@ it('should allow adding event listeners', () => {
   registry.subscribe(listener2);
 
   const entry: DraggableEntry = getDraggableEntry({
-    uniqueId: '1',
+    uniqueId: "1",
     dimension: preset.inHome1,
   });
   registry.draggable.register(entry);
 
-  expect(listener1).toHaveBeenCalledWith({ type: 'ADDITION', value: entry });
-  expect(listener2).toHaveBeenCalledWith({ type: 'ADDITION', value: entry });
+  expect(listener1).toHaveBeenCalledWith({ type: "ADDITION", value: entry });
+  expect(listener2).toHaveBeenCalledWith({ type: "ADDITION", value: entry });
 });
 
-it('should allow removing event listeners', () => {
+it("should allow removing event listeners", () => {
   const toBeRemoved = jest.fn();
   const persistent = jest.fn();
   const registry: Registry = createRegistry();
@@ -37,16 +37,16 @@ it('should allow removing event listeners', () => {
   unsubscribe();
 
   const entry: DraggableEntry = getDraggableEntry({
-    uniqueId: '1',
+    uniqueId: "1",
     dimension: preset.inHome1,
   });
   registry.draggable.register(entry);
 
   expect(toBeRemoved).not.toHaveBeenCalled();
-  expect(persistent).toHaveBeenCalledWith({ type: 'ADDITION', value: entry });
+  expect(persistent).toHaveBeenCalledWith({ type: "ADDITION", value: entry });
 });
 
-it('should not error on a double unsubscribe', () => {
+it("should not error on a double unsubscribe", () => {
   const toBeRemoved = jest.fn();
   const persistent = jest.fn();
   const registry: Registry = createRegistry();
@@ -59,7 +59,7 @@ it('should not error on a double unsubscribe', () => {
   unsubscribe();
 
   const entry: DraggableEntry = getDraggableEntry({
-    uniqueId: '1',
+    uniqueId: "1",
     dimension: preset.inHome1,
   });
   registry.draggable.register(entry);
@@ -67,5 +67,5 @@ it('should not error on a double unsubscribe', () => {
   // not called
   expect(toBeRemoved).not.toHaveBeenCalled();
   // unaffected
-  expect(persistent).toHaveBeenCalledWith({ type: 'ADDITION', value: entry });
+  expect(persistent).toHaveBeenCalledWith({ type: "ADDITION", value: entry });
 });
