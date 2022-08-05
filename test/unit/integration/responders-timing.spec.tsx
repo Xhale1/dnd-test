@@ -1,14 +1,14 @@
-import React from "react";
-import { getRect } from "css-box-model";
 import { render } from "@testing-library/react";
-import { invariant } from "../../../src/invariant";
+import { getRect } from "css-box-model";
+import React from "react";
 import { DragDropContext, Draggable, Droppable } from "../../../src";
-import { getComputedSpacing } from "../../util/dimension";
-import setDOMRect from "../../util/set-dom-rect";
+import { invariant } from "../../../src/invariant";
+import type { Responders } from "../../../src/types";
 import type { DraggableProvided } from "../../../src/view/draggable/draggable-types";
 import type { DroppableProvided } from "../../../src/view/droppable/droppable-types";
-import type { Responders } from "../../../src/types";
-import { simpleLift, keyboard } from "./util/controls";
+import { getComputedSpacing } from "../../util/dimension";
+import setDOMRect from "../../util/set-dom-rect";
+import { keyboard, simpleLift } from "./util/controls";
 
 interface ItemProps {
   provided: DraggableProvided;
@@ -33,7 +33,9 @@ class Item extends React.Component<ItemProps> {
 }
 
 beforeEach(() => {
-  jest.useFakeTimers("legacy");
+  jest.useFakeTimers({
+    legacyFakeTimers: true,
+  });
 });
 
 afterEach(() => {

@@ -1,19 +1,21 @@
 import { invariant } from "../../../../../src/invariant";
 import { initialPublish } from "../../../../../src/state/action-creators";
 import middleware from "../../../../../src/state/middleware/responders";
+import type { Store } from "../../../../../src/state/store-types";
 import {
   getDragStart,
   initialPublishArgs,
 } from "../../../../util/preset-action-args";
 import createStore from "../util/create-store";
 import passThroughMiddleware from "../util/pass-through-middleware";
-import type { Store } from "../../../../../src/state/store-types";
-import getRespondersStub from "./util/get-responders-stub";
 import getAnnounce from "./util/get-announce-stub";
+import getRespondersStub from "./util/get-responders-stub";
 
 beforeEach(() => {
   // Keep performance usaged
-  jest.useFakeTimers("legacy");
+  jest.useFakeTimers({
+    legacyFakeTimers: true,
+  });
 });
 
 afterEach(() => {

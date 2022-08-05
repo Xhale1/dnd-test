@@ -1,3 +1,4 @@
+/** @type {import('@jest/types').Config.InitialOptions} */
 const config = {
   clearMocks: true,
   modulePathIgnorePatterns: ["/dist/"],

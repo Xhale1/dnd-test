@@ -1,4 +1,5 @@
 import { invariant } from "../../../../../src/invariant";
+import messagePreset from "../../../../../src/screen-reader-message-preset";
 import {
   completeDrop,
   initialPublish,
@@ -6,27 +7,28 @@ import {
   updateDroppableIsCombineEnabled,
 } from "../../../../../src/state/action-creators";
 import middleware from "../../../../../src/state/middleware/responders";
-import messagePreset from "../../../../../src/screen-reader-message-preset";
-import {
-  preset,
-  getDragStart,
-  initialPublishArgs,
-} from "../../../../util/preset-action-args";
-import createStore from "../util/create-store";
+import type { Dispatch, Store } from "../../../../../src/state/store-types";
 import type {
   Announce,
-  Responders,
   DragUpdate,
   DropResult,
   ResponderProvided,
+  Responders,
 } from "../../../../../src/types";
-import type { Store, Dispatch } from "../../../../../src/state/store-types";
-import createResponders from "./util/get-responders-stub";
+import {
+  getDragStart,
+  initialPublishArgs,
+  preset,
+} from "../../../../util/preset-action-args";
+import createStore from "../util/create-store";
 import getAnnounce from "./util/get-announce-stub";
 import getCompletedWithResult from "./util/get-completed-with-result";
+import createResponders from "./util/get-responders-stub";
 
 beforeEach(() => {
-  jest.useFakeTimers("legacy");
+  jest.useFakeTimers({
+    legacyFakeTimers: true,
+  });
 });
 
 afterEach(() => {
