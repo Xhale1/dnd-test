@@ -1,19 +1,20 @@
-import React, { useRef, DragEvent, TransitionEvent } from "react";
-import { useMemo, useCallback } from "use-memo-one";
-import type { DraggableRubric, DraggableDescriptor } from "../../types";
-import getStyle from "./get-style";
-import useDraggablePublisher from "../use-draggable-publisher/use-draggable-publisher";
-import type { Args as PublisherArgs } from "../use-draggable-publisher/use-draggable-publisher";
+import React, { DragEvent, TransitionEvent, useRef } from "react";
+import { flushSync } from "react-dom";
+import { useCallback, useMemo } from "use-memo-one";
+import type { DraggableDescriptor, DraggableRubric } from "../../types";
 import AppContext from "../context/app-context";
 import DroppableContext from "../context/droppable-context";
-import type {
-  Props,
-  DraggableProvided,
-  DraggableStyle,
-  DraggableProvidedDragHandleProps,
-} from "./draggable-types";
-import { useValidation, useClonePropValidation } from "./use-validation";
+import type { Args as PublisherArgs } from "../use-draggable-publisher/use-draggable-publisher";
+import useDraggablePublisher from "../use-draggable-publisher/use-draggable-publisher";
 import useRequiredContext from "../use-required-context";
+import type {
+  DraggableProvided,
+  DraggableProvidedDragHandleProps,
+  DraggableStyle,
+  Props,
+} from "./draggable-types";
+import getStyle from "./get-style";
+import { useClonePropValidation, useValidation } from "./use-validation";
 
 function preventHtml5Dnd(event: DragEvent) {
   event.preventDefault();
@@ -126,7 +127,9 @@ const Draggable: React.FunctionComponent<Props> = (props) => {
         return;
       }
 
-      dropAnimationFinishedAction();
+      flushSync(() => {
+        dropAnimationFinishedAction();
+      });
     },
     [dropAnimationFinishedAction, mapped]
   );
