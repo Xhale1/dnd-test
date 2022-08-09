@@ -1,6 +1,6 @@
 module.exports = {
-  extends: ["airbnb", "prettier"],
-  plugins: ["@emotion", "react", "react-hooks", "import"],
+  extends: ["eslint:recommended", "prettier"],
+  plugins: ["react", "react-hooks", "import"],
   parser: "@babel/eslint-parser",
   env: {
     es6: true,
