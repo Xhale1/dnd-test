@@ -1,11 +1,11 @@
+import { act, render } from "@testing-library/react";
 import React, { useState } from "react";
-import { render } from "@testing-library/react";
-import { Droppable, Draggable, DragDropContext } from "../../../../../src";
 import type { DragStart } from "../../../../../src";
+import { DragDropContext, Draggable, Droppable } from "../../../../../src";
+import { noop } from "../../../../../src/empty";
+import { withError } from "../../../../util/console";
 import expandedMouse from "../../util/expanded-mouse";
 import { isDragging } from "../../util/helpers";
-import { withError } from "../../../../util/console";
-import { noop } from "../../../../../src/empty";
 
 function getIndex(el: HTMLElement): number {
   return Number(el.getAttribute("data-index"));
@@ -67,7 +67,7 @@ it("should adjust captured values for any changes that impact that dragging item
     );
   }
 
-  const { getByTestId, queryByTestId } = render(<Root />);
+  const { getByTestId, queryByTestId, rerender } = render(<Root />);
   const second: HTMLElement = getByTestId("second");
 
   // initially it had an index of 1
@@ -78,6 +78,8 @@ it("should adjust captured values for any changes that impact that dragging item
   withError(() => {
     expandedMouse.rawPowerLift(getByTestId("second"), { x: 0, y: 0 });
   });
+
+  act(() => rerender(<Root />));
 
   // act(() => rerender());
   // first item has been removed

@@ -1,23 +1,23 @@
+import { act, render } from "@testing-library/react";
 import React from "react";
-import { render } from "@testing-library/react";
-import { invariant } from "../../../../src/invariant";
 import type { DraggableStateSnapshot } from "../../../../src";
-import { simpleLift, keyboard } from "../util/controls";
-import expandedMouse from "../util/expanded-mouse";
+import { invariant } from "../../../../src/invariant";
 import getBodyElement from "../../../../src/view/get-body-element";
+import { withError } from "../../../util/console";
+import type { RenderItem } from "../util/app";
+import App from "../util/app";
+import { keyboard, simpleLift } from "../util/controls";
+import expandedMouse from "../util/expanded-mouse";
+import type { Call } from "../util/helpers";
 import {
-  withPoorDimensionMocks,
-  renderItemAndSpy,
-  isClone,
   getCallsFor,
   getLast,
+  isClone,
   isDragging,
   isDropAnimating,
+  renderItemAndSpy,
+  withPoorDimensionMocks,
 } from "../util/helpers";
-import type { Call } from "../util/helpers";
-import App from "../util/app";
-import type { RenderItem } from "../util/app";
-import { withError } from "../../../util/console";
 
 it("should no longer render the original draggable while dragging", () => {
   const { getByTestId } = render(<App useClone />);
@@ -89,7 +89,7 @@ it("should give the clone the starting location", () => {
 // this test is indirectly validating that a clone does not talk the registry or marshal
 it("should allow reordering other items when dropping", () => {
   withPoorDimensionMocks((preset) => {
-    const { getByTestId } = render(<App useClone />);
+    const { getByTestId, rerender } = render(<App useClone />);
     const box0 = preset.inHome1.client.borderBox;
     const box1 = preset.inHome2.client.borderBox;
 
@@ -114,6 +114,8 @@ it("should allow reordering other items when dropping", () => {
     withError(() => {
       expandedMouse.rawPowerLift(getByTestId("1"), box0.center);
     });
+
+    act(() => rerender(<App useClone />));
 
     expect(isDragging(getByTestId("1"))).toBe(true);
     expect(isDragging(getByTestId("0"))).toBe(false);

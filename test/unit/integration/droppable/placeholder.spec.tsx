@@ -1,14 +1,14 @@
+import { act, fireEvent, render } from "@testing-library/react";
 import React from "react";
-import { render, fireEvent } from "@testing-library/react";
 import { invariant } from "../../../../src/invariant";
-import * as attributes from "../../../../src/view/data-attributes";
-import type { DroppableId } from "../../../../src/types";
-import { isOver, isDragging } from "../util/helpers";
-import expandedMouse from "../util/expanded-mouse";
-import Board, { withPoorBoardDimensions } from "../util/board";
 import { toDroppableList } from "../../../../src/state/dimension-structures";
-import { getTransitionEnd } from "../util/controls";
+import type { DroppableId } from "../../../../src/types";
+import * as attributes from "../../../../src/view/data-attributes";
 import { withWarn } from "../../../util/console";
+import Board, { withPoorBoardDimensions } from "../util/board";
+import { getTransitionEnd } from "../util/controls";
+import expandedMouse from "../util/expanded-mouse";
+import { isDragging, isOver } from "../util/helpers";
 
 function findPlaceholder(droppableId: DroppableId, container: HTMLElement) {
   return container.querySelector<HTMLElement>(
@@ -311,10 +311,12 @@ describe("foreign list", () => {
       const second: HTMLElement = getByTestId(preset.inHome2.descriptor.id);
 
       // lifting item 2 while item 1 is dropping
-      expandedMouse.rawPowerLift(
-        second,
-        preset.inHome2.client.borderBox.center
-      );
+      act(() => {
+        expandedMouse.rawPowerLift(
+          second,
+          preset.inHome2.client.borderBox.center
+        );
+      });
       expect(isDragging(second)).toBe(true);
       expect(isOver(second)).toBe(preset.home.descriptor.id);
       expect(hasPlaceholder(preset.foreign.descriptor.id, container)).toBe(

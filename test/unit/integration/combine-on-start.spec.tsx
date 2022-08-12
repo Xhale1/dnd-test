@@ -1,16 +1,16 @@
+import { act, fireEvent, render } from "@testing-library/react";
 import React from "react";
-import { render, fireEvent } from "@testing-library/react";
-import * as keyCodes from "../../../src/view/key-codes";
 import type {
   DraggableProvided,
-  DroppableProvided,
   DragStart,
   DragUpdate,
+  DroppableProvided,
   DropResult,
 } from "../../../src";
+import { DragDropContext, Draggable, Droppable } from "../../../src";
 import type { Responders } from "../../../src/types";
-import { DragDropContext, Droppable, Draggable } from "../../../src";
-import { simpleLift, keyboard } from "./util/controls";
+import * as keyCodes from "../../../src/view/key-codes";
+import { keyboard, simpleLift } from "./util/controls";
 import { withPoorDimensionMocks } from "./util/helpers";
 
 interface State {
@@ -101,10 +101,12 @@ it("should allow the changing of combining in onDragStart", () => {
       onDragUpdate: jest.fn(),
       onDragEnd: jest.fn(),
     };
-    const { getByTestId } = render(<App {...responders} />);
+    const { getByTestId, rerender } = render(<App {...responders} />);
 
     const handle: HTMLElement = getByTestId("0");
-    simpleLift(keyboard, handle);
+    act(() => {
+      simpleLift(keyboard, handle);
+    });
     // flush onDragStart  responder
     jest.runOnlyPendingTimers();
 
@@ -118,7 +120,7 @@ it("should allow the changing of combining in onDragStart", () => {
       mode: "SNAP",
     };
     expect(responders.onDragStart).toHaveBeenCalledWith(start);
-
+    act(() => rerender(<App {...responders} />));
     // now moving down will cause a combine impact!
     fireEvent.keyDown(handle, { keyCode: keyCodes.arrowDown });
     jest.runOnlyPendingTimers();

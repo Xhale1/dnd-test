@@ -1,16 +1,16 @@
 import { invariant } from "../../invariant";
-import type { TypeId, DraggableId, DroppableId } from "../../types";
+import type { DraggableId, DroppableId, TypeId } from "../../types";
 import type {
-  Registry,
   DraggableAPI,
-  DroppableAPI,
   DraggableEntry,
+  DraggableEntryMap,
+  DroppableAPI,
   DroppableEntry,
+  DroppableEntryMap,
+  Registry,
   RegistryEvent,
   Subscriber,
   Unsubscribe,
-  DraggableEntryMap,
-  DroppableEntryMap,
 } from "./registry-types";
 
 interface EntryMap {
@@ -95,7 +95,11 @@ export default function createRegistry(): Registry {
       }
 
       delete entries.draggables[draggableId];
-      notify({ type: "REMOVAL", value: entry });
+
+      // Hack to get react 18 double useEffects to not cause errors when finding unregistered droppables
+      if (entries.droppables[entry.descriptor.droppableId]) {
+        notify({ type: "REMOVAL", value: entry });
+      }
     },
     getById: getDraggableById,
     findById: findDraggableById,

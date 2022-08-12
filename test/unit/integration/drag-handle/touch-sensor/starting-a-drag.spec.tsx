@@ -1,8 +1,8 @@
+import { act, createEvent, fireEvent, render } from "@testing-library/react";
 import React from "react";
-import { createEvent, fireEvent, render } from "@testing-library/react";
+import { timeForLongPress } from "../../../../../src/view/use-sensor-marshal/sensors/use-touch-sensor";
 import App from "../../util/app";
 import { isDragging } from "../../util/helpers";
-import { timeForLongPress } from "../../../../../src/view/use-sensor-marshal/sensors/use-touch-sensor";
 
 beforeEach(() => {
   jest.useFakeTimers();
@@ -19,7 +19,7 @@ function getTouchStart(handle: HTMLElement): Event {
 }
 
 it("should start dragging after a long press", () => {
-  const { getByText } = render(<App />);
+  const { getByText, rerender } = render(<App />);
   const handle: HTMLElement = getByText("item: 0");
   const touchStart: Event = getTouchStart(handle);
 
@@ -33,6 +33,8 @@ it("should start dragging after a long press", () => {
 
   // allow long press to run
   jest.runOnlyPendingTimers();
+
+  act(() => rerender(<App />));
 
   // now dragging
   expect(isDragging(handle)).toBe(true);
@@ -70,7 +72,7 @@ it("should not start dragging if finished before a long press", () => {
 });
 
 it("should allow a false start", () => {
-  const { getByText } = render(<App />);
+  const { getByText, rerender } = render(<App />);
   const handle: HTMLElement = getByText("item: 0");
 
   // a first attempt that is not successful
@@ -82,6 +84,7 @@ it("should allow a false start", () => {
   // Let's try again - this time we will wait
 
   fireEvent(handle, getTouchStart(handle));
-  jest.advanceTimersByTime(timeForLongPress);
+  jest.advanceTimersByTime(timeForLongPress + 1);
+  act(() => rerender(<App />));
   expect(isDragging(handle)).toBe(true);
 });

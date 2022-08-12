@@ -1,54 +1,54 @@
-import React, { useEffect, useRef } from "react";
-import type { ReactNode, MutableRefObject } from "react";
-import { bindActionCreators, Dispatch } from "redux";
+import React, { MutableRefObject, ReactNode, useEffect, useRef } from "react";
+import { flushSync } from "react-dom";
 import { Provider } from "react-redux";
-import { useMemo, useCallback } from "use-memo-one";
+import { bindActionCreators, Dispatch } from "redux";
+import { useCallback, useMemo } from "use-memo-one";
+import { warning } from "../../dev-warning";
 import { invariant } from "../../invariant";
-import createStore from "../../state/create-store";
-import createDimensionMarshal from "../../state/dimension-marshal/dimension-marshal";
-import canStartDrag from "../../state/can-start-drag";
-import scrollWindow from "../window/scroll-window";
-import createAutoScroller from "../../state/auto-scroller";
-import useStyleMarshal from "../use-style-marshal/use-style-marshal";
-import useFocusMarshal from "../use-focus-marshal";
-import useRegistry from "../../state/registry/use-registry";
-import type { Registry } from "../../state/registry/registry-types";
-import type { FocusMarshal } from "../use-focus-marshal/focus-marshal-types";
-import type { AutoScroller } from "../../state/auto-scroller/auto-scroller-types";
-import type { StyleMarshal } from "../use-style-marshal/style-marshal-types";
-import type {
-  DimensionMarshal,
-  Callbacks as DimensionMarshalCallbacks,
-} from "../../state/dimension-marshal/dimension-marshal-types";
-import type {
-  DraggableId,
-  State,
-  Responders,
-  Announce,
-  Sensor,
-  ElementId,
-} from "../../types";
-import type { Store, Action } from "../../state/store-types";
-import type { SetAppCallbacks, AppCallbacks } from "./drag-drop-context-types";
-import StoreContext from "../context/store-context";
 import {
-  move,
-  publishWhileDragging,
-  updateDroppableScroll,
-  updateDroppableIsEnabled,
-  updateDroppableIsCombineEnabled,
   collectionStarting,
   flush,
+  move,
+  publishWhileDragging,
+  updateDroppableIsCombineEnabled,
+  updateDroppableIsEnabled,
+  updateDroppableScroll,
 } from "../../state/action-creators";
+import createAutoScroller from "../../state/auto-scroller";
+import type { AutoScroller } from "../../state/auto-scroller/auto-scroller-types";
+import canStartDrag from "../../state/can-start-drag";
+import createStore from "../../state/create-store";
+import createDimensionMarshal from "../../state/dimension-marshal/dimension-marshal";
+import type {
+  Callbacks as DimensionMarshalCallbacks,
+  DimensionMarshal,
+} from "../../state/dimension-marshal/dimension-marshal-types";
 import isMovementAllowed from "../../state/is-movement-allowed";
-import useAnnouncer from "../use-announcer";
-import useHiddenTextElement from "../use-hidden-text-element";
-import AppContext from "../context/app-context";
+import type { Registry } from "../../state/registry/registry-types";
+import useRegistry from "../../state/registry/use-registry";
+import type { Action, Store } from "../../state/store-types";
+import type {
+  Announce,
+  DraggableId,
+  ElementId,
+  Responders,
+  Sensor,
+  State,
+} from "../../types";
 import type { AppContextValue } from "../context/app-context";
-import useStartupValidation from "./use-startup-validation";
+import AppContext from "../context/app-context";
+import StoreContext from "../context/store-context";
+import useAnnouncer from "../use-announcer";
+import useFocusMarshal from "../use-focus-marshal";
+import type { FocusMarshal } from "../use-focus-marshal/focus-marshal-types";
+import useHiddenTextElement from "../use-hidden-text-element";
 import usePrevious from "../use-previous-ref";
-import { warning } from "../../dev-warning";
 import useSensorMarshal from "../use-sensor-marshal/use-sensor-marshal";
+import type { StyleMarshal } from "../use-style-marshal/style-marshal-types";
+import useStyleMarshal from "../use-style-marshal/use-style-marshal";
+import scrollWindow from "../window/scroll-window";
+import type { AppCallbacks, SetAppCallbacks } from "./drag-drop-context-types";
+import useStartupValidation from "./use-startup-validation";
 
 export interface Props extends Responders {
   contextId: string;
@@ -64,7 +64,14 @@ export interface Props extends Responders {
 }
 
 const createResponders = (props: Props): Responders => ({
-  onBeforeCapture: props.onBeforeCapture,
+  onBeforeCapture: (t) => {
+    // Hack to make onBeforeCapture work when adding a new droppable
+    flushSync(() => {
+      if (props.onBeforeCapture) {
+        props.onBeforeCapture(t);
+      }
+    });
+  },
   onBeforeDragStart: props.onBeforeDragStart,
   onDragStart: props.onDragStart,
   onDragEnd: props.onDragEnd,

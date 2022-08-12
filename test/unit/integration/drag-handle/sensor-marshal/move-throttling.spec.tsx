@@ -1,15 +1,15 @@
-import React from "react";
+import { act, render } from "@testing-library/react";
 import type { Position } from "css-box-model";
-import { render } from "@testing-library/react";
+import React from "react";
 import { invariant } from "../../../../../src/invariant";
+import { add } from "../../../../../src/state/position";
 import type {
-  SensorAPI,
-  PreDragActions,
   FluidDragActions,
+  PreDragActions,
+  SensorAPI,
 } from "../../../../../src/types";
 import App from "../../util/app";
 import { getOffset } from "../../util/helpers";
-import { add } from "../../../../../src/state/position";
 
 function noop() {}
 
@@ -37,7 +37,9 @@ it("should throttle move events by request animation frame", () => {
   expect(getOffset(handle)).toEqual({ x: 0, y: 0 });
 
   // moved after frame
-  requestAnimationFrame.step();
+  act(() => {
+    requestAnimationFrame.step();
+  });
   expect(getOffset(handle)).toEqual(offset);
 });
 

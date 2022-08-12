@@ -1,18 +1,18 @@
-import React from "react";
+import { act, render } from "@testing-library/react";
 import { getRect } from "css-box-model";
-import { render } from "@testing-library/react";
+import React from "react";
 import type {
   DraggableProvided,
-  DroppableProvided,
   DragStart,
   DragUpdate,
+  DroppableProvided,
   DropResult,
 } from "../../../src";
+import { DragDropContext, Draggable, Droppable } from "../../../src";
 import type { Responders } from "../../../src/types";
-import { DragDropContext, Droppable, Draggable } from "../../../src";
 import { getComputedSpacing } from "../../util/dimension";
-import { simpleLift, keyboard } from "./util/controls";
 import setDOMRect from "../../util/set-dom-rect";
+import { keyboard, simpleLift } from "./util/controls";
 
 // Both list and item will have the same dimensions
 jest.spyOn(Element.prototype, "getBoundingClientRect").mockImplementation(() =>
@@ -41,8 +41,10 @@ class App extends React.Component<any, State> {
   };
 
   onDragStart = (start: DragStart) => {
-    this.props.onDragStart(start);
-    this.setState({ isDropDisabled: true });
+    act(() => {
+      this.props.onDragStart(start);
+      this.setState({ isDropDisabled: true });
+    });
   };
 
   onDragUpdate = (update: DragUpdate) => {
