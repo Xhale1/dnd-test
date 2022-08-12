@@ -5,15 +5,13 @@
 
 <div align="center">
 
-<small>@hello-pangea/dnd</small>
-
 **Beautiful** and **accessible** drag and drop for lists with [`React`](https://facebook.github.io/react/)
 
 [![npm](https://img.shields.io/npm/v/@hello-pangea/dnd.svg)](https://www.npmjs.com/package/@hello-pangea/dnd)
 
 ![quote application example](https://user-images.githubusercontent.com/2182637/53614150-efbed780-3c2c-11e9-9204-a5d2e746faca.gif)
 
-[Play with this example if you want!](https://react-forked-dnd.netlify.app/?path=/story/examples-board--simple)
+[Play with this example if you want!](https://dnd.hellopangea.com/?path=/story/examples-board--simple)
 
 </div>
 
@@ -28,6 +26,10 @@
 - No creation of additional wrapper dom nodes - flexbox and focus management friendly!
 
 ## Get started 👩‍🏫
+
+See [our installation docs](/docs/about/installation.md) to install `@hello-pangea/dnd`
+
+Check out https://dnd.hellopangea.com for examples on how to use this library.
 
 Alex Reardon has created [a free course on `egghead.io` 🥚](https://egghead.io/courses/beautiful-and-accessible-drag-and-drop-with-react-beautiful-dnd) (using [react-beautiful-dnd](https://github.com/atlassian/react-beautiful-dnd)) to help you get started with `@hello-pangea/dnd` as quickly as possible.
 
