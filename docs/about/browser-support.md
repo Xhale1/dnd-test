@@ -4,10 +4,10 @@ This library supports the standard [Atlassian supported browsers](https://conflu
 
 | Desktop                              | Version                                              |
 | ------------------------------------ | ---------------------------------------------------- |
-| Microsoft Internet Explorer(Windows) | Version 11                                           |
-| Microsoft Edge                       | Latest stable version supported                      |
-| Mozilla Firefox (all platforms)      | Latest stable version supported                      |
-| Google Chrome (Windows and Mac)      | Latest stable version supported                      |
+| Microsoft Internet Explorer(Windows) | Unsupported                                          |
+| Microsoft Edge                       | Latest 2 stable versions supported                   |
+| Mozilla Firefox (all platforms)      | Latest 2 stable versions supported                   |
+| Google Chrome (Windows and Mac)      | Latest 2 stable versions supported                   |
 | Safari (Mac)                         | Latest stable version on latest OS release supported |
 
 | Mobile                   | Version                                                   |
