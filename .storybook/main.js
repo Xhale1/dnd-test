@@ -13,6 +13,9 @@ module.exports = {
   reactOptions: {
     strictMode: true,
   },
+  core: {
+    builder: "webpack5",
+  },
   // TODO: investigate adding these back
   // babel: async (options) => ({
   //   ...options,
