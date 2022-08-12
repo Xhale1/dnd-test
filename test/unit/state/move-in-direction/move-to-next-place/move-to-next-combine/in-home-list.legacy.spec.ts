@@ -2,14 +2,14 @@ import type {
   Axis,
   DragImpact,
   DroppableDimension,
-} from '../../../../../../src/types';
-import { vertical, horizontal } from '../../../../../../src/state/axis';
-import { invariant } from '../../../../../../src/invariant';
-import { getPreset } from '../../../../../util/dimension';
-import moveToNextCombine from '../../../../../../src/state/move-in-direction/move-to-next-place/move-to-next-combine/index';
-import getDisplacedBy from '../../../../../../src/state/get-displaced-by';
-import getLiftEffect from '../../../../../../src/state/get-lift-effect';
-import { getForcedDisplacement } from '../../../../../util/impact';
+} from "../../../../../../src/types";
+import { vertical, horizontal } from "../../../../../../src/state/axis";
+import { invariant } from "../../../../../../src/invariant";
+import { getPreset } from "../../../../../util/dimension";
+import moveToNextCombine from "../../../../../../src/state/move-in-direction/move-to-next-place/move-to-next-combine/index";
+import getDisplacedBy from "../../../../../../src/state/get-displaced-by";
+import getLiftEffect from "../../../../../../src/state/get-lift-effect";
+import { getForcedDisplacement } from "../../../../../util/impact";
 
 const enableCombine = (droppable: DroppableDimension): DroppableDimension => ({
   ...droppable,
@@ -19,7 +19,7 @@ const enableCombine = (droppable: DroppableDimension): DroppableDimension => ({
 [vertical, horizontal].forEach((axis: Axis) => {
   const preset = getPreset(axis);
   describe(`on ${axis.direction} axis`, () => {
-    it('should move onto an item that started displaced', () => {
+    it("should move onto an item that started displaced", () => {
       const { impact: homeImpact } = getLiftEffect({
         draggable: preset.inHome2,
         draggables: preset.draggables,
@@ -39,7 +39,7 @@ const enableCombine = (droppable: DroppableDimension): DroppableDimension => ({
       const expected: DragImpact = {
         ...homeImpact,
         at: {
-          type: 'COMBINE',
+          type: "COMBINE",
           combine: {
             draggableId: preset.inHome3.descriptor.id,
             droppableId: preset.home.descriptor.id,
@@ -49,7 +49,7 @@ const enableCombine = (droppable: DroppableDimension): DroppableDimension => ({
       expect(result).toEqual(expected);
     });
 
-    it('should move onto an item that started displaced - but now is not', () => {
+    it("should move onto an item that started displaced - but now is not", () => {
       // inHome2 moved forward past inHome3 and now moving back onto inHome3
 
       const pastInHome3: DragImpact = {
@@ -58,7 +58,7 @@ const enableCombine = (droppable: DroppableDimension): DroppableDimension => ({
         }),
         displacedBy: getDisplacedBy(axis, preset.inHome2.displaceBy),
         at: {
-          type: 'REORDER',
+          type: "REORDER",
           destination: {
             index: preset.inHome3.descriptor.index,
             droppableId: preset.home.descriptor.id,
@@ -77,7 +77,7 @@ const enableCombine = (droppable: DroppableDimension): DroppableDimension => ({
       const expected: DragImpact = {
         ...pastInHome3,
         at: {
-          type: 'COMBINE',
+          type: "COMBINE",
           combine: {
             draggableId: preset.inHome3.descriptor.id,
             droppableId: preset.home.descriptor.id,
@@ -87,7 +87,7 @@ const enableCombine = (droppable: DroppableDimension): DroppableDimension => ({
       expect(moveBackwardsOntoInHome3).toEqual(expected);
     });
 
-    it('should move onto an item that did not start displaced', () => {
+    it("should move onto an item that did not start displaced", () => {
       // moving inHome3 backwards onto inHome2
       const { impact: homeImpact } = getLiftEffect({
         draggable: preset.inHome3,
@@ -108,7 +108,7 @@ const enableCombine = (droppable: DroppableDimension): DroppableDimension => ({
       const expected: DragImpact = {
         ...homeImpact,
         at: {
-          type: 'COMBINE',
+          type: "COMBINE",
           combine: {
             draggableId: preset.inHome2.descriptor.id,
             droppableId: preset.home.descriptor.id,
@@ -118,7 +118,7 @@ const enableCombine = (droppable: DroppableDimension): DroppableDimension => ({
       expect(result).toEqual(expected);
     });
 
-    it('should move onto an item that did not start displaced but now is', () => {
+    it("should move onto an item that did not start displaced but now is", () => {
       // inHome3 moved backward before inHome2 and now moving back onto inHome2
 
       const beforeInHome2: DragImpact = {
@@ -131,7 +131,7 @@ const enableCombine = (droppable: DroppableDimension): DroppableDimension => ({
         }),
         displacedBy: getDisplacedBy(axis, preset.inHome3.displaceBy),
         at: {
-          type: 'REORDER',
+          type: "REORDER",
           destination: {
             index: preset.inHome2.descriptor.index,
             droppableId: preset.home.descriptor.id,
@@ -151,7 +151,7 @@ const enableCombine = (droppable: DroppableDimension): DroppableDimension => ({
       const expected: DragImpact = {
         ...beforeInHome2,
         at: {
-          type: 'COMBINE',
+          type: "COMBINE",
           combine: {
             draggableId: preset.inHome2.descriptor.id,
             droppableId: preset.home.descriptor.id,
@@ -161,7 +161,7 @@ const enableCombine = (droppable: DroppableDimension): DroppableDimension => ({
       expect(moveForwardsOntoInHome2).toEqual(expected);
     });
 
-    it('should not allow combining with anything before the first item', () => {
+    it("should not allow combining with anything before the first item", () => {
       const { impact: homeImpact } = getLiftEffect({
         draggable: preset.inHome1,
         home: preset.home,
@@ -180,7 +180,7 @@ const enableCombine = (droppable: DroppableDimension): DroppableDimension => ({
       expect(result).toBe(null);
     });
 
-    it('should not allow combining with anything after the last item', () => {
+    it("should not allow combining with anything after the last item", () => {
       const { impact: homeImpact } = getLiftEffect({
         draggable: preset.inHome4,
         home: preset.home,

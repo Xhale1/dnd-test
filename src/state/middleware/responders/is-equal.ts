@@ -1,8 +1,8 @@
-import type { Critical, DraggableLocation, Combine } from '../../../types';
+import type { Critical, DraggableLocation, Combine } from "../../../types";
 
 export const areLocationsEqual = (
   first?: DraggableLocation | null,
-  second?: DraggableLocation | null,
+  second?: DraggableLocation | null
 ): boolean => {
   // if both are null - we are equal
   if (first == null && second == null) {
@@ -22,7 +22,7 @@ export const areLocationsEqual = (
 
 export const isCombineEqual = (
   first?: Combine | null,
-  second?: Combine | null,
+  second?: Combine | null
 ): boolean => {
   // if both are null - we are equal
   if (first == null && second == null) {

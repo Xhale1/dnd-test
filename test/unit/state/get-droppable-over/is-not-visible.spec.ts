@@ -1,24 +1,24 @@
-import type { Position, Rect } from 'css-box-model';
+import type { Position, Rect } from "css-box-model";
 import {
   getDroppableDimension,
   getDraggableDimension,
-} from '../../../util/dimension';
-import { subtract } from '../../../../src/state/position';
-import getDroppableOver from '../../../../src/state/get-droppable-over';
-import { offsetRectByPosition } from '../../../../src/state/rect';
+} from "../../../util/dimension";
+import { subtract } from "../../../../src/state/position";
+import getDroppableOver from "../../../../src/state/get-droppable-over";
+import { offsetRectByPosition } from "../../../../src/state/rect";
 import type {
   TypeId,
   DraggableDimension,
   DroppableDimension,
   DroppableId,
-} from '../../../../src/types';
+} from "../../../../src/types";
 
-const type: TypeId = 'standard';
-const droppableId: DroppableId = 'list';
+const type: TypeId = "standard";
+const droppableId: DroppableId = "list";
 
 const dragging: DraggableDimension = getDraggableDimension({
   descriptor: {
-    id: 'dragging',
+    id: "dragging",
     index: 0,
     type,
     droppableId,
@@ -31,12 +31,12 @@ const dragging: DraggableDimension = getDraggableDimension({
   },
 });
 
-it('should hit when inside subject, but outside the frame', () => {
+it("should hit when inside subject, but outside the frame", () => {
   const droppable: DroppableDimension = getDroppableDimension({
     descriptor: {
       id: droppableId,
       type,
-      mode: 'standard',
+      mode: "standard",
     },
     borderBox: {
       top: 0,
@@ -64,7 +64,7 @@ it('should hit when inside subject, but outside the frame', () => {
 
   const pageBorderBox: Rect = offsetRectByPosition(
     dragging.page.borderBox,
-    distance,
+    distance
   );
 
   const result: DroppableId | null = getDroppableOver({
@@ -76,12 +76,12 @@ it('should hit when inside subject, but outside the frame', () => {
   expect(result).toBe(droppableId);
 });
 
-it('should not hit when inside subject, but outside the frame', () => {
+it("should not hit when inside subject, but outside the frame", () => {
   const droppable: DroppableDimension = getDroppableDimension({
     descriptor: {
       id: droppableId,
       type,
-      mode: 'standard',
+      mode: "standard",
     },
     borderBox: {
       top: 0,
@@ -109,7 +109,7 @@ it('should not hit when inside subject, but outside the frame', () => {
 
   const pageBorderBox: Rect = offsetRectByPosition(
     dragging.page.borderBox,
-    distance,
+    distance
   );
 
   const result: DroppableId | null = getDroppableOver({
@@ -121,12 +121,12 @@ it('should not hit when inside subject, but outside the frame', () => {
   expect(result).toBe(null);
 });
 
-it('should not hit when outside subject and inside the frame (partially visible subject)', () => {
+it("should not hit when outside subject and inside the frame (partially visible subject)", () => {
   const droppable: DroppableDimension = getDroppableDimension({
     descriptor: {
       id: droppableId,
       type,
-      mode: 'standard',
+      mode: "standard",
     },
     borderBox: {
       top: 0,
@@ -154,7 +154,7 @@ it('should not hit when outside subject and inside the frame (partially visible 
 
   const pageBorderBox: Rect = offsetRectByPosition(
     dragging.page.borderBox,
-    distance,
+    distance
   );
 
   const result: DroppableId | null = getDroppableOver({
@@ -166,12 +166,12 @@ it('should not hit when outside subject and inside the frame (partially visible 
   expect(result).toBe(null);
 });
 
-it('should not hit when outside subject and inside the frame (invisible subject)', () => {
+it("should not hit when outside subject and inside the frame (invisible subject)", () => {
   const droppable: DroppableDimension = getDroppableDimension({
     descriptor: {
       id: droppableId,
       type,
-      mode: 'standard',
+      mode: "standard",
     },
     borderBox: {
       top: 0,
@@ -199,7 +199,7 @@ it('should not hit when outside subject and inside the frame (invisible subject)
 
   const pageBorderBox: Rect = offsetRectByPosition(
     dragging.page.borderBox,
-    distance,
+    distance
   );
 
   const result: DroppableId | null = getDroppableOver({

@@ -3,13 +3,13 @@ import type {
   DroppableDimension,
   DroppableDimensionMap,
   DragImpact,
-} from '../../../../src/types';
-import { horizontal, vertical } from '../../../../src/state/axis';
-import getDragImpact from '../../../../src/state/get-drag-impact';
-import noImpact from '../../../../src/state/no-impact';
-import { disableDroppable, getPreset } from '../../../util/dimension';
-import getLiftEffect from '../../../../src/state/get-lift-effect';
-import { origin } from '../../../../src/state/position';
+} from "../../../../src/types";
+import { horizontal, vertical } from "../../../../src/state/axis";
+import getDragImpact from "../../../../src/state/get-drag-impact";
+import noImpact from "../../../../src/state/no-impact";
+import { disableDroppable, getPreset } from "../../../util/dimension";
+import getLiftEffect from "../../../../src/state/get-lift-effect";
+import { origin } from "../../../../src/state/position";
 
 [vertical, horizontal].forEach((axis: Axis) => {
   describe(`on ${axis.direction} axis`, () => {
@@ -22,7 +22,7 @@ import { origin } from '../../../../src/state/position';
       viewport: preset.viewport,
     });
 
-    it('should return no impact when home is disabled', () => {
+    it("should return no impact when home is disabled", () => {
       const disabled: DroppableDimension = disableDroppable(preset.home);
       const withDisabled: DroppableDimensionMap = {
         ...preset.droppables,
@@ -43,7 +43,7 @@ import { origin } from '../../../../src/state/position';
       expect(impact).toEqual(noImpact);
     });
 
-    it('should return no impact when foreign is disabled', () => {
+    it("should return no impact when foreign is disabled", () => {
       const disabled: DroppableDimension = disableDroppable(preset.foreign);
       const withDisabled: DroppableDimensionMap = {
         ...preset.droppables,

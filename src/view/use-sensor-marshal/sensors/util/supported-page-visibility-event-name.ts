@@ -1,8 +1,8 @@
 const supportedEventName: string = ((): string => {
-  const base = 'visibilitychange';
+  const base = "visibilitychange";
 
   // Server side rendering
-  if (typeof document === 'undefined') {
+  if (typeof document === "undefined") {
     return base;
   }
 
@@ -16,7 +16,7 @@ const supportedEventName: string = ((): string => {
   ];
 
   const supported = candidates.find(
-    (eventName: string): boolean => `on${eventName}` in document,
+    (eventName: string): boolean => `on${eventName}` in document
   );
 
   return supported || base;

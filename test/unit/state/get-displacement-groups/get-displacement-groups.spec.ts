@@ -1,4 +1,4 @@
-import { getRect, Spacing } from 'css-box-model';
+import { getRect, Spacing } from "css-box-model";
 import type {
   Axis,
   Viewport,
@@ -7,21 +7,21 @@ import type {
   DraggableDimension,
   DroppableDimension,
   DraggableDimensionMap,
-} from '../../../../src/types';
-import { vertical, horizontal } from '../../../../src/state/axis';
-import { createViewport } from '../../../util/viewport';
-import { origin, patch } from '../../../../src/state/position';
+} from "../../../../src/types";
+import { vertical, horizontal } from "../../../../src/state/axis";
+import { createViewport } from "../../../util/viewport";
+import { origin, patch } from "../../../../src/state/position";
 import {
   getDroppableDimension,
   getDraggableDimension,
-} from '../../../util/dimension';
-import { emptyGroups } from '../../../../src/state/no-impact';
-import getDisplacedBy from '../../../../src/state/get-displaced-by';
-import { toDraggableMap } from '../../../../src/state/dimension-structures';
-import getLiftEffect from '../../../../src/state/get-lift-effect';
-import getDisplacementGroups from '../../../../src/state/get-displacement-groups';
-import { getForcedDisplacement } from '../../../util/impact';
-import scrollViewport from '../../../../src/state/scroll-viewport';
+} from "../../../util/dimension";
+import { emptyGroups } from "../../../../src/state/no-impact";
+import getDisplacedBy from "../../../../src/state/get-displaced-by";
+import { toDraggableMap } from "../../../../src/state/dimension-structures";
+import getLiftEffect from "../../../../src/state/get-lift-effect";
+import getDisplacementGroups from "../../../../src/state/get-displacement-groups";
+import { getForcedDisplacement } from "../../../util/impact";
+import scrollViewport from "../../../../src/state/scroll-viewport";
 
 [vertical, horizontal].forEach((axis: Axis) => {
   describe(`on the ${axis.direction} axis`, () => {
@@ -43,9 +43,9 @@ import scrollViewport from '../../../../src/state/scroll-viewport';
 
     const home: DroppableDimension = getDroppableDimension({
       descriptor: {
-        id: 'home',
-        type: 'TYPE',
-        mode: 'standard',
+        id: "home",
+        type: "TYPE",
+        mode: "standard",
       },
       direction: axis.direction,
       borderBox: {
@@ -58,9 +58,9 @@ import scrollViewport from '../../../../src/state/scroll-viewport';
 
     const foreign: DroppableDimension = getDroppableDimension({
       descriptor: {
-        id: 'foreign',
-        type: 'TYPE',
-        mode: 'standard',
+        id: "foreign",
+        type: "TYPE",
+        mode: "standard",
       },
       direction: axis.direction,
       borderBox: {
@@ -73,7 +73,7 @@ import scrollViewport from '../../../../src/state/scroll-viewport';
 
     const dragging: DraggableDimension = getDraggableDimension({
       descriptor: {
-        id: 'in-viewport',
+        id: "in-viewport",
         droppableId: home.descriptor.id,
         type: home.descriptor.type,
         index: 0,
@@ -88,12 +88,12 @@ import scrollViewport from '../../../../src/state/scroll-viewport';
 
     const displacedBy: DisplacedBy = getDisplacedBy(
       home.axis,
-      dragging.displaceBy,
+      dragging.displaceBy
     );
 
     const isVisible: DraggableDimension = getDraggableDimension({
       descriptor: {
-        id: 'is-visible',
+        id: "is-visible",
         droppableId: foreign.descriptor.id,
         type: foreign.descriptor.type,
         index: 0,
@@ -105,7 +105,7 @@ import scrollViewport from '../../../../src/state/scroll-viewport';
     const isVisibleDueToOverScanning: DraggableDimension =
       getDraggableDimension({
         descriptor: {
-          id: 'is-visible-due-to-overscanning',
+          id: "is-visible-due-to-overscanning",
           droppableId: foreign.descriptor.id,
           type: foreign.descriptor.type,
           index: 1,
@@ -120,7 +120,7 @@ import scrollViewport from '../../../../src/state/scroll-viewport';
 
     const isNotVisible: DraggableDimension = getDraggableDimension({
       descriptor: {
-        id: 'is-not-visible',
+        id: "is-not-visible",
         droppableId: foreign.descriptor.id,
         type: foreign.descriptor.type,
         index: 2,
@@ -155,7 +155,7 @@ import scrollViewport from '../../../../src/state/scroll-viewport';
       isNotVisible,
     ];
 
-    it('should return nothing when nothing is after the dragging item', () => {
+    it("should return nothing when nothing is after the dragging item", () => {
       const result: DisplacementGroups = getDisplacementGroups({
         afterDragging: [],
         destination: home,
@@ -167,7 +167,7 @@ import scrollViewport from '../../../../src/state/scroll-viewport';
       expect(result).toEqual(emptyGroups);
     });
 
-    it('should correctly mark item visibility', () => {
+    it("should correctly mark item visibility", () => {
       const result: DisplacementGroups = getDisplacementGroups({
         afterDragging,
         destination: foreign,
@@ -188,7 +188,7 @@ import scrollViewport from '../../../../src/state/scroll-viewport';
       expect(result).toEqual(expected);
     });
 
-    it('should keep displacement animation consistent between calls', () => {
+    it("should keep displacement animation consistent between calls", () => {
       const last: DisplacementGroups = getForcedDisplacement({
         visible: [
           // forcing this to be difference so we know this is working
@@ -209,7 +209,7 @@ import scrollViewport from '../../../../src/state/scroll-viewport';
       expect(result).toEqual(last);
     });
 
-    it('should mark an item as not animated when moving from invisible to visible', () => {
+    it("should mark an item as not animated when moving from invisible to visible", () => {
       const last: DisplacementGroups = getForcedDisplacement({
         visible: [
           { dimension: isVisible },
@@ -239,7 +239,7 @@ import scrollViewport from '../../../../src/state/scroll-viewport';
       expect(result).toEqual(expected);
     });
 
-    it('should make displacement animated if being displaced for the first time', () => {
+    it("should make displacement animated if being displaced for the first time", () => {
       const result: DisplacementGroups = getDisplacementGroups({
         afterDragging,
         destination: foreign,
@@ -261,7 +261,7 @@ import scrollViewport from '../../../../src/state/scroll-viewport';
       expect(result).toEqual(expected);
     });
 
-    it('should force the animation value when requested', () => {
+    it("should force the animation value when requested", () => {
       const result: DisplacementGroups = getDisplacementGroups({
         afterDragging,
         destination: foreign,

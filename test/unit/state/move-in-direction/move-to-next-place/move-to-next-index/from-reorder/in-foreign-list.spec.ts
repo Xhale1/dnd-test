@@ -2,21 +2,21 @@ import type {
   Axis,
   DragImpact,
   DisplacedBy,
-} from '../../../../../../../src/types';
-import { invariant } from '../../../../../../../src/invariant';
-import { vertical, horizontal } from '../../../../../../../src/state/axis';
-import { getPreset } from '../../../../../../util/dimension';
-import moveToNextIndex from '../../../../../../../src/state/move-in-direction/move-to-next-place/move-to-next-index';
-import getDisplacedBy from '../../../../../../../src/state/get-displaced-by';
-import getLiftEffect from '../../../../../../../src/state/get-lift-effect';
-import { getForcedDisplacement } from '../../../../../../util/impact';
-import { emptyGroups } from '../../../../../../../src/state/no-impact';
+} from "../../../../../../../src/types";
+import { invariant } from "../../../../../../../src/invariant";
+import { vertical, horizontal } from "../../../../../../../src/state/axis";
+import { getPreset } from "../../../../../../util/dimension";
+import moveToNextIndex from "../../../../../../../src/state/move-in-direction/move-to-next-place/move-to-next-index";
+import getDisplacedBy from "../../../../../../../src/state/get-displaced-by";
+import getLiftEffect from "../../../../../../../src/state/get-lift-effect";
+import { getForcedDisplacement } from "../../../../../../util/impact";
+import { emptyGroups } from "../../../../../../../src/state/no-impact";
 
 [vertical, horizontal].forEach((axis: Axis) => {
   const preset = getPreset(axis);
   const displacedBy: DisplacedBy = getDisplacedBy(
     axis,
-    preset.inHome1.displaceBy,
+    preset.inHome1.displaceBy
   );
   const { afterCritical } = getLiftEffect({
     draggable: preset.inHome1,
@@ -28,7 +28,7 @@ import { emptyGroups } from '../../../../../../../src/state/no-impact';
     // it was cleaner for these scenarios to be batched together into a clean flow
     // rather than recreating the impacts for each test
 
-    it('should update the impact when moving after where we started in the foreign start', () => {
+    it("should update the impact when moving after where we started in the foreign start", () => {
       // inHome1 has made its way into index #2 of foreign after a cross axis move
 
       const crossAxisMove: DragImpact = {
@@ -41,7 +41,7 @@ import { emptyGroups } from '../../../../../../../src/state/no-impact';
         }),
         displacedBy,
         at: {
-          type: 'REORDER',
+          type: "REORDER",
           destination: {
             droppableId: preset.foreign.descriptor.id,
             index: preset.inForeign2.descriptor.index,
@@ -72,7 +72,7 @@ import { emptyGroups } from '../../../../../../../src/state/no-impact';
           }),
           displacedBy,
           at: {
-            type: 'REORDER',
+            type: "REORDER",
             destination: {
               droppableId: preset.foreign.descriptor.id,
               index: preset.inForeign3.descriptor.index,
@@ -102,7 +102,7 @@ import { emptyGroups } from '../../../../../../../src/state/no-impact';
           }),
           displacedBy,
           at: {
-            type: 'REORDER',
+            type: "REORDER",
             destination: {
               droppableId: preset.foreign.descriptor.id,
               index: preset.inForeign4.descriptor.index,
@@ -137,7 +137,7 @@ import { emptyGroups } from '../../../../../../../src/state/no-impact';
           }),
           displacedBy,
           at: {
-            type: 'REORDER',
+            type: "REORDER",
             destination: {
               droppableId: preset.foreign.descriptor.id,
               index: preset.inForeign3.descriptor.index,
@@ -171,7 +171,7 @@ import { emptyGroups } from '../../../../../../../src/state/no-impact';
           }),
           displacedBy,
           at: {
-            type: 'REORDER',
+            type: "REORDER",
             destination: {
               droppableId: preset.foreign.descriptor.id,
               index: preset.inForeign2.descriptor.index,
@@ -184,7 +184,7 @@ import { emptyGroups } from '../../../../../../../src/state/no-impact';
       }
     });
 
-    it('should update the impact when moving before where we started in the foreign list', () => {
+    it("should update the impact when moving before where we started in the foreign list", () => {
       // inHome1 has made its way into index #3 of foreign after a cross axis move
       const crossAxisMove: DragImpact = {
         displaced: getForcedDisplacement({
@@ -195,7 +195,7 @@ import { emptyGroups } from '../../../../../../../src/state/no-impact';
         }),
         displacedBy,
         at: {
-          type: 'REORDER',
+          type: "REORDER",
           destination: {
             droppableId: preset.foreign.descriptor.id,
             index: preset.inForeign3.descriptor.index,
@@ -227,7 +227,7 @@ import { emptyGroups } from '../../../../../../../src/state/no-impact';
           }),
           displacedBy,
           at: {
-            type: 'REORDER',
+            type: "REORDER",
             destination: {
               droppableId: preset.foreign.descriptor.id,
               index: preset.inForeign2.descriptor.index,
@@ -262,7 +262,7 @@ import { emptyGroups } from '../../../../../../../src/state/no-impact';
           }),
           displacedBy,
           at: {
-            type: 'REORDER',
+            type: "REORDER",
             destination: {
               droppableId: preset.foreign.descriptor.id,
               index: preset.inForeign1.descriptor.index,
@@ -299,7 +299,7 @@ import { emptyGroups } from '../../../../../../../src/state/no-impact';
           }),
           displacedBy,
           at: {
-            type: 'REORDER',
+            type: "REORDER",
             destination: {
               droppableId: preset.foreign.descriptor.id,
               index: preset.inForeign2.descriptor.index,
@@ -333,7 +333,7 @@ import { emptyGroups } from '../../../../../../../src/state/no-impact';
           }),
           displacedBy,
           at: {
-            type: 'REORDER',
+            type: "REORDER",
             destination: {
               droppableId: preset.foreign.descriptor.id,
               index: preset.inForeign3.descriptor.index,
@@ -346,7 +346,7 @@ import { emptyGroups } from '../../../../../../../src/state/no-impact';
       }
     });
 
-    it('should not allow displaced before the start of the list', () => {
+    it("should not allow displaced before the start of the list", () => {
       // cross axis move inHome1 before inForeign1
       const crossAxisMove: DragImpact = {
         displaced: getForcedDisplacement({
@@ -358,7 +358,7 @@ import { emptyGroups } from '../../../../../../../src/state/no-impact';
         }),
         displacedBy,
         at: {
-          type: 'REORDER',
+          type: "REORDER",
           destination: {
             droppableId: preset.foreign.descriptor.id,
             index: preset.inForeign1.descriptor.index,
@@ -383,7 +383,7 @@ import { emptyGroups } from '../../../../../../../src/state/no-impact';
       expect(impact).toBe(null);
     });
 
-    it('should allow displaced into a spot after the last item in a list', () => {
+    it("should allow displaced into a spot after the last item in a list", () => {
       // cross axis move inHome1 before inForeign4
       const crossAxisMove: DragImpact = {
         displaced: getForcedDisplacement({
@@ -391,7 +391,7 @@ import { emptyGroups } from '../../../../../../../src/state/no-impact';
         }),
         displacedBy,
         at: {
-          type: 'REORDER',
+          type: "REORDER",
           // currently in the spot that inForeign4 initially occupied
           destination: {
             droppableId: preset.foreign.descriptor.id,
@@ -419,7 +419,7 @@ import { emptyGroups } from '../../../../../../../src/state/no-impact';
         displaced: emptyGroups,
         displacedBy,
         at: {
-          type: 'REORDER',
+          type: "REORDER",
           // trying to move after spot after inForeign4
           destination: {
             droppableId: preset.foreign.descriptor.id,
@@ -435,7 +435,7 @@ import { emptyGroups } from '../../../../../../../src/state/no-impact';
       displaced: emptyGroups,
       displacedBy,
       at: {
-        type: 'REORDER',
+        type: "REORDER",
         // after inForeign4
         destination: {
           droppableId: preset.foreign.descriptor.id,
@@ -444,7 +444,7 @@ import { emptyGroups } from '../../../../../../../src/state/no-impact';
       },
     };
 
-    it('should not allow displaced after it is already after the last item in a list', () => {
+    it("should not allow displaced after it is already after the last item in a list", () => {
       const impact: DragImpact | null = moveToNextIndex({
         isMovingForward: true,
         isInHomeList: false,
@@ -460,7 +460,7 @@ import { emptyGroups } from '../../../../../../../src/state/no-impact';
       expect(impact).toBe(null);
     });
 
-    it('should allow displaced back from after the last item in a list', () => {
+    it("should allow displaced back from after the last item in a list", () => {
       const impact: DragImpact | null = moveToNextIndex({
         isMovingForward: false,
         isInHomeList: false,
@@ -479,7 +479,7 @@ import { emptyGroups } from '../../../../../../../src/state/no-impact';
         }),
         displacedBy,
         at: {
-          type: 'REORDER',
+          type: "REORDER",
           // now in position of inForeign4
           destination: {
             droppableId: preset.foreign.descriptor.id,

@@ -1,28 +1,28 @@
-import React, { CSSProperties, ReactElement, useReducer } from 'react';
-import { FixedSizeList as List, areEqual } from 'react-window';
-import styled from '@emotion/styled';
-import { Global, css } from '@emotion/react';
-import { colors } from '@atlaskit/theme';
+import { colors } from "@atlaskit/theme";
+import { css, Global } from "@emotion/react";
+import styled from "@emotion/styled";
 import {
   DragDropContext,
-  Droppable,
   Draggable,
-  DropResult,
   DraggableLocation,
   DraggableProvided,
-  DraggableStateSnapshot,
-  DroppableProvided,
   DraggableRubric,
+  DraggableStateSnapshot,
+  Droppable,
+  DroppableProvided,
   DroppableStateSnapshot,
-} from '@react-forked/dnd';
-import type { QuoteMap, Quote } from '../../types';
-import Title from '../../primatives/title';
-import { reorderQuoteMap } from '../../reorder';
-import QuoteItem from '../../primatives/quote-item';
-import { grid, borderRadius } from '../../constants';
-import { getBackgroundColor } from '../../primatives/quote-list';
-import QuoteCountSlider from '../quote-count-chooser';
-import { generateQuoteMap } from '../../data';
+  DropResult,
+} from "@hello-pangea/dnd";
+import React, { CSSProperties, ReactElement, useReducer } from "react";
+import { areEqual, FixedSizeList as List } from "react-window";
+import { borderRadius, grid } from "../../constants";
+import { generateQuoteMap } from "../../data";
+import QuoteItem from "../../primatives/quote-item";
+import { getBackgroundColor } from "../../primatives/quote-list";
+import Title from "../../primatives/title";
+import { reorderQuoteMap } from "../../reorder";
+import type { Quote, QuoteMap } from "../../types";
+import QuoteCountSlider from "../quote-count-chooser";
 
 const Container = styled.div`
   display: flex;
@@ -96,7 +96,7 @@ const Column = React.memo(function Column(props: ColumnProps) {
         renderClone={(
           provided: DraggableProvided,
           snapshot: DraggableStateSnapshot,
-          rubric: DraggableRubric,
+          rubric: DraggableRubric
         ) => (
           <QuoteItem
             provided={provided}
@@ -108,7 +108,7 @@ const Column = React.memo(function Column(props: ColumnProps) {
       >
         {(
           droppableProvided: DroppableProvided,
-          snapshot: DroppableStateSnapshot,
+          snapshot: DroppableStateSnapshot
         ) => {
           // Add an extra item to our list to make space for a dragging item
           // Usually the DroppableProvided.placeholder does this, but that won't
@@ -127,9 +127,9 @@ const Column = React.memo(function Column(props: ColumnProps) {
               style={{
                 backgroundColor: getBackgroundColor(
                   snapshot.isDraggingOver,
-                  Boolean(snapshot.draggingFromThisWith),
+                  Boolean(snapshot.draggingFromThisWith)
                 ),
-                transition: 'background-color 0.2s ease',
+                transition: "background-color 0.2s ease",
                 // We add this spacing so that when we drop into an empty list we will animate to the correct visual position.
                 padding: grid,
               }}
@@ -167,16 +167,16 @@ function getInitialState() {
 
 type Action =
   | {
-      type: 'CHANGE_COUNT';
+      type: "CHANGE_COUNT";
       payload: number;
     }
   | {
-      type: 'REORDER';
+      type: "REORDER";
       payload: QuoteMap;
     };
 
 function reducer(state: State, action: Action) {
-  if (action.type === 'CHANGE_COUNT') {
+  if (action.type === "CHANGE_COUNT") {
     const quoteMap: QuoteMap = generateQuoteMap(action.payload);
     return {
       itemCount: action.payload,
@@ -184,7 +184,7 @@ function reducer(state: State, action: Action) {
       columnKeys: getColumnKeys(quoteMap),
     };
   }
-  if (action.type === 'REORDER') {
+  if (action.type === "REORDER") {
     return {
       itemCount: state.itemCount,
       quoteMap: action.payload,
@@ -219,7 +219,7 @@ function Board(): ReactElement {
       destination,
     });
 
-    dispatch({ type: 'REORDER', payload: updated.quoteMap });
+    dispatch({ type: "REORDER", payload: updated.quoteMap });
   }
 
   return (
@@ -236,7 +236,7 @@ function Board(): ReactElement {
           library="react-window"
           count={state.itemCount}
           onCountChange={(count: number) =>
-            dispatch({ type: 'CHANGE_COUNT', payload: count })
+            dispatch({ type: "CHANGE_COUNT", payload: count })
           }
         />
       </DragDropContext>

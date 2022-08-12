@@ -1,10 +1,10 @@
-import type { DroppableDimensionMap, DroppableId } from '../../../../src/types';
-import getDroppableOver from '../../../../src/state/get-droppable-over';
-import { disableDroppable, getPreset } from '../../../util/dimension';
+import type { DroppableDimensionMap, DroppableId } from "../../../../src/types";
+import getDroppableOver from "../../../../src/state/get-droppable-over";
+import { disableDroppable, getPreset } from "../../../util/dimension";
 
 const preset = getPreset();
 
-it('should not consider lists that are disabled', () => {
+it("should not consider lists that are disabled", () => {
   const withDisabled: DroppableDimensionMap = {
     ...preset.droppables,
     [preset.home.descriptor.id]: disableDroppable(preset.home),

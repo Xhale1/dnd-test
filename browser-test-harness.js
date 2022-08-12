@@ -1,33 +1,33 @@
-const childProcess = require('child_process');
-const path = require('path');
-const waitOn = require('wait-on');
-const ports = require('./server-ports');
+const childProcess = require("child_process");
+const path = require("path");
+const waitOn = require("wait-on");
+const ports = require("./server-ports");
 
 const storybook = childProcess.spawn(process.execPath, [
-  path.join('node_modules', 'cross-env', 'src', 'bin', 'cross-env-shell.js'),
-  'DISABLE_HMR=true',
-  'USE_PRODUCTION_BUILD=true',
-  path.join('node_modules', '.bin', 'start-storybook'),
-  '--ci',
-  '-p',
+  path.join("node_modules", "cross-env", "src", "bin", "cross-env-shell.js"),
+  "DISABLE_HMR=true",
+  "USE_PRODUCTION_BUILD=true",
+  path.join("node_modules", ".bin", "start-storybook"),
+  "--ci",
+  "-p",
   `${ports.storybook}`,
 ]);
 
 const cspServer = childProcess.spawn(process.execPath, [
-  path.join('node_modules', 'cross-env', 'src', 'bin', 'cross-env-shell.js'),
-  'USE_PRODUCTION_BUILD=true',
-  path.join('csp-server', 'start.sh'),
+  path.join("node_modules", "cross-env", "src", "bin", "cross-env-shell.js"),
+  "USE_PRODUCTION_BUILD=true",
+  path.join("csp-server", "start.sh"),
   `${ports.cspServer}`,
 ]);
 
-process.on('exit', () => {
+process.on("exit", () => {
   storybook.kill();
   cspServer.kill();
 });
 
 const cmdArgsMap = {
-  accessibility: ['test:accessibility'],
-  browser: ['test:browser:ci'],
+  accessibility: ["test:accessibility"],
+  browser: ["test:browser:ci"],
 };
 
 waitOn({
@@ -40,25 +40,25 @@ waitOn({
   .then(() => {
     if (!process.argv[2]) {
       // eslint-disable-next-line no-restricted-syntax
-      throw new Error('Started servers but no command supplied to run after');
+      throw new Error("Started servers but no command supplied to run after");
     }
 
     const args = cmdArgsMap[process.argv[2]];
 
     if (!args) {
       // eslint-disable-next-line no-restricted-syntax
-      throw new Error('Unknown argument provided');
+      throw new Error("Unknown argument provided");
     }
 
-    const child = childProcess.spawn('pnpm', args, {
-      stdio: 'inherit',
+    const child = childProcess.spawn("pnpm", args, {
+      stdio: "inherit",
     });
 
-    process.on('exit', () => {
+    process.on("exit", () => {
       child.kill();
     });
 
-    child.on('exit', (code) => {
+    child.on("exit", (code) => {
       // eslint-disable-next-line no-process-exit
       process.exit(code);
     });
@@ -70,5 +70,5 @@ waitOn({
     // eslint-disable-next-line no-console
     console.error(error);
     // eslint-disable-next-line no-restricted-syntax
-    throw new Error('Unable to spin up standalone servers');
+    throw new Error("Unable to spin up standalone servers");
   });

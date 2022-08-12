@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import type { ReactNode } from 'react';
-import { DragDropContext, Droppable, Draggable } from '../../../../src';
+import React, { useState } from "react";
+import type { ReactNode } from "react";
+import { DragDropContext, Droppable, Draggable } from "../../../../src";
 
 import type {
   DroppableProvided,
@@ -11,11 +11,11 @@ import type {
   DraggableRubric,
   DropResult,
   ResponderProvided,
-} from '../../../../src';
-import { Responders } from '../../../../src/types';
+} from "../../../../src";
+import { Responders } from "../../../../src/types";
 
-import reorder from '../../../util/reorder';
-import { noop } from '../../../../src/empty';
+import reorder from "../../../util/reorder";
+import { noop } from "../../../../src/empty";
 
 export interface Item {
   id: string;
@@ -28,11 +28,11 @@ export interface Item {
 }
 
 export type RenderItem = (
-  item: Item,
+  item: Item
 ) => (
   provided: DraggableProvided,
   snapshot: DraggableStateSnapshot,
-  rubric: DraggableRubric,
+  rubric: DraggableRubric
 ) => ReactNode;
 
 export const defaultItemRender: RenderItem =
@@ -73,12 +73,12 @@ function getItems() {
     { length: 3 },
     (v, k): Item => ({
       id: `${k}`,
-    }),
+    })
   );
 }
 
 function withDefaultBool(value: unknown, defaultValue: boolean) {
-  if (typeof value === 'boolean') {
+  if (typeof value === "boolean") {
     return value;
   }
   return defaultValue;
@@ -97,7 +97,7 @@ export default function App(props: Props) {
       const reordered: Item[] = reorder(
         items,
         result.source.index,
-        result.destination.index,
+        result.destination.index
       );
       setItems(reordered);
     }
@@ -109,10 +109,10 @@ export default function App(props: Props) {
 
   const sensors: Sensor[] = props.sensors || [];
   const render: RenderItem = props.renderItem || defaultItemRender;
-  const direction: Direction = props.direction || 'vertical';
+  const direction: Direction = props.direction || "vertical";
   const isCombineEnabled: boolean = withDefaultBool(
     props.isCombineEnabled,
-    false,
+    false
   );
   const renderClone = (() => {
     const useClone: boolean = withDefaultBool(props.useClone, false);
@@ -123,7 +123,7 @@ export default function App(props: Props) {
     return function result(
       provided: DraggableProvided,
       snapshot: DraggableStateSnapshot,
-      rubric: DraggableRubric,
+      rubric: DraggableRubric
     ): ReactNode {
       const item: Item = items[rubric.source.index];
       return render(item)(provided, snapshot, rubric);
@@ -161,11 +161,11 @@ export default function App(props: Props) {
                   isDragDisabled={item.isEnabled === false}
                   disableInteractiveElementBlocking={withDefaultBool(
                     item.canDragInteractiveElements,
-                    false,
+                    false
                   )}
                   shouldRespectForcePress={withDefaultBool(
                     item.shouldRespectForcePress,
-                    false,
+                    false
                   )}
                 >
                   {render(item)}

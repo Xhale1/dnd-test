@@ -1,25 +1,25 @@
-import type { Position } from 'css-box-model';
+import type { Position } from "css-box-model";
 import type {
   Axis,
   DragImpact,
   DisplacedBy,
   DroppableDimensionMap,
-} from '../../../../../src/types';
-import { vertical, horizontal } from '../../../../../src/state/axis';
-import { getPreset, enableCombining } from '../../../../util/dimension';
-import getDragImpact from '../../../../../src/state/get-drag-impact';
-import getDisplacedBy from '../../../../../src/state/get-displaced-by';
-import { patch, subtract, add } from '../../../../../src/state/position';
-import getLiftEffect from '../../../../../src/state/get-lift-effect';
-import afterPoint from '../../../../util/after-point';
-import beforePoint from '../../../../util/before-point';
-import { getForcedDisplacement } from '../../../../util/impact';
-import noImpact, { emptyGroups } from '../../../../../src/state/no-impact';
-import { getThreshold } from '../util/get-combine-threshold';
+} from "../../../../../src/types";
+import { vertical, horizontal } from "../../../../../src/state/axis";
+import { getPreset, enableCombining } from "../../../../util/dimension";
+import getDragImpact from "../../../../../src/state/get-drag-impact";
+import getDisplacedBy from "../../../../../src/state/get-displaced-by";
+import { patch, subtract, add } from "../../../../../src/state/position";
+import getLiftEffect from "../../../../../src/state/get-lift-effect";
+import afterPoint from "../../../../util/after-point";
+import beforePoint from "../../../../util/before-point";
+import { getForcedDisplacement } from "../../../../util/impact";
+import noImpact, { emptyGroups } from "../../../../../src/state/no-impact";
+import { getThreshold } from "../util/get-combine-threshold";
 import {
   getOffsetForEndEdge,
   getOffsetForStartEdge,
-} from '../util/get-offset-for-edge';
+} from "../util/get-offset-for-edge";
 
 [vertical, horizontal].forEach((axis: Axis) => {
   describe(`on ${axis.direction} axis`, () => {
@@ -32,11 +32,11 @@ import {
       viewport: preset.viewport,
     });
     const withCombineEnabled: DroppableDimensionMap = enableCombining(
-      preset.droppables,
+      preset.droppables
     );
     const displacedBy: DisplacedBy = getDisplacedBy(
       axis,
-      preset.inHome2.displaceBy,
+      preset.inHome2.displaceBy
     );
     const combineWithInHome3Impact: DragImpact = {
       displaced: getForcedDisplacement({
@@ -49,7 +49,7 @@ import {
       }),
       displacedBy,
       at: {
-        type: 'COMBINE',
+        type: "COMBINE",
         combine: {
           draggableId: preset.inHome3.descriptor.id,
           droppableId: preset.inHome3.descriptor.droppableId,
@@ -60,20 +60,20 @@ import {
     const startOfInHome3: Position = patch(
       axis.line,
       preset.inHome3.page.borderBox[axis.start],
-      preset.inHome3.page.borderBox.center[axis.crossAxisLine],
+      preset.inHome3.page.borderBox.center[axis.crossAxisLine]
     );
     const endOfInHome3: Position = patch(
       axis.line,
       preset.inHome3.page.borderBox[axis.end],
-      preset.inHome3.page.borderBox.center[axis.crossAxisLine],
+      preset.inHome3.page.borderBox.center[axis.crossAxisLine]
     );
     const inHome3Threshold: Position = getThreshold(axis, preset.inHome3);
 
-    describe('moving onto displaced item', () => {
+    describe("moving onto displaced item", () => {
       const combineStart: Position = add(startOfInHome3, inHome3Threshold);
       const combineEnd: Position = subtract(endOfInHome3, inHome3Threshold);
 
-      it('should move onto a target once it hits (1/5) of the targets size', () => {
+      it("should move onto a target once it hits (1/5) of the targets size", () => {
         const offset: Position = getOffsetForEndEdge({
           endEdgeOn: combineStart,
           dragging: preset.inHome2.page.borderBox,
@@ -110,7 +110,7 @@ import {
         }
       });
 
-      it('should remain displaced until the bottom of the dragging item goes onto the (4/5) mark', () => {
+      it("should remain displaced until the bottom of the dragging item goes onto the (4/5) mark", () => {
         const offset: Position = getOffsetForEndEdge({
           endEdgeOn: combineEnd,
           dragging: preset.inHome2.page.borderBox,
@@ -146,7 +146,7 @@ import {
             }),
             displacedBy,
             at: {
-              type: 'REORDER',
+              type: "REORDER",
               // now in position of inHome3
               destination: {
                 index: preset.inHome3.descriptor.index,
@@ -159,22 +159,22 @@ import {
       });
     });
 
-    describe('moving backwards onto un displaced item', () => {
+    describe("moving backwards onto un displaced item", () => {
       const displacedStartOfInHome3: Position = subtract(
         startOfInHome3,
-        displacedBy.point,
+        displacedBy.point
       );
       const displacedEndOfInHome3: Position = subtract(
         endOfInHome3,
-        displacedBy.point,
+        displacedBy.point
       );
       const combineStart: Position = add(
         displacedStartOfInHome3,
-        inHome3Threshold,
+        inHome3Threshold
       );
       const combineEnd: Position = subtract(
         displacedEndOfInHome3,
-        inHome3Threshold,
+        inHome3Threshold
       );
 
       const combineWithDisplacedInHome3Impact: DragImpact = {
@@ -186,7 +186,7 @@ import {
         }),
         displacedBy,
         at: {
-          type: 'COMBINE',
+          type: "COMBINE",
           combine: {
             draggableId: preset.inHome3.descriptor.id,
             droppableId: preset.inHome3.descriptor.droppableId,
@@ -201,7 +201,7 @@ import {
         }),
         displacedBy,
         at: {
-          type: 'REORDER',
+          type: "REORDER",
           // now in position of inHome3
           destination: {
             index: preset.inHome3.descriptor.index,
@@ -210,7 +210,7 @@ import {
         },
       };
 
-      it('should move backwards onto an item that has shifted backwards', () => {
+      it("should move backwards onto an item that has shifted backwards", () => {
         const offset: Position = getOffsetForStartEdge({
           startEdgeOn: combineEnd,
           dragging: preset.inHome2.page.borderBox,
@@ -228,7 +228,7 @@ import {
             viewport: preset.viewport,
             afterCritical,
           });
-          expect(impact.at).toHaveProperty('type', 'REORDER');
+          expect(impact.at).toHaveProperty("type", "REORDER");
         }
         // moved back enough
         {
@@ -246,7 +246,7 @@ import {
         }
       });
 
-      it('should no longer combine with an item once it hits the top threshold', () => {
+      it("should no longer combine with an item once it hits the top threshold", () => {
         const offset: Position = getOffsetForStartEdge({
           startEdgeOn: combineStart,
           dragging: preset.inHome2.page.borderBox,
@@ -278,7 +278,7 @@ import {
             afterCritical,
           });
 
-          expect(impact.at).toHaveProperty('type', 'REORDER');
+          expect(impact.at).toHaveProperty("type", "REORDER");
         }
       });
     });
@@ -287,20 +287,20 @@ import {
     // - inHome4 will have shifted backwards
     // - re-enter home list
     // TODO: I am not sure this test is asserting the right thing
-    it('should understand that when re-entering a list, items that started displaced no longer are', () => {
+    it("should understand that when re-entering a list, items that started displaced no longer are", () => {
       const inHome4Threshold: Position = getThreshold(axis, preset.inHome4);
       const endOfInHome4: Position = patch(
         axis.line,
         preset.inHome4.page.borderBox[axis.end],
-        preset.inHome4.page.borderBox.center[axis.crossAxisLine],
+        preset.inHome4.page.borderBox.center[axis.crossAxisLine]
       );
       const displacedEndOfInHome4: Position = subtract(
         endOfInHome4,
-        displacedBy.point,
+        displacedBy.point
       );
       const combineEnd: Position = subtract(
         displacedEndOfInHome4,
-        inHome4Threshold,
+        inHome4Threshold
       );
 
       const offset: Position = getOffsetForStartEdge({
@@ -324,7 +324,7 @@ import {
         displacedBy: getDisplacedBy(axis, preset.inHome3.displaceBy),
         // below inHome4
         at: {
-          type: 'REORDER',
+          type: "REORDER",
           destination: {
             droppableId: preset.inHome3.descriptor.droppableId,
             index: preset.inHome4.descriptor.index,

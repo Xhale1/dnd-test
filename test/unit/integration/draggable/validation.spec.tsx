@@ -1,14 +1,14 @@
-import React from 'react';
-import { render } from '@testing-library/react';
-import { DragDropContext, Droppable, Draggable } from '../../../../src';
-import type { DroppableProvided, DraggableProvided } from '../../../../src';
+import React from "react";
+import { render } from "@testing-library/react";
+import { DragDropContext, Droppable, Draggable } from "../../../../src";
+import type { DroppableProvided, DraggableProvided } from "../../../../src";
 
 let consoleErrorSpy: jest.SpyInstance;
 let consoleWarnSpy: jest.SpyInstance;
 
 beforeEach(() => {
-  consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
-  consoleWarnSpy = jest.spyOn(console, 'warn').mockImplementation(() => {});
+  consoleErrorSpy = jest.spyOn(console, "error").mockImplementation(() => {});
+  consoleWarnSpy = jest.spyOn(console, "warn").mockImplementation(() => {});
 });
 
 afterEach(() => {
@@ -49,10 +49,10 @@ function WithCustomProps(props: Props) {
   );
 }
 
-it('should log an error if draggableId is not a string', () => {
+it("should log an error if draggableId is not a string", () => {
   [1, undefined, false, {}].forEach((value: unknown) => {
     const { unmount } = render(
-      <WithCustomProps draggableId={value} index={0} />,
+      <WithCustomProps draggableId={value} index={0} />
     );
 
     expect(consoleErrorSpy).toHaveBeenCalled();
@@ -62,10 +62,10 @@ it('should log an error if draggableId is not a string', () => {
   });
 });
 
-it('should log an error if index is not an integer', () => {
-  ['1', 1.33, undefined, false, {}].forEach((value: unknown) => {
+it("should log an error if index is not an integer", () => {
+  ["1", 1.33, undefined, false, {}].forEach((value: unknown) => {
     const { unmount } = render(
-      <WithCustomProps draggableId="draggable" index={value} />,
+      <WithCustomProps draggableId="draggable" index={value} />
     );
 
     expect(consoleErrorSpy).toHaveBeenCalled();
@@ -75,7 +75,7 @@ it('should log an error if index is not an integer', () => {
   });
 });
 
-it('should log an error if innerRef is not provided', () => {
+it("should log an error if innerRef is not provided", () => {
   function App() {
     return (
       <DragDropContext onDragEnd={() => {}}>
@@ -110,7 +110,7 @@ it('should log an error if innerRef is not provided', () => {
   expect(consoleErrorSpy).toHaveBeenCalled();
 });
 
-it('should log an error if innerRef is an SVG', () => {
+it("should log an error if innerRef is an SVG", () => {
   function App() {
     return (
       <DragDropContext onDragEnd={() => {}}>
@@ -147,7 +147,7 @@ it('should log an error if innerRef is an SVG', () => {
   expect(consoleErrorSpy).toHaveBeenCalled();
 });
 
-it('should log an error if no drag handle props are applied', () => {
+it("should log an error if no drag handle props are applied", () => {
   function App() {
     return (
       <DragDropContext onDragEnd={() => {}}>
@@ -182,7 +182,7 @@ it('should log an error if no drag handle props are applied', () => {
   expect(consoleErrorSpy).toHaveBeenCalled();
 });
 
-it('should log an error if the draggable is disabled as there will be no drag handle', () => {
+it("should log an error if the draggable is disabled as there will be no drag handle", () => {
   function App() {
     return (
       <DragDropContext onDragEnd={() => {}}>

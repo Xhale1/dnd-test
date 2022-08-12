@@ -1,11 +1,11 @@
-import type { Position } from 'css-box-model';
-import { mount } from 'enzyme';
-import React from 'react';
-import { invariant } from '../../../../src/invariant';
-import type { DroppableDimension } from '../../../../src/types';
-import { getDroppableDimension } from '../../../util/dimension';
-import { getMarshalStub } from '../../../util/dimension-marshal';
-import { setViewport } from '../../../util/viewport';
+import { render } from "@testing-library/react";
+import type { Position } from "css-box-model";
+import React from "react";
+import { invariant } from "../../../../src/invariant";
+import type { DroppableDimension } from "../../../../src/types";
+import { getDroppableDimension } from "../../../util/dimension";
+import { getMarshalStub } from "../../../util/dimension-marshal";
+import { setViewport } from "../../../util/viewport";
 import {
   App,
   bigClient,
@@ -17,13 +17,13 @@ import {
   preset,
   smallFrameClient,
   WithAppContext,
-} from './util/shared';
+} from "./util/shared";
 import type {
   Registry,
   DroppableCallbacks,
-} from '../../../../src/state/registry/registry-types';
-import createRegistry from '../../../../src/state/registry/create-registry';
-import setDOMRect from '../../../util/set-dom-rect';
+} from "../../../../src/state/registry/registry-types";
+import createRegistry from "../../../../src/state/registry/create-registry";
+import setDOMRect from "../../../util/set-dom-rect";
 
 beforeEach(() => {
   setViewport(preset.viewport);
@@ -54,27 +54,27 @@ const expected: DroppableDimension = getDroppableDimension({
   },
 });
 
-it('should recollect scroll if requested', () => {
+it("should recollect scroll if requested", () => {
   const marshal = getMarshalStub();
   // both the droppable and the parent are scrollable
   const registry: Registry = createRegistry();
-  const registerSpy = jest.spyOn(registry.droppable, 'register');
-  const wrapper = mount(
+  const registerSpy = jest.spyOn(registry.droppable, "register");
+  const { container } = render(
     <WithAppContext marshal={marshal} registry={registry}>
       <App droppableIsScrollable />
-    </WithAppContext>,
+    </WithAppContext>
   );
-  const el = wrapper.find('.droppable').getDOMNode<HTMLElement>();
+  const el = container.querySelector(".droppable") as HTMLElement;
   invariant(el);
   // returning smaller border box as this is what occurs when the element is scrollable
   jest
-    .spyOn(el, 'getBoundingClientRect')
+    .spyOn(el, "getBoundingClientRect")
     .mockImplementation(() => setDOMRect(smallFrameClient.borderBox));
   // scrollWidth / scrollHeight are based on the paddingBox of an element
-  Object.defineProperty(el, 'scrollWidth', {
+  Object.defineProperty(el, "scrollWidth", {
     value: bigClient.paddingBox.width,
   });
-  Object.defineProperty(el, 'scrollHeight', {
+  Object.defineProperty(el, "scrollHeight", {
     value: bigClient.paddingBox.height,
   });
 
@@ -83,7 +83,7 @@ it('should recollect scroll if requested', () => {
   // execute it to get the dimension
   const initial: DroppableDimension = callbacks.getDimensionAndWatchScroll(
     preset.windowScroll,
-    immediate,
+    immediate
   );
 
   expect(initial).toEqual(expected);
@@ -95,15 +95,15 @@ it('should recollect scroll if requested', () => {
   expect(result).toEqual(newScroll);
 });
 
-it('should throw if there is no drag occurring when a recollection is requested', () => {
+it("should throw if there is no drag occurring when a recollection is requested", () => {
   const marshal = getMarshalStub();
   // both the droppable and the parent are scrollable
   const registry: Registry = createRegistry();
-  const registerSpy = jest.spyOn(registry.droppable, 'register');
-  mount(
+  const registerSpy = jest.spyOn(registry.droppable, "register");
+  render(
     <WithAppContext marshal={marshal} registry={registry}>
       <App droppableIsScrollable showPlaceholder />
-    </WithAppContext>,
+    </WithAppContext>
   );
 
   const callbacks: DroppableCallbacks = registerSpy.mock.calls[0][0].callbacks;
@@ -111,15 +111,15 @@ it('should throw if there is no drag occurring when a recollection is requested'
   expect(() => callbacks.getScrollWhileDragging()).toThrow();
 });
 
-it('should throw if there if recollecting from droppable that is not a scroll container', () => {
+it("should throw if there if recollecting from droppable that is not a scroll container", () => {
   const marshal = getMarshalStub();
   // both the droppable and the parent are scrollable
   const registry: Registry = createRegistry();
-  const registerSpy = jest.spyOn(registry.droppable, 'register');
-  mount(
+  const registerSpy = jest.spyOn(registry.droppable, "register");
+  render(
     <WithAppContext marshal={marshal} registry={registry}>
       <App />
-    </WithAppContext>,
+    </WithAppContext>
   );
 
   const callbacks: DroppableCallbacks = registerSpy.mock.calls[0][0].callbacks;

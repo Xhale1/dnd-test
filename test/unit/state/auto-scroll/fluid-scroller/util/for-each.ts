@@ -1,7 +1,7 @@
-import { vertical, horizontal } from '../../../../../../src/state/axis';
-import type { Axis } from '../../../../../../src/types';
-import { getPreset } from '../../../../../util/dimension';
-import getSimpleStatePreset from '../../../../../util/get-simple-state-preset';
+import { vertical, horizontal } from "../../../../../../src/state/axis";
+import type { Axis } from "../../../../../../src/types";
+import { getPreset } from "../../../../../util/dimension";
+import getSimpleStatePreset from "../../../../../util/get-simple-state-preset";
 
 export interface BlockFnArgs {
   axis: Axis;

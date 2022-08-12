@@ -1,13 +1,13 @@
-import type { Position } from 'css-box-model';
-import { invariant } from '../../invariant';
+import type { Position } from "css-box-model";
+import { invariant } from "../../invariant";
 import type {
   DimensionMarshal,
   Callbacks,
   StartPublishingResult,
-} from './dimension-marshal-types';
-import createPublisher from './while-dragging-publisher';
-import type { WhileDraggingPublisher } from './while-dragging-publisher';
-import getInitialPublish from './get-initial-publish';
+} from "./dimension-marshal-types";
+import createPublisher from "./while-dragging-publisher";
+import type { WhileDraggingPublisher } from "./while-dragging-publisher";
+import getInitialPublish from "./get-initial-publish";
 import type {
   Registry,
   DroppableEntry,
@@ -15,15 +15,15 @@ import type {
   Subscriber,
   Unsubscribe,
   RegistryEvent,
-} from '../registry/registry-types';
+} from "../registry/registry-types";
 import type {
   DroppableId,
   DroppableDescriptor,
   LiftRequest,
   Critical,
   DraggableDescriptor,
-} from '../../types';
-import { warning } from '../../dev-warning';
+} from "../../types";
+import { warning } from "../../dev-warning";
 
 interface Collection {
   critical: Critical;
@@ -33,7 +33,7 @@ interface Collection {
 function shouldPublishUpdate(
   registry: Registry,
   dragging: DraggableDescriptor,
-  entry: DraggableEntry,
+  entry: DraggableEntry
 ): boolean {
   // do not publish updates for the critical draggable
   if (entry.descriptor.id === dragging.id) {
@@ -45,10 +45,10 @@ function shouldPublishUpdate(
   }
 
   const home: DroppableEntry = registry.droppable.getById(
-    entry.descriptor.droppableId,
+    entry.descriptor.droppableId
   );
 
-  if (home.descriptor.mode !== 'virtual') {
+  if (home.descriptor.mode !== "virtual") {
     warning(`
       You are attempting to add or remove a Draggable [id: ${entry.descriptor.id}]
       while a drag is occurring. This is only supported for virtual lists.
@@ -75,7 +75,7 @@ export default (registry: Registry, callbacks: Callbacks) => {
   const updateDroppableIsEnabled = (id: DroppableId, isEnabled: boolean) => {
     invariant(
       registry.droppable.exists(id),
-      `Cannot update is enabled flag of Droppable ${id} as it is not registered`,
+      `Cannot update is enabled flag of Droppable ${id} as it is not registered`
     );
 
     // no need to update the application state if a collection is not occurring
@@ -91,7 +91,7 @@ export default (registry: Registry, callbacks: Callbacks) => {
 
   const updateDroppableIsCombineEnabled = (
     id: DroppableId,
-    isCombineEnabled: boolean,
+    isCombineEnabled: boolean
   ) => {
     // no need to update
     if (!collection) {
@@ -100,7 +100,7 @@ export default (registry: Registry, callbacks: Callbacks) => {
 
     invariant(
       registry.droppable.exists(id),
-      `Cannot update isCombineEnabled flag of Droppable ${id} as it is not registered`,
+      `Cannot update isCombineEnabled flag of Droppable ${id} as it is not registered`
     );
 
     callbacks.updateDroppableIsCombineEnabled({ id, isCombineEnabled });
@@ -114,7 +114,7 @@ export default (registry: Registry, callbacks: Callbacks) => {
 
     invariant(
       registry.droppable.exists(id),
-      `Cannot update the scroll on Droppable ${id} as it is not registered`,
+      `Cannot update the scroll on Droppable ${id} as it is not registered`
     );
 
     callbacks.updateDroppableScroll({ id, newScroll });
@@ -151,18 +151,18 @@ export default (registry: Registry, callbacks: Callbacks) => {
   const subscriber: Subscriber = (event: RegistryEvent) => {
     invariant(
       collection,
-      'Should only be subscribed when a collection is occurring',
+      "Should only be subscribed when a collection is occurring"
     );
     // The dragging item can be add and removed when using a clone
     // We do not publish updates for the critical item
     const dragging: DraggableDescriptor = collection.critical.draggable;
 
-    if (event.type === 'ADDITION') {
+    if (event.type === "ADDITION") {
       if (shouldPublishUpdate(registry, dragging, event.value)) {
         publisher.add(event.value);
       }
     }
-    if (event.type === 'REMOVAL') {
+    if (event.type === "REMOVAL") {
       if (shouldPublishUpdate(registry, dragging, event.value)) {
         publisher.remove(event.value);
       }
@@ -172,13 +172,13 @@ export default (registry: Registry, callbacks: Callbacks) => {
   const startPublishing = (request: LiftRequest): StartPublishingResult => {
     invariant(
       !collection,
-      'Cannot start capturing critical dimensions as there is already a collection',
+      "Cannot start capturing critical dimensions as there is already a collection"
     );
     const entry: DraggableEntry = registry.draggable.getById(
-      request.draggableId,
+      request.draggableId
     );
     const home: DroppableEntry = registry.droppable.getById(
-      entry.descriptor.droppableId,
+      entry.descriptor.droppableId
     );
 
     const critical: Critical = {

@@ -3,20 +3,20 @@ import type {
   DraggableDimension,
   DragImpact,
   LiftEffect,
-} from '../../../../src/types';
-import getLiftEffect from '../../../../src/state/get-lift-effect';
-import { getPreset } from '../../../util/dimension';
-import getDisplacedBy from '../../../../src/state/get-displaced-by';
-import getHomeLocation from '../../../../src/state/get-home-location';
+} from "../../../../src/types";
+import getLiftEffect from "../../../../src/state/get-lift-effect";
+import { getPreset } from "../../../util/dimension";
+import getDisplacedBy from "../../../../src/state/get-displaced-by";
+import getHomeLocation from "../../../../src/state/get-home-location";
 import {
   getForcedDisplacement,
   getDraggableIdMap,
   getDraggableIds,
-} from '../../../util/impact';
+} from "../../../util/impact";
 
 const preset = getPreset();
 
-it('should mark everything after the critical', () => {
+it("should mark everything after the critical", () => {
   const { impact, afterCritical } = getLiftEffect({
     draggable: preset.inHome2,
     home: preset.home,
@@ -27,7 +27,7 @@ it('should mark everything after the critical', () => {
   // originally displacement
   const displacedBy: DisplacedBy = getDisplacedBy(
     preset.home.axis,
-    preset.inHome2.displaceBy,
+    preset.inHome2.displaceBy
   );
 
   // ordered by closest impacted
@@ -48,7 +48,7 @@ it('should mark everything after the critical', () => {
       }),
       displacedBy,
       at: {
-        type: 'REORDER',
+        type: "REORDER",
         destination: getHomeLocation(preset.inHome2.descriptor),
       },
     };

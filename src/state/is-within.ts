@@ -2,7 +2,7 @@
 
 export default (
     lowerBound: number,
-    upperBound: number,
+    upperBound: number
   ): ((a: number) => boolean) =>
   (value: number): boolean =>
     lowerBound <= value && value <= upperBound;

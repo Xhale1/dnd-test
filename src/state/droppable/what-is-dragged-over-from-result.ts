@@ -1,4 +1,4 @@
-import type { DroppableId, DropResult } from '../../types';
+import type { DroppableId, DropResult } from "../../types";
 
 export default (result: DropResult): DroppableId | null => {
   const { combine, destination } = result;

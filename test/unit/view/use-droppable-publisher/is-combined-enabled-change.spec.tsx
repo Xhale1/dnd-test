@@ -1,35 +1,29 @@
-import { mount } from 'enzyme';
-import React from 'react';
-import { getMarshalStub } from '../../../util/dimension-marshal';
-import { setViewport } from '../../../util/viewport';
+import { render } from "@testing-library/react";
+import React from "react";
+import { getMarshalStub } from "../../../util/dimension-marshal";
+import { setViewport } from "../../../util/viewport";
 import {
   preset,
   scheduled,
   ScrollableItem,
   WithAppContext,
-} from './util/shared';
-import forceUpdate from '../../../util/force-update';
-import PassThroughProps from '../../../util/pass-through-props';
+} from "./util/shared";
 import type {
   Registry,
   DroppableCallbacks,
-} from '../../../../src/state/registry/registry-types';
-import createRegistry from '../../../../src/state/registry/create-registry';
+} from "../../../../src/state/registry/registry-types";
+import createRegistry from "../../../../src/state/registry/create-registry";
 
 setViewport(preset.viewport);
 
-it('should publish updates to the enabled state when dragging', () => {
+it("should publish updates to the enabled state when dragging", () => {
   const marshal = getMarshalStub();
   const registry: Registry = createRegistry();
-  const registerSpy = jest.spyOn(registry.droppable, 'register');
-  const wrapper = mount(
-    <PassThroughProps>
-      {(extra) => (
-        <WithAppContext marshal={marshal} registry={registry}>
-          <ScrollableItem isCombineEnabled {...extra} />
-        </WithAppContext>
-      )}
-    </PassThroughProps>,
+  const registerSpy = jest.spyOn(registry.droppable, "register");
+  const { rerender } = render(
+    <WithAppContext marshal={marshal} registry={registry}>
+      <ScrollableItem isCombineEnabled />
+    </WithAppContext>
   );
   // not called yet
   expect(marshal.updateDroppableIsCombineEnabled).not.toHaveBeenCalled();
@@ -38,38 +32,38 @@ it('should publish updates to the enabled state when dragging', () => {
   callbacks.getDimensionAndWatchScroll(preset.windowScroll, scheduled);
 
   // changing to false
-  wrapper.setProps({
-    isCombineEnabled: false,
-  });
+  rerender(
+    <WithAppContext marshal={marshal} registry={registry}>
+      <ScrollableItem isCombineEnabled={false} />
+    </WithAppContext>
+  );
   expect(marshal.updateDroppableIsCombineEnabled).toHaveBeenCalledTimes(1);
   expect(marshal.updateDroppableIsCombineEnabled).toHaveBeenCalledWith(
     preset.home.descriptor.id,
-    false,
+    false
   );
   marshal.updateDroppableIsCombineEnabled.mockClear();
 
   // now setting to true
-  wrapper.setProps({
-    isCombineEnabled: true,
-  });
+  rerender(
+    <WithAppContext marshal={marshal} registry={registry}>
+      <ScrollableItem isCombineEnabled />
+    </WithAppContext>
+  );
   expect(marshal.updateDroppableIsCombineEnabled).toHaveBeenCalledTimes(1);
   expect(marshal.updateDroppableIsCombineEnabled).toHaveBeenCalledWith(
     preset.home.descriptor.id,
-    true,
+    true
   );
 });
 
-it('should not publish updates to the enabled state when there is no drag', () => {
+it("should not publish updates to the enabled state when there is no drag", () => {
   const marshal = getMarshalStub();
   const registry: Registry = createRegistry();
-  const wrapper = mount(
-    <PassThroughProps>
-      {(extra) => (
-        <WithAppContext marshal={marshal} registry={registry}>
-          <ScrollableItem isCombineEnabled {...extra} />,
-        </WithAppContext>
-      )}
-    </PassThroughProps>,
+  const { rerender } = render(
+    <WithAppContext marshal={marshal} registry={registry}>
+      <ScrollableItem isCombineEnabled />,
+    </WithAppContext>
   );
 
   // not called yet
@@ -77,25 +71,23 @@ it('should not publish updates to the enabled state when there is no drag', () =
 
   // no yet dragging
 
-  wrapper.setProps({
-    isCombineEnabled: false,
-  });
+  rerender(
+    <WithAppContext marshal={marshal} registry={registry}>
+      <ScrollableItem isCombineEnabled={false} />,
+    </WithAppContext>
+  );
 
   expect(marshal.updateDroppableIsCombineEnabled).not.toHaveBeenCalled();
 });
 
-it('should not publish updates when there is no change', () => {
+it("should not publish updates when there is no change", () => {
   const marshal = getMarshalStub();
   const registry: Registry = createRegistry();
-  const registerSpy = jest.spyOn(registry.droppable, 'register');
-  const wrapper = mount(
-    <PassThroughProps>
-      {(extra) => (
-        <WithAppContext marshal={marshal} registry={registry}>
-          <ScrollableItem isCombineEnabled {...extra} />,
-        </WithAppContext>
-      )}
-    </PassThroughProps>,
+  const registerSpy = jest.spyOn(registry.droppable, "register");
+  const { rerender } = render(
+    <WithAppContext marshal={marshal} registry={registry}>
+      <ScrollableItem isCombineEnabled />,
+    </WithAppContext>
   );
 
   // not called yet
@@ -104,13 +96,20 @@ it('should not publish updates when there is no change', () => {
   callbacks.getDimensionAndWatchScroll(preset.windowScroll, scheduled);
 
   // no change
-  wrapper.setProps({
-    isCombineEnabled: true,
-  });
+  rerender(
+    <WithAppContext marshal={marshal} registry={registry}>
+      <ScrollableItem isCombineEnabled />,
+    </WithAppContext>
+  );
 
   expect(marshal.updateDroppableIsCombineEnabled).not.toHaveBeenCalled();
   marshal.updateDroppableIsCombineEnabled.mockReset();
 
-  forceUpdate(wrapper);
+  // force update
+  rerender(
+    <WithAppContext marshal={marshal} registry={registry}>
+      <ScrollableItem isCombineEnabled />,
+    </WithAppContext>
+  );
   expect(marshal.updateDroppableIsCombineEnabled).not.toHaveBeenCalled();
 });

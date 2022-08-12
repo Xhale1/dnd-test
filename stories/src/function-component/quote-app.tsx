@@ -1,15 +1,15 @@
-import React, { ReactElement, useState } from 'react';
-import styled from '@emotion/styled';
-import { DragDropContext, Droppable, Draggable } from '@react-forked/dnd';
+import styled from "@emotion/styled";
 import type {
-  DropResult,
   DraggableProvided,
   DroppableProvided,
-} from '@react-forked/dnd';
-import type { Quote as QuoteType } from '../types';
-import { quotes as initial } from '../data';
-import reorder from '../reorder';
-import { grid } from '../constants';
+  DropResult,
+} from "@hello-pangea/dnd";
+import { DragDropContext, Draggable, Droppable } from "@hello-pangea/dnd";
+import React, { ReactElement, useState } from "react";
+import { grid } from "../constants";
+import { quotes as initial } from "../data";
+import reorder from "../reorder";
+import type { Quote as QuoteType } from "../types";
 
 interface QuoteProps {
   quote: QuoteType;
@@ -72,7 +72,7 @@ function QuoteApp(): ReactElement {
     const newQuotes = reorder(
       quotes,
       result.source.index,
-      result.destination.index,
+      result.destination.index
     );
 
     setQuotes(newQuotes);

@@ -1,5 +1,5 @@
-import { invariant } from '../../../../src/invariant';
-import { getPreset, addDroppable } from '../../../util/dimension';
+import { invariant } from "../../../../src/invariant";
+import { getPreset, addDroppable } from "../../../util/dimension";
 import type {
   DraggableDimension,
   CollectingState,
@@ -8,33 +8,33 @@ import type {
   DraggingState,
   DropPendingState,
   DragImpact,
-} from '../../../../src/types';
-import { virtualForeign, empty } from './util';
-import getSimpleStatePreset from '../../../util/get-simple-state-preset';
-import publish from '../../../../src/state/publish-while-dragging-in-virtual';
-import getDisplacedBy from '../../../../src/state/get-displaced-by';
-import { vertical } from '../../../../src/state/axis';
-import type { PublicResult } from '../../../../src/state/move-in-direction/move-in-direction-types';
-import moveInDirection from '../../../../src/state/move-in-direction';
-import update from '../../../../src/state/post-reducer/when-moving/update';
-import { getForcedDisplacement } from '../../../util/impact';
-import { origin } from '../../../../src/state/position';
+} from "../../../../src/types";
+import { virtualForeign, empty } from "./util";
+import getSimpleStatePreset from "../../../util/get-simple-state-preset";
+import publish from "../../../../src/state/publish-while-dragging-in-virtual";
+import getDisplacedBy from "../../../../src/state/get-displaced-by";
+import { vertical } from "../../../../src/state/axis";
+import type { PublicResult } from "../../../../src/state/move-in-direction/move-in-direction-types";
+import moveInDirection from "../../../../src/state/move-in-direction";
+import update from "../../../../src/state/post-reducer/when-moving/update";
+import { getForcedDisplacement } from "../../../util/impact";
+import { origin } from "../../../../src/state/position";
 
 const preset = getPreset(vertical);
 const state = getSimpleStatePreset(vertical);
 
-it('should not animate any displacement', () => {
+it("should not animate any displacement", () => {
   // inHome1 currently in foreign
   // adding item to foreign list
   // we are ensuring this displacement is not animated
 
   const inHomeState: DraggingState = addDroppable(
     state.dragging(),
-    virtualForeign,
+    virtualForeign
   );
   const moveToForeign: PublicResult | null = moveInDirection({
     state: inHomeState,
-    type: 'MOVE_RIGHT',
+    type: "MOVE_RIGHT",
   });
   invariant(moveToForeign);
   const inForeignImpact: DragImpact = moveToForeign.impact;
@@ -52,7 +52,7 @@ it('should not animate any displacement', () => {
       displaced,
       displacedBy: getDisplacedBy(vertical, preset.inHome1.displaceBy),
       at: {
-        type: 'REORDER',
+        type: "REORDER",
         destination: {
           index: preset.inForeign2.descriptor.index,
           droppableId: preset.foreign.descriptor.id,
@@ -73,12 +73,12 @@ it('should not animate any displacement', () => {
     descriptor: {
       ...preset.inForeign4.descriptor,
       index: preset.inForeign4.descriptor.index + 1,
-      id: 'added',
+      id: "added",
     },
   };
   const collectingState: CollectingState = {
     ...inForeignState,
-    phase: 'COLLECTING',
+    phase: "COLLECTING",
   };
   const published: Published = {
     ...empty,
@@ -90,7 +90,7 @@ it('should not animate any displacement', () => {
     state: collectingState,
     published,
   });
-  invariant(result.phase === 'DRAGGING');
+  invariant(result.phase === "DRAGGING");
 
   const displaced: DisplacementGroups = getForcedDisplacement({
     visible: [

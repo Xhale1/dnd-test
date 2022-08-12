@@ -1,12 +1,12 @@
-import React, { Component, ReactElement } from 'react';
-import styled from '@emotion/styled';
-import { colors } from '@atlaskit/theme';
-import { DragDropContext } from '@react-forked/dnd';
-import type { DropResult } from '@react-forked/dnd';
-import type { Quote } from '../types';
-import AuthorList from '../primatives/author-list';
-import reorder from '../reorder';
-import { grid } from '../constants';
+import { colors } from "@atlaskit/theme";
+import styled from "@emotion/styled";
+import type { DropResult } from "@hello-pangea/dnd";
+import { DragDropContext } from "@hello-pangea/dnd";
+import React, { Component, ReactElement } from "react";
+import { grid } from "../constants";
+import AuthorList from "../primatives/author-list";
+import reorder from "../reorder";
+import type { Quote } from "../types";
 
 interface Props {
   initial: Quote[];
@@ -55,7 +55,7 @@ export default class AuthorApp extends Component<Props, State> {
     const quotes = reorder(
       this.state.quotes,
       result.source.index,
-      result.destination.index,
+      result.destination.index
     );
 
     this.setState({

@@ -3,8 +3,8 @@ import type {
   DragImpact,
   DisplacedBy,
   LiftEffect,
-} from '../types';
-import { origin } from './position';
+} from "../types";
+import { origin } from "./position";
 
 export const noDisplacedBy: DisplacedBy = {
   point: origin,

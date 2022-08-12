@@ -1,19 +1,19 @@
-import type { PublicResult } from '../../../../../src/state/move-in-direction/move-in-direction-types';
+import type { PublicResult } from "../../../../../src/state/move-in-direction/move-in-direction-types";
 import type {
   Viewport,
   DraggableDimension,
   DroppableDimension,
   DraggableDimensionMap,
   DroppableDimensionMap,
-} from '../../../../../src/types';
-import moveCrossAxis from '../../../../../src/state/move-in-direction/move-cross-axis';
-import getViewport from '../../../../../src/view/window/get-viewport';
+} from "../../../../../src/types";
+import moveCrossAxis from "../../../../../src/state/move-in-direction/move-cross-axis";
+import getViewport from "../../../../../src/view/window/get-viewport";
 import {
   getPreset,
   getDroppableDimension,
   getDraggableDimension,
-} from '../../../../util/dimension';
-import getLiftEffect from '../../../../../src/state/get-lift-effect';
+} from "../../../../util/dimension";
+import getLiftEffect from "../../../../../src/state/get-lift-effect";
 
 const preset = getPreset();
 const viewport: Viewport = getViewport();
@@ -21,12 +21,12 @@ const viewport: Viewport = getViewport();
 // The functionality of move-cross-axis is covered by other files in this folder.
 // This spec file is directed any any logic in move-cross-axis/index.js
 
-it('should return null if there are draggables in a destination list but none are visible', () => {
+it("should return null if there are draggables in a destination list but none are visible", () => {
   const custom: DroppableDimension = getDroppableDimension({
     descriptor: {
-      id: 'custom',
-      type: 'TYPE',
-      mode: 'standard',
+      id: "custom",
+      type: "TYPE",
+      mode: "standard",
     },
     borderBox: {
       left: preset.home.client.borderBox.left + 1,
@@ -37,7 +37,7 @@ it('should return null if there are draggables in a destination list but none ar
   });
   const notVisible: DraggableDimension = getDraggableDimension({
     descriptor: {
-      id: 'not-visible',
+      id: "not-visible",
       droppableId: custom.descriptor.id,
       type: custom.descriptor.type,
       index: 0,

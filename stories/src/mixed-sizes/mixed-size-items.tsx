@@ -1,18 +1,18 @@
-import React, { ReactElement, useState } from 'react';
-import { DragDropContext } from '@react-forked/dnd';
-import type { DropResult } from '@react-forked/dnd';
-import { quotes as initial } from '../data';
-import type { Quote } from '../types';
-import QuoteList from '../primatives/quote-list';
-import reorder from '../reorder';
+import type { DropResult } from "@hello-pangea/dnd";
+import { DragDropContext } from "@hello-pangea/dnd";
+import React, { ReactElement, useState } from "react";
+import { quotes as initial } from "../data";
+import QuoteList from "../primatives/quote-list";
+import reorder from "../reorder";
+import type { Quote } from "../types";
 
 function getQuotes() {
   const large: Quote = {
     ...initial[0],
     // eslint-disable-next-line no-restricted-syntax
     content: Array.from({ length: 20 })
-      .map(() => 'some really long text')
-      .join(' '),
+      .map(() => "some really long text")
+      .join(" "),
   };
 
   const quotes: Quote[] = [large, ...initial.slice(1)];
@@ -34,7 +34,7 @@ export default function App(): ReactElement {
         type="button"
         onClick={() => setIsCombineEnabled((value) => !value)}
       >
-        Combining <strong>{isCombineEnabled ? 'enabled' : 'disabled'}</strong>
+        Combining <strong>{isCombineEnabled ? "enabled" : "disabled"}</strong>
       </button>
       <QuoteList quotes={quotes} isCombineEnabled={isCombineEnabled} />
     </DragDropContext>

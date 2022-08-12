@@ -6,8 +6,8 @@ import type {
   DisplacementGroups,
   DraggableId,
   LiftEffect,
-} from '../../../../types';
-import didStartAfterCritical from '../../../did-start-after-critical';
+} from "../../../../types";
+import didStartAfterCritical from "../../../did-start-after-critical";
 
 interface Args {
   isMovingForward: boolean;
@@ -33,7 +33,7 @@ export default ({
   const combineWithIndex: number = combineWith.descriptor.index;
   const didCombineWithStartAfterCritical: boolean = didStartAfterCritical(
     combineId,
-    afterCritical,
+    afterCritical
   );
 
   if (didCombineWithStartAfterCritical) {

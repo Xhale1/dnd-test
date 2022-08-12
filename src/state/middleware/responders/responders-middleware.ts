@@ -1,32 +1,32 @@
-import getPublisher from './publisher';
+import getPublisher from "./publisher";
 import type {
   State,
   DropResult,
   Responders,
   Critical,
   Announce,
-} from '../../../types';
-import type { Middleware } from '../../store-types';
+} from "../../../types";
+import type { Middleware } from "../../store-types";
 
 export default (
   getResponders: () => Responders,
-  announce: Announce,
+  announce: Announce
 ): Middleware => {
   const publisher = getPublisher(
     getResponders as () => Responders,
-    announce as Announce,
+    announce as Announce
   );
 
   return (store) => (next) => (action) => {
-    if (action.type === 'BEFORE_INITIAL_CAPTURE') {
+    if (action.type === "BEFORE_INITIAL_CAPTURE") {
       publisher.beforeCapture(
         action.payload.draggableId,
-        action.payload.movementMode,
+        action.payload.movementMode
       );
       return;
     }
 
-    if (action.type === 'INITIAL_PUBLISH') {
+    if (action.type === "INITIAL_PUBLISH") {
       const critical: Critical = action.payload.critical;
       publisher.beforeStart(critical, action.payload.movementMode);
       next(action);
@@ -35,7 +35,7 @@ export default (
     }
 
     // Drag end
-    if (action.type === 'DROP_COMPLETE') {
+    if (action.type === "DROP_COMPLETE") {
       // it is important that we use the result and not the last impact
       // the last impact might be different to the result for visual reasons
       const result: DropResult = action.payload.completed.result;
@@ -51,7 +51,7 @@ export default (
 
     // Drag state resetting - need to check if
     // we should fire a onDragEnd responder
-    if (action.type === 'FLUSH') {
+    if (action.type === "FLUSH") {
       publisher.abort();
       return;
     }
@@ -60,7 +60,7 @@ export default (
     // impact of action has already been reduced
 
     const state: State = store.getState();
-    if (state.phase === 'DRAGGING') {
+    if (state.phase === "DRAGGING") {
       publisher.update(state.critical, state.impact);
     }
   };

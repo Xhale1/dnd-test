@@ -1,4 +1,4 @@
-import type { ReactNode } from 'react';
+import type { ReactNode } from "react";
 import type {
   DraggableId,
   DroppableId,
@@ -9,17 +9,17 @@ import type {
   ContextId,
   DraggableRubric,
   DroppableMode,
-} from '../../types';
-import type { DraggableChildrenFn } from '../draggable/draggable-types';
-import { updateViewportMaxScroll } from '../../state/action-creators';
+} from "../../types";
+import type { DraggableChildrenFn } from "../draggable/draggable-types";
+import { updateViewportMaxScroll } from "../../state/action-creators";
 
-export type { DraggableChildrenFn } from '../draggable/draggable-types';
+export type { DraggableChildrenFn } from "../draggable/draggable-types";
 
 export interface DroppableProvidedProps {
   // used for shared global styles
-  'data-rfd-droppable-context-id': ContextId;
+  "data-rfd-droppable-context-id": ContextId;
   // Used to lookup. Currently not used for drag and drop lifecycle
-  'data-rfd-droppable-id': DroppableId;
+  "data-rfd-droppable-id": DroppableId;
 }
 
 export interface DroppableProvided {
@@ -75,7 +75,7 @@ export interface DispatchProps {
 export interface DroppableProps extends Partial<DefaultProps> {
   children: (
     provided: DroppableProvided,
-    snapshot: DroppableStateSnapshot,
+    snapshot: DroppableStateSnapshot
   ) => ReactNode;
   droppableId: DroppableId;
   renderClone?: DraggableChildrenFn | null;

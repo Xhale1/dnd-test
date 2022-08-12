@@ -1,4 +1,4 @@
-import type { Position } from 'css-box-model';
+import type { Position } from "css-box-model";
 import type {
   Id,
   DraggableId,
@@ -7,15 +7,15 @@ import type {
   DroppableDimension,
   DimensionMap,
   DraggableOptions,
-} from '../../src/types';
+} from "../../src/types";
 import type {
   DroppableCallbacks,
   Registry,
   DraggableEntry,
   DroppableEntry,
-} from '../../src/state/registry/registry-types';
-import { getPreset } from './dimension';
-import { origin } from '../../src/state/position';
+} from "../../src/state/registry/registry-types";
+import { getPreset } from "./dimension";
+import { origin } from "../../src/state/position";
 
 interface DraggableArgs {
   uniqueId?: Id;
@@ -48,7 +48,7 @@ export function getDraggableEntry({
 }
 
 export const getDroppableCallbacks = (
-  dimension: DroppableDimension,
+  dimension: DroppableDimension
 ): DroppableCallbacks => ({
   getDimensionAndWatchScroll: jest.fn().mockReturnValue(dimension),
   getScrollWhileDragging: jest.fn().mockReturnValue(origin),
@@ -88,7 +88,7 @@ const preset = getPreset();
 
 export const populate = (
   registry: Registry,
-  dimensions: DimensionMap = preset.dimensions,
+  dimensions: DimensionMap = preset.dimensions
 ): DimensionWatcher => {
   const { draggables, droppables } = dimensions;
   const watcher: DimensionWatcher = {

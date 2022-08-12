@@ -1,19 +1,19 @@
-import { useRef } from 'react';
-import type { Position } from 'css-box-model';
-import rafSchedule from 'raf-schd';
-import { useMemo, useCallback } from 'use-memo-one';
-import memoizeOne from 'memoize-one';
-import { invariant } from '../../invariant';
-import checkForNestedScrollContainers from './check-for-nested-scroll-container';
-import * as dataAttr from '../data-attributes';
-import { origin } from '../../state/position';
-import getScroll from './get-scroll';
+import { useRef } from "react";
+import type { Position } from "css-box-model";
+import rafSchedule from "raf-schd";
+import { useMemo, useCallback } from "use-memo-one";
+import memoizeOne from "memoize-one";
+import { invariant } from "../../invariant";
+import checkForNestedScrollContainers from "./check-for-nested-scroll-container";
+import * as dataAttr from "../data-attributes";
+import { origin } from "../../state/position";
+import getScroll from "./get-scroll";
 import type {
   DroppableEntry,
   DroppableCallbacks,
-} from '../../state/registry/registry-types';
-import getEnv from './get-env';
-import type { Env } from './get-env';
+} from "../../state/registry/registry-types";
+import getEnv from "./get-env";
+import type { Env } from "./get-env";
 import type {
   Id,
   DroppableId,
@@ -23,16 +23,16 @@ import type {
   Direction,
   ScrollOptions,
   DroppableMode,
-} from '../../types';
-import getDimension from './get-dimension';
-import AppContext from '../context/app-context';
-import type { AppContextValue } from '../context/app-context';
-import { warning } from '../../dev-warning';
-import getListenerOptions from './get-listener-options';
-import useRequiredContext from '../use-required-context';
-import usePreviousRef from '../use-previous-ref';
-import useLayoutEffect from '../use-isomorphic-layout-effect';
-import useUniqueId from '../use-unique-id';
+} from "../../types";
+import getDimension from "./get-dimension";
+import AppContext from "../context/app-context";
+import type { AppContextValue } from "../context/app-context";
+import { warning } from "../../dev-warning";
+import getListenerOptions from "./get-listener-options";
+import useRequiredContext from "../use-required-context";
+import usePreviousRef from "../use-previous-ref";
+import useLayoutEffect from "../use-isomorphic-layout-effect";
+import useUniqueId from "../use-unique-id";
 
 interface Props {
   droppableId: DroppableId;
@@ -53,13 +53,13 @@ interface WhileDragging {
 }
 
 const getClosestScrollableFromDrag = (
-  dragging?: WhileDragging | null,
+  dragging?: WhileDragging | null
 ): HTMLElement | null => (dragging && dragging.env.closestScrollable) || null;
 
 export default function useDroppablePublisher(args: Props) {
   const whileDraggingRef = useRef<WhileDragging | null>(null);
   const appContext: AppContextValue = useRequiredContext(AppContext);
-  const uniqueId: Id = useUniqueId('droppable');
+  const uniqueId: Id = useUniqueId("droppable");
   const { registry, marshal } = appContext;
   const previousRef = usePreviousRef(args);
 
@@ -69,7 +69,7 @@ export default function useDroppablePublisher(args: Props) {
       type: args.type,
       mode: args.mode,
     }),
-    [args.droppableId, args.mode, args.type],
+    [args.droppableId, args.mode, args.type]
   );
   const publishedDescriptorRef = useRef<DroppableDescriptor>(descriptor);
 
@@ -78,12 +78,12 @@ export default function useDroppablePublisher(args: Props) {
       memoizeOne((x: number, y: number) => {
         invariant(
           whileDraggingRef.current,
-          'Can only update scroll when dragging',
+          "Can only update scroll when dragging"
         );
         const scroll: Position = { x, y };
         marshal.updateDroppableScroll(descriptor.id, scroll);
       }),
-    [descriptor.id, marshal],
+    [descriptor.id, marshal]
   );
 
   const getClosestScroll = useCallback((): Position => {
@@ -103,7 +103,7 @@ export default function useDroppablePublisher(args: Props) {
 
   const scheduleScrollUpdate = useMemo(
     () => rafSchedule(updateScroll),
-    [updateScroll],
+    [updateScroll]
   );
 
   const onClosestScroll = useCallback(() => {
@@ -112,7 +112,7 @@ export default function useDroppablePublisher(args: Props) {
 
     invariant(
       dragging && closest,
-      'Could not find scroll options while scrolling',
+      "Could not find scroll options while scrolling"
     );
     const options: ScrollOptions = dragging.scrollOptions;
     if (options.shouldPublishImmediately) {
@@ -126,11 +126,11 @@ export default function useDroppablePublisher(args: Props) {
     (windowScroll: Position, options: ScrollOptions) => {
       invariant(
         !whileDraggingRef.current,
-        'Cannot collect a droppable while a drag is occurring',
+        "Cannot collect a droppable while a drag is occurring"
       );
       const previous: Props = previousRef.current;
       const ref: HTMLElement | null = previous.getDroppableRef();
-      invariant(ref, 'Cannot collect without a droppable ref');
+      invariant(ref, "Cannot collect without a droppable ref");
       const env: Env = getEnv(ref);
 
       const dragging: WhileDragging = {
@@ -158,24 +158,24 @@ export default function useDroppablePublisher(args: Props) {
       if (scrollable) {
         scrollable.setAttribute(
           dataAttr.scrollContainer.contextId,
-          appContext.contextId,
+          appContext.contextId
         );
 
         // bind scroll listener
         scrollable.addEventListener(
-          'scroll',
+          "scroll",
           onClosestScroll,
-          getListenerOptions(dragging.scrollOptions),
+          getListenerOptions(dragging.scrollOptions)
         );
         // print a debug warning if using an unsupported nested scroll container setup
-        if (process.env.NODE_ENV !== 'production') {
+        if (process.env.NODE_ENV !== "production") {
           checkForNestedScrollContainers(scrollable);
         }
       }
 
       return dimension;
     },
-    [appContext.contextId, descriptor, onClosestScroll, previousRef],
+    [appContext.contextId, descriptor, onClosestScroll, previousRef]
   );
 
   const getScrollWhileDragging = useCallback((): Position => {
@@ -183,7 +183,7 @@ export default function useDroppablePublisher(args: Props) {
     const closest: Element | null = getClosestScrollableFromDrag(dragging);
     invariant(
       dragging && closest,
-      'Can only recollect Droppable client for Droppables that have a scroll container',
+      "Can only recollect Droppable client for Droppables that have a scroll container"
     );
 
     return getScroll(closest);
@@ -191,7 +191,7 @@ export default function useDroppablePublisher(args: Props) {
 
   const dragStopped = useCallback(() => {
     const dragging: WhileDragging | null = whileDraggingRef.current;
-    invariant(dragging, 'Cannot stop drag when no active drag');
+    invariant(dragging, "Cannot stop drag when no active drag");
     const closest = getClosestScrollableFromDrag(dragging);
 
     // goodbye old friend
@@ -205,20 +205,20 @@ export default function useDroppablePublisher(args: Props) {
     scheduleScrollUpdate.cancel();
     closest.removeAttribute(dataAttr.scrollContainer.contextId);
     closest.removeEventListener(
-      'scroll',
+      "scroll",
       onClosestScroll,
       // See: https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/removeEventListener
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      getListenerOptions(dragging.scrollOptions) as any,
+      getListenerOptions(dragging.scrollOptions) as any
     );
   }, [onClosestScroll, scheduleScrollUpdate]);
 
   const scroll = useCallback((change: Position) => {
     // arrange
     const dragging: WhileDragging | null = whileDraggingRef.current;
-    invariant(dragging, 'Cannot scroll when there is no drag');
+    invariant(dragging, "Cannot scroll when there is no drag");
     const closest: Element | null = getClosestScrollableFromDrag(dragging);
-    invariant(closest, 'Cannot scroll a droppable with no closest scrollable');
+    invariant(closest, "Cannot scroll a droppable with no closest scrollable");
 
     // act
     closest.scrollTop += change.y;
@@ -240,7 +240,7 @@ export default function useDroppablePublisher(args: Props) {
       descriptor,
       callbacks,
     }),
-    [callbacks, descriptor, uniqueId],
+    [callbacks, descriptor, uniqueId]
   );
 
   // Register with the marshal and let it know of:
@@ -253,7 +253,7 @@ export default function useDroppablePublisher(args: Props) {
     return () => {
       if (whileDraggingRef.current) {
         warning(
-          'Unsupported: changing the droppableId or type of a Droppable during a drag',
+          "Unsupported: changing the droppableId or type of a Droppable during a drag"
         );
         dragStopped();
       }
@@ -270,7 +270,7 @@ export default function useDroppablePublisher(args: Props) {
     }
     marshal.updateDroppableIsEnabled(
       publishedDescriptorRef.current.id,
-      !args.isDropDisabled,
+      !args.isDropDisabled
     );
   }, [args.isDropDisabled, marshal]);
 
@@ -282,7 +282,7 @@ export default function useDroppablePublisher(args: Props) {
     }
     marshal.updateDroppableIsCombineEnabled(
       publishedDescriptorRef.current.id,
-      args.isCombineEnabled,
+      args.isCombineEnabled
     );
   }, [args.isCombineEnabled, marshal]);
 }

@@ -1,5 +1,5 @@
-import { useMemo } from 'use-memo-one';
-import type { Id } from '../types';
+import { useMemo } from "use-memo-one";
+import type { Id } from "../types";
 
 let count = 0;
 
@@ -7,7 +7,7 @@ interface Options {
   separator: string;
 }
 
-const defaults: Options = { separator: '::' };
+const defaults: Options = { separator: "::" };
 
 export function reset() {
   count = 0;
@@ -15,10 +15,10 @@ export function reset() {
 
 export default function useUniqueId(
   prefix: string,
-  options: Options = defaults,
+  options: Options = defaults
 ): Id {
   return useMemo(
     () => `${prefix}${options.separator}${count++}`,
-    [options.separator, prefix],
+    [options.separator, prefix]
   );
 }

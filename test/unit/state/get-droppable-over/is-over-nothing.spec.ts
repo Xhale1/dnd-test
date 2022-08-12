@@ -1,11 +1,11 @@
-import type { DroppableId } from '../../../../src/types';
-import getDroppableOver from '../../../../src/state/get-droppable-over';
-import { getPreset } from '../../../util/dimension';
-import { offsetRectByPosition } from '../../../../src/state/rect';
+import type { DroppableId } from "../../../../src/types";
+import getDroppableOver from "../../../../src/state/get-droppable-over";
+import { getPreset } from "../../../util/dimension";
+import { offsetRectByPosition } from "../../../../src/state/rect";
 
 const preset = getPreset();
 
-it('should return null when over nothing', () => {
+it("should return null when over nothing", () => {
   const result: DroppableId | null = getDroppableOver({
     pageBorderBox: offsetRectByPosition(preset.inHome1.page.borderBox, {
       x: 10000,

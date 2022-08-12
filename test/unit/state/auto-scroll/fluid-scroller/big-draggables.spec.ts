@@ -1,52 +1,52 @@
-import type { Position, Spacing } from 'css-box-model';
-import forEach from './util/for-each';
-import type { BlockFnArgs } from './util/for-each';
+import type { Position, Spacing } from "css-box-model";
+import forEach from "./util/for-each";
+import type { BlockFnArgs } from "./util/for-each";
 import type {
   DraggableDimension,
   DraggingState,
-} from '../../../../../src/types';
-import { scrollableViewport, unscrollableViewport } from './util/viewport';
-import getDroppable from './util/get-droppable';
-import dragTo from './util/drag-to';
-import getScroller from '../../../../../src/state/auto-scroller/fluid-scroller';
+} from "../../../../../src/types";
+import { scrollableViewport, unscrollableViewport } from "./util/viewport";
+import getDroppable from "./util/get-droppable";
+import dragTo from "./util/drag-to";
+import getScroller from "../../../../../src/state/auto-scroller/fluid-scroller";
 import type {
   PublicArgs,
   FluidScroller,
-} from '../../../../../src/state/auto-scroller/fluid-scroller';
-import getDistanceThresholds from '../../../../../src/state/auto-scroller/fluid-scroller/get-scroll/get-scroll-on-axis/get-distance-thresholds';
-import type { DistanceThresholds } from '../../../../../src/state/auto-scroller/fluid-scroller/get-scroll/get-scroll-on-axis/get-distance-thresholds';
-import { patch } from '../../../../../src/state/position';
-import getArgsMock from './util/get-args-mock';
-import { vertical, horizontal } from '../../../../../src/state/axis';
-import { expandByPosition } from '../../../../../src/state/spacing';
+} from "../../../../../src/state/auto-scroller/fluid-scroller";
+import getDistanceThresholds from "../../../../../src/state/auto-scroller/fluid-scroller/get-scroll/get-scroll-on-axis/get-distance-thresholds";
+import type { DistanceThresholds } from "../../../../../src/state/auto-scroller/fluid-scroller/get-scroll/get-scroll-on-axis/get-distance-thresholds";
+import { patch } from "../../../../../src/state/position";
+import getArgsMock from "./util/get-args-mock";
+import { vertical, horizontal } from "../../../../../src/state/axis";
+import { expandByPosition } from "../../../../../src/state/spacing";
 import {
   getDraggableDimension,
   addDraggable,
-} from '../../../../util/dimension';
+} from "../../../../util/dimension";
 
 forEach(({ axis, state, preset }: BlockFnArgs) => {
-  describe('window', () => {
+  describe("window", () => {
     const thresholds: DistanceThresholds = getDistanceThresholds(
       scrollableViewport.frame,
-      axis,
+      axis
     );
     const crossAxisThresholds: DistanceThresholds = getDistanceThresholds(
       scrollableViewport.frame,
-      axis === vertical ? horizontal : vertical,
+      axis === vertical ? horizontal : vertical
     );
     const onMaxBoundaryOfBoth: Position = patch(
       axis.line,
       scrollableViewport.frame[axis.size] - thresholds.maxScrollValueAt,
       scrollableViewport.frame[axis.crossAxisSize] -
-        crossAxisThresholds.maxScrollValueAt,
+        crossAxisThresholds.maxScrollValueAt
     );
 
-    it('should allow scrolling on the cross axis if too big on the main axis', () => {
+    it("should allow scrolling on the cross axis if too big on the main axis", () => {
       const mocks: PublicArgs = getArgsMock();
       const scroller: FluidScroller = getScroller(mocks);
       const biggerOnMainAxis: Spacing = expandByPosition(
         scrollableViewport.frame,
-        patch(axis.line, 1),
+        patch(axis.line, 1)
       );
       const tooBigOnMainAxis: DraggableDimension = getDraggableDimension({
         descriptor: preset.inHome1.descriptor,
@@ -58,23 +58,23 @@ forEach(({ axis, state, preset }: BlockFnArgs) => {
           selection: onMaxBoundaryOfBoth,
           state,
         }),
-        tooBigOnMainAxis,
+        tooBigOnMainAxis
       );
 
       scroller.start(first);
       requestAnimationFrame.step();
 
       expect(mocks.scrollWindow).toHaveBeenCalledWith(
-        patch(axis.crossAxisLine, expect.any(Number)),
+        patch(axis.crossAxisLine, expect.any(Number))
       );
     });
 
-    it('should allow scrolling on the main axis if too big on the cross axis', () => {
+    it("should allow scrolling on the main axis if too big on the cross axis", () => {
       const mocks: PublicArgs = getArgsMock();
       const scroller: FluidScroller = getScroller(mocks);
       const biggerOnCrossAxis: Spacing = expandByPosition(
         scrollableViewport.frame,
-        patch(axis.crossAxisLine, 1),
+        patch(axis.crossAxisLine, 1)
       );
       const tooBigOnCrossAxis: DraggableDimension = getDraggableDimension({
         descriptor: preset.inHome1.descriptor,
@@ -86,23 +86,23 @@ forEach(({ axis, state, preset }: BlockFnArgs) => {
           selection: onMaxBoundaryOfBoth,
           state,
         }),
-        tooBigOnCrossAxis,
+        tooBigOnCrossAxis
       );
 
       scroller.start(first);
       requestAnimationFrame.step();
 
       expect(mocks.scrollWindow).toHaveBeenCalledWith(
-        patch(axis.line, expect.any(Number)),
+        patch(axis.line, expect.any(Number))
       );
     });
 
-    it('should not allow scrolling on any axis if too big on both axis', () => {
+    it("should not allow scrolling on any axis if too big on both axis", () => {
       const mocks: PublicArgs = getArgsMock();
       const scroller: FluidScroller = getScroller(mocks);
       const biggerOnBothAxis: Spacing = expandByPosition(
         scrollableViewport.frame,
-        patch(axis.line, 1, 1),
+        patch(axis.line, 1, 1)
       );
       const tooBig: DraggableDimension = getDraggableDimension({
         descriptor: preset.inHome1.descriptor,
@@ -114,7 +114,7 @@ forEach(({ axis, state, preset }: BlockFnArgs) => {
           selection: onMaxBoundaryOfBoth,
           state,
         }),
-        tooBig,
+        tooBig
       );
 
       scroller.start(first);
@@ -124,29 +124,29 @@ forEach(({ axis, state, preset }: BlockFnArgs) => {
     });
   });
 
-  describe('droppable', () => {
+  describe("droppable", () => {
     const { scrollable, frameClient } = getDroppable(preset);
     const thresholds: DistanceThresholds = getDistanceThresholds(
       frameClient.borderBox,
-      axis,
+      axis
     );
     const crossAxisThresholds: DistanceThresholds = getDistanceThresholds(
       frameClient.borderBox,
-      axis === vertical ? horizontal : vertical,
+      axis === vertical ? horizontal : vertical
     );
     const onMaxBoundaryOfBoth: Position = patch(
       axis.line,
       frameClient.borderBox[axis.size] - thresholds.maxScrollValueAt,
       frameClient.borderBox[axis.crossAxisSize] -
-        crossAxisThresholds.maxScrollValueAt,
+        crossAxisThresholds.maxScrollValueAt
     );
 
-    it('should allow scrolling on the cross axis if too big on the main axis', () => {
+    it("should allow scrolling on the cross axis if too big on the main axis", () => {
       const mocks: PublicArgs = getArgsMock();
       const scroller: FluidScroller = getScroller(mocks);
       const biggerOnMainAxis: Spacing = expandByPosition(
         frameClient.borderBox,
-        patch(axis.line, 1),
+        patch(axis.line, 1)
       );
       const tooBigOnMainAxis: DraggableDimension = getDraggableDimension({
         descriptor: preset.inHome1.descriptor,
@@ -159,7 +159,7 @@ forEach(({ axis, state, preset }: BlockFnArgs) => {
           state,
           droppable: scrollable,
         }),
-        tooBigOnMainAxis,
+        tooBigOnMainAxis
       );
 
       scroller.start(first);
@@ -167,16 +167,16 @@ forEach(({ axis, state, preset }: BlockFnArgs) => {
 
       expect(mocks.scrollDroppable).toHaveBeenCalledWith(
         scrollable.descriptor.id,
-        patch(axis.crossAxisLine, expect.any(Number)),
+        patch(axis.crossAxisLine, expect.any(Number))
       );
     });
 
-    it('should allow scrolling on the main axis if too big on the cross axis', () => {
+    it("should allow scrolling on the main axis if too big on the cross axis", () => {
       const mocks: PublicArgs = getArgsMock();
       const scroller: FluidScroller = getScroller(mocks);
       const biggerOnCrossAxis: Spacing = expandByPosition(
         frameClient.borderBox,
-        patch(axis.crossAxisLine, 1),
+        patch(axis.crossAxisLine, 1)
       );
       const tooBigOnCrossAxis: DraggableDimension = getDraggableDimension({
         descriptor: preset.inHome1.descriptor,
@@ -189,7 +189,7 @@ forEach(({ axis, state, preset }: BlockFnArgs) => {
           droppable: scrollable,
           state,
         }),
-        tooBigOnCrossAxis,
+        tooBigOnCrossAxis
       );
 
       scroller.start(first);
@@ -197,16 +197,16 @@ forEach(({ axis, state, preset }: BlockFnArgs) => {
 
       expect(mocks.scrollDroppable).toHaveBeenCalledWith(
         scrollable.descriptor.id,
-        patch(axis.line, expect.any(Number)),
+        patch(axis.line, expect.any(Number))
       );
     });
 
-    it('should not allow scrolling on any axis if too big on both axis', () => {
+    it("should not allow scrolling on any axis if too big on both axis", () => {
       const mocks: PublicArgs = getArgsMock();
       const scroller: FluidScroller = getScroller(mocks);
       const biggerOnBothAxis: Spacing = expandByPosition(
         frameClient.borderBox,
-        patch(axis.line, 1, 1),
+        patch(axis.line, 1, 1)
       );
       const tooBig: DraggableDimension = getDraggableDimension({
         descriptor: preset.inHome1.descriptor,
@@ -219,7 +219,7 @@ forEach(({ axis, state, preset }: BlockFnArgs) => {
           droppable: scrollable,
           state,
         }),
-        tooBig,
+        tooBig
       );
 
       scroller.start(first);

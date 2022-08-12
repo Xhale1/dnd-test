@@ -1,10 +1,10 @@
-import type { Position } from 'css-box-model';
-import { getPreset } from './dimension';
-import { vertical } from '../../src/state/axis';
-import getViewport from '../../src/view/window/get-viewport';
-import { add } from '../../src/state/position';
-import getLiftEffect from '../../src/state/get-lift-effect';
-import getHomeLocation from '../../src/state/get-home-location';
+import type { Position } from "css-box-model";
+import { getPreset } from "./dimension";
+import { vertical } from "../../src/state/axis";
+import getViewport from "../../src/view/window/get-viewport";
+import { add } from "../../src/state/position";
+import getLiftEffect from "../../src/state/get-lift-effect";
+import getHomeLocation from "../../src/state/get-home-location";
 import type {
   Axis,
   State,
@@ -24,7 +24,7 @@ import type {
   DragPositions,
   DraggingState,
   DropPendingState,
-} from '../../src/types';
+} from "../../src/types";
 
 export default (axis: Axis = vertical) => {
   const preset = getPreset(axis);
@@ -34,7 +34,7 @@ export default (axis: Axis = vertical) => {
   };
 
   const idle: IdleState = {
-    phase: 'IDLE',
+    phase: "IDLE",
     completed: null,
     shouldFlush: false,
   };
@@ -45,7 +45,7 @@ export default (axis: Axis = vertical) => {
     // eslint-disable-next-line default-param-last
     id: DraggableId = critical.draggable.id,
     selection?: Position,
-    viewport: Viewport = preset.viewport,
+    viewport: Viewport = preset.viewport
   ): DraggingState => {
     // will populate the dimension state with the initial dimensions
     const draggable: DraggableDimension = preset.draggables[id];
@@ -83,10 +83,10 @@ export default (axis: Axis = vertical) => {
     });
 
     const result: DraggingState = {
-      phase: 'DRAGGING',
+      phase: "DRAGGING",
       critical: ourCritical,
       isDragging: true,
-      movementMode: 'FLUID',
+      movementMode: "FLUID",
       dimensions: preset.dimensions,
       initial,
       current: initial,
@@ -105,10 +105,10 @@ export default (axis: Axis = vertical) => {
   const collecting = (
     id?: DraggableId,
     selection?: Position,
-    viewport?: Viewport,
+    viewport?: Viewport
   ): CollectingState => ({
     ...dragging(id, selection, viewport),
-    phase: 'COLLECTING',
+    phase: "COLLECTING",
   });
 
   interface DropPendingArgs {
@@ -117,34 +117,34 @@ export default (axis: Axis = vertical) => {
   }
 
   const defaultDropPending: DropPendingArgs = {
-    reason: 'DROP',
+    reason: "DROP",
     isWaiting: true,
   };
 
   const dropPending = (
-    args: DropPendingArgs = defaultDropPending,
+    args: DropPendingArgs = defaultDropPending
   ): DropPendingState => ({
     ...dragging(),
-    phase: 'DROP_PENDING',
+    phase: "DROP_PENDING",
     ...args,
   });
 
   const scrollJumpRequest = (
     request: Position,
-    viewport: Viewport = getViewport(),
+    viewport: Viewport = getViewport()
   ): DraggingState => {
     const state: DraggingState = dragging(undefined, undefined, viewport);
 
     return {
       ...state,
-      movementMode: 'SNAP',
+      movementMode: "SNAP",
       scrollJumpRequest: request,
     };
   };
 
   const getDropAnimating = (
     id: DraggableId,
-    reason: DropReason,
+    reason: DropReason
   ): DropAnimatingState => {
     const draggable: DraggableDimension = preset.draggables[id];
     const home: DroppableDimension =
@@ -166,10 +166,10 @@ export default (axis: Axis = vertical) => {
       },
       // no destination when cancelling for result
       destination:
-        reason === 'DROP' ? getHomeLocation(draggable.descriptor) : null,
+        reason === "DROP" ? getHomeLocation(draggable.descriptor) : null,
       reason,
       combine: null,
-      mode: 'FLUID',
+      mode: "FLUID",
     };
 
     const ourCritical: Critical = {
@@ -185,7 +185,7 @@ export default (axis: Axis = vertical) => {
     };
 
     const state: DropAnimatingState = {
-      phase: 'DROP_ANIMATING',
+      phase: "DROP_ANIMATING",
       completed,
       dimensions: preset.dimensions,
       newHomeClientOffset: { x: 10, y: 20 },
@@ -195,15 +195,15 @@ export default (axis: Axis = vertical) => {
   };
 
   const dropAnimating = (
-    id: DraggableId = preset.inHome1.descriptor.id,
-  ): DropAnimatingState => getDropAnimating(id, 'DROP');
+    id: DraggableId = preset.inHome1.descriptor.id
+  ): DropAnimatingState => getDropAnimating(id, "DROP");
 
   const userCancel = (
-    id: DraggableId = preset.inHome1.descriptor.id,
-  ): DropAnimatingState => getDropAnimating(id, 'CANCEL');
+    id: DraggableId = preset.inHome1.descriptor.id
+  ): DropAnimatingState => getDropAnimating(id, "CANCEL");
 
   const allPhases = (
-    id: DraggableId = preset.inHome1.descriptor.id,
+    id: DraggableId = preset.inHome1.descriptor.id
   ): State[] => [idle, dragging(id), dropAnimating(id), userCancel(id)];
 
   return {

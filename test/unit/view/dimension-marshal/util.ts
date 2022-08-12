@@ -1,9 +1,9 @@
-import { getPreset } from '../../../util/dimension';
+import { getPreset } from "../../../util/dimension";
 import type {
   DimensionMap,
   LiftRequest,
   Critical,
-} from '../../../../src/types';
+} from "../../../../src/types";
 
 const preset = getPreset();
 

@@ -1,6 +1,6 @@
 export function getRuntimeError(): Event {
-  return new window.ErrorEvent('error', {
-    error: new Error('non-rfd'),
+  return new window.ErrorEvent("error", {
+    error: new Error("non-rfd"),
     cancelable: true,
   });
 }

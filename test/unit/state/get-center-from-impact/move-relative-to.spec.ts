@@ -1,13 +1,13 @@
-import { createBox } from 'css-box-model';
-import type { BoxModel, Spacing, Position } from 'css-box-model';
-import type { Axis } from '../../../../src/types';
+import { createBox } from "css-box-model";
+import type { BoxModel, Spacing, Position } from "css-box-model";
+import type { Axis } from "../../../../src/types";
 import {
   goBefore,
   goAfter,
   goIntoStart,
-} from '../../../../src/state/get-center-from-impact/move-relative-to';
-import { vertical, horizontal } from '../../../../src/state/axis';
-import { patch } from '../../../../src/state/position';
+} from "../../../../src/state/get-center-from-impact/move-relative-to";
+import { vertical, horizontal } from "../../../../src/state/axis";
+import { patch } from "../../../../src/state/position";
 
 let spacing = 1;
 
@@ -50,7 +50,7 @@ const distanceFromEndToCenter = (axis: Axis, box: BoxModel): number =>
 
 [vertical, horizontal].forEach((axis: Axis) => {
   describe(`on ${axis.direction} axis`, () => {
-    it('should align before the target', () => {
+    it("should align before the target", () => {
       const newCenter: Position = goBefore({
         axis,
         moveRelativeTo,
@@ -66,13 +66,13 @@ const distanceFromEndToCenter = (axis: Axis, box: BoxModel): number =>
         // start at the cross axis start of the item we are moving relative to
         moveRelativeTo.marginBox[axis.crossAxisStart] +
           isMoving.margin[axis.crossAxisStart] +
-          isMoving.borderBox[axis.crossAxisSize] / 2,
+          isMoving.borderBox[axis.crossAxisSize] / 2
       );
 
       expect(newCenter).toEqual(expected);
     });
 
-    it('should align after the target', () => {
+    it("should align after the target", () => {
       const newCenter: Position = goAfter({
         axis,
         moveRelativeTo,
@@ -88,13 +88,13 @@ const distanceFromEndToCenter = (axis: Axis, box: BoxModel): number =>
         // start at the cross axis start of the item we are moving relative to
         moveRelativeTo.marginBox[axis.crossAxisStart] +
           isMoving.margin[axis.crossAxisStart] +
-          isMoving.borderBox[axis.crossAxisSize] / 2,
+          isMoving.borderBox[axis.crossAxisSize] / 2
       );
 
       expect(newCenter).toEqual(expected);
     });
 
-    it('should move into the start of the context box of the target', () => {
+    it("should move into the start of the context box of the target", () => {
       const newCenter: Position = goIntoStart({
         axis,
         moveInto: moveRelativeTo,
@@ -110,7 +110,7 @@ const distanceFromEndToCenter = (axis: Axis, box: BoxModel): number =>
         // start at the cross axis start of the item we are moving relative to
         moveRelativeTo.contentBox[axis.crossAxisStart] +
           isMoving.margin[axis.crossAxisStart] +
-          isMoving.borderBox[axis.crossAxisSize] / 2,
+          isMoving.borderBox[axis.crossAxisSize] / 2
       );
 
       expect(newCenter).toEqual(expected);

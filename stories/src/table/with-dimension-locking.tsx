@@ -1,19 +1,19 @@
 /* eslint-disable react/sort-comp */
-import type { Property } from 'csstype';
-import React, { Component, Fragment, ReactElement } from 'react';
-import type { ReactNode } from 'react';
-import styled from '@emotion/styled';
-import { colors } from '@atlaskit/theme';
-import { DragDropContext, Droppable, Draggable } from '@react-forked/dnd';
+import { colors } from "@atlaskit/theme";
+import styled from "@emotion/styled";
 import type {
-  DropResult,
-  DroppableProvided,
   DraggableProvided,
   DraggableStateSnapshot,
-} from '@react-forked/dnd';
-import reorder from '../reorder';
-import { grid } from '../constants';
-import type { Quote } from '../types';
+  DroppableProvided,
+  DropResult,
+} from "@hello-pangea/dnd";
+import { DragDropContext, Draggable, Droppable } from "@hello-pangea/dnd";
+import type { Property } from "csstype";
+import type { ReactNode } from "react";
+import React, { Component, Fragment, ReactElement } from "react";
+import { grid } from "../constants";
+import reorder from "../reorder";
+import type { Quote } from "../types";
 
 const Table = styled.table<{ layout: Property.TableLayout }>`
   width: 500px;
@@ -32,7 +32,7 @@ const THead = styled.thead`
 `;
 
 const Row = styled.tr<{ isDragging?: boolean }>`
-  ${(props) => (props.isDragging ? `background: ${colors.G100};` : '')};
+  ${(props) => (props.isDragging ? `background: ${colors.G100};` : "")};
 `;
 
 const Cell = styled.td`
@@ -54,7 +54,7 @@ class TableCell extends React.Component<TableCellProps> {
   ref: HTMLElement | undefined | null;
 
   getSnapshotBeforeUpdate(
-    prevProps: TableCellProps,
+    prevProps: TableCellProps
   ): TableCellSnapshot | undefined | null {
     if (!this.ref) {
       return null;
@@ -80,7 +80,7 @@ class TableCell extends React.Component<TableCellProps> {
   componentDidUpdate(
     prevProps: TableCellProps,
     prevState: unknown,
-    snapshot?: TableCellSnapshot | null,
+    snapshot?: TableCellSnapshot | null
   ) {
     const ref: HTMLElement | undefined | null = this.ref;
     if (!ref) {
@@ -103,8 +103,8 @@ class TableCell extends React.Component<TableCellProps> {
     }
 
     // no snapshot and drag is finished - clear the inline styles
-    ref.style.removeProperty('height');
-    ref.style.removeProperty('width');
+    ref.style.removeProperty("height");
+    ref.style.removeProperty("width");
   }
 
   setRef = (ref?: HTMLElement | null) => {
@@ -169,7 +169,7 @@ interface AppProps {
 
 interface AppState {
   quotes: Quote[];
-  layout: 'fixed' | 'auto';
+  layout: "fixed" | "auto";
   isDragging: boolean;
 }
 
@@ -178,7 +178,7 @@ export default class TableApp extends Component<AppProps, AppState> {
 
   state: AppState = {
     quotes: this.props.initial,
-    layout: 'auto',
+    layout: "auto",
     isDragging: false,
   };
 
@@ -206,7 +206,7 @@ export default class TableApp extends Component<AppProps, AppState> {
     const quotes = reorder(
       this.state.quotes,
       result.source.index,
-      result.destination.index,
+      result.destination.index
     );
 
     this.setState({
@@ -216,7 +216,7 @@ export default class TableApp extends Component<AppProps, AppState> {
 
   toggleTableLayout = (): void => {
     this.setState({
-      layout: this.state.layout === 'auto' ? 'fixed' : 'auto',
+      layout: this.state.layout === "auto" ? "fixed" : "auto",
     });
   };
 
@@ -232,7 +232,7 @@ export default class TableApp extends Component<AppProps, AppState> {
 
     const wasCopied: boolean = (() => {
       try {
-        const result: boolean = document.execCommand('copy');
+        const result: boolean = document.execCommand("copy");
         return result;
       } catch (e) {
         return false;
@@ -240,7 +240,7 @@ export default class TableApp extends Component<AppProps, AppState> {
     })();
 
     // eslint-disable-next-line no-console
-    console.log('was copied?', wasCopied);
+    console.log("was copied?", wasCopied);
 
     // clear selection
     window?.getSelection()?.removeAllRanges();
@@ -292,7 +292,7 @@ export default class TableApp extends Component<AppProps, AppState> {
                       >
                         {(
                           provided: DraggableProvided,
-                          snapshot: DraggableStateSnapshot,
+                          snapshot: DraggableStateSnapshot
                         ) => (
                           <TableRow
                             provided={provided}

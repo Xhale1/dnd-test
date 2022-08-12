@@ -1,19 +1,19 @@
-import React from 'react';
-import { render } from '@testing-library/react';
-import { forEachSensor, simpleLift } from '../../util/controls';
-import type { Control } from '../../util/controls';
-import { isDragging } from '../../util/helpers';
+import React from "react";
+import { render } from "@testing-library/react";
+import { forEachSensor, simpleLift } from "../../util/controls";
+import type { Control } from "../../util/controls";
+import { isDragging } from "../../util/helpers";
 import type {
   DraggableProvided,
   DraggableStateSnapshot,
-} from '../../../../../src';
-import App from '../../util/app';
-import type { Item } from '../../util/app';
+} from "../../../../../src";
+import App from "../../util/app";
+import type { Item } from "../../util/app";
 import {
   interactiveTagNames,
   InteractiveTagName,
-} from '../../../../../src/view/use-sensor-marshal/is-event-in-interactive-element';
-import { disableError } from '../../../../util/console';
+} from "../../../../../src/view/use-sensor-marshal/is-event-in-interactive-element";
+import { disableError } from "../../../../util/console";
 
 const mixedCase = [
   ...interactiveTagNames,
@@ -28,7 +28,7 @@ forEachSensor((control: Control) => {
   // react will log a warning if using upper case
   disableError();
 
-  it('should not drag if the handle is an interactive element', () => {
+  it("should not drag if the handle is an interactive element", () => {
     mixedCase.forEach((tagName) => {
       const renderItem =
         (item: Item) =>
@@ -46,7 +46,7 @@ forEachSensor((control: Control) => {
         };
 
       const { unmount, getByTestId } = render(<App renderItem={renderItem} />);
-      const handle: HTMLElement = getByTestId('0');
+      const handle: HTMLElement = getByTestId("0");
 
       simpleLift(control, handle);
 
@@ -56,9 +56,9 @@ forEachSensor((control: Control) => {
     });
   });
 
-  it('should allow dragging from an interactive handle if instructed', () => {
+  it("should allow dragging from an interactive handle if instructed", () => {
     mixedCase.forEach((tagName) => {
-      const items: Item[] = [{ id: '0', canDragInteractiveElements: true }];
+      const items: Item[] = [{ id: "0", canDragInteractiveElements: true }];
       const renderItem =
         (item: Item) =>
         (provided: DraggableProvided, snapshot: DraggableStateSnapshot) => {
@@ -75,9 +75,9 @@ forEachSensor((control: Control) => {
         };
 
       const { unmount, getByTestId } = render(
-        <App items={items} renderItem={renderItem} />,
+        <App items={items} renderItem={renderItem} />
       );
-      const handle: HTMLElement = getByTestId('0');
+      const handle: HTMLElement = getByTestId("0");
 
       simpleLift(control, handle);
 
@@ -87,7 +87,7 @@ forEachSensor((control: Control) => {
     });
   });
 
-  it('should not start a drag if the parent is interactive', () => {
+  it("should not start a drag if the parent is interactive", () => {
     mixedCase.forEach((tagName) => {
       const renderItem =
         (item: Item) =>
@@ -107,8 +107,8 @@ forEachSensor((control: Control) => {
         };
 
       const { unmount, getByTestId } = render(<App renderItem={renderItem} />);
-      const inner: HTMLElement = getByTestId('inner-0');
-      const handle: HTMLElement = getByTestId('handle-0');
+      const inner: HTMLElement = getByTestId("inner-0");
+      const handle: HTMLElement = getByTestId("handle-0");
 
       simpleLift(control, inner);
 
@@ -118,9 +118,9 @@ forEachSensor((control: Control) => {
     });
   });
 
-  it('should allow dragging from with an interactive parent if instructed', () => {
+  it("should allow dragging from with an interactive parent if instructed", () => {
     mixedCase.forEach((tagName) => {
-      const items: Item[] = [{ id: '0', canDragInteractiveElements: true }];
+      const items: Item[] = [{ id: "0", canDragInteractiveElements: true }];
       const renderItem =
         (item: Item) =>
         (provided: DraggableProvided, snapshot: DraggableStateSnapshot) => {
@@ -139,10 +139,10 @@ forEachSensor((control: Control) => {
         };
 
       const { unmount, getByTestId } = render(
-        <App items={items} renderItem={renderItem} />,
+        <App items={items} renderItem={renderItem} />
       );
-      const handle: HTMLElement = getByTestId('handle-0');
-      const inner: HTMLElement = getByTestId('inner-0');
+      const handle: HTMLElement = getByTestId("handle-0");
+      const inner: HTMLElement = getByTestId("inner-0");
 
       simpleLift(control, inner);
 

@@ -1,19 +1,19 @@
-import type { Position } from 'css-box-model';
+import type { Position } from "css-box-model";
 import type {
   Axis,
   DragImpact,
   DroppableDimensionMap,
-} from '../../../../../src/types';
-import { horizontal, vertical } from '../../../../../src/state/axis';
-import getDisplacedBy from '../../../../../src/state/get-displaced-by';
-import getDragImpact from '../../../../../src/state/get-drag-impact';
-import getLiftEffect from '../../../../../src/state/get-lift-effect';
-import { patch, add } from '../../../../../src/state/position';
-import afterPoint from '../../../../util/after-point';
-import { enableCombining, getPreset } from '../../../../util/dimension';
-import { getForcedDisplacement } from '../../../../util/impact';
-import { getThreshold } from '../util/get-combine-threshold';
-import { getOffsetForEndEdge } from '../util/get-offset-for-edge';
+} from "../../../../../src/types";
+import { horizontal, vertical } from "../../../../../src/state/axis";
+import getDisplacedBy from "../../../../../src/state/get-displaced-by";
+import getDragImpact from "../../../../../src/state/get-drag-impact";
+import getLiftEffect from "../../../../../src/state/get-lift-effect";
+import { patch, add } from "../../../../../src/state/position";
+import afterPoint from "../../../../util/after-point";
+import { enableCombining, getPreset } from "../../../../util/dimension";
+import { getForcedDisplacement } from "../../../../util/impact";
+import { getThreshold } from "../util/get-combine-threshold";
+import { getOffsetForEndEdge } from "../util/get-offset-for-edge";
 
 [vertical, horizontal].forEach((axis: Axis) => {
   describe(`on ${axis.direction} axis`, () => {
@@ -26,12 +26,12 @@ import { getOffsetForEndEdge } from '../util/get-offset-for-edge';
       viewport: preset.viewport,
     });
     const withCombineEnabled: DroppableDimensionMap = enableCombining(
-      preset.droppables,
+      preset.droppables
     );
     const startOfInHome3: Position = patch(
       axis.line,
       preset.inHome3.page.borderBox[axis.start],
-      preset.inHome3.page.borderBox.center[axis.crossAxisLine],
+      preset.inHome3.page.borderBox.center[axis.crossAxisLine]
     );
     const threshold: Position = getThreshold(axis, preset.inHome3);
     const combineStart: Position = getOffsetForEndEdge({
@@ -40,7 +40,7 @@ import { getOffsetForEndEdge } from '../util/get-offset-for-edge';
       axis,
     });
 
-    it('should not create a combine impact when combining is disabled', () => {
+    it("should not create a combine impact when combining is disabled", () => {
       // does not combine when combine is disabled
       {
         const impact: DragImpact = getDragImpact({
@@ -77,7 +77,7 @@ import { getOffsetForEndEdge } from '../util/get-offset-for-edge';
           }),
           displacedBy: getDisplacedBy(axis, preset.inHome2.displaceBy),
           at: {
-            type: 'COMBINE',
+            type: "COMBINE",
             combine: {
               draggableId: preset.inHome3.descriptor.id,
               droppableId: preset.inHome3.descriptor.droppableId,

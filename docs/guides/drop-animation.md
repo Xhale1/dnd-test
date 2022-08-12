@@ -13,7 +13,7 @@ In some cases you might want to add an additional `transform` or change the `tra
 Here is the shape of `DropAnimation`:
 
 ```ts
-type DropReason = 'DROP' | 'CANCEL';
+type DropReason = "DROP" | "CANCEL";
 
 interface DropAnimation {
   // how long the animation will run for
@@ -40,7 +40,7 @@ function getStyle(style, snapshot) {
   // move to the right spot
   const translate = `translate(${moveTo.x}px, ${moveTo.y}px)`;
   // add a bit of turn for fun
-  const rotate = 'rotate(0.5turn)';
+  const rotate = "rotate(0.5turn)";
 
   // patching the existing style
   return {
@@ -75,7 +75,7 @@ function TaskItem(props) {
 
 Generally speaking you should be avoiding this. A drop animation is an important affordance to communicate placement. Our drop animations do not prevent the user from dragging something else while the animation is running.
 
-If you are seeing a strange drop behaviour, such as dropping to the wrong spot, our recommendation is to raise an issue as it could be a bug with `@react-forked/dnd` or a setup issue.
+If you are seeing a strange drop behaviour, such as dropping to the wrong spot, our recommendation is to raise an issue as it could be a bug with `@hello-pangea/dnd` or a setup issue.
 
 If you do have use case where it makes sense to remove the drop animation you will need to add a [`transition-duration`](https://developer.mozilla.org/en-US/docs/Web/CSS/transition-duration) property of _almost_ `0s`. This will skip the drop animation.
 

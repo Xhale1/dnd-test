@@ -1,10 +1,10 @@
-import type { CompletedDrag, DimensionMap } from '../../../../src/types';
-import type { Store, Dispatch } from '../../../../src/state/store-types';
-import type { DimensionMarshal } from '../../../../src/state/dimension-marshal/dimension-marshal-types';
-import middleware from '../../../../src/state/middleware/lift';
-import createStore from './util/create-store';
-import passThroughMiddleware from './util/pass-through-middleware';
-import { setViewport, resetViewport } from '../../../util/viewport';
+import type { CompletedDrag, DimensionMap } from "../../../../src/types";
+import type { Store, Dispatch } from "../../../../src/state/store-types";
+import type { DimensionMarshal } from "../../../../src/state/dimension-marshal/dimension-marshal-types";
+import middleware from "../../../../src/state/middleware/lift";
+import createStore from "./util/create-store";
+import passThroughMiddleware from "./util/pass-through-middleware";
+import { setViewport, resetViewport } from "../../../util/viewport";
 import {
   lift,
   initialPublish,
@@ -12,19 +12,19 @@ import {
   completeDrop,
   flush,
   beforeInitialCapture,
-} from '../../../../src/state/action-creators';
-import type { AnimateDropArgs } from '../../../../src/state/action-creators';
-import { createMarshal } from '../../../util/dimension-marshal';
+} from "../../../../src/state/action-creators";
+import type { AnimateDropArgs } from "../../../../src/state/action-creators";
+import { createMarshal } from "../../../util/dimension-marshal";
 import {
   preset,
   liftArgs,
   initialPublishArgs,
   beforeCaptureArgs,
   getCompletedArgs,
-} from '../../../util/preset-action-args';
-import { populate } from '../../../util/registry';
-import type { Registry } from '../../../../src/state/registry/registry-types';
-import createRegistry from '../../../../src/state/registry/create-registry';
+} from "../../../util/preset-action-args";
+import { populate } from "../../../util/registry";
+import type { Registry } from "../../../../src/state/registry/registry-types";
+import createRegistry from "../../../../src/state/registry/create-registry";
 
 const getPopulatedRegistry = (dimensions?: DimensionMap): Registry => {
   const registry: Registry = createRegistry();
@@ -47,34 +47,34 @@ afterEach(() => {
   jest.useRealTimers();
 });
 
-it('should throw if a drag cannot be started when a lift action occurs', () => {
+it("should throw if a drag cannot be started when a lift action occurs", () => {
   const mock = jest.fn();
   const store: Store = createStore(
     passThroughMiddleware(mock),
-    middleware(getBasicMarshal((action) => store.dispatch(action))),
+    middleware(getBasicMarshal((action) => store.dispatch(action)))
   );
 
   // first lift is all good
   store.dispatch(lift(liftArgs));
   expect(mock).toHaveBeenCalledWith(lift(liftArgs));
-  expect(store.getState().phase).toBe('DRAGGING');
+  expect(store.getState().phase).toBe("DRAGGING");
 
   // a lift is not permitted in the DRAGGING phase
   expect(() => store.dispatch(lift(liftArgs))).toThrow();
 });
 
-it('should flush any animating drops', () => {
+it("should flush any animating drops", () => {
   const mock = jest.fn();
   const store: Store = createStore(
     passThroughMiddleware(mock),
-    middleware(getBasicMarshal((action) => store.dispatch(action))),
+    middleware(getBasicMarshal((action) => store.dispatch(action)))
   );
 
   // start a drag
   store.dispatch(initialPublish(initialPublishArgs));
-  expect(store.getState().phase).toBe('DRAGGING');
+  expect(store.getState().phase).toBe("DRAGGING");
 
-  const completed: CompletedDrag = getCompletedArgs('DROP').completed;
+  const completed: CompletedDrag = getCompletedArgs("DROP").completed;
 
   // start a drop
   const args: AnimateDropArgs = {
@@ -83,7 +83,7 @@ it('should flush any animating drops', () => {
     completed,
   };
   store.dispatch(animateDrop(args));
-  expect(store.getState().phase).toBe('DROP_ANIMATING');
+  expect(store.getState().phase).toBe("DROP_ANIMATING");
 
   // while drop animating a lift occurs
   mock.mockReset();
@@ -99,11 +99,11 @@ it('should flush any animating drops', () => {
   expect(mock).toHaveBeenCalledTimes(5);
 });
 
-it('should publish the initial dimensions when lifting', () => {
+it("should publish the initial dimensions when lifting", () => {
   const mock = jest.fn();
   const store: Store = createStore(
     passThroughMiddleware(mock),
-    middleware(getBasicMarshal((action) => store.dispatch(action))),
+    middleware(getBasicMarshal((action) => store.dispatch(action)))
   );
 
   // first lift is preparing
@@ -114,5 +114,5 @@ it('should publish the initial dimensions when lifting', () => {
   expect(mock).toHaveBeenCalledWith(initialPublish(initialPublishArgs));
   expect(mock).toHaveBeenCalledWith(beforeInitialCapture(beforeCaptureArgs));
   expect(mock).toHaveBeenCalledTimes(4);
-  expect(store.getState().phase).toBe('DRAGGING');
+  expect(store.getState().phase).toBe("DRAGGING");
 });

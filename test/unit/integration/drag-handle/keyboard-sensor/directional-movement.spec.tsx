@@ -1,8 +1,8 @@
-import React from 'react';
-import { fireEvent, render, createEvent } from '@testing-library/react';
-import * as keyCodes from '../../../../../src/view/key-codes';
-import App from '../../util/app';
-import { simpleLift, keyboard } from '../../util/controls';
+import React from "react";
+import { fireEvent, render, createEvent } from "@testing-library/react";
+import * as keyCodes from "../../../../../src/view/key-codes";
+import App from "../../util/app";
+import { simpleLift, keyboard } from "../../util/controls";
 
 beforeEach(() => {
   jest.useFakeTimers();
@@ -12,10 +12,10 @@ afterEach(() => {
   jest.useRealTimers();
 });
 
-it('should move up when pressing the up arrow', () => {
+it("should move up when pressing the up arrow", () => {
   const onDragUpdate = jest.fn();
   const { getByText } = render(<App onDragUpdate={onDragUpdate} />);
-  const handle: HTMLElement = getByText('item: 1');
+  const handle: HTMLElement = getByText("item: 1");
 
   simpleLift(keyboard, handle);
 
@@ -33,10 +33,10 @@ it('should move up when pressing the up arrow', () => {
   expect(event.defaultPrevented).toBe(true);
 });
 
-it('should move down when pressing the down arrow', () => {
+it("should move down when pressing the down arrow", () => {
   const onDragUpdate = jest.fn();
   const { getByText } = render(<App onDragUpdate={onDragUpdate} />);
-  const handle: HTMLElement = getByText('item: 0');
+  const handle: HTMLElement = getByText("item: 0");
 
   simpleLift(keyboard, handle);
 
@@ -54,12 +54,12 @@ it('should move down when pressing the down arrow', () => {
   expect(event.defaultPrevented).toBe(true);
 });
 
-it('should move right when pressing the right arrow', () => {
+it("should move right when pressing the right arrow", () => {
   const onDragUpdate = jest.fn();
   const { getByText } = render(
-    <App onDragUpdate={onDragUpdate} direction="horizontal" />,
+    <App onDragUpdate={onDragUpdate} direction="horizontal" />
   );
-  const handle: HTMLElement = getByText('item: 0');
+  const handle: HTMLElement = getByText("item: 0");
 
   simpleLift(keyboard, handle);
 
@@ -77,12 +77,12 @@ it('should move right when pressing the right arrow', () => {
   expect(event.defaultPrevented).toBe(true);
 });
 
-it('should move left when pressing the left arrow', () => {
+it("should move left when pressing the left arrow", () => {
   const onDragUpdate = jest.fn();
   const { getByText } = render(
-    <App onDragUpdate={onDragUpdate} direction="horizontal" />,
+    <App onDragUpdate={onDragUpdate} direction="horizontal" />
   );
-  const handle: HTMLElement = getByText('item: 1');
+  const handle: HTMLElement = getByText("item: 1");
 
   simpleLift(keyboard, handle);
 

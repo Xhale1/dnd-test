@@ -1,18 +1,18 @@
-import type { Position } from 'css-box-model';
+import type { Position } from "css-box-model";
 import type {
   Axis,
   DragImpact,
   DroppableDimension,
   DroppableDimensionMap,
-} from '../../../../../src/types';
-import { vertical, horizontal } from '../../../../../src/state/axis';
-import scrollDroppable from '../../../../../src/state/droppable/scroll-droppable';
-import getDragImpact from '../../../../../src/state/get-drag-impact';
-import getLiftEffect from '../../../../../src/state/get-lift-effect';
-import { patch, add } from '../../../../../src/state/position';
-import { getPreset, makeScrollable } from '../../../../util/dimension';
-import { getThreshold } from '../util/get-combine-threshold';
-import { getOffsetForEndEdge } from '../util/get-offset-for-edge';
+} from "../../../../../src/types";
+import { vertical, horizontal } from "../../../../../src/state/axis";
+import scrollDroppable from "../../../../../src/state/droppable/scroll-droppable";
+import getDragImpact from "../../../../../src/state/get-drag-impact";
+import getLiftEffect from "../../../../../src/state/get-lift-effect";
+import { patch, add } from "../../../../../src/state/position";
+import { getPreset, makeScrollable } from "../../../../util/dimension";
+import { getThreshold } from "../util/get-combine-threshold";
+import { getOffsetForEndEdge } from "../util/get-offset-for-edge";
 
 [vertical, horizontal].forEach((axis: Axis) => {
   describe(`on ${axis.direction} axis`, () => {
@@ -33,7 +33,7 @@ import { getOffsetForEndEdge } from '../util/get-offset-for-edge';
     const scroll: Position = patch(axis.line, 1);
     const scrolled: DroppableDimension = scrollDroppable(
       scrollableHome,
-      scroll,
+      scroll
     );
     const withoutScrolled: DroppableDimensionMap = {
       ...preset.droppables,
@@ -46,7 +46,7 @@ import { getOffsetForEndEdge } from '../util/get-offset-for-edge';
     const startOfInHome2: Position = patch(
       axis.line,
       preset.inHome2.page.borderBox[axis.start],
-      preset.inHome2.page.borderBox.center[axis.crossAxisLine],
+      preset.inHome2.page.borderBox.center[axis.crossAxisLine]
     );
     const threshold: Position = getThreshold(axis, preset.inHome2);
     const combineStart: Position = add(startOfInHome2, threshold);
@@ -56,7 +56,7 @@ import { getOffsetForEndEdge } from '../util/get-offset-for-edge';
       axis,
     });
 
-    it('should take into account droppable scroll', () => {
+    it("should take into account droppable scroll", () => {
       // no combine without droppable scroll
       {
         const impact: DragImpact = getDragImpact({
@@ -69,7 +69,7 @@ import { getOffsetForEndEdge } from '../util/get-offset-for-edge';
           afterCritical,
         });
 
-        expect(impact.at).toHaveProperty('type', 'REORDER');
+        expect(impact.at).toHaveProperty("type", "REORDER");
       }
       // combine now due to do droppable scroll
       {
@@ -87,7 +87,7 @@ import { getOffsetForEndEdge } from '../util/get-offset-for-edge';
           displaced: homeImpact.displaced,
           displacedBy: homeImpact.displacedBy,
           at: {
-            type: 'COMBINE',
+            type: "COMBINE",
             combine: {
               draggableId: preset.inHome2.descriptor.id,
               droppableId: preset.home.descriptor.id,

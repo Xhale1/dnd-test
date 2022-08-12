@@ -1,16 +1,16 @@
-import { getRect } from 'css-box-model';
-import type { Position } from 'css-box-model';
+import { getRect } from "css-box-model";
+import type { Position } from "css-box-model";
 import type {
   DraggingState,
   Viewport,
   MovementMode,
-} from '../../../../src/types';
-import { createViewport } from '../../../util/viewport';
-import getStatePreset from '../../../util/get-simple-state-preset';
-import getScroller from '../../../../src/state/auto-scroller';
-import type { Args } from '../../../../src/state/auto-scroller';
-import type { AutoScroller } from '../../../../src/state/auto-scroller/auto-scroller-types';
-import { origin } from '../../../../src/state/position';
+} from "../../../../src/types";
+import { createViewport } from "../../../util/viewport";
+import getStatePreset from "../../../util/get-simple-state-preset";
+import getScroller from "../../../../src/state/auto-scroller";
+import type { Args } from "../../../../src/state/auto-scroller";
+import type { AutoScroller } from "../../../../src/state/auto-scroller/auto-scroller-types";
+import { origin } from "../../../../src/state/position";
 
 const state = getStatePreset();
 
@@ -40,7 +40,7 @@ const onCenter = (mode: MovementMode): DraggingState => ({
   ...state.dragging(
     state.preset.inHome1.descriptor.id,
     scrollableViewport.frame.center,
-    scrollableViewport,
+    scrollableViewport
   ),
 
   movementMode: mode,
@@ -53,46 +53,46 @@ const onEnd = (mode: MovementMode): DraggingState => ({
       x: scrollableViewport.frame.right,
       y: scrollableViewport.frame.bottom,
     },
-    scrollableViewport,
+    scrollableViewport
   ),
 
   movementMode: mode,
 });
 
-it('should use the fluid scroller when in fluid mode', () => {
+it("should use the fluid scroller when in fluid mode", () => {
   const mocks: Args = getMocks();
   const scroller: AutoScroller = getScroller(mocks);
 
   // lift in center - should not cause an auto scroll
-  scroller.start(onCenter('FLUID'));
+  scroller.start(onCenter("FLUID"));
   requestAnimationFrame.flush();
   expect(mocks.scrollWindow).not.toHaveBeenCalled();
 
   // now scrolling on visibile edge. Should cause a big auto scroll
   // this will be done with the fluid scroller
-  scroller.scroll(onEnd('FLUID'));
+  scroller.scroll(onEnd("FLUID"));
   requestAnimationFrame.step();
   expect(mocks.scrollWindow).toHaveBeenCalled();
 });
 
-it('should use the jump scroller when in SNAP mode and there is a jumpScrollerRequest', () => {
+it("should use the jump scroller when in SNAP mode and there is a jumpScrollerRequest", () => {
   const mocks: Args = getMocks();
   const scroller: AutoScroller = getScroller(mocks);
 
   // lift in center - should not cause an auto scroll
-  scroller.start(onCenter('SNAP'));
+  scroller.start(onCenter("SNAP"));
   requestAnimationFrame.flush();
   expect(mocks.scrollWindow).not.toHaveBeenCalled();
 
   // now scrolling on visibile edge. Should not cause an auto scroll because we are in SNAP mode
-  scroller.scroll(onEnd('SNAP'));
+  scroller.scroll(onEnd("SNAP"));
   requestAnimationFrame.step();
   expect(mocks.scrollWindow).not.toHaveBeenCalled();
 
   const request: Position = { x: 1, y: 1 };
   const withRequest: DraggingState = state.scrollJumpRequest(
     request,
-    scrollableViewport,
+    scrollableViewport
   );
   scroller.scroll(withRequest);
   requestAnimationFrame.step();

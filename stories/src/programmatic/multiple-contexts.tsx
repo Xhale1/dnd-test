@@ -1,22 +1,22 @@
 /* eslint-disable no-console */
 /* eslint-disable no-await-in-loop */
-import React, { useState, useEffect, ReactElement } from 'react';
-import styled from '@emotion/styled';
-import { useCallback } from 'use-memo-one';
+import styled from "@emotion/styled";
 import type {
   DropResult,
   PreDragActions,
-  SnapDragActions,
   Sensor,
   SensorAPI,
-} from '@react-forked/dnd';
-import { DragDropContext } from '@react-forked/dnd';
-import type { Quote } from '../types';
-import { quotes as initial } from '../data';
-import QuoteList from '../primatives/quote-list';
-import reorder from '../reorder';
-import bindEvents from '../../../src/view/event-bindings/bind-events';
-import { grid } from '../constants';
+  SnapDragActions,
+} from "@hello-pangea/dnd";
+import { DragDropContext } from "@hello-pangea/dnd";
+import React, { ReactElement, useEffect, useState } from "react";
+import { useCallback } from "use-memo-one";
+import bindEvents from "../../../src/view/event-bindings/bind-events";
+import { grid } from "../constants";
+import { quotes as initial } from "../data";
+import QuoteList from "../primatives/quote-list";
+import reorder from "../reorder";
+import type { Quote } from "../types";
 
 function sleep(fn: () => void, time = 300) {
   return new Promise<void>((resolve) => {
@@ -31,10 +31,10 @@ function getSensor(delay: number): Sensor {
   return function useCustomSensor(api: SensorAPI) {
     const start = useCallback(
       async function start() {
-        const preDrag: PreDragActions | undefined | null = api.tryGetLock('1');
+        const preDrag: PreDragActions | undefined | null = api.tryGetLock("1");
 
         if (!preDrag) {
-          console.warn('unable to start drag');
+          console.warn("unable to start drag");
           return;
         }
 
@@ -43,7 +43,7 @@ function getSensor(delay: number): Sensor {
 
         const unbind = bindEvents(window, [
           {
-            eventName: 'resize',
+            eventName: "resize",
             fn: () => cancel(),
             options: { once: true },
           },
@@ -69,7 +69,7 @@ function getSensor(delay: number): Sensor {
 
         unbind();
       },
-      [api],
+      [api]
     );
 
     useEffect(() => {
@@ -100,12 +100,12 @@ function QuoteApp(props: Props) {
       const newQuotes = reorder(
         quotes,
         result.source.index,
-        result.destination.index,
+        result.destination.index
       );
 
       setQuotes(newQuotes);
     },
-    [quotes],
+    [quotes]
   );
 
   return (
@@ -132,7 +132,7 @@ export default function App(): ReactElement {
     <Root>
       <Column>
         <Title>
-          Programmatic #1{' '}
+          Programmatic #1{" "}
           <span role="img" aria-label="controller">
             🎮
           </span>
@@ -141,7 +141,7 @@ export default function App(): ReactElement {
       </Column>
       <Column>
         <Title>
-          Programmatic #2{' '}
+          Programmatic #2{" "}
           <span role="img" aria-label="controller">
             🎮
           </span>
@@ -150,7 +150,7 @@ export default function App(): ReactElement {
       </Column>
       <Column>
         <Title>
-          User controlled{' '}
+          User controlled{" "}
           <span role="img" aria-label="hand">
             🤚
           </span>

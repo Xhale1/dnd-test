@@ -1,4 +1,4 @@
-import type { BoxModel, Rect, Position } from 'css-box-model';
+import type { BoxModel, Rect, Position } from "css-box-model";
 
 export type Id = string;
 export type DraggableId = Id;
@@ -7,7 +7,7 @@ export type TypeId = Id;
 export type ContextId = Id;
 export type ElementId = Id;
 
-export type DroppableMode = 'standard' | 'virtual';
+export type DroppableMode = "standard" | "virtual";
 
 export interface DroppableDescriptor {
   id: DroppableId;
@@ -31,30 +31,30 @@ export interface DraggableOptions {
   isEnabled: boolean;
 }
 
-export type Direction = 'horizontal' | 'vertical';
+export type Direction = "horizontal" | "vertical";
 
 export interface VerticalAxis {
-  direction: 'vertical';
-  line: 'y';
-  start: 'top';
-  end: 'bottom';
-  size: 'height';
-  crossAxisLine: 'x';
-  crossAxisStart: 'left';
-  crossAxisEnd: 'right';
-  crossAxisSize: 'width';
+  direction: "vertical";
+  line: "y";
+  start: "top";
+  end: "bottom";
+  size: "height";
+  crossAxisLine: "x";
+  crossAxisStart: "left";
+  crossAxisEnd: "right";
+  crossAxisSize: "width";
 }
 
 export interface HorizontalAxis {
-  direction: 'horizontal';
-  line: 'x';
-  start: 'left';
-  end: 'right';
-  size: 'width';
-  crossAxisLine: 'y';
-  crossAxisStart: 'top';
-  crossAxisEnd: 'bottom';
-  crossAxisSize: 'height';
+  direction: "horizontal";
+  line: "x";
+  start: "left";
+  end: "right";
+  size: "width";
+  crossAxisLine: "y";
+  crossAxisStart: "top";
+  crossAxisEnd: "bottom";
+  crossAxisSize: "height";
 }
 
 export type Axis = VerticalAxis | HorizontalAxis;
@@ -198,12 +198,12 @@ export interface DisplacementGroups {
 }
 
 export interface ReorderImpact {
-  type: 'REORDER';
+  type: "REORDER";
   destination: DraggableLocation;
 }
 
 export interface CombineImpact {
-  type: 'COMBINE';
+  type: "COMBINE";
   combine: Combine;
 }
 
@@ -241,7 +241,7 @@ export interface PagePositions {
 // There are two seperate modes that a drag can be in
 // FLUID: everything is done in response to highly granular input (eg mouse)
 // SNAP: items move in response to commands (eg keyboard);
-export type MovementMode = 'FLUID' | 'SNAP';
+export type MovementMode = "FLUID" | "SNAP";
 
 export interface DragPositions {
   client: ClientPositions;
@@ -274,7 +274,7 @@ export interface DragUpdate extends DragStart {
   combine: Combine | null;
 }
 
-export type DropReason = 'DROP' | 'CANCEL';
+export type DropReason = "DROP" | "CANCEL";
 
 // published when a drag finishes
 export interface DropResult extends DragUpdate {
@@ -337,7 +337,7 @@ export interface CompletedDrag {
 }
 
 export interface IdleState {
-  phase: 'IDLE';
+  phase: "IDLE";
   completed: CompletedDrag | null;
   shouldFlush: boolean;
 }
@@ -362,7 +362,7 @@ interface BaseState {
   forceShouldAnimate: boolean | null;
 }
 export interface DraggingState extends BaseState {
-  phase: 'DRAGGING';
+  phase: "DRAGGING";
 }
 
 // While dragging we can enter into a bulk collection phase
@@ -371,7 +371,7 @@ export interface DraggingState extends BaseState {
 // completed before continuing with the drop
 // TODO: rename to BulkCollectingState
 export interface CollectingState extends BaseState {
-  phase: 'COLLECTING';
+  phase: "COLLECTING";
 }
 
 // If a drop action occurs during a bulk collection we need to
@@ -379,14 +379,14 @@ export interface CollectingState extends BaseState {
 // This is to ensure that everything has the correct index after
 // a drop
 export interface DropPendingState extends BaseState {
-  phase: 'DROP_PENDING';
+  phase: "DROP_PENDING";
   isWaiting: boolean;
   reason: DropReason;
 }
 
 // An optional phase for animating the drop / cancel if it is needed
 export interface DropAnimatingState {
-  phase: 'DROP_ANIMATING';
+  phase: "DROP_ANIMATING";
   completed: CompletedDrag;
   newHomeClientOffset: Position;
   dropDuration: number;
@@ -405,7 +405,7 @@ export type StateWhenUpdatesAllowed = DraggingState | CollectingState;
 
 export type Announce = (message: string) => void;
 
-export type InOutAnimationMode = 'none' | 'open' | 'close';
+export type InOutAnimationMode = "none" | "open" | "close";
 
 export interface ResponderProvided {
   announce: Announce;
@@ -417,17 +417,17 @@ export type OnBeforeDragStartResponder = (start: DragStart) => void;
 
 export type OnDragStartResponder = (
   start: DragStart,
-  provided: ResponderProvided,
+  provided: ResponderProvided
 ) => void;
 
 export type OnDragUpdateResponder = (
   update: DragUpdate,
-  provided: ResponderProvided,
+  provided: ResponderProvided
 ) => void;
 
 export type OnDragEndResponder = (
   result: DropResult,
-  provided: ResponderProvided,
+  provided: ResponderProvided
 ) => void;
 
 export interface Responders {
@@ -481,7 +481,7 @@ export interface TryGetLockOptions {
 export type TryGetLock = (
   draggableId: DraggableId,
   forceStop?: () => void,
-  options?: TryGetLockOptions,
+  options?: TryGetLockOptions
 ) => PreDragActions | null;
 
 export interface SensorAPI {

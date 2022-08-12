@@ -1,16 +1,16 @@
-import { createBox, getRect, withScroll } from 'css-box-model';
-import type { Rect, BoxModel, Spacing, Position } from 'css-box-model';
-import { invariant } from '../../src/invariant';
-import { vertical } from '../../src/state/axis';
-import { noSpacing, offsetByPosition } from '../../src/state/spacing';
-import getViewport from '../../src/view/window/get-viewport';
-import scrollViewport from '../../src/state/scroll-viewport';
-import getDroppable from '../../src/state/droppable/get-droppable';
-import type { Closest } from '../../src/state/droppable/get-droppable';
+import { createBox, getRect, withScroll } from "css-box-model";
+import type { Rect, BoxModel, Spacing, Position } from "css-box-model";
+import { invariant } from "../../src/invariant";
+import { vertical } from "../../src/state/axis";
+import { noSpacing, offsetByPosition } from "../../src/state/spacing";
+import getViewport from "../../src/view/window/get-viewport";
+import scrollViewport from "../../src/state/scroll-viewport";
+import getDroppable from "../../src/state/droppable/get-droppable";
+import type { Closest } from "../../src/state/droppable/get-droppable";
 import {
   toDroppableMap,
   toDroppableList,
-} from '../../src/state/dimension-structures';
+} from "../../src/state/dimension-structures";
 import type {
   Axis,
   CollectingState,
@@ -27,9 +27,9 @@ import type {
   DimensionMap,
   DraggingState,
   ScrollSize,
-} from '../../src/types';
-import isTotallyVisibleThroughFrame from '../../src/state/visibility/is-totally-visible-through-frame';
-import patchDimensionMap from '../../src/state/patch-dimension-map';
+} from "../../src/types";
+import isTotallyVisibleThroughFrame from "../../src/state/visibility/is-totally-visible-through-frame";
+import patchDimensionMap from "../../src/state/patch-dimension-map";
 
 interface GetComputedSpacingArgs {
   margin?: Spacing;
@@ -49,7 +49,7 @@ export const getComputedSpacing = ({
   margin = noSpacing,
   padding = noSpacing,
   border = noSpacing,
-  display = 'block',
+  display = "block",
 }: GetComputedSpacingArgs): any => ({
   paddingTop: `${padding.top}px`,
   paddingRight: `${padding.right}px`,
@@ -122,22 +122,22 @@ export const makeScrollable = (droppable: DroppableDimension, amount = 20) => {
 
 export const makeVirtual = (
   droppable: DroppableDimension,
-  amount?: number,
+  amount?: number
 ): DroppableDimension => // a virtual list also needs to be scrollable
   makeScrollable(
     {
       ...droppable,
       descriptor: {
         ...droppable.descriptor,
-        mode: 'virtual',
+        mode: "virtual",
       },
     },
-    amount,
+    amount
   );
 
 export const addDroppable = <TState extends DraggingState | CollectingState>(
   base: TState,
-  droppable: DroppableDimension,
+  droppable: DroppableDimension
 ): TState => ({
   ...base,
   dimensions: patchDimensionMap(base.dimensions, droppable),
@@ -145,7 +145,7 @@ export const addDroppable = <TState extends DraggingState | CollectingState>(
 
 export const addDraggable = (
   state: DraggingState,
-  draggable: DraggableDimension,
+  draggable: DraggableDimension
 ): DraggingState => ({
   ...state,
 
@@ -160,8 +160,8 @@ export const addDraggable = (
 
 const getPlaceholder = (client: BoxModel): Placeholder => ({
   client,
-  tagName: 'div',
-  display: 'block',
+  tagName: "div",
+  display: "block",
 });
 
 interface GetDraggableArgs {
@@ -216,7 +216,7 @@ interface ClosestMaker {
 interface GetDroppableArgs {
   descriptor: DroppableDescriptor;
   borderBox: Spacing;
-  direction?: 'vertical' | 'horizontal';
+  direction?: "vertical" | "horizontal";
   margin?: Spacing;
   border?: Spacing;
   padding?: Spacing;
@@ -236,7 +236,7 @@ export const getDroppableDimension = ({
   windowScroll = origin,
   closest,
   isEnabled = true,
-  direction = 'vertical',
+  direction = "vertical",
   isFixedOnPage = false,
   isCombineEnabled = false,
 }: GetDroppableArgs): DroppableDimension => {
@@ -295,26 +295,26 @@ export const withAssortedSpacing = () => {
 
 const validateIsInDroppable = (
   inList: DraggableDimension[],
-  droppable: DroppableDimension,
+  droppable: DroppableDimension
 ) => {
   inList.forEach((item: DraggableDimension) => {
     invariant(
       isTotallyVisibleThroughFrame(droppable.client.borderBox)(
-        item.client.marginBox,
+        item.client.marginBox
       ),
       `
       draggable: "${item.descriptor.id}"
       margin box must be within
       droppable: "${droppable.descriptor.id}"
       border box
-    `,
+    `
     );
   });
 };
 
 const validateIsStacked = (
   inList: DraggableDimension[],
-  droppable: DroppableDimension,
+  droppable: DroppableDimension
 ) => {
   inList.forEach((item: DraggableDimension, index: number) => {
     // ignore first
@@ -333,7 +333,7 @@ const validateIsStacked = (
       draggable: "${item.descriptor.id}"
       must be after
       draggable: "${before.descriptor.id}"
-    `,
+    `
     );
   });
 };
@@ -390,9 +390,9 @@ export const getPreset = (axis: Axis = vertical) => {
 
   const home: DroppableDimension = getDroppableDimension({
     descriptor: {
-      id: 'home',
-      type: 'TYPE',
-      mode: 'standard',
+      id: "home",
+      type: "TYPE",
+      mode: "standard",
     },
     borderBox: {
       [axis.start]: droppableBorderBoxStart,
@@ -407,9 +407,9 @@ export const getPreset = (axis: Axis = vertical) => {
 
   const foreign: DroppableDimension = getDroppableDimension({
     descriptor: {
-      id: 'foreign',
-      type: 'TYPE',
-      mode: 'standard',
+      id: "foreign",
+      type: "TYPE",
+      mode: "standard",
     },
     borderBox: {
       [axis.start]: droppableBorderBoxStart,
@@ -424,9 +424,9 @@ export const getPreset = (axis: Axis = vertical) => {
 
   const emptyForeign: DroppableDimension = getDroppableDimension({
     descriptor: {
-      id: 'empty-foreign',
-      type: 'TYPE',
-      mode: 'standard',
+      id: "empty-foreign",
+      type: "TYPE",
+      mode: "standard",
     },
     borderBox: {
       [axis.start]: droppableBorderBoxStart,
@@ -442,7 +442,7 @@ export const getPreset = (axis: Axis = vertical) => {
   const inHome1Size = 20;
   const inHome1: DraggableDimension = getDraggableDimension({
     descriptor: {
-      id: 'inhome1',
+      id: "inhome1",
       droppableId: home.descriptor.id,
       type: home.descriptor.type,
       index: 0,
@@ -466,7 +466,7 @@ export const getPreset = (axis: Axis = vertical) => {
   // size: 20
   const inHome2: DraggableDimension = getDraggableDimension({
     descriptor: {
-      id: 'inhome2',
+      id: "inhome2",
       droppableId: home.descriptor.id,
       type: home.descriptor.type,
       index: 1,
@@ -483,7 +483,7 @@ export const getPreset = (axis: Axis = vertical) => {
   // size: 30
   const inHome3: DraggableDimension = getDraggableDimension({
     descriptor: {
-      id: 'inhome3',
+      id: "inhome3",
       droppableId: home.descriptor.id,
       type: home.descriptor.type,
       index: 2,
@@ -499,7 +499,7 @@ export const getPreset = (axis: Axis = vertical) => {
   // size: 40
   const inHome4: DraggableDimension = getDraggableDimension({
     descriptor: {
-      id: 'inhome4',
+      id: "inhome4",
       droppableId: home.descriptor.id,
       type: home.descriptor.type,
       index: 3,
@@ -514,13 +514,13 @@ export const getPreset = (axis: Axis = vertical) => {
   });
   invariant(
     inHome4.client.marginBox[axis.end] < droppableBorderBoxEnd,
-    'Expecting items to be in bounds',
+    "Expecting items to be in bounds"
   );
 
   // size: 10
   const inForeign1: DraggableDimension = getDraggableDimension({
     descriptor: {
-      id: 'inForeign1',
+      id: "inForeign1",
       droppableId: foreign.descriptor.id,
       type: foreign.descriptor.type,
       index: 0,
@@ -537,7 +537,7 @@ export const getPreset = (axis: Axis = vertical) => {
   // size: 20
   const inForeign2: DraggableDimension = getDraggableDimension({
     descriptor: {
-      id: 'inForeign2',
+      id: "inForeign2",
       droppableId: foreign.descriptor.id,
       type: foreign.descriptor.type,
       index: 1,
@@ -554,7 +554,7 @@ export const getPreset = (axis: Axis = vertical) => {
   // size: 30
   const inForeign3: DraggableDimension = getDraggableDimension({
     descriptor: {
-      id: 'inForeign3',
+      id: "inForeign3",
       droppableId: foreign.descriptor.id,
       type: foreign.descriptor.type,
       index: 2,
@@ -571,7 +571,7 @@ export const getPreset = (axis: Axis = vertical) => {
   // size: 40
   const inForeign4: DraggableDimension = getDraggableDimension({
     descriptor: {
-      id: 'inForeign4',
+      id: "inForeign4",
       droppableId: foreign.descriptor.id,
       type: foreign.descriptor.type,
       index: 3,
@@ -666,7 +666,7 @@ export const getPreset = (axis: Axis = vertical) => {
 };
 
 export const disableDroppable = (
-  droppable: DroppableDimension,
+  droppable: DroppableDimension
 ): DroppableDimension => ({
   ...droppable,
   isEnabled: false,
@@ -691,7 +691,7 @@ export const shiftDraggables = ({
     .map((dimension: DraggableDimension) => {
       const borderBox: Spacing = offsetByPosition(
         dimension.client.borderBox,
-        amount,
+        amount
       );
       const client: BoxModel = createBox({
         borderBox,
@@ -723,13 +723,13 @@ export const shiftDraggables = ({
     }, {});
 
 export const enableCombining = (
-  droppables: DroppableDimensionMap,
+  droppables: DroppableDimensionMap
 ): DroppableDimensionMap =>
   toDroppableMap(
     toDroppableList(droppables).map(
       (droppable: DroppableDimension): DroppableDimension => ({
         ...droppable,
         isCombineEnabled: true,
-      }),
-    ),
+      })
+    )
   );

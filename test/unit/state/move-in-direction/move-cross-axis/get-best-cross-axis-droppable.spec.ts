@@ -1,28 +1,28 @@
-import type { Position, Spacing } from 'css-box-model';
-import getBestCrossAxisDroppable from '../../../../../src/state/move-in-direction/move-cross-axis/get-best-cross-axis-droppable';
-import { getDroppableDimension } from '../../../../util/dimension';
-import { add } from '../../../../../src/state/position';
-import { horizontal, vertical } from '../../../../../src/state/axis';
-import getViewport from '../../../../../src/view/window/get-viewport';
+import type { Position, Spacing } from "css-box-model";
+import getBestCrossAxisDroppable from "../../../../../src/state/move-in-direction/move-cross-axis/get-best-cross-axis-droppable";
+import { getDroppableDimension } from "../../../../util/dimension";
+import { add } from "../../../../../src/state/position";
+import { horizontal, vertical } from "../../../../../src/state/axis";
+import getViewport from "../../../../../src/view/window/get-viewport";
 import type {
   Viewport,
   Axis,
   DroppableDimension,
   DroppableDimensionMap,
-} from '../../../../../src/types';
+} from "../../../../../src/types";
 
 const viewport: Viewport = getViewport();
 
-describe('get best cross axis droppable', () => {
-  describe('on the vertical axis', () => {
+describe("get best cross axis droppable", () => {
+  describe("on the vertical axis", () => {
     const axis: Axis = vertical;
 
-    it('should return the first droppable on the cross axis when moving forward', () => {
+    it("should return the first droppable on the cross axis when moving forward", () => {
       const source = getDroppableDimension({
         descriptor: {
-          id: 'source',
-          type: 'TYPE',
-          mode: 'standard',
+          id: "source",
+          type: "TYPE",
+          mode: "standard",
         },
         direction: axis.direction,
         borderBox: {
@@ -34,9 +34,9 @@ describe('get best cross axis droppable', () => {
       });
       const forward = getDroppableDimension({
         descriptor: {
-          id: 'forward',
-          type: 'TYPE',
-          mode: 'standard',
+          id: "forward",
+          type: "TYPE",
+          mode: "standard",
         },
         direction: axis.direction,
         borderBox: {
@@ -62,12 +62,12 @@ describe('get best cross axis droppable', () => {
       expect(result).toBe(forward);
     });
 
-    it('should return the first droppable on the cross axis when moving backward', () => {
+    it("should return the first droppable on the cross axis when moving backward", () => {
       const behind = getDroppableDimension({
         descriptor: {
-          id: 'behind',
-          type: 'TYPE',
-          mode: 'standard',
+          id: "behind",
+          type: "TYPE",
+          mode: "standard",
         },
         direction: axis.direction,
         borderBox: {
@@ -79,9 +79,9 @@ describe('get best cross axis droppable', () => {
       });
       const source = getDroppableDimension({
         descriptor: {
-          id: 'source',
-          type: 'TYPE',
-          mode: 'standard',
+          id: "source",
+          type: "TYPE",
+          mode: "standard",
         },
         direction: axis.direction,
         borderBox: {
@@ -108,12 +108,12 @@ describe('get best cross axis droppable', () => {
       expect(result).toBe(behind);
     });
 
-    it('should exclude options that are not in the desired direction', () => {
+    it("should exclude options that are not in the desired direction", () => {
       const source = getDroppableDimension({
         descriptor: {
-          id: 'source',
-          type: 'TYPE',
-          mode: 'standard',
+          id: "source",
+          type: "TYPE",
+          mode: "standard",
         },
         direction: axis.direction,
         borderBox: {
@@ -125,9 +125,9 @@ describe('get best cross axis droppable', () => {
       });
       const behind = getDroppableDimension({
         descriptor: {
-          id: 'behind',
-          type: 'TYPE',
-          mode: 'standard',
+          id: "behind",
+          type: "TYPE",
+          mode: "standard",
         },
         direction: axis.direction,
         borderBox: {
@@ -162,12 +162,12 @@ describe('get best cross axis droppable', () => {
       expect(result2).toBe(behind);
     });
 
-    it('should exclude options that are not enabled', () => {
+    it("should exclude options that are not enabled", () => {
       const source = getDroppableDimension({
         descriptor: {
-          id: 'source',
-          type: 'TYPE',
-          mode: 'standard',
+          id: "source",
+          type: "TYPE",
+          mode: "standard",
         },
         direction: axis.direction,
         borderBox: {
@@ -179,9 +179,9 @@ describe('get best cross axis droppable', () => {
       });
       const disabled = getDroppableDimension({
         descriptor: {
-          id: 'disabled',
-          type: 'TYPE',
-          mode: 'standard',
+          id: "disabled",
+          type: "TYPE",
+          mode: "standard",
         },
         isEnabled: false,
         direction: axis.direction,
@@ -208,12 +208,12 @@ describe('get best cross axis droppable', () => {
       expect(result).toBe(null);
     });
 
-    it('should exclude options that are not in the viewport', () => {
+    it("should exclude options that are not in the viewport", () => {
       const source = getDroppableDimension({
         descriptor: {
-          id: 'source',
-          type: 'TYPE',
-          mode: 'standard',
+          id: "source",
+          type: "TYPE",
+          mode: "standard",
         },
         direction: axis.direction,
         borderBox: {
@@ -225,9 +225,9 @@ describe('get best cross axis droppable', () => {
       });
       const outsideViewport = getDroppableDimension({
         descriptor: {
-          id: 'outsideViewport',
-          type: 'TYPE',
-          mode: 'standard',
+          id: "outsideViewport",
+          type: "TYPE",
+          mode: "standard",
         },
         direction: axis.direction,
         borderBox: {
@@ -253,12 +253,12 @@ describe('get best cross axis droppable', () => {
       expect(result).toBe(null);
     });
 
-    it('should exclude options that do not overlap on the main axis', () => {
+    it("should exclude options that do not overlap on the main axis", () => {
       const source = getDroppableDimension({
         descriptor: {
-          id: 'source',
-          type: 'TYPE',
-          mode: 'standard',
+          id: "source",
+          type: "TYPE",
+          mode: "standard",
         },
         direction: axis.direction,
         borderBox: {
@@ -270,9 +270,9 @@ describe('get best cross axis droppable', () => {
       });
       const noOverlap = getDroppableDimension({
         descriptor: {
-          id: 'noOverlap',
-          type: 'TYPE',
-          mode: 'standard',
+          id: "noOverlap",
+          type: "TYPE",
+          mode: "standard",
         },
         direction: axis.direction,
         borderBox: {
@@ -300,13 +300,13 @@ describe('get best cross axis droppable', () => {
       expect(result).toBe(null);
     });
 
-    describe('more than one option share the same crossAxisStart value', () => {
+    describe("more than one option share the same crossAxisStart value", () => {
       // this happens when two lists sit on top of one another
       const source = getDroppableDimension({
         descriptor: {
-          id: 'source',
-          type: 'TYPE',
-          mode: 'standard',
+          id: "source",
+          type: "TYPE",
+          mode: "standard",
         },
         direction: axis.direction,
         borderBox: {
@@ -318,9 +318,9 @@ describe('get best cross axis droppable', () => {
       });
       const sibling1 = getDroppableDimension({
         descriptor: {
-          id: 'sibling1',
-          type: 'TYPE',
-          mode: 'standard',
+          id: "sibling1",
+          type: "TYPE",
+          mode: "standard",
         },
         direction: axis.direction,
         borderBox: {
@@ -349,9 +349,9 @@ describe('get best cross axis droppable', () => {
       });
       const sibling2 = getDroppableDimension({
         descriptor: {
-          id: 'sibling2',
-          type: 'TYPE',
-          mode: 'standard',
+          id: "sibling2",
+          type: "TYPE",
+          mode: "standard",
         },
         direction: axis.direction,
         borderBox: {
@@ -369,7 +369,7 @@ describe('get best cross axis droppable', () => {
         [sibling2.descriptor.id]: sibling2,
       };
 
-      it('should return a droppable where the center position (axis.line) of the draggable draggable sits within the size of a droppable', () => {
+      it("should return a droppable where the center position (axis.line) of the draggable draggable sits within the size of a droppable", () => {
         // sitting inside source - but within the size of sibling2 on the main axis
         const center: Position = {
           y: 50,
@@ -387,7 +387,7 @@ describe('get best cross axis droppable', () => {
         expect(result).toBe(sibling2);
       });
 
-      it('should account for container clipping', () => {
+      it("should account for container clipping", () => {
         // inside sibling1's droppable bounds, but outside its clipped bounds
         const center: Position = {
           y: 50,
@@ -407,8 +407,8 @@ describe('get best cross axis droppable', () => {
         expect(result).toBe(sibling2);
       });
 
-      describe('center point is not contained within a droppable', () => {
-        it('should return the droppable that has the closest corner', () => {
+      describe("center point is not contained within a droppable", () => {
+        it("should return the droppable that has the closest corner", () => {
           // Choosing a point that is above the first sibling
           const center: Position = {
             // above sibling 1
@@ -427,7 +427,7 @@ describe('get best cross axis droppable', () => {
           expect(result).toBe(sibling1);
         });
 
-        it('should choose the droppable that is furthest back (closest to {x: 0, y: 0} on the screen) in the event of a tie', () => {
+        it("should choose the droppable that is furthest back (closest to {x: 0, y: 0} on the screen) in the event of a tie", () => {
           // Choosing a point that is above the first sibling
           const center: Position = {
             // this line is shared between sibling1 and sibling2
@@ -460,15 +460,15 @@ describe('get best cross axis droppable', () => {
     });
   });
 
-  describe('on the horizontal axis', () => {
+  describe("on the horizontal axis", () => {
     const axis: Axis = horizontal;
 
-    it('should return the first droppable on the cross axis when moving forward', () => {
+    it("should return the first droppable on the cross axis when moving forward", () => {
       const source = getDroppableDimension({
         descriptor: {
-          id: 'source',
-          type: 'TYPE',
-          mode: 'standard',
+          id: "source",
+          type: "TYPE",
+          mode: "standard",
         },
         direction: axis.direction,
         borderBox: {
@@ -480,9 +480,9 @@ describe('get best cross axis droppable', () => {
       });
       const forward = getDroppableDimension({
         descriptor: {
-          id: 'forward',
-          type: 'TYPE',
-          mode: 'standard',
+          id: "forward",
+          type: "TYPE",
+          mode: "standard",
         },
         direction: axis.direction,
         borderBox: {
@@ -508,12 +508,12 @@ describe('get best cross axis droppable', () => {
       expect(result).toBe(forward);
     });
 
-    it('should return the first droppable on the cross axis when moving backward', () => {
+    it("should return the first droppable on the cross axis when moving backward", () => {
       const behind = getDroppableDimension({
         descriptor: {
-          id: 'behind',
-          type: 'TYPE',
-          mode: 'standard',
+          id: "behind",
+          type: "TYPE",
+          mode: "standard",
         },
         direction: axis.direction,
         borderBox: {
@@ -525,9 +525,9 @@ describe('get best cross axis droppable', () => {
       });
       const source = getDroppableDimension({
         descriptor: {
-          id: 'source',
-          type: 'TYPE',
-          mode: 'standard',
+          id: "source",
+          type: "TYPE",
+          mode: "standard",
         },
         direction: axis.direction,
         borderBox: {
@@ -554,12 +554,12 @@ describe('get best cross axis droppable', () => {
       expect(result).toBe(behind);
     });
 
-    it('should exclude options that are not in the desired direction', () => {
+    it("should exclude options that are not in the desired direction", () => {
       const behind = getDroppableDimension({
         descriptor: {
-          id: 'behind',
-          type: 'TYPE',
-          mode: 'standard',
+          id: "behind",
+          type: "TYPE",
+          mode: "standard",
         },
         direction: axis.direction,
         borderBox: {
@@ -571,9 +571,9 @@ describe('get best cross axis droppable', () => {
       });
       const source = getDroppableDimension({
         descriptor: {
-          id: 'source',
-          type: 'TYPE',
-          mode: 'standard',
+          id: "source",
+          type: "TYPE",
+          mode: "standard",
         },
         direction: axis.direction,
         borderBox: {
@@ -609,12 +609,12 @@ describe('get best cross axis droppable', () => {
       expect(result2).toBe(behind);
     });
 
-    it('should exclude options that are not enabled', () => {
+    it("should exclude options that are not enabled", () => {
       const source = getDroppableDimension({
         descriptor: {
-          id: 'source',
-          type: 'TYPE',
-          mode: 'standard',
+          id: "source",
+          type: "TYPE",
+          mode: "standard",
         },
         direction: axis.direction,
         borderBox: {
@@ -626,9 +626,9 @@ describe('get best cross axis droppable', () => {
       });
       const disabled = getDroppableDimension({
         descriptor: {
-          id: 'disabled',
-          type: 'TYPE',
-          mode: 'standard',
+          id: "disabled",
+          type: "TYPE",
+          mode: "standard",
         },
         isEnabled: false,
         direction: axis.direction,
@@ -655,12 +655,12 @@ describe('get best cross axis droppable', () => {
       expect(result).toBe(null);
     });
 
-    it('should exclude options that are not visible in their frame', () => {
+    it("should exclude options that are not visible in their frame", () => {
       const source = getDroppableDimension({
         descriptor: {
-          id: 'source',
-          type: 'TYPE',
-          mode: 'standard',
+          id: "source",
+          type: "TYPE",
+          mode: "standard",
         },
         direction: axis.direction,
         borderBox: {
@@ -672,9 +672,9 @@ describe('get best cross axis droppable', () => {
       });
       const subjectNotVisibleThroughFrame = getDroppableDimension({
         descriptor: {
-          id: 'notInViewport',
-          type: 'TYPE',
-          mode: 'standard',
+          id: "notInViewport",
+          type: "TYPE",
+          mode: "standard",
         },
         direction: axis.direction,
         // totally hidden by frame
@@ -718,12 +718,12 @@ describe('get best cross axis droppable', () => {
       expect(result).toBe(null);
     });
 
-    it('should exclude options that are not in the viewport', () => {
+    it("should exclude options that are not in the viewport", () => {
       const source = getDroppableDimension({
         descriptor: {
-          id: 'source',
-          type: 'TYPE',
-          mode: 'standard',
+          id: "source",
+          type: "TYPE",
+          mode: "standard",
         },
         direction: axis.direction,
         borderBox: {
@@ -735,9 +735,9 @@ describe('get best cross axis droppable', () => {
       });
       const notInViewport = getDroppableDimension({
         descriptor: {
-          id: 'notInViewport',
-          type: 'TYPE',
-          mode: 'standard',
+          id: "notInViewport",
+          type: "TYPE",
+          mode: "standard",
         },
         direction: axis.direction,
         borderBox: {
@@ -763,12 +763,12 @@ describe('get best cross axis droppable', () => {
       expect(result).toBe(null);
     });
 
-    it('should exclude options that do not overlap on the main axis', () => {
+    it("should exclude options that do not overlap on the main axis", () => {
       const source = getDroppableDimension({
         descriptor: {
-          id: 'source',
-          type: 'TYPE',
-          mode: 'standard',
+          id: "source",
+          type: "TYPE",
+          mode: "standard",
         },
         direction: axis.direction,
         borderBox: {
@@ -780,9 +780,9 @@ describe('get best cross axis droppable', () => {
       });
       const noOverlap = getDroppableDimension({
         descriptor: {
-          id: 'noOverlap',
-          type: 'TYPE',
-          mode: 'standard',
+          id: "noOverlap",
+          type: "TYPE",
+          mode: "standard",
         },
         direction: axis.direction,
         borderBox: {
@@ -811,13 +811,13 @@ describe('get best cross axis droppable', () => {
       expect(result).toBe(null);
     });
 
-    describe('more than one option share the same crossAxisStart value', () => {
+    describe("more than one option share the same crossAxisStart value", () => {
       // this happens when two lists sit side by side
       const source = getDroppableDimension({
         descriptor: {
-          id: 'source',
-          type: 'TYPE',
-          mode: 'standard',
+          id: "source",
+          type: "TYPE",
+          mode: "standard",
         },
         direction: axis.direction,
         borderBox: {
@@ -829,9 +829,9 @@ describe('get best cross axis droppable', () => {
       });
       const sibling1 = getDroppableDimension({
         descriptor: {
-          id: 'sibling1',
-          type: 'TYPE',
-          mode: 'standard',
+          id: "sibling1",
+          type: "TYPE",
+          mode: "standard",
         },
         direction: axis.direction,
         borderBox: {
@@ -845,9 +845,9 @@ describe('get best cross axis droppable', () => {
       });
       const sibling2 = getDroppableDimension({
         descriptor: {
-          id: 'sibling2',
-          type: 'TYPE',
-          mode: 'standard',
+          id: "sibling2",
+          type: "TYPE",
+          mode: "standard",
         },
         direction: axis.direction,
         borderBox: {
@@ -865,7 +865,7 @@ describe('get best cross axis droppable', () => {
         [sibling2.descriptor.id]: sibling2,
       };
 
-      it('should return a droppable where the center position (axis.line) of the draggable draggable sits within the size of a droppable', () => {
+      it("should return a droppable where the center position (axis.line) of the draggable draggable sits within the size of a droppable", () => {
         // sitting inside source - but within the size of sibling2 on the main axis
         const center: Position = {
           y: 5,
@@ -883,8 +883,8 @@ describe('get best cross axis droppable', () => {
         expect(result).toBe(sibling2);
       });
 
-      describe('center point is not contained within a droppable', () => {
-        it('should return the droppable that has the closest corner', () => {
+      describe("center point is not contained within a droppable", () => {
+        it("should return the droppable that has the closest corner", () => {
           // Choosing a point that is before the first sibling
           const center: Position = {
             // above sibling 1
@@ -904,7 +904,7 @@ describe('get best cross axis droppable', () => {
           expect(result).toBe(sibling1);
         });
 
-        it('should choose the droppable that is furthest back (closest to {x: 0, y: 0} on the screen) in the event of a tie', () => {
+        it("should choose the droppable that is furthest back (closest to {x: 0, y: 0} on the screen) in the event of a tie", () => {
           // Choosing a point that is above the first sibling
           const center: Position = {
             y: 5,
@@ -939,11 +939,11 @@ describe('get best cross axis droppable', () => {
     });
   });
 
-  describe('overlap', () => {
+  describe("overlap", () => {
     const axis: Axis = vertical;
 
-    describe('moving forward', () => {
-      it('allow overlap as long as the end of the target is after the end of the source', () => {
+    describe("moving forward", () => {
+      it("allow overlap as long as the end of the target is after the end of the source", () => {
         const box: Spacing = {
           top: 0,
           left: 20,
@@ -952,18 +952,18 @@ describe('get best cross axis droppable', () => {
         };
         const source = getDroppableDimension({
           descriptor: {
-            id: 'source',
-            type: 'TYPE',
-            mode: 'standard',
+            id: "source",
+            type: "TYPE",
+            mode: "standard",
           },
           direction: axis.direction,
           borderBox: box,
         });
         const forward = getDroppableDimension({
           descriptor: {
-            id: 'forward',
-            type: 'TYPE',
-            mode: 'standard',
+            id: "forward",
+            type: "TYPE",
+            mode: "standard",
           },
           direction: axis.direction,
           borderBox: {
@@ -987,7 +987,7 @@ describe('get best cross axis droppable', () => {
         expect(result).toBe(forward);
       });
 
-      it('should not allow movement when the droppables are on top of each other', () => {
+      it("should not allow movement when the droppables are on top of each other", () => {
         const box: Spacing = {
           top: 0,
           left: 20,
@@ -996,18 +996,18 @@ describe('get best cross axis droppable', () => {
         };
         const source = getDroppableDimension({
           descriptor: {
-            id: 'source',
-            type: 'TYPE',
-            mode: 'standard',
+            id: "source",
+            type: "TYPE",
+            mode: "standard",
           },
           direction: axis.direction,
           borderBox: box,
         });
         const forward = getDroppableDimension({
           descriptor: {
-            id: 'forward',
-            type: 'TYPE',
-            mode: 'standard',
+            id: "forward",
+            type: "TYPE",
+            mode: "standard",
           },
           direction: axis.direction,
           borderBox: box,
@@ -1028,7 +1028,7 @@ describe('get best cross axis droppable', () => {
         expect(result).toBe(null);
       });
 
-      it('should not allow movement the right edge of the source is not greater than the right edge of the target', () => {
+      it("should not allow movement the right edge of the source is not greater than the right edge of the target", () => {
         const box: Spacing = {
           top: 0,
           left: 20,
@@ -1037,18 +1037,18 @@ describe('get best cross axis droppable', () => {
         };
         const source = getDroppableDimension({
           descriptor: {
-            id: 'source',
-            type: 'TYPE',
-            mode: 'standard',
+            id: "source",
+            type: "TYPE",
+            mode: "standard",
           },
           direction: axis.direction,
           borderBox: box,
         });
         const forward = getDroppableDimension({
           descriptor: {
-            id: 'forward',
-            type: 'TYPE',
-            mode: 'standard',
+            id: "forward",
+            type: "TYPE",
+            mode: "standard",
           },
           direction: axis.direction,
           borderBox: {
@@ -1076,8 +1076,8 @@ describe('get best cross axis droppable', () => {
       });
     });
 
-    describe('moving backwards', () => {
-      it('should allow overlap as long as the start of the target is before the start of the source', () => {
+    describe("moving backwards", () => {
+      it("should allow overlap as long as the start of the target is before the start of the source", () => {
         const box: Spacing = {
           top: 0,
           left: 20,
@@ -1086,18 +1086,18 @@ describe('get best cross axis droppable', () => {
         };
         const source = getDroppableDimension({
           descriptor: {
-            id: 'source',
-            type: 'TYPE',
-            mode: 'standard',
+            id: "source",
+            type: "TYPE",
+            mode: "standard",
           },
           direction: axis.direction,
           borderBox: box,
         });
         const backwards = getDroppableDimension({
           descriptor: {
-            id: 'forward',
-            type: 'TYPE',
-            mode: 'standard',
+            id: "forward",
+            type: "TYPE",
+            mode: "standard",
           },
           direction: axis.direction,
           borderBox: {
@@ -1121,7 +1121,7 @@ describe('get best cross axis droppable', () => {
         expect(result).toBe(backwards);
       });
 
-      it('should not allow movement when the droppables are on top of each other', () => {
+      it("should not allow movement when the droppables are on top of each other", () => {
         const box: Spacing = {
           top: 0,
           left: 20,
@@ -1130,18 +1130,18 @@ describe('get best cross axis droppable', () => {
         };
         const source = getDroppableDimension({
           descriptor: {
-            id: 'source',
-            type: 'TYPE',
-            mode: 'standard',
+            id: "source",
+            type: "TYPE",
+            mode: "standard",
           },
           direction: axis.direction,
           borderBox: box,
         });
         const backward = getDroppableDimension({
           descriptor: {
-            id: 'forward',
-            type: 'TYPE',
-            mode: 'standard',
+            id: "forward",
+            type: "TYPE",
+            mode: "standard",
           },
           direction: axis.direction,
           borderBox: box,
@@ -1162,7 +1162,7 @@ describe('get best cross axis droppable', () => {
         expect(result).toBe(null);
       });
 
-      it('should not allow movement left edge of the source is not greater than the left edge of the target', () => {
+      it("should not allow movement left edge of the source is not greater than the left edge of the target", () => {
         const box: Spacing = {
           top: 0,
           left: 20,
@@ -1171,18 +1171,18 @@ describe('get best cross axis droppable', () => {
         };
         const source = getDroppableDimension({
           descriptor: {
-            id: 'source',
-            type: 'TYPE',
-            mode: 'standard',
+            id: "source",
+            type: "TYPE",
+            mode: "standard",
           },
           direction: axis.direction,
           borderBox: box,
         });
         const backward = getDroppableDimension({
           descriptor: {
-            id: 'forward',
-            type: 'TYPE',
-            mode: 'standard',
+            id: "forward",
+            type: "TYPE",
+            mode: "standard",
           },
           direction: axis.direction,
           borderBox: {

@@ -17,7 +17,7 @@ export const forceEnable = () => {
 export const start = (key: string) => {
   // we want to strip all the code out for production builds
   // draw back: can only do timings in dev env (which seems to be fine for now)
-  if (process.env.NODE_ENV !== 'production') {
+  if (process.env.NODE_ENV !== "production") {
     if (!isTimingsEnabled()) {
       return;
     }
@@ -33,7 +33,7 @@ interface Style {
 }
 
 export const finish = (key: string) => {
-  if (process.env.NODE_ENV !== 'production') {
+  if (process.env.NODE_ENV !== "production") {
     if (!isTimingsEnabled()) {
       return;
     }
@@ -43,7 +43,7 @@ export const finish = (key: string) => {
 
     if (!previous) {
       // eslint-disable-next-line no-console
-      console.warn('cannot finish timing as no previous time found', key);
+      console.warn("cannot finish timing as no previous time found", key);
       return;
     }
 
@@ -53,19 +53,19 @@ export const finish = (key: string) => {
     const style: Style = (() => {
       if (result < 12) {
         return {
-          textColor: 'green',
-          symbol: '✅',
+          textColor: "green",
+          symbol: "✅",
         };
       }
       if (result < 40) {
         return {
-          textColor: 'orange',
-          symbol: '⚠️',
+          textColor: "orange",
+          symbol: "⚠️",
         };
       }
       return {
-        textColor: 'red',
-        symbol: '❌',
+        textColor: "red",
+        symbol: "❌",
       };
     })();
 
@@ -73,13 +73,13 @@ export const finish = (key: string) => {
     console.log(
       `${style.symbol} %cTiming %c${rounded} %cms %c${key}`,
       // title
-      'color: blue; font-weight: bold;',
+      "color: blue; font-weight: bold;",
       // result
       `color: ${style.textColor}; font-size: 1.1em;`,
       // ms
-      'color: grey;',
+      "color: grey;",
       // key
-      'color: purple; font-weight: bold;',
+      "color: purple; font-weight: bold;"
     );
   }
 };

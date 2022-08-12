@@ -1,6 +1,6 @@
 // Stub requestAnimationFrame
-import type JSDOMEnvironment from 'jest-environment-jsdom';
-import createStub from 'raf-stub';
+import type JSDOMEnvironment from "jest-environment-jsdom";
+import createStub from "raf-stub";
 
 declare global {
   // eslint-disable-next-line @typescript-eslint/no-namespace
@@ -35,7 +35,7 @@ export default function attachRafStub(this: JSDOMEnvironment) {
 
   if (this.fakeTimers) {
     const originalUseFakeTimers = this.fakeTimers.useFakeTimers.bind(
-      this.fakeTimers,
+      this.fakeTimers
     );
 
     this.fakeTimers.useFakeTimers = () => {
@@ -46,7 +46,7 @@ export default function attachRafStub(this: JSDOMEnvironment) {
     };
 
     const originalUseRealTimers = this.fakeTimers.useRealTimers.bind(
-      this.fakeTimers,
+      this.fakeTimers
     );
     this.fakeTimers.useRealTimers = () => {
       originalUseRealTimers();

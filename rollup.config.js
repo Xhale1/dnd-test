@@ -1,31 +1,31 @@
-import babel from '@rollup/plugin-babel';
-import commonjs from '@rollup/plugin-commonjs';
-import json from '@rollup/plugin-json';
-import resolve from '@rollup/plugin-node-resolve';
-import replace from '@rollup/plugin-replace';
-import strip from '@rollup/plugin-strip';
-import { terser } from 'rollup-plugin-terser';
-import { sizeSnapshot } from 'rollup-plugin-size-snapshot';
-import dts from 'rollup-plugin-dts';
+import babel from "@rollup/plugin-babel";
+import commonjs from "@rollup/plugin-commonjs";
+import json from "@rollup/plugin-json";
+import resolve from "@rollup/plugin-node-resolve";
+import replace from "@rollup/plugin-replace";
+import strip from "@rollup/plugin-strip";
+import { terser } from "rollup-plugin-terser";
+import { sizeSnapshot } from "rollup-plugin-size-snapshot";
+import dts from "rollup-plugin-dts";
 
-import pkg from './package.json';
+import pkg from "./package.json";
 
-const input = './src/index.ts';
-const extensions = ['.ts', '.tsx'];
+const input = "./src/index.ts";
+const extensions = [".ts", ".tsx"];
 
 // Treat as externals all not relative and not absolute paths
 // e.g. 'react'
-const excludeAllExternals = (id) => !id.startsWith('.') && !id.startsWith('/');
+const excludeAllExternals = (id) => !id.startsWith(".") && !id.startsWith("/");
 
 const getBabelOptions = ({ useESModules }) => ({
   extensions,
-  exclude: 'node_modules/**',
-  babelHelpers: 'runtime',
-  plugins: [['@babel/plugin-transform-runtime', { useESModules }]],
+  exclude: "node_modules/**",
+  babelHelpers: "runtime",
+  plugins: [["@babel/plugin-transform-runtime", { useESModules }]],
 });
 
 const snapshotArgs =
-  process.env.SNAPSHOT === 'match'
+  process.env.SNAPSHOT === "match"
     ? {
         matchSnapshot: true,
         threshold: 1000,
@@ -33,7 +33,7 @@ const snapshotArgs =
     : {};
 
 const commonjsArgs = {
-  include: 'node_modules/**',
+  include: "node_modules/**",
 };
 
 export default [
@@ -43,13 +43,13 @@ export default [
   {
     input,
     output: {
-      file: 'dist/dnd.js',
-      format: 'umd',
-      name: 'ReactBeautifulDnd',
-      globals: { react: 'React', 'react-dom': 'ReactDOM' },
+      file: "dist/dnd.js",
+      format: "umd",
+      name: "ReactBeautifulDnd",
+      globals: { react: "React", "react-dom": "ReactDOM" },
     },
     // Only deep dependency required is React
-    external: ['react', 'react-dom'],
+    external: ["react", "react-dom"],
     plugins: [
       json(),
       babel(getBabelOptions({ useESModules: true })),
@@ -57,7 +57,7 @@ export default [
       commonjs(commonjsArgs),
       replace({
         preventAssignment: true,
-        'process.env.NODE_ENV': JSON.stringify('development'),
+        "process.env.NODE_ENV": JSON.stringify("development"),
       }),
       sizeSnapshot(snapshotArgs),
     ],
@@ -67,13 +67,13 @@ export default [
   {
     input,
     output: {
-      file: 'dist/dnd.min.js',
-      format: 'umd',
-      name: 'ReactBeautifulDnd',
-      globals: { react: 'React', 'react-dom': 'ReactDOM' },
+      file: "dist/dnd.min.js",
+      format: "umd",
+      name: "ReactBeautifulDnd",
+      globals: { react: "React", "react-dom": "ReactDOM" },
     },
     // Only deep dependency required is React
-    external: ['react', 'react-dom'],
+    external: ["react", "react-dom"],
     plugins: [
       json(),
       babel(getBabelOptions({ useESModules: true })),
@@ -82,7 +82,7 @@ export default [
       strip(),
       replace({
         preventAssignment: true,
-        'process.env.NODE_ENV': JSON.stringify('production'),
+        "process.env.NODE_ENV": JSON.stringify("production"),
       }),
       sizeSnapshot(snapshotArgs),
       terser(),
@@ -101,7 +101,7 @@ export default [
   // - All external packages are not bundled
   {
     input,
-    output: { file: pkg.main, format: 'cjs' },
+    output: { file: pkg.main, format: "cjs" },
     external: excludeAllExternals,
     plugins: [
       json(),
@@ -115,7 +115,7 @@ export default [
   // - All external packages are not bundled
   {
     input,
-    output: { file: pkg.module, format: 'esm' },
+    output: { file: pkg.module, format: "esm" },
     external: excludeAllExternals,
     plugins: [
       json(),
@@ -128,7 +128,7 @@ export default [
   // TypeScript declaration
   {
     input,
-    output: [{ file: 'dist/dnd.d.ts', format: 'es' }],
+    output: [{ file: "dist/dnd.d.ts", format: "es" }],
     plugins: [dts()],
   },
 ];

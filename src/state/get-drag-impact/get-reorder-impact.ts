@@ -1,4 +1,4 @@
-import type { Rect } from 'css-box-model';
+import type { Rect } from "css-box-model";
 import type {
   DraggableId,
   DraggableDimension,
@@ -9,13 +9,13 @@ import type {
   Viewport,
   DisplacedBy,
   LiftEffect,
-} from '../../types';
-import getDisplacedBy from '../get-displaced-by';
-import removeDraggableFromList from '../remove-draggable-from-list';
-import isHomeOf from '../droppable/is-home-of';
-import getDidStartAfterCritical from '../did-start-after-critical';
-import calculateReorderImpact from '../calculate-drag-impact/calculate-reorder-impact';
-import getIsDisplaced from '../get-is-displaced';
+} from "../../types";
+import getDisplacedBy from "../get-displaced-by";
+import removeDraggableFromList from "../remove-draggable-from-list";
+import isHomeOf from "../droppable/is-home-of";
+import getDidStartAfterCritical from "../did-start-after-critical";
+import calculateReorderImpact from "../calculate-drag-impact/calculate-reorder-impact";
+import getIsDisplaced from "../get-is-displaced";
 
 interface Args {
   pageBorderBoxWithDroppableScroll: Rect;
@@ -65,7 +65,7 @@ export default ({
   const axis: Axis = destination.axis;
   const displacedBy: DisplacedBy = getDisplacedBy(
     destination.axis,
-    draggable.displaceBy,
+    draggable.displaceBy
   );
   const displacement: number = displacedBy.value;
 
@@ -74,7 +74,7 @@ export default ({
 
   const withoutDragging: DraggableDimension[] = removeDraggableFromList(
     draggable,
-    insideDestination,
+    insideDestination
   );
 
   const closest =
@@ -84,7 +84,7 @@ export default ({
 
       const didStartAfterCritical: boolean = getDidStartAfterCritical(
         id,
-        afterCritical,
+        afterCritical
       );
 
       const isDisplaced: boolean = getIsDisplaced({ displaced: last, id });

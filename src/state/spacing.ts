@@ -1,4 +1,4 @@
-import type { Spacing, Position } from 'css-box-model';
+import type { Spacing, Position } from "css-box-model";
 
 // TODO add test
 export const isEqual = (first: Spacing, second: Spacing): boolean =>
@@ -9,7 +9,7 @@ export const isEqual = (first: Spacing, second: Spacing): boolean =>
 
 export const offsetByPosition = (
   spacing: Spacing,
-  point: Position,
+  point: Position
 ): Spacing => ({
   top: spacing.top + point.y,
   left: spacing.left + point.x,
@@ -19,7 +19,7 @@ export const offsetByPosition = (
 
 export const expandByPosition = (
   spacing: Spacing,
-  position: Position,
+  position: Position
 ): Spacing => ({
   // pulling back to increase size
   top: spacing.top - position.y,

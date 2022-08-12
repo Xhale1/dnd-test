@@ -1,6 +1,6 @@
-import type { Position, BoxModel, Rect } from 'css-box-model';
-import { patch } from '../position';
-import type { Axis } from '../../types';
+import type { Position, BoxModel, Rect } from "css-box-model";
+import { patch } from "../position";
+import type { Axis } from "../../types";
 
 interface Args {
   axis: Axis;
@@ -10,7 +10,7 @@ interface Args {
 
 const distanceFromStartToBorderBoxCenter = (
   axis: Axis,
-  box: BoxModel,
+  box: BoxModel
 ): number => box.margin[axis.start] + box.borderBox[axis.size] / 2;
 
 const distanceFromEndToBorderBoxCenter = (axis: Axis, box: BoxModel): number =>
@@ -22,7 +22,7 @@ const distanceFromEndToBorderBoxCenter = (axis: Axis, box: BoxModel): number =>
 const getCrossAxisBorderBoxCenter = (
   axis: Axis,
   target: Rect,
-  isMoving: BoxModel,
+  isMoving: BoxModel
 ): number =>
   target[axis.crossAxisStart] +
   isMoving.margin[axis.crossAxisStart] +
@@ -34,7 +34,7 @@ export const goAfter = ({ axis, moveRelativeTo, isMoving }: Args): Position =>
     // start measuring from the end of the target
     moveRelativeTo.marginBox[axis.end] +
       distanceFromStartToBorderBoxCenter(axis, isMoving),
-    getCrossAxisBorderBoxCenter(axis, moveRelativeTo.marginBox, isMoving),
+    getCrossAxisBorderBoxCenter(axis, moveRelativeTo.marginBox, isMoving)
   );
 
 export const goBefore = ({ axis, moveRelativeTo, isMoving }: Args): Position =>
@@ -43,7 +43,7 @@ export const goBefore = ({ axis, moveRelativeTo, isMoving }: Args): Position =>
     // start measuring from the start of the target
     moveRelativeTo.marginBox[axis.start] -
       distanceFromEndToBorderBoxCenter(axis, isMoving),
-    getCrossAxisBorderBoxCenter(axis, moveRelativeTo.marginBox, isMoving),
+    getCrossAxisBorderBoxCenter(axis, moveRelativeTo.marginBox, isMoving)
   );
 
 interface GoIntoArgs {
@@ -62,5 +62,5 @@ export const goIntoStart = ({
     axis.line,
     moveInto.contentBox[axis.start] +
       distanceFromStartToBorderBoxCenter(axis, isMoving),
-    getCrossAxisBorderBoxCenter(axis, moveInto.contentBox, isMoving),
+    getCrossAxisBorderBoxCenter(axis, moveInto.contentBox, isMoving)
   );

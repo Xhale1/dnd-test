@@ -1,5 +1,4 @@
-import React, { useMemo } from 'react';
-import { mount } from 'enzyme';
+import React, { useMemo } from "react";
 import type {
   MapProps,
   DroppableProps,
@@ -7,19 +6,19 @@ import type {
   DispatchProps,
   DroppableStateSnapshot,
   Props,
-} from '../../../../../src/view/droppable/droppable-types';
-import Droppable from '../../../../../src/view/droppable/droppable';
+} from "../../../../../src/view/droppable/droppable-types";
+import Droppable from "../../../../../src/view/droppable/droppable";
 import {
   homeOwnProps,
   homeAtRest,
   dispatchProps as defaultDispatchProps,
-} from './get-props';
-import getStubber from './get-stubber';
-import { getMarshalStub } from '../../../../util/dimension-marshal';
-import AppContext from '../../../../../src/view/context/app-context';
-import type { AppContextValue } from '../../../../../src/view/context/app-context';
-import createRegistry from '../../../../../src/state/registry/create-registry';
-import useFocusMarshal from '../../../../../src/view/use-focus-marshal';
+} from "./get-props";
+import getStubber from "./get-stubber";
+import { getMarshalStub } from "../../../../util/dimension-marshal";
+import AppContext from "../../../../../src/view/context/app-context";
+import type { AppContextValue } from "../../../../../src/view/context/app-context";
+import createRegistry from "../../../../../src/state/registry/create-registry";
+import useFocusMarshal from "../../../../../src/view/use-focus-marshal";
 
 interface MountArgs {
   WrappedComponent?: any;
@@ -27,6 +26,7 @@ interface MountArgs {
   mapProps?: MapProps;
   dispatchProps?: DispatchProps;
   isMovementAllowed?: () => boolean;
+  overwriteProps?: Partial<AppProps>;
 }
 
 interface AppProps extends Props {
@@ -36,7 +36,7 @@ interface AppProps extends Props {
 
 function App(props: AppProps) {
   const { WrappedComponent, isMovementAllowed, ...rest } = props;
-  const contextId = '1';
+  const contextId = "1";
 
   const focus = useFocusMarshal(contextId);
   const context: AppContextValue = useMemo(
@@ -45,11 +45,11 @@ function App(props: AppProps) {
       contextId,
       canLift: () => true,
       isMovementAllowed,
-      dragHandleUsageInstructionsId: 'fake-id',
+      dragHandleUsageInstructionsId: "fake-id",
       marshal: getMarshalStub(),
       registry: createRegistry(),
     }),
-    [focus, isMovementAllowed],
+    [focus, isMovementAllowed]
   );
 
   return (
@@ -69,13 +69,14 @@ export default ({
   mapProps = homeAtRest,
   dispatchProps = defaultDispatchProps,
   isMovementAllowed = () => true,
-}: MountArgs = {}) =>
-  mount<any>(
-    <App
-      {...ownProps}
-      {...mapProps}
-      {...dispatchProps}
-      isMovementAllowed={isMovementAllowed}
-      WrappedComponent={WrappedComponent}
-    />,
-  );
+  overwriteProps = {},
+}: MountArgs) => (
+  <App
+    {...ownProps}
+    {...mapProps}
+    {...dispatchProps}
+    isMovementAllowed={isMovementAllowed}
+    WrappedComponent={WrappedComponent}
+    {...overwriteProps}
+  />
+);

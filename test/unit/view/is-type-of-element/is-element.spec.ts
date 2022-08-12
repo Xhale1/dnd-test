@@ -1,24 +1,24 @@
-import { JSDOM } from 'jsdom';
-import isElement from '../../../../src/view/is-type-of-element/is-element';
-import getSvg from './util/get-svg';
+import { JSDOM } from "jsdom";
+import isElement from "../../../../src/view/is-type-of-element/is-element";
+import getSvg from "./util/get-svg";
 
-it('should allow all elements through', () => {
-  const anchor: HTMLElement = document.createElement('a');
+it("should allow all elements through", () => {
+  const anchor: HTMLElement = document.createElement("a");
   const svg: SVGElement = getSvg(document);
 
   expect(isElement(anchor)).toBe(true);
   expect(isElement(svg)).toBe(true);
 });
 
-it('should not let other types through', () => {
+it("should not let other types through", () => {
   [null, 1, true, {}, () => {}].forEach((value: unknown) =>
-    expect(isElement(value)).toBe(false),
+    expect(isElement(value)).toBe(false)
   );
 });
 
-it('should not allow svg elements from another window', () => {
+it("should not allow svg elements from another window", () => {
   const other = new JSDOM(`<!DOCTYPE html><p>Hello world</p>`);
-  const anchor: HTMLElement = other.window.document.createElement('a');
+  const anchor: HTMLElement = other.window.document.createElement("a");
   const svg: SVGElement = getSvg(other.window.document);
 
   expect(isElement(anchor)).toBe(true);

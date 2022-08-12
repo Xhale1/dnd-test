@@ -5,9 +5,9 @@ import type {
   DroppableDimension,
   DraggableDimensionMap,
   LiftEffect,
-} from '../../../types';
-import recompute from '../../update-displacement-visibility/recompute';
-import { emptyGroups } from '../../no-impact';
+} from "../../../types";
+import recompute from "../../update-displacement-visibility/recompute";
+import { emptyGroups } from "../../no-impact";
 
 interface Args {
   draggables: DraggableDimensionMap;
@@ -32,7 +32,7 @@ export default ({
   viewport,
   onLiftImpact,
 }: Args): Result => {
-  if (!lastImpact.at || reason !== 'DROP') {
+  if (!lastImpact.at || reason !== "DROP") {
     // Dropping outside of a list or the drag was cancelled
 
     // Going to use the on lift impact
@@ -55,7 +55,7 @@ export default ({
   }
 
   // use the existing impact
-  if (lastImpact.at.type === 'REORDER') {
+  if (lastImpact.at.type === "REORDER") {
     return {
       impact: lastImpact,
       didDropInsideDroppable: true,

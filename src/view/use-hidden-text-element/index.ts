@@ -1,1 +1,1 @@
-export { default } from './use-hidden-text-element';
+export { default } from "./use-hidden-text-element";

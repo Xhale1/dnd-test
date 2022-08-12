@@ -1,4 +1,4 @@
-import type { Position } from 'css-box-model';
+import type { Position } from "css-box-model";
 
 export const origin: Position = { x: 0, y: 0 };
 
@@ -27,11 +27,11 @@ export const negate = (point: Position): Position => ({
 // patch('x', 5)    = { x: 5, y: 0 }
 // patch('y', 5, 1) = { x: 1, y: 5 }
 export const patch = (
-  line: 'x' | 'y',
+  line: "x" | "y",
   value: number,
-  otherValue = 0,
+  otherValue = 0
 ): Position => {
-  if (line === 'x') {
+  if (line === "x") {
     return {
       x: value,
       y: otherValue,

@@ -1,28 +1,28 @@
-import type { Rect } from 'css-box-model';
+import type { Rect } from "css-box-model";
 import {
   getDroppableDimension,
   getDraggableDimension,
-} from '../../../util/dimension';
-import { offsetRectByPosition } from '../../../../src/state/rect';
+} from "../../../util/dimension";
+import { offsetRectByPosition } from "../../../../src/state/rect";
 import type {
   DraggableDimension,
   DroppableDimension,
-} from '../../../../src/types';
+} from "../../../../src/types";
 
-import getDroppableOver from '../../../../src/state/get-droppable-over';
+import getDroppableOver from "../../../../src/state/get-droppable-over";
 import {
   getOffsetForCrossAxisEndEdge,
   getOffsetForCrossAxisStartEdge,
-} from '../get-drag-impact/util/get-offset-for-edge';
-import { toDroppableMap } from '../../../../src/state/dimension-structures';
-import { beforeCrossAxisPoint } from '../../../util/before-point';
-import { afterCrossAxisPoint } from '../../../util/after-point';
+} from "../get-drag-impact/util/get-offset-for-edge";
+import { toDroppableMap } from "../../../../src/state/dimension-structures";
+import { beforeCrossAxisPoint } from "../../../util/before-point";
+import { afterCrossAxisPoint } from "../../../util/after-point";
 
 const droppableLarge: DroppableDimension = getDroppableDimension({
   descriptor: {
-    id: 'large',
-    type: 'standard',
-    mode: 'standard',
+    id: "large",
+    type: "standard",
+    mode: "standard",
   },
   borderBox: {
     top: 0,
@@ -34,9 +34,9 @@ const droppableLarge: DroppableDimension = getDroppableDimension({
 
 const droppableSmall: DroppableDimension = getDroppableDimension({
   descriptor: {
-    id: 'small',
-    type: 'standard',
-    mode: 'standard',
+    id: "small",
+    type: "standard",
+    mode: "standard",
   },
   borderBox: {
     top: 1000,
@@ -48,7 +48,7 @@ const droppableSmall: DroppableDimension = getDroppableDimension({
 
 const draggable: DraggableDimension = getDraggableDimension({
   descriptor: {
-    id: 'my draggable',
+    id: "my draggable",
     index: 0,
     type: droppableLarge.descriptor.type,
     droppableId: droppableLarge.descriptor.id,
@@ -56,7 +56,7 @@ const draggable: DraggableDimension = getDraggableDimension({
   borderBox: droppableLarge.client.borderBox,
 });
 
-it('should hit when dragging cross axis end edge is over the list center', () => {
+it("should hit when dragging cross axis end edge is over the list center", () => {
   const offset = getOffsetForCrossAxisEndEdge({
     crossAxisEndEdgeOn: droppableSmall.page.borderBox.center,
     dragging: draggable.page.borderBox,
@@ -66,7 +66,7 @@ it('should hit when dragging cross axis end edge is over the list center', () =>
   {
     const pageBorderBox: Rect = offsetRectByPosition(
       draggable.page.borderBox,
-      offset,
+      offset
     );
 
     const result = getDroppableOver({
@@ -81,7 +81,7 @@ it('should hit when dragging cross axis end edge is over the list center', () =>
   {
     const pageBorderBox: Rect = offsetRectByPosition(
       draggable.page.borderBox,
-      afterCrossAxisPoint(droppableSmall.axis, offset),
+      afterCrossAxisPoint(droppableSmall.axis, offset)
     );
 
     const result = getDroppableOver({
@@ -95,7 +95,7 @@ it('should hit when dragging cross axis end edge is over the list center', () =>
 });
 
 // For this test we are hitting draggableSmall from the (right side) cross axis side
-it('should hit when dragging cross axis start edge is over the list center', () => {
+it("should hit when dragging cross axis start edge is over the list center", () => {
   const offset = getOffsetForCrossAxisStartEdge({
     crossAxisStartEdgeOn: droppableSmall.page.borderBox.center,
     dragging: draggable.page.borderBox,
@@ -105,7 +105,7 @@ it('should hit when dragging cross axis start edge is over the list center', () 
   {
     const pageBorderBox: Rect = offsetRectByPosition(
       draggable.page.borderBox,
-      offset,
+      offset
     );
 
     const result = getDroppableOver({
@@ -120,7 +120,7 @@ it('should hit when dragging cross axis start edge is over the list center', () 
   {
     const pageBorderBox: Rect = offsetRectByPosition(
       draggable.page.borderBox,
-      beforeCrossAxisPoint(droppableSmall.axis, offset),
+      beforeCrossAxisPoint(droppableSmall.axis, offset)
     );
 
     const result = getDroppableOver({

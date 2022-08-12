@@ -1,5 +1,5 @@
-import { getRect, offset } from 'css-box-model';
-import type { Position, BoxModel, Rect } from 'css-box-model';
+import { getRect, offset } from "css-box-model";
+import type { Position, BoxModel, Rect } from "css-box-model";
 import type {
   Axis,
   DragImpact,
@@ -8,30 +8,30 @@ import type {
   DraggableDimensionMap,
   DisplacedBy,
   Viewport,
-} from '../../../../../../src/types';
-import { invariant } from '../../../../../../src/invariant';
-import { vertical, horizontal } from '../../../../../../src/state/axis';
+} from "../../../../../../src/types";
+import { invariant } from "../../../../../../src/invariant";
+import { vertical, horizontal } from "../../../../../../src/state/axis";
 import {
   getDraggableDimension,
   getDroppableDimension,
   getFrame,
-} from '../../../../../util/dimension';
-import getDisplacedBy from '../../../../../../src/state/get-displaced-by';
-import { createViewport } from '../../../../../util/viewport';
-import moveToNextPlace from '../../../../../../src/state/move-in-direction/move-to-next-place';
-import type { PublicResult } from '../../../../../../src/state/move-in-direction/move-in-direction-types';
-import { origin, subtract, patch } from '../../../../../../src/state/position';
-import getPageBorderBoxCenter from '../../../../../../src/state/get-center-from-impact/get-page-border-box-center';
+} from "../../../../../util/dimension";
+import getDisplacedBy from "../../../../../../src/state/get-displaced-by";
+import { createViewport } from "../../../../../util/viewport";
+import moveToNextPlace from "../../../../../../src/state/move-in-direction/move-to-next-place";
+import type { PublicResult } from "../../../../../../src/state/move-in-direction/move-in-direction-types";
+import { origin, subtract, patch } from "../../../../../../src/state/position";
+import getPageBorderBoxCenter from "../../../../../../src/state/get-center-from-impact/get-page-border-box-center";
 import {
   isTotallyVisible,
   isPartiallyVisible,
-} from '../../../../../../src/state/visibility/is-visible';
-import { toDraggableMap } from '../../../../../../src/state/dimension-structures';
-import getLiftEffect from '../../../../../../src/state/get-lift-effect';
-import getClientFromPageBorderBoxCenter from '../../../../../../src/state/get-center-from-impact/get-client-border-box-center/get-client-from-page-border-box-center';
-import scrollDroppable from '../../../../../../src/state/droppable/scroll-droppable';
-import { getForcedDisplacement } from '../../../../../util/impact';
-import { emptyGroups } from '../../../../../../src/state/no-impact';
+} from "../../../../../../src/state/visibility/is-visible";
+import { toDraggableMap } from "../../../../../../src/state/dimension-structures";
+import getLiftEffect from "../../../../../../src/state/get-lift-effect";
+import getClientFromPageBorderBoxCenter from "../../../../../../src/state/get-center-from-impact/get-client-border-box-center/get-client-from-page-border-box-center";
+import scrollDroppable from "../../../../../../src/state/droppable/scroll-droppable";
+import { getForcedDisplacement } from "../../../../../util/impact";
+import { emptyGroups } from "../../../../../../src/state/no-impact";
 
 [vertical, horizontal].forEach((axis: Axis) => {
   const viewport: Viewport = createViewport({
@@ -48,9 +48,9 @@ import { emptyGroups } from '../../../../../../src/state/no-impact';
 
   const home: DroppableDimension = getDroppableDimension({
     descriptor: {
-      id: 'home',
-      type: 'droppable',
-      mode: 'standard',
+      id: "home",
+      type: "droppable",
+      mode: "standard",
     },
     direction: axis.direction,
     borderBox: {
@@ -62,9 +62,9 @@ import { emptyGroups } from '../../../../../../src/state/no-impact';
   });
   const foreign: DroppableDimension = getDroppableDimension({
     descriptor: {
-      id: 'scrollable foriegn',
-      type: 'droppable',
-      mode: 'standard',
+      id: "scrollable foriegn",
+      type: "droppable",
+      mode: "standard",
     },
     direction: axis.direction,
     // huge subject that will be cut by frame
@@ -93,7 +93,7 @@ import { emptyGroups } from '../../../../../../src/state/no-impact';
 
   const inHome: DraggableDimension = getDraggableDimension({
     descriptor: {
-      id: 'in-home',
+      id: "in-home",
       index: 0,
       droppableId: home.descriptor.id,
       type: home.descriptor.type,
@@ -102,7 +102,7 @@ import { emptyGroups } from '../../../../../../src/state/no-impact';
   });
   const inForeign: DraggableDimension = getDraggableDimension({
     descriptor: {
-      id: 'in-foreign',
+      id: "in-foreign",
       index: 0,
       droppableId: foreign.descriptor.id,
       type: foreign.descriptor.type,
@@ -120,8 +120,8 @@ import { emptyGroups } from '../../../../../../src/state/no-impact';
   });
 
   describe(`on ${axis.direction} axis`, () => {
-    describe('moving forward', () => {
-      it('should be setup correctly', () => {
+    describe("moving forward", () => {
+      it("should be setup correctly", () => {
         // verify visibility is as expected
         // before scroll
         expect(
@@ -130,7 +130,7 @@ import { emptyGroups } from '../../../../../../src/state/no-impact';
             viewport: viewport.frame,
             withDroppableDisplacement: true,
             destination: home,
-          }),
+          })
         ).toBe(true);
         expect(
           isTotallyVisible({
@@ -138,13 +138,13 @@ import { emptyGroups } from '../../../../../../src/state/no-impact';
             viewport: viewport.frame,
             withDroppableDisplacement: true,
             destination: foreign,
-          }),
+          })
         ).toBe(true);
 
         // would be visible if displaced
         const displaced: BoxModel = offset(
           inForeign.client,
-          getDisplacedBy(vertical, inHome.displaceBy).point,
+          getDisplacedBy(vertical, inHome.displaceBy).point
         );
         expect(
           isTotallyVisible({
@@ -152,11 +152,11 @@ import { emptyGroups } from '../../../../../../src/state/no-impact';
             viewport: viewport.frame,
             withDroppableDisplacement: true,
             destination: foreign,
-          }),
+          })
         ).toBe(false);
       });
 
-      it('should request a jump scroll for movement that is outside of the viewport', () => {
+      it("should request a jump scroll for movement that is outside of the viewport", () => {
         const previousPageBorderBoxCenter: Position =
           inHome.page.borderBox.center;
         const previousClientSelection: Position =
@@ -167,7 +167,7 @@ import { emptyGroups } from '../../../../../../src/state/no-impact';
           }),
           displacedBy,
           at: {
-            type: 'REORDER',
+            type: "REORDER",
             destination: {
               droppableId: foreign.descriptor.id,
               index: inForeign.descriptor.index,
@@ -192,7 +192,7 @@ import { emptyGroups } from '../../../../../../src/state/no-impact';
           displaced: emptyGroups,
           displacedBy,
           at: {
-            type: 'REORDER',
+            type: "REORDER",
             destination: {
               droppableId: foreign.descriptor.id,
               index: inForeign.descriptor.index + 1,
@@ -209,7 +209,7 @@ import { emptyGroups } from '../../../../../../src/state/no-impact';
         });
         const expectedScrollJump: Position = subtract(
           nonVisibleCenter,
-          previousPageBorderBoxCenter,
+          previousPageBorderBoxCenter
         );
         const expected: PublicResult = {
           clientSelection: previousClientSelection,
@@ -220,15 +220,15 @@ import { emptyGroups } from '../../../../../../src/state/no-impact';
       });
     });
 
-    describe('moving backward', () => {
+    describe("moving backward", () => {
       // inHome after inForeign and inForeign is not visible
       const newScroll: Position = patch(
         axis.line,
-        frameBorderBox[axis.end] + 1,
+        frameBorderBox[axis.end] + 1
       );
       const scrolled: DroppableDimension = scrollDroppable(foreign, newScroll);
 
-      it('should be setup correctly', () => {
+      it("should be setup correctly", () => {
         // verify visibility is as expected
         expect(
           isTotallyVisible({
@@ -236,7 +236,7 @@ import { emptyGroups } from '../../../../../../src/state/no-impact';
             viewport: viewport.frame,
             withDroppableDisplacement: true,
             destination: scrolled,
-          }),
+          })
         ).toBe(false);
         // going further - ensure it is not partially visible
         expect(
@@ -245,14 +245,14 @@ import { emptyGroups } from '../../../../../../src/state/no-impact';
             viewport: viewport.frame,
             withDroppableDisplacement: true,
             destination: scrolled,
-          }),
+          })
         ).toBe(false);
 
         // checking that if displaced then inForeign would be visible
         // using raw .displacedBy as we are scolling on
         const displaced: BoxModel = offset(
           inForeign.client,
-          getDisplacedBy(axis, inHome.displaceBy).point,
+          getDisplacedBy(axis, inHome.displaceBy).point
         );
         expect(
           isPartiallyVisible({
@@ -260,17 +260,17 @@ import { emptyGroups } from '../../../../../../src/state/no-impact';
             viewport: viewport.frame,
             withDroppableDisplacement: true,
             destination: scrolled,
-          }),
+          })
         ).toBe(true);
       });
 
-      it('should request a jump scroll for movement that is outside of the viewport', () => {
+      it("should request a jump scroll for movement that is outside of the viewport", () => {
         // after non-displaced inForeign
         const previousImpact: DragImpact = {
           displaced: emptyGroups,
           displacedBy: getDisplacedBy(axis, inHome.displaceBy),
           at: {
-            type: 'REORDER',
+            type: "REORDER",
             destination: {
               droppableId: foreign.descriptor.id,
               index: inForeign.descriptor.index + 1,
@@ -314,7 +314,7 @@ import { emptyGroups } from '../../../../../../src/state/no-impact';
           }),
           displacedBy,
           at: {
-            type: 'REORDER',
+            type: "REORDER",
             // moving into place of inForeign
             destination: {
               droppableId: foreign.descriptor.id,
@@ -332,7 +332,7 @@ import { emptyGroups } from '../../../../../../src/state/no-impact';
         });
         const expectedScrollJump: Position = subtract(
           nonVisibleCenter,
-          previousPageBorderBoxCenter,
+          previousPageBorderBoxCenter
         );
         const expected: PublicResult = {
           clientSelection: previousClientSelection,

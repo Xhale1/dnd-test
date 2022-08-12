@@ -1,15 +1,15 @@
-import type { Position, Rect } from 'css-box-model';
+import type { Position, Rect } from "css-box-model";
 import type {
   DroppableDimension,
   DroppableDimensionMap,
   DroppableId,
   DraggableDimension,
   Axis,
-} from '../types';
-import { toDroppableList } from './dimension-structures';
-import isPositionInFrame from './visibility/is-position-in-frame';
-import { distance, patch } from './position';
-import isWithin from './is-within';
+} from "../types";
+import { toDroppableList } from "./dimension-structures";
+import isPositionInFrame from "./visibility/is-position-in-frame";
+import { distance, patch } from "./position";
+import isWithin from "./is-within";
 
 // https://stackoverflow.com/questions/306316/determine-if-two-rectangles-overlap-each-other
 // https://silentmatt.com/rectangle-intersection/
@@ -60,7 +60,7 @@ function getFurthestAway({
         // use the current center of the dragging item on the main axis
         pageBorderBox.center[axis.line],
         // use the center of the list on the cross axis
-        candidate.page.borderBox.center[axis.crossAxisLine],
+        candidate.page.borderBox.center[axis.crossAxisLine]
       );
 
       return {
@@ -114,7 +114,7 @@ export default function getDroppableOver({
 
       const isContained = isWithin(
         active[axis.crossAxisStart],
-        active[axis.crossAxisEnd],
+        active[axis.crossAxisEnd]
       );
 
       const isStartContained: boolean = isContained(crossAxisStart);
@@ -134,7 +134,7 @@ export default function getDroppableOver({
       }
 
       return crossAxisEnd > childCenter;
-    },
+    }
   );
 
   if (!candidates.length) {

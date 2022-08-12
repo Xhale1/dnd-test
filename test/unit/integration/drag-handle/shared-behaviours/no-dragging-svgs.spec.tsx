@@ -1,19 +1,19 @@
-import React from 'react';
-import { render } from '@testing-library/react';
-import { invariant } from '../../../../../src/invariant';
-import { forEachSensor, simpleLift } from '../../util/controls';
-import type { Control } from '../../util/controls';
-import { isDragging } from '../../util/helpers';
+import React from "react";
+import { render } from "@testing-library/react";
+import { invariant } from "../../../../../src/invariant";
+import { forEachSensor, simpleLift } from "../../util/controls";
+import type { Control } from "../../util/controls";
+import { isDragging } from "../../util/helpers";
 import type {
   DraggableProvided,
   DraggableStateSnapshot,
-} from '../../../../../src';
-import App from '../../util/app';
-import type { Item } from '../../util/app';
-import { withWarn, withError } from '../../../../util/console';
+} from "../../../../../src";
+import App from "../../util/app";
+import type { Item } from "../../util/app";
+import { withWarn, withError } from "../../../../util/console";
 
 forEachSensor((control: Control) => {
-  it('should not start a drag from an SVG', () => {
+  it("should not start a drag from an SVG", () => {
     const renderItem =
       (item: Item) =>
       (provided: DraggableProvided, snapshot: DraggableStateSnapshot) =>
@@ -32,7 +32,7 @@ forEachSensor((control: Control) => {
         );
 
     const spyable = { render };
-    const renderSpy = jest.spyOn(spyable, 'render');
+    const renderSpy = jest.spyOn(spyable, "render");
     // this is a setup problem: a drag handle cannot be a svg
     withWarn(() => {
       withError(() => {
@@ -40,11 +40,11 @@ forEachSensor((control: Control) => {
       });
     });
     const result = renderSpy.mock.results?.[0];
-    invariant(result.type === 'return');
+    invariant(result.type === "return");
     const api = result.value;
     invariant(api);
-    const draggable = api.getByTestId('draggable-0');
-    const handle = api.getByTestId('handle-0');
+    const draggable = api.getByTestId("draggable-0");
+    const handle = api.getByTestId("handle-0");
 
     withWarn(() => {
       simpleLift(control, handle);
@@ -53,7 +53,7 @@ forEachSensor((control: Control) => {
     expect(isDragging(draggable)).toBe(false);
   });
 
-  it('should allow an SVG within a draggable', () => {
+  it("should allow an SVG within a draggable", () => {
     const renderItem =
       (item: Item) =>
       (provided: DraggableProvided, snapshot: DraggableStateSnapshot) =>
@@ -69,8 +69,8 @@ forEachSensor((control: Control) => {
           </div>
         );
     const { getByTestId } = render(<App renderItem={renderItem} />);
-    const draggable = getByTestId('draggable-0');
-    const startFrom = getByTestId('svg-0');
+    const draggable = getByTestId("draggable-0");
+    const startFrom = getByTestId("svg-0");
 
     simpleLift(control, startFrom);
 

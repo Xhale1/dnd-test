@@ -1,12 +1,12 @@
-import type { Position, Rect, Spacing } from 'css-box-model';
-import type { DraggableDimension, LiftEffect } from '../../../types';
-import { negate, subtract } from '../../position';
-import { offsetByPosition } from '../../spacing';
-import didStartAfterCritical from '../../did-start-after-critical';
+import type { Position, Rect, Spacing } from "css-box-model";
+import type { DraggableDimension, LiftEffect } from "../../../types";
+import { negate, subtract } from "../../position";
+import { offsetByPosition } from "../../spacing";
+import didStartAfterCritical from "../../did-start-after-critical";
 
 export const getCurrentPageBorderBoxCenter = (
   draggable: DraggableDimension,
-  afterCritical: LiftEffect,
+  afterCritical: LiftEffect
 ): Position => {
   // If an item started displaced it is now resting
   // in a non-displaced location
@@ -18,7 +18,7 @@ export const getCurrentPageBorderBoxCenter = (
 
 export const getCurrentPageBorderBox = (
   draggable: DraggableDimension,
-  afterCritical: LiftEffect,
+  afterCritical: LiftEffect
 ): Spacing => {
   // If an item started displaced it is now resting
   // in a non-displaced location

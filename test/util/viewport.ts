@@ -1,9 +1,9 @@
-import type { Rect, Position } from 'css-box-model';
-import type { Viewport } from '../../src/types';
-import getViewport from '../../src/view/window/get-viewport';
-import getMaxScroll from '../../src/state/get-max-scroll';
-import getDocumentElement from '../../src/view/get-document-element';
-import writable from './writable';
+import type { Rect, Position } from "css-box-model";
+import type { Viewport } from "../../src/types";
+import getViewport from "../../src/view/window/get-viewport";
+import getMaxScroll from "../../src/state/get-max-scroll";
+import getDocumentElement from "../../src/view/get-document-element";
+import writable from "./writable";
 
 export const setWindowScroll = (newScroll: Position) => {
   writable(window).pageYOffset = newScroll.y;
@@ -12,10 +12,10 @@ export const setWindowScroll = (newScroll: Position) => {
 
 export const setViewport = (viewport: Viewport) => {
   if (viewport.scroll.current.x !== viewport.frame.left) {
-    throw new Error('scroll x must match left of subject');
+    throw new Error("scroll x must match left of subject");
   }
   if (viewport.scroll.current.y !== viewport.frame.top) {
-    throw new Error('scroll y must match top of subject');
+    throw new Error("scroll y must match top of subject");
   }
 
   setWindowScroll(viewport.scroll.current);

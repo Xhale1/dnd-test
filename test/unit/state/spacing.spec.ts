@@ -1,9 +1,9 @@
-import type { Position, Spacing } from 'css-box-model';
+import type { Position, Spacing } from "css-box-model";
 import {
   getCorners,
   expandByPosition,
   offsetByPosition,
-} from '../../../src/state/spacing';
+} from "../../../src/state/spacing";
 
 const base: Spacing = {
   top: 8,
@@ -12,9 +12,9 @@ const base: Spacing = {
   left: 5,
 };
 
-describe('spacing', () => {
-  describe('expandByPosition', () => {
-    it('should increase the size of the spacing', () => {
+describe("spacing", () => {
+  describe("expandByPosition", () => {
+    it("should increase the size of the spacing", () => {
       const spacing: Spacing = {
         top: 0,
         right: 10,
@@ -36,8 +36,8 @@ describe('spacing', () => {
     });
   });
 
-  describe('offsetByPosition', () => {
-    it('should add x/y values to top/right/bottom/left dimensions', () => {
+  describe("offsetByPosition", () => {
+    it("should add x/y values to top/right/bottom/left dimensions", () => {
       const offsetPosition: Position = {
         x: 10,
         y: 5,
@@ -52,8 +52,8 @@ describe('spacing', () => {
     });
   });
 
-  describe('getCorners', () => {
-    it('should return the corners of a spacing box in the order TL, TR, BL, BR', () => {
+  describe("getCorners", () => {
+    it("should return the corners of a spacing box in the order TL, TR, BL, BR", () => {
       const spacing: Spacing = {
         top: 1,
         right: 2,

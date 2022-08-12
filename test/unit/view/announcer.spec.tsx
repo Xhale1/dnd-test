@@ -1,10 +1,10 @@
-import React from 'react';
-import type { ReactNode } from 'react';
-import { render } from '@testing-library/react';
-import { invariant } from '../../../src/invariant';
-import type { Announce, ContextId } from '../../../src/types';
-import useAnnouncer from '../../../src/view/use-announcer';
-import { getId } from '../../../src/view/use-announcer/use-announcer';
+import React from "react";
+import type { ReactNode } from "react";
+import { render } from "@testing-library/react";
+import { invariant } from "../../../src/invariant";
+import type { Announce, ContextId } from "../../../src/types";
+import useAnnouncer from "../../../src/view/use-announcer";
+import { getId } from "../../../src/view/use-announcer/use-announcer";
 
 // beforeEach(() => {
 //   jest.useFakeTimers();
@@ -32,56 +32,56 @@ const getMock = () => jest.fn().mockImplementation(() => null);
 const getElement = (contextId: ContextId) =>
   document.getElementById(getId(contextId));
 
-it('should create a new element when mounting', () => {
+it("should create a new element when mounting", () => {
   render(<WithAnnouncer contextId="5">{getMock()}</WithAnnouncer>);
 
-  const el = getElement('5');
+  const el = getElement("5");
 
   expect(el).toBeTruthy();
 });
 
-it('should apply the appropriate aria attributes and non visibility styles', () => {
+it("should apply the appropriate aria attributes and non visibility styles", () => {
   render(<WithAnnouncer contextId="5">{getMock()}</WithAnnouncer>);
 
-  const el = getElement('5');
-  invariant(el, 'Cannot find node');
+  const el = getElement("5");
+  invariant(el, "Cannot find node");
 
-  expect(el.getAttribute('aria-live')).toBe('assertive');
-  expect(el.getAttribute('aria-atomic')).toBe('true');
+  expect(el.getAttribute("aria-live")).toBe("assertive");
+  expect(el.getAttribute("aria-atomic")).toBe("true");
 
   // not checking all the styles - just enough to know we are doing something
-  expect(el.style.overflow).toBe('hidden');
+  expect(el.style.overflow).toBe("hidden");
 });
 
-it('should remove the element when unmounting after a timeout', () => {
+it("should remove the element when unmounting after a timeout", () => {
   const mock = getMock();
   const { unmount } = render(
-    <WithAnnouncer contextId="5">{mock}</WithAnnouncer>,
+    <WithAnnouncer contextId="5">{mock}</WithAnnouncer>
   );
 
   unmount();
 
-  expect(getElement('5')).toBeTruthy();
+  expect(getElement("5")).toBeTruthy();
 
   return new Promise<void>((resolve) => {
     setTimeout(() => {
-      expect(getElement('5')).not.toBeTruthy();
+      expect(getElement("5")).not.toBeTruthy();
       resolve();
     });
   });
 });
 
-it('should set the text content of the announcement element', () => {
+it("should set the text content of the announcement element", () => {
   // arrange
   const mock = getMock();
   render(<WithAnnouncer contextId="6">{mock}</WithAnnouncer>);
-  const el = getElement('6');
-  invariant(el, 'Could not find announcer');
+  const el = getElement("6");
+  invariant(el, "Could not find announcer");
 
   // act
   const announce = getAnnounce(mock);
-  announce('test');
+  announce("test");
 
   // assert
-  expect(el.textContent).toBe('test');
+  expect(el.textContent).toBe("test");
 });

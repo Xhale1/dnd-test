@@ -1,4 +1,4 @@
-import type { DraggableId } from '../../types';
+import type { DraggableId } from "../../types";
 
 export type Unregister = () => void;
 

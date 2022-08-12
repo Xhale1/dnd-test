@@ -1,16 +1,16 @@
-import { calculateBox, withScroll } from 'css-box-model';
-import type { BoxModel, Position } from 'css-box-model';
+import { calculateBox, withScroll } from "css-box-model";
+import type { BoxModel, Position } from "css-box-model";
 import type {
   DraggableDescriptor,
   DraggableDimension,
   Placeholder,
-} from '../../types';
-import { origin } from '../../state/position';
+} from "../../types";
+import { origin } from "../../state/position";
 
 export default function getDimension(
   descriptor: DraggableDescriptor,
   el: HTMLElement,
-  windowScroll: Position = origin,
+  windowScroll: Position = origin
 ): DraggableDimension {
   const computedStyles: CSSStyleDeclaration = window.getComputedStyle(el);
   const borderBox: ClientRect = el.getBoundingClientRect();

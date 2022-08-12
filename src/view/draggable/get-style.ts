@@ -1,6 +1,6 @@
-import type { BoxModel } from 'css-box-model';
-import { combine, transforms, transitions } from '../../animation';
-import type { DraggableDimension } from '../../types';
+import type { BoxModel } from "css-box-model";
+import { combine, transforms, transitions } from "../../animation";
+import type { DraggableDimension } from "../../types";
 import type {
   DraggingStyle,
   NotDraggingStyle,
@@ -10,7 +10,7 @@ import type {
   DraggingMapProps,
   DraggableStyle,
   MappedProps,
-} from './draggable-types';
+} from "./draggable-types";
 
 export const zIndexOptions: ZIndexOptions = {
   dragging: 5000,
@@ -19,7 +19,7 @@ export const zIndexOptions: ZIndexOptions = {
 
 const getDraggingTransition = (
   shouldAnimateDragMovement: boolean,
-  dropping?: DropAnimation | null,
+  dropping?: DropAnimation | null
 ): string => {
   if (dropping) {
     return transitions.drop(dropping.duration);
@@ -32,7 +32,7 @@ const getDraggingTransition = (
 
 const getDraggingOpacity = (
   isCombining: boolean,
-  isDropAnimating: boolean,
+  isDropAnimating: boolean
 ): number | undefined => {
   // if not combining: no not impact opacity
   if (!isCombining) {
@@ -46,7 +46,7 @@ const getShouldDraggingAnimate = (dragging: DraggingMapProps): boolean => {
   if (dragging.forceShouldAnimate != null) {
     return dragging.forceShouldAnimate;
   }
-  return dragging.mode === 'SNAP';
+  return dragging.mode === "SNAP";
 };
 
 function getDraggingStyle(dragging: DraggingMapProps): DraggingStyle {
@@ -65,14 +65,14 @@ function getDraggingStyle(dragging: DraggingMapProps): DraggingStyle {
 
   const style: DraggingStyle = {
     // ## Placement
-    position: 'fixed',
+    position: "fixed",
     // As we are applying the margins we need to align to the start of the marginBox
     top: box.marginBox.top,
     left: box.marginBox.left,
 
     // ## Sizing
     // Locking these down as pulling the node out of the DOM could cause it to change size
-    boxSizing: 'border-box',
+    boxSizing: "border-box",
     width: box.borderBox.width,
     height: box.borderBox.height,
 
@@ -88,7 +88,7 @@ function getDraggingStyle(dragging: DraggingMapProps): DraggingStyle {
 
     // ## Blocking any pointer events on the dragging or dropping item
     // global styles on cover while dragging
-    pointerEvents: 'none',
+    pointerEvents: "none",
   };
   return style;
 }
@@ -97,12 +97,12 @@ function getSecondaryStyle(secondary: SecondaryMapProps): NotDraggingStyle {
   return {
     transform: transforms.moveTo(secondary.offset),
     // transition style is applied in the head
-    transition: secondary.shouldAnimateDisplacement ? undefined : 'none',
+    transition: secondary.shouldAnimateDisplacement ? undefined : "none",
   };
 }
 
 export default function getStyle(mapped: MappedProps): DraggableStyle {
-  return mapped.type === 'DRAGGING'
+  return mapped.type === "DRAGGING"
     ? getDraggingStyle(mapped)
     : getSecondaryStyle(mapped);
 }

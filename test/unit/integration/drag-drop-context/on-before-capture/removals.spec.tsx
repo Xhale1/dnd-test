@@ -1,14 +1,14 @@
-import React, { useState } from 'react';
-import { render } from '@testing-library/react';
-import { Droppable, Draggable, DragDropContext } from '../../../../../src';
-import type { DragStart } from '../../../../../src';
-import expandedMouse from '../../util/expanded-mouse';
-import { isDragging } from '../../util/helpers';
-import { withError } from '../../../../util/console';
-import { noop } from '../../../../../src/empty';
+import { act, render } from "@testing-library/react";
+import React, { useState } from "react";
+import type { DragStart } from "../../../../../src";
+import { DragDropContext, Draggable, Droppable } from "../../../../../src";
+import { noop } from "../../../../../src/empty";
+import { withError } from "../../../../util/console";
+import expandedMouse from "../../util/expanded-mouse";
+import { isDragging } from "../../util/helpers";
 
 function getIndex(el: HTMLElement): number {
-  return Number(el.getAttribute('data-index'));
+  return Number(el.getAttribute("data-index"));
 }
 
 beforeEach(() => {
@@ -19,16 +19,16 @@ afterEach(() => {
   jest.useRealTimers();
 });
 
-it('should adjust captured values for any changes that impact that dragging item', () => {
+it("should adjust captured values for any changes that impact that dragging item", () => {
   // 1. Changing the `type` of the Droppable
   // 2. Adding and item before the dragging item to impact it's index
   const onDragStart = jest.fn();
 
   function Root() {
-    const [items, setItems] = useState(['first', 'second']);
+    const [items, setItems] = useState(["first", "second"]);
     function onBeforeCapture() {
       // removing the first item
-      setItems(['second']);
+      setItems(["second"]);
     }
 
     return (
@@ -67,8 +67,8 @@ it('should adjust captured values for any changes that impact that dragging item
     );
   }
 
-  const { getByTestId, queryByTestId } = render(<Root />);
-  const second: HTMLElement = getByTestId('second');
+  const { getByTestId, queryByTestId, rerender } = render(<Root />);
+  const second: HTMLElement = getByTestId("second");
 
   // initially it had an index of 1
   expect(getIndex(second)).toBe(1);
@@ -76,12 +76,14 @@ it('should adjust captured values for any changes that impact that dragging item
   // act(() => {}); is joining the two into one update which is
   // causing unexpected mounting behaviour
   withError(() => {
-    expandedMouse.rawPowerLift(getByTestId('second'), { x: 0, y: 0 });
+    expandedMouse.rawPowerLift(getByTestId("second"), { x: 0, y: 0 });
   });
+
+  act(() => rerender(<Root />));
 
   // act(() => rerender());
   // first item has been removed
-  expect(queryByTestId('first')).toBe(null);
+  expect(queryByTestId("first")).toBe(null);
   // second is now dragging
   expect(isDragging(second)).toBe(true);
   // second index accounts for removal
@@ -92,12 +94,12 @@ it('should adjust captured values for any changes that impact that dragging item
 
   // onDragStart called with correct new index
   const expected: DragStart = {
-    draggableId: 'second',
-    mode: 'FLUID',
-    type: 'DEFAULT',
+    draggableId: "second",
+    mode: "FLUID",
+    type: "DEFAULT",
     source: {
       index: 0,
-      droppableId: 'droppable',
+      droppableId: "droppable",
     },
   };
   expect(onDragStart.mock.calls[0][0]).toEqual(expected);

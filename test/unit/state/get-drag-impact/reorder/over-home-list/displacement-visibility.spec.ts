@@ -1,8 +1,8 @@
-import type { Position, Spacing } from 'css-box-model';
-import getDragImpact from '../../../../../../src/state/get-drag-impact';
-import noImpact from '../../../../../../src/state/no-impact';
-import { vertical, horizontal } from '../../../../../../src/state/axis';
-import getDisplacedBy from '../../../../../../src/state/get-displaced-by';
+import type { Position, Spacing } from "css-box-model";
+import getDragImpact from "../../../../../../src/state/get-drag-impact";
+import noImpact from "../../../../../../src/state/no-impact";
+import { vertical, horizontal } from "../../../../../../src/state/axis";
+import getDisplacedBy from "../../../../../../src/state/get-displaced-by";
 import type {
   Axis,
   DragImpact,
@@ -12,16 +12,16 @@ import type {
   DroppableDimensionMap,
   Viewport,
   DisplacedBy,
-} from '../../../../../../src/types';
+} from "../../../../../../src/types";
 import {
   getDroppableDimension,
   getDraggableDimension,
-} from '../../../../../util/dimension';
-import getViewport from '../../../../../../src/view/window/get-viewport';
-import getLiftEffect from '../../../../../../src/state/get-lift-effect';
-import { getForcedDisplacement } from '../../../../../util/impact';
-import noAfterCritical from '../../../../../util/no-after-critical';
-import { origin, subtract } from '../../../../../../src/state/position';
+} from "../../../../../util/dimension";
+import getViewport from "../../../../../../src/view/window/get-viewport";
+import getLiftEffect from "../../../../../../src/state/get-lift-effect";
+import { getForcedDisplacement } from "../../../../../util/impact";
+import noAfterCritical from "../../../../../util/no-after-critical";
+import { origin, subtract } from "../../../../../../src/state/position";
 
 const viewport: Viewport = getViewport();
 
@@ -32,12 +32,12 @@ const viewport: Viewport = getViewport();
     const crossAxisStart = 0;
     const crossAxisEnd = 100;
 
-    it('should indicate when a displacement is not visible due to being outside of the droppable frame', () => {
+    it("should indicate when a displacement is not visible due to being outside of the droppable frame", () => {
       const droppable: DroppableDimension = getDroppableDimension({
         descriptor: {
-          id: 'my-custom-droppable',
-          type: 'TYPE',
-          mode: 'standard',
+          id: "my-custom-droppable",
+          type: "TYPE",
+          mode: "standard",
         },
         direction: axis.direction,
         borderBox: {
@@ -65,7 +65,7 @@ const viewport: Viewport = getViewport();
       });
       const visible: DraggableDimension = getDraggableDimension({
         descriptor: {
-          id: 'visible',
+          id: "visible",
           droppableId: droppable.descriptor.id,
           type: droppable.descriptor.type,
           index: 0,
@@ -79,7 +79,7 @@ const viewport: Viewport = getViewport();
       });
       const partialVisible: DraggableDimension = getDraggableDimension({
         descriptor: {
-          id: 'partial-visible',
+          id: "partial-visible",
           droppableId: droppable.descriptor.id,
           type: droppable.descriptor.type,
           index: 1,
@@ -94,7 +94,7 @@ const viewport: Viewport = getViewport();
       });
       const notVisible1: DraggableDimension = getDraggableDimension({
         descriptor: {
-          id: 'not-visible-1',
+          id: "not-visible-1",
           droppableId: droppable.descriptor.id,
           type: droppable.descriptor.type,
           index: 2,
@@ -109,7 +109,7 @@ const viewport: Viewport = getViewport();
       });
       const notVisible2: DraggableDimension = getDraggableDimension({
         descriptor: {
-          id: 'not-visible-2',
+          id: "not-visible-2",
           droppableId: droppable.descriptor.id,
           type: droppable.descriptor.type,
           index: 3,
@@ -134,7 +134,7 @@ const viewport: Viewport = getViewport();
       // dragging notVisible2 backwards into first position
       const displacedBy: DisplacedBy = getDisplacedBy(
         axis,
-        notVisible2.displaceBy,
+        notVisible2.displaceBy
       );
       const expected: DragImpact = {
         displaced: getForcedDisplacement({
@@ -152,7 +152,7 @@ const viewport: Viewport = getViewport();
         }),
         displacedBy,
         at: {
-          type: 'REORDER',
+          type: "REORDER",
           destination: {
             droppableId: droppable.descriptor.id,
             index: 0,
@@ -170,7 +170,7 @@ const viewport: Viewport = getViewport();
       const destination: Position = { x: 1, y: 1 };
       const offset: Position = subtract(
         destination,
-        notVisible2.page.borderBox.center,
+        notVisible2.page.borderBox.center
       );
       const impact: DragImpact = getDragImpact({
         pageOffset: offset,
@@ -185,12 +185,12 @@ const viewport: Viewport = getViewport();
       expect(impact).toEqual(expected);
     });
 
-    it('should indicate when a displacement is not visible due to being outside of the viewport', () => {
+    it("should indicate when a displacement is not visible due to being outside of the viewport", () => {
       const droppable: DroppableDimension = getDroppableDimension({
         descriptor: {
-          id: 'my-custom-droppable',
-          type: 'TYPE',
-          mode: 'standard',
+          id: "my-custom-droppable",
+          type: "TYPE",
+          mode: "standard",
         },
         direction: axis.direction,
         borderBox: {
@@ -202,7 +202,7 @@ const viewport: Viewport = getViewport();
       });
       const visible: DraggableDimension = getDraggableDimension({
         descriptor: {
-          id: 'visible',
+          id: "visible",
           droppableId: droppable.descriptor.id,
           type: droppable.descriptor.type,
           index: 0,
@@ -216,7 +216,7 @@ const viewport: Viewport = getViewport();
       });
       const partialVisible: DraggableDimension = getDraggableDimension({
         descriptor: {
-          id: 'partial-visible',
+          id: "partial-visible",
           droppableId: droppable.descriptor.id,
           type: droppable.descriptor.type,
           index: 1,
@@ -230,7 +230,7 @@ const viewport: Viewport = getViewport();
       });
       const notVisible1: DraggableDimension = getDraggableDimension({
         descriptor: {
-          id: 'not-visible-1',
+          id: "not-visible-1",
           droppableId: droppable.descriptor.id,
           type: droppable.descriptor.type,
           index: 2,
@@ -247,7 +247,7 @@ const viewport: Viewport = getViewport();
       });
       const notVisible2: DraggableDimension = getDraggableDimension({
         descriptor: {
-          id: 'not-visible-2',
+          id: "not-visible-2",
           droppableId: droppable.descriptor.id,
           type: droppable.descriptor.type,
           index: 3,
@@ -291,7 +291,7 @@ const viewport: Viewport = getViewport();
         }),
         displacedBy,
         at: {
-          type: 'REORDER',
+          type: "REORDER",
           destination: {
             droppableId: droppable.descriptor.id,
             index: 0,

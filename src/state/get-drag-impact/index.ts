@@ -1,4 +1,4 @@
-import type { Position, Rect } from 'css-box-model';
+import type { Position, Rect } from "css-box-model";
 import type {
   DroppableId,
   DraggableDimension,
@@ -8,14 +8,14 @@ import type {
   DragImpact,
   Viewport,
   LiftEffect,
-} from '../../types';
-import getDroppableOver from '../get-droppable-over';
-import getDraggablesInsideDroppable from '../get-draggables-inside-droppable';
-import withDroppableScroll from '../with-scroll-change/with-droppable-scroll';
-import getReorderImpact from './get-reorder-impact';
-import getCombineImpact from './get-combine-impact';
-import noImpact from '../no-impact';
-import { offsetRectByPosition } from '../rect';
+} from "../../types";
+import getDroppableOver from "../get-droppable-over";
+import getDraggablesInsideDroppable from "../get-draggables-inside-droppable";
+import withDroppableScroll from "../with-scroll-change/with-droppable-scroll";
+import getReorderImpact from "./get-reorder-impact";
+import getCombineImpact from "./get-combine-impact";
+import noImpact from "../no-impact";
+import { offsetRectByPosition } from "../rect";
 
 interface Args {
   pageOffset: Position;
@@ -39,7 +39,7 @@ export default ({
 }: Args): DragImpact => {
   const pageBorderBox: Rect = offsetRectByPosition(
     draggable.page.borderBox,
-    pageOffset,
+    pageOffset
   );
 
   const destinationId: DroppableId | null = getDroppableOver({
@@ -59,14 +59,14 @@ export default ({
   const destination: DroppableDimension = droppables[destinationId];
   const insideDestination: DraggableDimension[] = getDraggablesInsideDroppable(
     destination.descriptor.id,
-    draggables,
+    draggables
   );
 
   // Where the element actually is now.
   // Need to take into account the change of scroll in the droppable
   const pageBorderBoxWithDroppableScroll: Rect = withDroppableScroll(
     destination,
-    pageBorderBox,
+    pageBorderBox
   );
 
   // checking combine first so we combine before any reordering

@@ -1,8 +1,8 @@
-import type { DroppableDimension, DroppableDimensionMap } from '../types';
+import type { DroppableDimension, DroppableDimensionMap } from "../types";
 
 export default (
   droppables: DroppableDimensionMap,
-  updated: DroppableDimension,
+  updated: DroppableDimension
 ): DroppableDimensionMap => ({
   ...droppables,
   [updated.descriptor.id]: updated,

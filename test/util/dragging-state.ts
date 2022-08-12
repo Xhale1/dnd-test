@@ -1,6 +1,6 @@
-import type { Position } from 'css-box-model';
-import { add } from '../../src/state/position';
-import getStatePreset from './get-simple-state-preset';
+import type { Position } from "css-box-model";
+import { add } from "../../src/state/position";
+import getStatePreset from "./get-simple-state-preset";
 import type {
   ClientPositions,
   PagePositions,
@@ -8,7 +8,7 @@ import type {
   CollectingState,
   DropPendingState,
   DragImpact,
-} from '../../src/types';
+} from "../../src/types";
 
 const state = getStatePreset();
 
@@ -25,7 +25,7 @@ export const draggingStates: IsDraggingState[] = [
 
 export const withImpact = (
   current: IsDraggingState,
-  impact: DragImpact,
+  impact: DragImpact
 ): IsDraggingState =>
   ({
     ...current,
@@ -34,7 +34,7 @@ export const withImpact = (
 
 export const move = (
   previous: IsDraggingState,
-  offset: Position,
+  offset: Position
 ): IsDraggingState => {
   const client: ClientPositions = {
     offset,
@@ -45,7 +45,7 @@ export const move = (
     selection: add(client.selection, previous.viewport.scroll.current),
     borderBoxCenter: add(
       client.borderBoxCenter,
-      previous.viewport.scroll.current,
+      previous.viewport.scroll.current
     ),
     offset: add(client.offset, previous.viewport.scroll.diff.value),
   };

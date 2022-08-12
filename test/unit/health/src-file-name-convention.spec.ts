@@ -1,29 +1,29 @@
 /**
  * @jest-environment node
  */
-import fg from 'fast-glob';
-import { invariant } from '../../../src/invariant';
-import pkg from '../../../package.json';
+import fg from "fast-glob";
+import { invariant } from "../../../src/invariant";
+import pkg from "../../../package.json";
 
 // Regex playground: https://regexr.com/40fin
 const convention = /^[a-z0-9\-./]+$/;
 const isSnakeCase = (filePath: string): boolean => convention.test(filePath);
 
 const exceptions: string[] = [
-  'CHANGELOG.md',
-  'CODE_OF_CONDUCT.md',
-  'CONTRIBUTING.md',
-  'ISSUE_TEMPLATE.md',
-  'README.md',
+  "CHANGELOG.md",
+  "CODE_OF_CONDUCT.md",
+  "CONTRIBUTING.md",
+  "ISSUE_TEMPLATE.md",
+  "README.md",
 ];
 
-it('should have every prettier target following the file name convention', async () => {
-  const targets: string[] = pkg.config.prettier_target.split(' ');
+it("should have every prettier target following the file name convention", async () => {
+  const targets: string[] = pkg.config.prettier_target.split(" ");
   const paths: string[] = await fg(targets);
 
   invariant(
     paths.length,
-    'Could not find files to test against file name convention',
+    "Could not find files to test against file name convention"
   );
 
   paths.forEach((filePath: string) => {
@@ -35,7 +35,7 @@ it('should have every prettier target following the file name convention', async
 
     invariant(
       isMatching,
-      `${filePath} does not follow the file path convention (snake-case.js) ${convention.toString()}`,
+      `${filePath} does not follow the file path convention (snake-case.js) ${convention.toString()}`
     );
 
     expect(isMatching).toBe(true);

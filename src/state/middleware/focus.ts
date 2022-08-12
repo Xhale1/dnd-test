@@ -1,6 +1,6 @@
-import type { DropResult } from '../../types';
-import type { Action, Dispatch } from '../store-types';
-import type { FocusMarshal } from '../../view/use-focus-marshal/focus-marshal-types';
+import type { DropResult } from "../../types";
+import type { Action, Dispatch } from "../store-types";
+import type { FocusMarshal } from "../../view/use-focus-marshal/focus-marshal-types";
 
 export default (marshal: FocusMarshal) => {
   let isWatching = false;
@@ -8,7 +8,7 @@ export default (marshal: FocusMarshal) => {
   return () =>
     (next: Dispatch) =>
     (action: Action): any => {
-      if (action.type === 'INITIAL_PUBLISH') {
+      if (action.type === "INITIAL_PUBLISH") {
         isWatching = true;
 
         marshal.tryRecordFocus(action.payload.critical.draggable.id);
@@ -23,13 +23,13 @@ export default (marshal: FocusMarshal) => {
         return;
       }
 
-      if (action.type === 'FLUSH') {
+      if (action.type === "FLUSH") {
         isWatching = false;
         marshal.tryRestoreFocusRecorded();
         return;
       }
 
-      if (action.type === 'DROP_COMPLETE') {
+      if (action.type === "DROP_COMPLETE") {
         isWatching = false;
         const result: DropResult = action.payload.completed.result;
 
@@ -37,7 +37,7 @@ export default (marshal: FocusMarshal) => {
         if (result.combine) {
           marshal.tryShiftRecord(
             result.draggableId,
-            result.combine.draggableId,
+            result.combine.draggableId
           );
         }
         marshal.tryRestoreFocusRecorded();

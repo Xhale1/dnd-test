@@ -1,17 +1,17 @@
-import type { Property } from 'csstype';
-import React, { Component, Fragment, ReactElement } from 'react';
-import styled from '@emotion/styled';
-import { colors } from '@atlaskit/theme';
-import { DragDropContext, Droppable, Draggable } from '@react-forked/dnd';
+import { colors } from "@atlaskit/theme";
+import styled from "@emotion/styled";
 import type {
-  DropResult,
-  DroppableProvided,
   DraggableProvided,
   DraggableStateSnapshot,
-} from '@react-forked/dnd';
-import reorder from '../reorder';
-import { grid } from '../constants';
-import type { Quote } from '../types';
+  DroppableProvided,
+  DropResult,
+} from "@hello-pangea/dnd";
+import { DragDropContext, Draggable, Droppable } from "@hello-pangea/dnd";
+import type { Property } from "csstype";
+import React, { Component, Fragment, ReactElement } from "react";
+import { grid } from "../constants";
+import reorder from "../reorder";
+import type { Quote } from "../types";
 
 const Table = styled.table<{ layout: Property.TableLayout }>`
   width: 500px;
@@ -39,7 +39,7 @@ const Row = styled.tr<{ isDragging?: boolean }>`
     /* maintain cell width while dragging */
     display: table;
   `
-      : ''}/* stylelint-enable */;
+      : ""}/* stylelint-enable */;
 `;
 
 const Cell = styled.td`
@@ -94,7 +94,7 @@ interface AppProps {
 
 interface AppState {
   quotes: Quote[];
-  layout: 'fixed' | 'auto';
+  layout: "fixed" | "auto";
 }
 
 export default class TableApp extends Component<AppProps, AppState> {
@@ -103,7 +103,7 @@ export default class TableApp extends Component<AppProps, AppState> {
 
   state: AppState = {
     quotes: this.props.initial,
-    layout: 'auto',
+    layout: "auto",
   };
 
   onDragEnd = (result: DropResult): void => {
@@ -123,7 +123,7 @@ export default class TableApp extends Component<AppProps, AppState> {
     const quotes = reorder(
       this.state.quotes,
       result.source.index,
-      result.destination.index,
+      result.destination.index
     );
 
     this.setState({
@@ -133,7 +133,7 @@ export default class TableApp extends Component<AppProps, AppState> {
 
   toggleTableLayout = (): void => {
     this.setState({
-      layout: this.state.layout === 'auto' ? 'fixed' : 'auto',
+      layout: this.state.layout === "auto" ? "fixed" : "auto",
     });
   };
 
@@ -149,7 +149,7 @@ export default class TableApp extends Component<AppProps, AppState> {
 
     const wasCopied: boolean = (() => {
       try {
-        const result: boolean = document.execCommand('copy');
+        const result: boolean = document.execCommand("copy");
         return result;
       } catch (e) {
         return false;
@@ -157,7 +157,7 @@ export default class TableApp extends Component<AppProps, AppState> {
     })();
 
     // eslint-disable-next-line no-console
-    console.log('was copied?', wasCopied);
+    console.log("was copied?", wasCopied);
 
     // clear selection
     window?.getSelection()?.removeAllRanges();
@@ -205,7 +205,7 @@ export default class TableApp extends Component<AppProps, AppState> {
                     >
                       {(
                         provided: DraggableProvided,
-                        snapshot: DraggableStateSnapshot,
+                        snapshot: DraggableStateSnapshot
                       ) => (
                         <TableRow
                           provided={provided}

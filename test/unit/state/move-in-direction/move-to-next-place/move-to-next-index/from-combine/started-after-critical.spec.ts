@@ -2,13 +2,13 @@ import type {
   Axis,
   DragImpact,
   DroppableDimension,
-} from '../../../../../../../src/types';
-import { vertical, horizontal } from '../../../../../../../src/state/axis';
-import { getPreset } from '../../../../../../util/dimension';
-import moveToNextIndex from '../../../../../../../src/state/move-in-direction/move-to-next-place/move-to-next-index/index';
-import getDisplacedBy from '../../../../../../../src/state/get-displaced-by';
-import getLiftEffect from '../../../../../../../src/state/get-lift-effect';
-import { getForcedDisplacement } from '../../../../../../util/impact';
+} from "../../../../../../../src/types";
+import { vertical, horizontal } from "../../../../../../../src/state/axis";
+import { getPreset } from "../../../../../../util/dimension";
+import moveToNextIndex from "../../../../../../../src/state/move-in-direction/move-to-next-place/move-to-next-index/index";
+import getDisplacedBy from "../../../../../../../src/state/get-displaced-by";
+import getLiftEffect from "../../../../../../../src/state/get-lift-effect";
+import { getForcedDisplacement } from "../../../../../../util/impact";
 
 const enableCombine = (droppable: DroppableDimension): DroppableDimension => ({
   ...droppable,
@@ -18,7 +18,7 @@ const enableCombine = (droppable: DroppableDimension): DroppableDimension => ({
 [vertical, horizontal].forEach((axis: Axis) => {
   const preset = getPreset(axis);
   describe(`on ${axis.direction} axis`, () => {
-    it('should move backward off combining with an item that is displaced', () => {
+    it("should move backward off combining with an item that is displaced", () => {
       // inHome2 combining with inHome3
       const { afterCritical, impact: homeImpact } = getLiftEffect({
         draggable: preset.inHome2,
@@ -29,7 +29,7 @@ const enableCombine = (droppable: DroppableDimension): DroppableDimension => ({
       const combining: DragImpact = {
         ...homeImpact,
         at: {
-          type: 'COMBINE',
+          type: "COMBINE",
           combine: {
             draggableId: preset.inHome3.descriptor.id,
             droppableId: preset.home.descriptor.id,
@@ -52,7 +52,7 @@ const enableCombine = (droppable: DroppableDimension): DroppableDimension => ({
       expect(result).toEqual(homeImpact);
     });
 
-    it('should move forward past a combining an item that is displaced', () => {
+    it("should move forward past a combining an item that is displaced", () => {
       // inHome2 combining with inHome3
       const { afterCritical, impact: homeImpact } = getLiftEffect({
         draggable: preset.inHome2,
@@ -63,7 +63,7 @@ const enableCombine = (droppable: DroppableDimension): DroppableDimension => ({
       const combining: DragImpact = {
         ...homeImpact,
         at: {
-          type: 'COMBINE',
+          type: "COMBINE",
           combine: {
             draggableId: preset.inHome3.descriptor.id,
             droppableId: preset.home.descriptor.id,
@@ -90,7 +90,7 @@ const enableCombine = (droppable: DroppableDimension): DroppableDimension => ({
         }),
         displacedBy: getDisplacedBy(axis, preset.inHome2.displaceBy),
         at: {
-          type: 'REORDER',
+          type: "REORDER",
           destination: {
             index: preset.inHome3.descriptor.index,
             droppableId: preset.home.descriptor.id,
@@ -100,7 +100,7 @@ const enableCombine = (droppable: DroppableDimension): DroppableDimension => ({
       expect(result).toEqual(expected);
     });
 
-    it('should move backwards past combining with an item that started displaced - but now is not', () => {
+    it("should move backwards past combining with an item that started displaced - but now is not", () => {
       // inHome2 moved past inHome3 and then backwards onto it
       const { afterCritical } = getLiftEffect({
         draggable: preset.inHome2,
@@ -115,7 +115,7 @@ const enableCombine = (droppable: DroppableDimension): DroppableDimension => ({
         }),
         displacedBy: getDisplacedBy(axis, preset.inHome2.displaceBy),
         at: {
-          type: 'COMBINE',
+          type: "COMBINE",
           combine: {
             draggableId: preset.inHome3.descriptor.id,
             droppableId: preset.home.descriptor.id,
@@ -146,7 +146,7 @@ const enableCombine = (droppable: DroppableDimension): DroppableDimension => ({
         }),
         displacedBy: getDisplacedBy(axis, preset.inHome2.displaceBy),
         at: {
-          type: 'REORDER',
+          type: "REORDER",
           destination: {
             index: preset.inHome2.descriptor.index,
             droppableId: preset.home.descriptor.id,
@@ -156,7 +156,7 @@ const enableCombine = (droppable: DroppableDimension): DroppableDimension => ({
       expect(result).toEqual(expected);
     });
 
-    it('should move forwards past combining with an item that started displaced - but now is not', () => {
+    it("should move forwards past combining with an item that started displaced - but now is not", () => {
       // inHome2 moved past inHome3 and then backwards onto it
       const { afterCritical } = getLiftEffect({
         draggable: preset.inHome2,
@@ -172,7 +172,7 @@ const enableCombine = (droppable: DroppableDimension): DroppableDimension => ({
         }),
         displacedBy: getDisplacedBy(axis, preset.inHome2.displaceBy),
         at: {
-          type: 'COMBINE',
+          type: "COMBINE",
           combine: {
             draggableId: preset.inHome3.descriptor.id,
             droppableId: preset.home.descriptor.id,
@@ -199,7 +199,7 @@ const enableCombine = (droppable: DroppableDimension): DroppableDimension => ({
         }),
         displacedBy: getDisplacedBy(axis, preset.inHome2.displaceBy),
         at: {
-          type: 'REORDER',
+          type: "REORDER",
           destination: {
             index: preset.inHome3.descriptor.index,
             droppableId: preset.home.descriptor.id,

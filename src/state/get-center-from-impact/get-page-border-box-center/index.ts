@@ -1,4 +1,4 @@
-import type { Position } from 'css-box-model';
+import type { Position } from "css-box-model";
 import type {
   DragImpact,
   DraggableDimension,
@@ -6,10 +6,10 @@ import type {
   DraggableDimensionMap,
   ImpactLocation,
   LiftEffect,
-} from '../../../types';
-import whenCombining from './when-combining';
-import whenReordering from './when-reordering';
-import withDroppableDisplacement from '../../with-scroll-change/with-droppable-displacement';
+} from "../../../types";
+import whenCombining from "./when-combining";
+import whenReordering from "./when-reordering";
+import withDroppableDisplacement from "../../with-scroll-change/with-droppable-displacement";
 
 interface Args {
   impact: DragImpact;
@@ -37,7 +37,7 @@ const getResultWithoutDroppableDisplacement = ({
     return original;
   }
 
-  if (at.type === 'REORDER') {
+  if (at.type === "REORDER") {
     return whenReordering({
       impact,
       draggable,

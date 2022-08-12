@@ -1,7 +1,7 @@
-import React, { ChangeEvent, ReactElement } from 'react';
-import { css } from '@emotion/react';
-import { colors } from '@atlaskit/theme';
-import { grid, borderRadius } from '../constants';
+import React, { ChangeEvent, ReactElement } from "react";
+import { css } from "@emotion/react";
+import { colors } from "@atlaskit/theme";
+import { grid, borderRadius } from "../constants";
 
 interface Props {
   library: string;
@@ -15,9 +15,9 @@ interface Option {
 }
 
 const options: Option[] = [
-  { name: 'Small', value: 8 },
-  { name: 'Medium', value: 500 },
-  { name: 'Large', value: 10000 },
+  { name: "Small", value: 8 },
+  { name: "Medium", value: 500 },
+  { name: "Large", value: 10000 },
 ];
 
 export default function QuoteCountChooser(props: Props): ReactElement {

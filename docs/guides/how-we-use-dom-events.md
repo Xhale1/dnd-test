@@ -12,7 +12,7 @@ This page assumes a working knowledge of DOM events. For a good introduction to 
 
 ## Safe event bindings
 
-Without needing going into all the details below, here are the safest event handlers to build on top of `@react-forked/dnd`:
+Without needing going into all the details below, here are the safest event handlers to build on top of `@hello-pangea/dnd`:
 
 > These can be added on the _drag handle_, anywhere else higher on the tree or to the window directly.
 
@@ -35,7 +35,7 @@ In order to know if we have already used the event for the purpose of drag and d
 So let's say you want to add a window `click` handler. You could do something like this:
 
 ```ts
-window.addEventListener('click', (event: MouseEvent) => {
+window.addEventListener("click", (event: MouseEvent) => {
   // event has already been used for drag and drop
   if (event.defaultPrevented) {
     return;

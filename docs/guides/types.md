@@ -33,11 +33,20 @@ type OnBeforeCaptureResponder = (before: BeforeCapture) => unknown;
 
 type OnBeforeDragStartResponder = (start: DragStart) => unknown;
 
-type OnDragStartResponder = (start: DragStart, provided: ResponderProvided) => unknown;
+type OnDragStartResponder = (
+  start: DragStart,
+  provided: ResponderProvided
+) => unknown;
 
-type OnDragUpdateResponder = (update: DragUpdate, provided: ResponderProvided) => unknown;
+type OnDragUpdateResponder = (
+  update: DragUpdate,
+  provided: ResponderProvided
+) => unknown;
 
-type OnDragEndResponder = (result: DropResult, provided: ResponderProvided) => unknown;
+type OnDragEndResponder = (
+  result: DropResult,
+  provided: ResponderProvided
+) => unknown;
 
 interface DraggableRubric {
   draggableId: DraggableId;
@@ -46,9 +55,8 @@ interface DraggableRubric {
 }
 
 interface DragStart extends DraggableRubric {
-    mode: MovementMode;
+  mode: MovementMode;
 }
-
 
 interface DragUpdate extends DragStart {
   // populated if in a reorder position
@@ -64,10 +72,10 @@ interface Combine {
 }
 
 interface DropResult extends DragUpdate {
-    reason: DropReason;
+  reason: DropReason;
 }
 
-type DropReason = 'DROP' | 'CANCEL';
+type DropReason = "DROP" | "CANCEL";
 
 interface DraggableLocation {
   droppableId: DroppableId;
@@ -78,7 +86,7 @@ interface DraggableLocation {
 // There are two modes that a drag can be in
 // FLUID: everything is done in response to highly granular input (eg mouse)
 // SNAP: items snap between positions (eg keyboard);
-type MovementMode = 'FLUID' | 'SNAP';
+type MovementMode = "FLUID" | "SNAP";
 ```
 
 ### Sensors
@@ -113,9 +121,9 @@ interface DroppableProvided {
 }
 interface DroppableProps {
   // used for shared global styles
-  'data-rfd-droppable-context-id': ContextId;
+  "data-rfd-droppable-context-id": ContextId;
   // Used to lookup. Currently not used for drag and drop lifecycle
-  'data-rfd-droppable-id': DroppableId;
+  "data-rfd-droppable-id": DroppableId;
 }
 interface DroppableStateSnapshot {
   isDraggingOver: boolean;
@@ -147,41 +155,41 @@ interface DraggableStateSnapshot {
 
 interface DraggableProps {
   style?: DraggableStyle;
-  'data-rfd-draggable-context-id': ContextId;
-  'data-rfd-draggable-id': DraggableId;
+  "data-rfd-draggable-context-id": ContextId;
+  "data-rfd-draggable-id": DraggableId;
   onTransitionEnd?: TransitionEventHandler;
 }
 
 type DraggableChildrenFn = (
   DraggableProvided,
   DraggableStateSnapshot,
-  DraggableRubric,
+  DraggableRubric
 ) => ReactNode | null;
 
 type DraggableStyle = DraggingStyle | NotDraggingStyle;
 interface DraggingStyle {
-  position: 'fixed';
+  position: "fixed";
   top: number;
   left: number;
-  boxSizing: 'border-box';
+  boxSizing: "border-box";
   width: number;
   height: number;
   transition: string;
   transform?: string;
   zIndex: number;
   opacity?: number;
-  pointerEvents: 'none';
+  pointerEvents: "none";
 }
 interface NotDraggingStyle {
   transform?: string;
-  transition?: 'none';
+  transition?: "none";
 }
 
 interface DragHandleProps {
-  'data-rfd-drag-handle-draggable-id': DraggableId;
-  'data-rfd-drag-handle-context-id': ContextId;
+  "data-rfd-drag-handle-draggable-id": DraggableId;
+  "data-rfd-drag-handle-context-id": ContextId;
   role: string;
-  'aria-describedby': ElementId;
+  "aria-describedby": ElementId;
   tabIndex: number;
   draggable: boolean;
   onDragStart: DragEventHandler;
@@ -201,7 +209,7 @@ interface DropAnimation {
 The types are exported as part of the module so using them is as simple as:
 
 ```js
-import type { DroppableProvided } from '@react-forked/dnd';
+import type { DroppableProvided } from "@hello-pangea/dnd";
 ```
 
 [← Back to documentation](/README.md#documentation-)

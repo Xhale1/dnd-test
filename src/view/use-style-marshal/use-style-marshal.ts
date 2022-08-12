@@ -1,26 +1,26 @@
-import { useRef, MutableRefObject } from 'react';
-import memoizeOne from 'memoize-one';
-import { useMemo, useCallback } from 'use-memo-one';
-import { invariant } from '../../invariant';
-import type { StyleMarshal } from './style-marshal-types';
-import type { ContextId, DropReason } from '../../types';
-import getStyles from './get-styles';
-import type { Styles } from './get-styles';
-import { prefix } from '../data-attributes';
-import useLayoutEffect from '../use-isomorphic-layout-effect';
+import { useRef, MutableRefObject } from "react";
+import memoizeOne from "memoize-one";
+import { useMemo, useCallback } from "use-memo-one";
+import { invariant } from "../../invariant";
+import type { StyleMarshal } from "./style-marshal-types";
+import type { ContextId, DropReason } from "../../types";
+import getStyles from "./get-styles";
+import type { Styles } from "./get-styles";
+import { prefix } from "../data-attributes";
+import useLayoutEffect from "../use-isomorphic-layout-effect";
 
 const getHead = (): HTMLHeadElement => {
-  const head: HTMLHeadElement | null = document.querySelector('head');
-  invariant(head, 'Cannot find the head to append a style to');
+  const head: HTMLHeadElement | null = document.querySelector("head");
+  invariant(head, "Cannot find the head to append a style to");
   return head;
 };
 
 const createStyleEl = (nonce?: string): HTMLStyleElement => {
-  const el: HTMLStyleElement = document.createElement('style');
+  const el: HTMLStyleElement = document.createElement("style");
   if (nonce) {
-    el.setAttribute('nonce', nonce);
+    el.setAttribute("nonce", nonce);
   }
-  el.type = 'text/css';
+  el.type = "text/css";
   return el;
 };
 
@@ -34,15 +34,15 @@ export default function useStyleMarshal(contextId: ContextId, nonce?: string) {
     // Using memoizeOne to prevent frequent updates to textContext
     memoizeOne((proposed: string) => {
       const el: HTMLStyleElement | null = dynamicRef.current;
-      invariant(el, 'Cannot set dynamic style element if it is not set');
+      invariant(el, "Cannot set dynamic style element if it is not set");
       el.textContent = proposed;
     }),
-    [],
+    []
   );
 
   const setAlwaysStyle = useCallback((proposed: string) => {
     const el: HTMLStyleElement | null = alwaysRef.current;
-    invariant(el, 'Cannot set dynamic style element if it is not set');
+    invariant(el, "Cannot set dynamic style element if it is not set");
     el.textContent = proposed;
   }, []);
 
@@ -50,7 +50,7 @@ export default function useStyleMarshal(contextId: ContextId, nonce?: string) {
   useLayoutEffect(() => {
     invariant(
       !alwaysRef.current && !dynamicRef.current,
-      'style elements already mounted',
+      "style elements already mounted"
     );
 
     const always: HTMLStyleElement = createStyleEl(nonce);
@@ -75,7 +75,7 @@ export default function useStyleMarshal(contextId: ContextId, nonce?: string) {
     return () => {
       const remove = (ref: MutableRefObject<HTMLStyleElement | null>) => {
         const current: HTMLStyleElement | null = ref.current;
-        invariant(current, 'Cannot unmount ref as it is not set');
+        invariant(current, "Cannot unmount ref as it is not set");
         getHead().removeChild(current);
         ref.current = null;
       };
@@ -94,17 +94,17 @@ export default function useStyleMarshal(contextId: ContextId, nonce?: string) {
 
   const dragging = useCallback(
     () => setDynamicStyle(styles.dragging),
-    [setDynamicStyle, styles.dragging],
+    [setDynamicStyle, styles.dragging]
   );
   const dropping = useCallback(
     (reason: DropReason) => {
-      if (reason === 'DROP') {
+      if (reason === "DROP") {
         setDynamicStyle(styles.dropAnimating);
         return;
       }
       setDynamicStyle(styles.userCancel);
     },
-    [setDynamicStyle, styles.dropAnimating, styles.userCancel],
+    [setDynamicStyle, styles.dropAnimating, styles.userCancel]
   );
   const resting = useCallback(() => {
     // Can be called defensively
@@ -120,7 +120,7 @@ export default function useStyleMarshal(contextId: ContextId, nonce?: string) {
       dropping,
       resting,
     }),
-    [dragging, dropping, resting],
+    [dragging, dropping, resting]
   );
 
   return marshal;

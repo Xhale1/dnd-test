@@ -1,19 +1,19 @@
-import { getBox, withScroll, createBox, expand } from 'css-box-model';
-import type { BoxModel, Position, Spacing } from 'css-box-model';
-import getDroppableDimension from '../../state/droppable/get-droppable';
-import type { Closest } from '../../state/droppable/get-droppable';
-import type { Env } from './get-env';
+import { getBox, withScroll, createBox, expand } from "css-box-model";
+import type { BoxModel, Position, Spacing } from "css-box-model";
+import getDroppableDimension from "../../state/droppable/get-droppable";
+import type { Closest } from "../../state/droppable/get-droppable";
+import type { Env } from "./get-env";
 import type {
   DroppableDimension,
   DroppableDescriptor,
   Direction,
   ScrollSize,
-} from '../../types';
-import getScroll from './get-scroll';
+} from "../../types";
+import getScroll from "./get-scroll";
 
 const getClient = (
   targetRef: HTMLElement,
-  closestScrollable?: Element | null,
+  closestScrollable?: Element | null
 ): BoxModel => {
   const base: BoxModel = getBox(targetRef);
 

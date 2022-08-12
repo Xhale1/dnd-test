@@ -1,6 +1,6 @@
-import type { Position } from 'css-box-model';
-import { add, apply, isEqual, origin } from '../position';
-import type { DroppableDimension, Viewport, Scrollable } from '../../types';
+import type { Position } from "css-box-model";
+import { add, apply, isEqual, origin } from "../position";
+import type { DroppableDimension, Viewport, Scrollable } from "../../types";
 
 interface CanPartiallyScrollArgs {
   max: Position;
@@ -93,7 +93,7 @@ export const canPartiallyScroll = ({
 
 export const canScrollWindow = (
   viewport: Viewport,
-  change: Position,
+  change: Position
 ): boolean =>
   canPartiallyScroll({
     current: viewport.scroll.current,
@@ -103,7 +103,7 @@ export const canScrollWindow = (
 
 export const getWindowOverlap = (
   viewport: Viewport,
-  change: Position,
+  change: Position
 ): Position | null => {
   if (!canScrollWindow(viewport, change)) {
     return null;
@@ -121,7 +121,7 @@ export const getWindowOverlap = (
 
 export const canScrollDroppable = (
   droppable: DroppableDimension,
-  change: Position,
+  change: Position
 ): boolean => {
   const frame: Scrollable | null = droppable.frame;
 
@@ -139,7 +139,7 @@ export const canScrollDroppable = (
 
 export const getDroppableOverlap = (
   droppable: DroppableDimension,
-  change: Position,
+  change: Position
 ): Position | null => {
   const frame: Scrollable | null = droppable.frame;
 

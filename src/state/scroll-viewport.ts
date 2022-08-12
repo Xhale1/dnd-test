@@ -1,8 +1,8 @@
-import { getRect } from 'css-box-model';
-import type { Rect, Position } from 'css-box-model';
+import { getRect } from "css-box-model";
+import type { Rect, Position } from "css-box-model";
 
-import { subtract, negate } from './position';
-import type { Viewport } from '../types';
+import { subtract, negate } from "./position";
+import type { Viewport } from "../types";
 
 export default (viewport: Viewport, newScroll: Position): Viewport => {
   const diff: Position = subtract(newScroll, viewport.scroll.initial);

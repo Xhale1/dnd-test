@@ -12,21 +12,21 @@ import type {
   DragImpact,
   DroppablePublish,
   DroppableId,
-} from '../../types';
-import * as timings from '../../debug/timings';
-import getDragImpact from '../get-drag-impact';
-import adjustAdditionsForScrollChanges from './adjust-additions-for-scroll-changes';
-import { toDraggableMap, toDroppableMap } from '../dimension-structures';
-import getLiftEffect from '../get-lift-effect';
-import scrollDroppable from '../droppable/scroll-droppable';
-import whatIsDraggedOver from '../droppable/what-is-dragged-over';
+} from "../../types";
+import * as timings from "../../debug/timings";
+import getDragImpact from "../get-drag-impact";
+import adjustAdditionsForScrollChanges from "./adjust-additions-for-scroll-changes";
+import { toDraggableMap, toDroppableMap } from "../dimension-structures";
+import getLiftEffect from "../get-lift-effect";
+import scrollDroppable from "../droppable/scroll-droppable";
+import whatIsDraggedOver from "../droppable/what-is-dragged-over";
 
 interface Args {
   state: CollectingState | DropPendingState;
   published: Published;
 }
 
-const timingsKey = 'Processing dynamic changes';
+const timingsKey = "Processing dynamic changes";
 
 export default ({
   state,
@@ -48,10 +48,10 @@ export default ({
 
       const scrolled: DroppableDimension = scrollDroppable(
         existing,
-        update.scroll,
+        update.scroll
       );
       return scrolled;
-    },
+    }
   );
 
   const droppables: DroppableDimensionMap = {
@@ -64,7 +64,7 @@ export default ({
       additions: published.additions,
       updatedDroppables: droppables,
       viewport: state.viewport,
-    }),
+    })
   );
 
   const draggables: DraggableDimensionMap = {
@@ -123,7 +123,7 @@ export default ({
   const draggingState: DraggingState = {
     ...state,
     // eslint-disable-next-line
-    phase: 'DRAGGING',
+    phase: "DRAGGING",
     impact,
     onLiftImpact,
     dimensions,
@@ -132,7 +132,7 @@ export default ({
     forceShouldAnimate: false,
   };
 
-  if (state.phase === 'COLLECTING') {
+  if (state.phase === "COLLECTING") {
     return draggingState;
   }
 
@@ -143,7 +143,7 @@ export default ({
   const dropPending: DropPendingState = {
     ...draggingState,
     // eslint-disable-next-line
-    phase: 'DROP_PENDING',
+    phase: "DROP_PENDING",
     // No longer waiting
     reason: state.reason,
     isWaiting: false,

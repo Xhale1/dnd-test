@@ -1,21 +1,21 @@
 import type {
   Registry,
   DraggableEntry,
-} from '../../../../src/state/registry/registry-types';
-import createRegistry from '../../../../src/state/registry/create-registry';
-import { getPreset } from '../../../util/dimension';
-import { getDraggableEntry, getDroppableEntry } from '../../../util/registry';
+} from "../../../../src/state/registry/registry-types";
+import createRegistry from "../../../../src/state/registry/create-registry";
+import { getPreset } from "../../../util/dimension";
+import { getDraggableEntry, getDroppableEntry } from "../../../util/registry";
 
 const preset = getPreset();
 
-it('should remove any registrations', () => {
+it("should remove any registrations", () => {
   const registry: Registry = createRegistry();
 
   registry.draggable.register(
-    getDraggableEntry({ uniqueId: '1', dimension: preset.inHome1 }),
+    getDraggableEntry({ uniqueId: "1", dimension: preset.inHome1 })
   );
   registry.droppable.register(
-    getDroppableEntry({ uniqueId: '1', dimension: preset.home }),
+    getDroppableEntry({ uniqueId: "1", dimension: preset.home })
   );
   expect(registry.draggable.exists(preset.inHome1.descriptor.id)).toBe(true);
   expect(registry.droppable.exists(preset.home.descriptor.id)).toBe(true);
@@ -27,7 +27,7 @@ it('should remove any registrations', () => {
   expect(registry.droppable.exists(preset.home.descriptor.id)).toBe(false);
 });
 
-it('should remove unsubscribe any event listeners', () => {
+it("should remove unsubscribe any event listeners", () => {
   const listener1 = jest.fn();
   const listener2 = jest.fn();
   const registry: Registry = createRegistry();
@@ -38,7 +38,7 @@ it('should remove unsubscribe any event listeners', () => {
   registry.clean();
 
   const entry: DraggableEntry = getDraggableEntry({
-    uniqueId: '1',
+    uniqueId: "1",
     dimension: preset.inHome1,
   });
   registry.draggable.register(entry);

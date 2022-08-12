@@ -1,10 +1,10 @@
-import React from 'react';
-import { fireEvent, render } from '@testing-library/react';
-import App from '../../util/app';
-import type { Item } from '../../util/app';
-import { touch, simpleLift } from '../../util/controls';
-import { forcePressThreshold } from '../../../../../src/view/use-sensor-marshal/sensors/use-touch-sensor';
-import { isDragging } from '../../util/helpers';
+import React from "react";
+import { fireEvent, render } from "@testing-library/react";
+import App from "../../util/app";
+import type { Item } from "../../util/app";
+import { touch, simpleLift } from "../../util/controls";
+import { forcePressThreshold } from "../../../../../src/view/use-sensor-marshal/sensors/use-touch-sensor";
+import { isDragging } from "../../util/helpers";
 
 beforeEach(() => {
   jest.useFakeTimers();
@@ -15,7 +15,7 @@ afterEach(() => {
 });
 
 function getForceChange(force: number): Event {
-  const event = new Event('touchforcechange', {
+  const event = new Event("touchforcechange", {
     bubbles: true,
     cancelable: true,
   });
@@ -34,10 +34,10 @@ function getForceChange(force: number): Event {
 
 // Note: this behaviour is a bit strange as we are working around a safari issue
 // https://github.com/atlassian/react-beautiful-dnd/issues/1401
-describe('force press not respected (default)', () => {
-  it('should not abort presses that do not have enought pressure', () => {
+describe("force press not respected (default)", () => {
+  it("should not abort presses that do not have enought pressure", () => {
     const { getByText } = render(<App />);
-    const handle: HTMLElement = getByText('item: 0');
+    const handle: HTMLElement = getByText("item: 0");
 
     touch.preLift(handle);
 
@@ -55,9 +55,9 @@ describe('force press not respected (default)', () => {
     expect(isDragging(handle)).toBe(true);
   });
 
-  it('should not prevent a force press when pending (strange I know)', () => {
+  it("should not prevent a force press when pending (strange I know)", () => {
     const { getByText } = render(<App />);
-    const handle: HTMLElement = getByText('item: 0');
+    const handle: HTMLElement = getByText("item: 0");
 
     touch.preLift(handle);
 
@@ -70,9 +70,9 @@ describe('force press not respected (default)', () => {
     expect(isDragging(handle)).toBe(true);
   });
 
-  it('prevent a force press when dragging', () => {
+  it("prevent a force press when dragging", () => {
     const { getByText } = render(<App />);
-    const handle: HTMLElement = getByText('item: 0');
+    const handle: HTMLElement = getByText("item: 0");
 
     touch.preLift(handle);
 
@@ -93,12 +93,12 @@ describe('force press not respected (default)', () => {
   });
 });
 
-describe('force press respected', () => {
-  const items: Item[] = [{ id: '0', shouldRespectForcePress: true }];
+describe("force press respected", () => {
+  const items: Item[] = [{ id: "0", shouldRespectForcePress: true }];
 
-  it('should cancel a pending drag if a force press is registered', () => {
+  it("should cancel a pending drag if a force press is registered", () => {
     const { getByText } = render(<App items={items} />);
-    const handle: HTMLElement = getByText('item: 0');
+    const handle: HTMLElement = getByText("item: 0");
 
     touch.preLift(handle);
 
@@ -112,9 +112,9 @@ describe('force press respected', () => {
     expect(isDragging(handle)).toBe(false);
   });
 
-  it('should cancel a drag if a force press is registered', () => {
+  it("should cancel a drag if a force press is registered", () => {
     const { getByText } = render(<App items={items} />);
-    const handle: HTMLElement = getByText('item: 0');
+    const handle: HTMLElement = getByText("item: 0");
 
     simpleLift(touch, handle);
 
@@ -127,9 +127,9 @@ describe('force press respected', () => {
     expect(isDragging(handle)).toBe(false);
   });
 
-  it('should abort a force press if dragging and some movement has occurred', () => {
+  it("should abort a force press if dragging and some movement has occurred", () => {
     const { getByText } = render(<App items={items} />);
-    const handle: HTMLElement = getByText('item: 0');
+    const handle: HTMLElement = getByText("item: 0");
 
     simpleLift(touch, handle);
 
@@ -144,17 +144,17 @@ describe('force press respected', () => {
   });
 });
 
-it('should not listen to force press changes after a drag has started', () => {
-  const withForcePress: Item[] = [{ id: '0', shouldRespectForcePress: true }];
+it("should not listen to force press changes after a drag has started", () => {
+  const withForcePress: Item[] = [{ id: "0", shouldRespectForcePress: true }];
 
   const { getByText, rerender } = render(<App items={withForcePress} />);
-  const handle: HTMLElement = getByText('item: 0');
+  const handle: HTMLElement = getByText("item: 0");
 
   simpleLift(touch, handle);
 
   // changing
   const withoutForcePress: Item[] = [
-    { id: '0', shouldRespectForcePress: false },
+    { id: "0", shouldRespectForcePress: false },
   ];
   rerender(<App items={withoutForcePress} />);
 

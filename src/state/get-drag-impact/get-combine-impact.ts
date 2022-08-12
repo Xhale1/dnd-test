@@ -1,4 +1,4 @@
-import type { Rect } from 'css-box-model';
+import type { Rect } from "css-box-model";
 import type {
   DraggableId,
   Axis,
@@ -7,11 +7,11 @@ import type {
   DragImpact,
   LiftEffect,
   DisplacedBy,
-} from '../../types';
-import getDidStartAfterCritical from '../did-start-after-critical';
-import getDisplacedBy from '../get-displaced-by';
-import getIsDisplaced from '../get-is-displaced';
-import removeDraggableFromList from '../remove-draggable-from-list';
+} from "../../types";
+import getDidStartAfterCritical from "../did-start-after-critical";
+import getDisplacedBy from "../get-displaced-by";
+import getIsDisplaced from "../get-is-displaced";
+import removeDraggableFromList from "../remove-draggable-from-list";
 
 interface Args {
   draggable: DraggableDimension;
@@ -39,7 +39,7 @@ export default ({
   const axis: Axis = destination.axis;
   const displacedBy: DisplacedBy = getDisplacedBy(
     destination.axis,
-    draggable.displaceBy,
+    draggable.displaceBy
   );
   const displacement: number = displacedBy.value;
 
@@ -48,7 +48,7 @@ export default ({
 
   const withoutDragging: DraggableDimension[] = removeDraggableFromList(
     draggable,
-    insideDestination,
+    insideDestination
   );
 
   const combineWith = withoutDragging.find((child): boolean => {
@@ -59,7 +59,7 @@ export default ({
 
     const didStartAfterCritical: boolean = getDidStartAfterCritical(
       id,
-      afterCritical,
+      afterCritical
     );
 
     const isDisplaced: boolean = getIsDisplaced({
@@ -114,7 +114,7 @@ export default ({
     displacedBy,
     displaced: previousImpact.displaced,
     at: {
-      type: 'COMBINE',
+      type: "COMBINE",
       combine: {
         draggableId: combineWith.descriptor.id,
         droppableId: destination.descriptor.id,

@@ -1,11 +1,11 @@
-import React, { Component } from 'react';
 import {
   DragDropContext,
-  Droppable,
   Draggable,
   DraggableStyle,
+  Droppable,
   DropResult,
-} from '@react-forked/dnd';
+} from "@hello-pangea/dnd";
+import React, { Component } from "react";
 
 // fake data generator
 const getItems = (count: number) =>
@@ -18,7 +18,7 @@ const getItems = (count: number) =>
 const reorder = <TList extends unknown[]>(
   list: TList,
   startIndex: number,
-  endIndex: number,
+  endIndex: number
 ): TList => {
   const result = Array.from(list) as TList;
   const [removed] = result.splice(startIndex, 1);
@@ -31,28 +31,28 @@ const grid = 8;
 
 const getItemStyle = (
   isDragging: boolean,
-  draggableStyle: DraggableStyle = {},
+  draggableStyle: DraggableStyle = {}
 ) => ({
   // some basic styles to make the items look a bit nicer
-  userSelect: 'none' as const,
+  userSelect: "none" as const,
   padding: grid * 2,
   margin: `0 0 ${grid}px 0`,
-  border: '5px solid yellow',
+  border: "5px solid yellow",
   height: 30,
 
   // change background colour if dragging
-  background: isDragging ? 'lightgreen' : 'red',
+  background: isDragging ? "lightgreen" : "red",
 
   // styles we need to apply on draggables
   ...draggableStyle,
 });
 
 const getListStyle = (isDraggingOver: boolean, overflow?: string) => ({
-  background: isDraggingOver ? 'lightblue' : 'grey',
+  background: isDraggingOver ? "lightblue" : "grey",
   padding: grid,
-  border: '5px solid pink',
+  border: "5px solid pink",
   width: 250,
-  maxHeight: '50vh',
+  maxHeight: "50vh",
   overflow,
 });
 
@@ -71,7 +71,7 @@ interface AppState {
 
 export default class App extends Component<AppProps, AppState> {
   static defaultProps = {
-    overflow: 'auto',
+    overflow: "auto",
   };
 
   constructor(props: AppProps) {
@@ -91,7 +91,7 @@ export default class App extends Component<AppProps, AppState> {
     const items = reorder(
       this.state.items,
       result.source.index,
-      result.destination.index,
+      result.destination.index
     );
 
     this.setState({
@@ -110,11 +110,11 @@ export default class App extends Component<AppProps, AppState> {
               ref={droppableProvided.innerRef}
               style={getListStyle(
                 droppableSnapshot.isDraggingOver,
-                this.props.overflow,
+                this.props.overflow
               )}
               onScroll={(e) =>
                 // eslint-disable-next-line no-console
-                console.log('current scrollTop', e.currentTarget.scrollTop)
+                console.log("current scrollTop", e.currentTarget.scrollTop)
               }
             >
               {this.state.items.map((item, index) => (
@@ -126,7 +126,7 @@ export default class App extends Component<AppProps, AppState> {
                       {...draggableProvided.dragHandleProps}
                       style={getItemStyle(
                         draggableSnapshot.isDragging,
-                        draggableProvided.draggableProps.style,
+                        draggableProvided.draggableProps.style
                       )}
                     >
                       {item.content}

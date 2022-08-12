@@ -1,5 +1,5 @@
-import type { Position } from 'css-box-model';
-import { subtract } from './position';
+import type { Position } from "css-box-model";
+import { subtract } from "./position";
 
 interface Args {
   scrollHeight: number;
@@ -18,7 +18,7 @@ export default ({
     // full size
     { x: scrollWidth, y: scrollHeight },
     // viewport size
-    { x: width, y: height },
+    { x: width, y: height }
   );
 
   const adjustedMaxScroll: Position = {

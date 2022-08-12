@@ -3,7 +3,7 @@ declare type TimeoutID = number;
 declare type IntervalID = number;
 
 interface ProcessEnv {
-  NODE_ENV: 'development' | 'production';
+  NODE_ENV: "development" | "production";
 }
 
 interface Process {
@@ -13,7 +13,7 @@ interface Process {
 declare const process: Process;
 
 declare interface Window {
-  '__@react-forked/dnd-disable-dev-warnings'?: boolean;
+  "__@hello-pangea/dnd-disable-dev-warnings"?: boolean;
 }
 
 // From the test folder we explicitly set typescript to load node.

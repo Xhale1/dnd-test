@@ -1,6 +1,6 @@
-import type { DraggableDimension, DroppableDimension } from '../../types';
+import type { DraggableDimension, DroppableDimension } from "../../types";
 
 export default (
   draggable: DraggableDimension,
-  destination: DroppableDimension,
+  destination: DroppableDimension
 ): boolean => draggable.descriptor.droppableId === destination.descriptor.id;

@@ -1,4 +1,4 @@
-import type { Position } from 'css-box-model';
+import type { Position } from "css-box-model";
 import type {
   DroppableDimension,
   Viewport,
@@ -6,9 +6,9 @@ import type {
   DraggableDimension,
   DraggableDimensionMap,
   LiftEffect,
-} from '../../../types';
-import getPageBorderBoxCenterFromImpact from '../get-page-border-box-center';
-import getClientFromPageBorderBoxCenter from './get-client-from-page-border-box-center';
+} from "../../../types";
+import getPageBorderBoxCenterFromImpact from "../get-page-border-box-center";
+import getClientFromPageBorderBoxCenter from "./get-client-from-page-border-box-center";
 
 interface Args {
   impact: DragImpact;

@@ -5,11 +5,11 @@ import type {
   DisplacementGroups,
   Viewport,
   DisplacedBy,
-} from '../../types';
-import removeDraggableFromList from '../remove-draggable-from-list';
-import isHomeOf from '../droppable/is-home-of';
-import { emptyGroups } from '../no-impact';
-import getDisplacementGroups from '../get-displacement-groups';
+} from "../../types";
+import removeDraggableFromList from "../remove-draggable-from-list";
+import isHomeOf from "../droppable/is-home-of";
+import { emptyGroups } from "../no-impact";
+import getDisplacementGroups from "../get-displacement-groups";
 
 interface Args {
   draggable: DraggableDimension;
@@ -26,7 +26,7 @@ function getIndexOfLastItem(
   draggables: DraggableDimension[],
   options: {
     inHomeList: boolean;
-  },
+  }
 ): number {
   if (!draggables.length) {
     return 0;
@@ -60,7 +60,7 @@ function goAtEnd({
     displaced: emptyGroups,
     displacedBy,
     at: {
-      type: 'REORDER',
+      type: "REORDER",
       destination: {
         droppableId: destination.descriptor.id,
         index: newIndex,
@@ -93,7 +93,7 @@ export default function calculateReorderImpact({
 
   // this might be the dragging item
   const match = insideDestination.find(
-    (item: DraggableDimension) => item.descriptor.index === index,
+    (item: DraggableDimension) => item.descriptor.index === index
   );
 
   if (!match) {
@@ -106,7 +106,7 @@ export default function calculateReorderImpact({
   }
   const withoutDragging: DraggableDimension[] = removeDraggableFromList(
     draggable,
-    insideDestination,
+    insideDestination
   );
 
   const sliceFrom: number = insideDestination.indexOf(match);
@@ -125,7 +125,7 @@ export default function calculateReorderImpact({
     displaced,
     displacedBy,
     at: {
-      type: 'REORDER',
+      type: "REORDER",
       destination: {
         droppableId: destination.descriptor.id,
         index,

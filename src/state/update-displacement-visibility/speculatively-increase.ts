@@ -1,4 +1,4 @@
-import type { Position } from 'css-box-model';
+import type { Position } from "css-box-model";
 import type {
   DraggableId,
   DroppableDimension,
@@ -10,11 +10,11 @@ import type {
   DraggableIdMap,
   DisplacementMap,
   Viewport,
-} from '../../types';
-import scrollViewport from '../scroll-viewport';
-import scrollDroppable from '../droppable/scroll-droppable';
-import { add } from '../position';
-import getDisplacementGroups from '../get-displacement-groups';
+} from "../../types";
+import scrollViewport from "../scroll-viewport";
+import scrollDroppable from "../droppable/scroll-droppable";
+import { add } from "../position";
+import getDisplacementGroups from "../get-displacement-groups";
 
 interface SpeculativeArgs {
   impact: DragImpact;
@@ -26,14 +26,14 @@ interface SpeculativeArgs {
 
 function getDraggables(
   ids: DraggableId[],
-  draggables: DraggableDimensionMap,
+  draggables: DraggableDimensionMap
 ): DraggableDimension[] {
   return ids.map((id: DraggableId): DraggableDimension => draggables[id]);
 }
 
 function tryGetVisible(
   id: DraggableId,
-  groups: DisplacementGroups[],
+  groups: DisplacementGroups[]
 ): Displacement | null {
   for (let i = 0; i < groups.length; i++) {
     const displacement: Displacement | null = groups[i].visible[id];
@@ -53,12 +53,12 @@ export default ({
 }: SpeculativeArgs): DragImpact => {
   const scrolledViewport: Viewport = scrollViewport(
     viewport,
-    add(viewport.scroll.current, maxScrollChange),
+    add(viewport.scroll.current, maxScrollChange)
   );
   const scrolledDroppable: DroppableDimension = destination.frame
     ? scrollDroppable(
         destination,
-        add(destination.frame.scroll.current, maxScrollChange),
+        add(destination.frame.scroll.current, maxScrollChange)
       )
     : destination;
 

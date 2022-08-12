@@ -1,8 +1,8 @@
-import { useEffect } from 'react';
-import { useMemo } from 'use-memo-one';
-import type { ContextId, ElementId } from '../../types';
-import getBodyElement from '../get-body-element';
-import useUniqueId from '../use-unique-id';
+import { useEffect } from "react";
+import { useMemo } from "use-memo-one";
+import type { ContextId, ElementId } from "../../types";
+import getBodyElement from "../get-body-element";
+import useUniqueId from "../use-unique-id";
 
 interface GetIdArgs {
   contextId: ContextId;
@@ -22,15 +22,15 @@ export default function useHiddenTextElement({
   contextId,
   text,
 }: Args): ElementId {
-  const uniqueId: string = useUniqueId('hidden-text', { separator: '-' });
+  const uniqueId: string = useUniqueId("hidden-text", { separator: "-" });
   const id: ElementId = useMemo(
     () => getElementId({ contextId, uniqueId }),
-    [uniqueId, contextId],
+    [uniqueId, contextId]
   );
 
   useEffect(
     function mount() {
-      const el: HTMLElement = document.createElement('div');
+      const el: HTMLElement = document.createElement("div");
 
       // identifier
       el.id = id;
@@ -39,7 +39,7 @@ export default function useHiddenTextElement({
       el.textContent = text;
 
       // Using `display: none` prevent screen readers from reading this element in the document flow
-      el.style.display = 'none';
+      el.style.display = "none";
 
       // Add to body
       getBodyElement().appendChild(el);
@@ -52,7 +52,7 @@ export default function useHiddenTextElement({
         }
       };
     },
-    [id, text],
+    [id, text]
   );
 
   return id;

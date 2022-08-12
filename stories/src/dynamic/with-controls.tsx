@@ -1,14 +1,14 @@
 /* eslint-disable no-restricted-syntax */
-import React, { ReactElement } from 'react';
-import type { ChangeEvent } from 'react';
-import styled from '@emotion/styled';
-import { DragDropContext } from '@react-forked/dnd';
-import type { DropResult, DragUpdate } from '@react-forked/dnd';
-import QuoteList from '../primatives/quote-list';
-import { generateQuoteMap, authors } from '../data';
-import { reorderQuoteMap } from '../reorder';
-import { grid } from '../constants';
-import type { Quote, QuoteMap, Author } from '../types';
+import styled from "@emotion/styled";
+import type { DragUpdate, DropResult } from "@hello-pangea/dnd";
+import { DragDropContext } from "@hello-pangea/dnd";
+import type { ChangeEvent } from "react";
+import React, { ReactElement } from "react";
+import { grid } from "../constants";
+import { authors, generateQuoteMap } from "../data";
+import QuoteList from "../primatives/quote-list";
+import { reorderQuoteMap } from "../reorder";
+import type { Author, Quote, QuoteMap } from "../types";
 
 const initial: QuoteMap = generateQuoteMap(0);
 
@@ -53,7 +53,7 @@ class Controls extends React.Component<{
           </li>
         </ul>
         <br />
-        Change by:{' '}
+        Change by:{" "}
         <input
           type="number"
           min="1"
@@ -65,7 +65,7 @@ class Controls extends React.Component<{
         />
         <h2>Combine items</h2>
         <p>
-          Can items be combined?{' '}
+          Can items be combined?{" "}
           <input
             type="checkbox"
             checked={this.props.isCombineEnabled}
@@ -97,7 +97,7 @@ const createQuote = (() => {
 
     const quote: Quote = {
       id,
-      content: 'Generated',
+      content: "Generated",
       author,
     };
 
@@ -113,11 +113,11 @@ export default class WithControls extends React.Component<unknown, State> {
   };
 
   componentDidMount(): void {
-    window.addEventListener('keydown', this.onWindowKeyDown);
+    window.addEventListener("keydown", this.onWindowKeyDown);
   }
 
   componentWillUnmount(): void {
-    window.removeEventListener('keydown', this.onWindowKeyDown);
+    window.removeEventListener("keydown", this.onWindowKeyDown);
   }
 
   onWindowKeyDown = (event: KeyboardEvent): void => {
@@ -129,10 +129,10 @@ export default class WithControls extends React.Component<unknown, State> {
     const quoteMap: QuoteMap = this.state.quoteMap;
 
     // eslint-disable-next-line no-console
-    console.log('event.key', event.key);
+    console.log("event.key", event.key);
 
     // Add quote to start of list ('before')
-    if (event.key === 'b') {
+    if (event.key === "b") {
       // eslint-disable-next-line no-console
       console.log(`Adding ${this.state.changeBy} to start`);
       const map: QuoteMap = Object.keys(quoteMap).reduce(
@@ -140,12 +140,12 @@ export default class WithControls extends React.Component<unknown, State> {
           const quotes: Quote[] = quoteMap[key];
           const additions: Quote[] = Array.from(
             { length: this.state.changeBy },
-            () => createQuote(),
+            () => createQuote()
           );
           previous[key] = [...additions, ...quotes];
           return previous;
         },
-        {},
+        {}
       );
 
       this.setState({
@@ -155,7 +155,7 @@ export default class WithControls extends React.Component<unknown, State> {
     }
 
     // Add quote to end of list ('after')
-    if (event.key === 'a') {
+    if (event.key === "a") {
       // eslint-disable-next-line no-console
       console.log(`Adding ${this.state.changeBy} to end`);
       const map: QuoteMap = Object.keys(quoteMap).reduce(
@@ -163,12 +163,12 @@ export default class WithControls extends React.Component<unknown, State> {
           const quotes: Quote[] = quoteMap[key];
           const additions: Quote[] = Array.from(
             { length: this.state.changeBy },
-            () => createQuote(),
+            () => createQuote()
           );
           previous[key] = [...quotes, ...additions];
           return previous;
         },
-        {},
+        {}
       );
 
       this.setState({
@@ -178,7 +178,7 @@ export default class WithControls extends React.Component<unknown, State> {
     }
 
     // Remove quote from end of list
-    if (event.key === 'd') {
+    if (event.key === "d") {
       // eslint-disable-next-line no-console
       console.log(`Removing ${this.state.changeBy} from end`);
       const map: QuoteMap = Object.keys(quoteMap).reduce(
@@ -189,7 +189,7 @@ export default class WithControls extends React.Component<unknown, State> {
             : [];
           return previous;
         },
-        {},
+        {}
       );
 
       this.setState({
@@ -199,7 +199,7 @@ export default class WithControls extends React.Component<unknown, State> {
     }
 
     // Remove quote from start of list
-    if (event.key === 's') {
+    if (event.key === "s") {
       // eslint-disable-next-line no-console
       console.log(`Removing ${this.state.changeBy} from start`);
       const map: QuoteMap = Object.keys(quoteMap).reduce(
@@ -210,7 +210,7 @@ export default class WithControls extends React.Component<unknown, State> {
             : [];
           return previous;
         },
-        {},
+        {}
       );
 
       this.setState({
@@ -222,8 +222,8 @@ export default class WithControls extends React.Component<unknown, State> {
   onDragUpdate = (update: DragUpdate): void => {
     // eslint-disable-next-line no-console
     console.log(
-      'Update: current index =>',
-      update.destination ? update.destination.index : null,
+      "Update: current index =>",
+      update.destination ? update.destination.index : null
     );
   };
 
@@ -241,7 +241,7 @@ export default class WithControls extends React.Component<unknown, State> {
         quoteMap: this.state.quoteMap,
         source: result.source,
         destination: result.destination,
-      }),
+      })
     );
   };
 
@@ -269,8 +269,8 @@ export default class WithControls extends React.Component<unknown, State> {
               key={key}
               listId={key}
               quotes={quoteMap[key]}
-              style={{ border: '3px solid blue', paddingBottom: grid }}
-              scrollContainerStyle={{ height: 300, border: '3px solid green' }}
+              style={{ border: "3px solid blue", paddingBottom: grid }}
+              scrollContainerStyle={{ height: 300, border: "3px solid green" }}
               internalScroll
               isCombineEnabled={isCombineEnabled}
             />

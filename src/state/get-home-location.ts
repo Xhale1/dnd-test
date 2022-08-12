@@ -1,4 +1,4 @@
-import type { DraggableDescriptor, DraggableLocation } from '../types';
+import type { DraggableDescriptor, DraggableLocation } from "../types";
 
 export default (descriptor: DraggableDescriptor): DraggableLocation => ({
   index: descriptor.index,

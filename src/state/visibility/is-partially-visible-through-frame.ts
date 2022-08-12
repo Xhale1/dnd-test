@@ -1,5 +1,5 @@
-import type { Spacing } from 'css-box-model';
-import isWithin from '../is-within';
+import type { Spacing } from "css-box-model";
+import isWithin from "../is-within";
 
 export default (frame: Spacing) => {
   const isWithinVertical = isWithin(frame.top, frame.bottom);

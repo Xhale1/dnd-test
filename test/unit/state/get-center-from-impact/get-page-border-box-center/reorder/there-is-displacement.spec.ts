@@ -1,24 +1,24 @@
-import type { Position } from 'css-box-model';
-import { offset } from 'css-box-model';
+import type { Position } from "css-box-model";
+import { offset } from "css-box-model";
 import type {
   Axis,
   DragImpact,
   DisplacedBy,
-} from '../../../../../../src/types';
-import { vertical, horizontal } from '../../../../../../src/state/axis';
-import getPageBorderBoxCenter from '../../../../../../src/state/get-center-from-impact/get-page-border-box-center';
-import getLiftEffect from '../../../../../../src/state/get-lift-effect';
-import { getPreset } from '../../../../../util/dimension';
-import { goBefore } from '../../../../../../src/state/get-center-from-impact/move-relative-to';
-import getDisplacedBy from '../../../../../../src/state/get-displaced-by';
-import { getForcedDisplacement } from '../../../../../util/impact';
+} from "../../../../../../src/types";
+import { vertical, horizontal } from "../../../../../../src/state/axis";
+import getPageBorderBoxCenter from "../../../../../../src/state/get-center-from-impact/get-page-border-box-center";
+import getLiftEffect from "../../../../../../src/state/get-lift-effect";
+import { getPreset } from "../../../../../util/dimension";
+import { goBefore } from "../../../../../../src/state/get-center-from-impact/move-relative-to";
+import getDisplacedBy from "../../../../../../src/state/get-displaced-by";
+import { getForcedDisplacement } from "../../../../../util/impact";
 
 [vertical, horizontal].forEach((axis: Axis) => {
   describe(`on ${axis.direction} axis`, () => {
     const preset = getPreset(axis);
 
-    describe('closest displaced started displaced', () => {
-      it('should go before the visible (displaced) position of the item', () => {
+    describe("closest displaced started displaced", () => {
+      it("should go before the visible (displaced) position of the item", () => {
         const { afterCritical } = getLiftEffect({
           draggable: preset.inHome1,
           home: preset.home,
@@ -27,7 +27,7 @@ import { getForcedDisplacement } from '../../../../../util/impact';
         });
         const displacedBy: DisplacedBy = getDisplacedBy(
           axis,
-          preset.inHome1.displaceBy,
+          preset.inHome1.displaceBy
         );
 
         const impact: DragImpact = {
@@ -46,7 +46,7 @@ import { getForcedDisplacement } from '../../../../../util/impact';
           }),
           displacedBy,
           at: {
-            type: 'REORDER',
+            type: "REORDER",
             destination: {
               index: preset.inHome3.descriptor.index,
               droppableId: preset.inHome3.descriptor.id,
@@ -70,8 +70,8 @@ import { getForcedDisplacement } from '../../../../../util/impact';
       });
     });
 
-    describe('closest displaced did not start displaced', () => {
-      it('should go before the displaced position of the item', () => {
+    describe("closest displaced did not start displaced", () => {
+      it("should go before the displaced position of the item", () => {
         const { afterCritical } = getLiftEffect({
           draggable: preset.inHome1,
           home: preset.home,
@@ -80,7 +80,7 @@ import { getForcedDisplacement } from '../../../../../util/impact';
         });
         const displacedBy: DisplacedBy = getDisplacedBy(
           axis,
-          preset.inHome1.displaceBy,
+          preset.inHome1.displaceBy
         );
         // moved into foreign
         const impact: DragImpact = {
@@ -102,7 +102,7 @@ import { getForcedDisplacement } from '../../../../../util/impact';
           }),
           displacedBy,
           at: {
-            type: 'REORDER',
+            type: "REORDER",
             // currently in position of inForeign2
             destination: {
               index: preset.inForeign2.descriptor.index,

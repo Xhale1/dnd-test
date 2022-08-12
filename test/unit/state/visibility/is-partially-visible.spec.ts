@@ -1,10 +1,10 @@
-import { getRect } from 'css-box-model';
-import type { Rect, Spacing } from 'css-box-model';
-import { isPartiallyVisible } from '../../../../src/state/visibility/is-visible';
-import scrollDroppable from '../../../../src/state/droppable/scroll-droppable';
-import { offsetByPosition } from '../../../../src/state/spacing';
-import { getDroppableDimension, getFrame } from '../../../util/dimension';
-import type { DroppableDimension } from '../../../../src/types';
+import { getRect } from "css-box-model";
+import type { Rect, Spacing } from "css-box-model";
+import { isPartiallyVisible } from "../../../../src/state/visibility/is-visible";
+import scrollDroppable from "../../../../src/state/droppable/scroll-droppable";
+import { offsetByPosition } from "../../../../src/state/spacing";
+import { getDroppableDimension, getFrame } from "../../../util/dimension";
+import type { DroppableDimension } from "../../../../src/types";
 
 const viewport: Rect = getRect({
   right: 800,
@@ -15,9 +15,9 @@ const viewport: Rect = getRect({
 
 const asBigAsViewport: DroppableDimension = getDroppableDimension({
   descriptor: {
-    id: 'same-as-viewport',
-    type: 'TYPE',
-    mode: 'standard',
+    id: "same-as-viewport",
+    type: "TYPE",
+    mode: "standard",
   },
   borderBox: viewport,
 });
@@ -45,50 +45,50 @@ const notInViewport: Spacing = {
 
 const asBigAsInViewport1: DroppableDimension = getDroppableDimension({
   descriptor: {
-    id: 'subset',
-    type: 'TYPE',
-    mode: 'standard',
+    id: "subset",
+    type: "TYPE",
+    mode: "standard",
   },
   borderBox: inViewport1,
 });
 
-describe('is partially visible', () => {
-  describe('viewport', () => {
-    describe('without changes in droppable scroll', () => {
-      it('should return false if the item is not in the viewport', () => {
+describe("is partially visible", () => {
+  describe("viewport", () => {
+    describe("without changes in droppable scroll", () => {
+      it("should return false if the item is not in the viewport", () => {
         expect(
           isPartiallyVisible({
             target: notInViewport,
             viewport,
             destination: asBigAsViewport,
             withDroppableDisplacement: true,
-          }),
+          })
         ).toBe(false);
       });
 
-      it('should return true if item takes up entire viewport', () => {
+      it("should return true if item takes up entire viewport", () => {
         expect(
           isPartiallyVisible({
             target: viewport,
             viewport,
             destination: asBigAsViewport,
             withDroppableDisplacement: true,
-          }),
+          })
         ).toBe(true);
       });
 
-      it('should return true if the item is totally visible in the viewport', () => {
+      it("should return true if the item is totally visible in the viewport", () => {
         expect(
           isPartiallyVisible({
             target: inViewport1,
             viewport,
             destination: asBigAsViewport,
             withDroppableDisplacement: true,
-          }),
+          })
         ).toBe(true);
       });
 
-      it('should return true if the item is partially visible in the viewport', () => {
+      it("should return true if the item is partially visible in the viewport", () => {
         const partials: Spacing[] = [
           // bleed over top
           offsetByPosition(viewport, { x: 0, y: -1 }),
@@ -107,18 +107,18 @@ describe('is partially visible', () => {
               viewport,
               destination: asBigAsViewport,
               withDroppableDisplacement: true,
-            }),
+            })
           ).toBe(true);
         });
       });
     });
 
-    describe('with changes in droppable scroll', () => {
+    describe("with changes in droppable scroll", () => {
       const clippedByViewport: DroppableDimension = getDroppableDimension({
         descriptor: {
-          id: 'clipped',
-          type: 'TYPE',
-          mode: 'standard',
+          id: "clipped",
+          type: "TYPE",
+          mode: "standard",
         },
         borderBox: {
           top: viewport.top,
@@ -138,8 +138,8 @@ describe('is partially visible', () => {
         },
       });
 
-      describe('originally invisible but now invisible', () => {
-        it('should take into account the droppable scroll when detecting visibility', () => {
+      describe("originally invisible but now invisible", () => {
+        it("should take into account the droppable scroll when detecting visibility", () => {
           const originallyInvisible: Spacing = {
             top: viewport.bottom + 1,
             bottom: viewport.bottom + 100,
@@ -154,7 +154,7 @@ describe('is partially visible', () => {
               destination: clippedByViewport,
               viewport,
               withDroppableDisplacement: true,
-            }),
+            })
           ).toBe(false);
 
           // after scroll the target is now visible
@@ -164,13 +164,13 @@ describe('is partially visible', () => {
               destination: scrollDroppable(clippedByViewport, { x: 0, y: 100 }),
               viewport,
               withDroppableDisplacement: true,
-            }),
+            })
           ).toBe(true);
         });
       });
 
-      describe('originally visible but now visible', () => {
-        it('should take into account the droppable scroll when detecting visibility', () => {
+      describe("originally visible but now visible", () => {
+        it("should take into account the droppable scroll when detecting visibility", () => {
           const originallyVisible: Spacing = {
             top: viewport.top,
             bottom: viewport.top + 50,
@@ -185,7 +185,7 @@ describe('is partially visible', () => {
               destination: clippedByViewport,
               viewport,
               withDroppableDisplacement: true,
-            }),
+            })
           ).toBe(true);
 
           // after scroll the target is now invisible
@@ -195,14 +195,14 @@ describe('is partially visible', () => {
               destination: scrollDroppable(clippedByViewport, { x: 0, y: 100 }),
               viewport,
               withDroppableDisplacement: true,
-            }),
+            })
           ).toBe(false);
         });
       });
     });
   });
 
-  describe('droppable', () => {
+  describe("droppable", () => {
     const borderBox: Rect = getRect({
       top: 0,
       left: 0,
@@ -218,9 +218,9 @@ describe('is partially visible', () => {
 
     const scrollable: DroppableDimension = getDroppableDimension({
       descriptor: {
-        id: 'clipped',
-        type: 'TYPE',
-        mode: 'standard',
+        id: "clipped",
+        type: "TYPE",
+        mode: "standard",
       },
       borderBox,
       closest: {
@@ -234,41 +234,41 @@ describe('is partially visible', () => {
       },
     });
 
-    describe('without changes in droppable scroll', () => {
-      it('should return false if outside the droppable', () => {
+    describe("without changes in droppable scroll", () => {
+      it("should return false if outside the droppable", () => {
         expect(
           isPartiallyVisible({
             target: inViewport2,
             viewport,
             destination: asBigAsInViewport1,
             withDroppableDisplacement: true,
-          }),
+          })
         ).toBe(false);
       });
 
-      it('should return true if the target is bigger than the droppable', () => {
+      it("should return true if the target is bigger than the droppable", () => {
         expect(
           isPartiallyVisible({
             target: viewport,
             viewport,
             destination: asBigAsInViewport1,
             withDroppableDisplacement: true,
-          }),
+          })
         ).toBe(true);
       });
 
-      it('should return true if the same size of the droppable', () => {
+      it("should return true if the same size of the droppable", () => {
         expect(
           isPartiallyVisible({
             target: inViewport1,
             viewport,
             destination: asBigAsInViewport1,
             withDroppableDisplacement: true,
-          }),
+          })
         ).toBe(true);
       });
 
-      it('should return true if within the droppable', () => {
+      it("should return true if within the droppable", () => {
         const insideDroppable: Spacing = {
           top: 20,
           left: 20,
@@ -282,11 +282,11 @@ describe('is partially visible', () => {
             viewport,
             destination: asBigAsInViewport1,
             withDroppableDisplacement: true,
-          }),
+          })
         ).toBe(true);
       });
 
-      it('should return true if partially within the droppable', () => {
+      it("should return true if partially within the droppable", () => {
         const partials: Spacing[] = [
           // bleed over top
           offsetByPosition(inViewport1, { x: 0, y: -1 }),
@@ -305,12 +305,12 @@ describe('is partially visible', () => {
               viewport,
               destination: asBigAsInViewport1,
               withDroppableDisplacement: true,
-            }),
+            })
           ).toBe(true);
         });
       });
 
-      it('should return false if falling on clipped area of droppable', () => {
+      it("should return false if falling on clipped area of droppable", () => {
         const ourFrame: Rect = getRect({
           top: 10,
           left: 10,
@@ -320,9 +320,9 @@ describe('is partially visible', () => {
         });
         const clippedDroppable: DroppableDimension = getDroppableDimension({
           descriptor: {
-            id: 'clipped',
-            type: 'TYPE',
-            mode: 'standard',
+            id: "clipped",
+            type: "TYPE",
+            mode: "standard",
           },
           borderBox: {
             ...ourFrame,
@@ -351,14 +351,14 @@ describe('is partially visible', () => {
             destination: clippedDroppable,
             withDroppableDisplacement: true,
             viewport,
-          }),
+          })
         ).toBe(false);
       });
     });
 
-    describe('with changes in droppable scroll', () => {
-      describe('originally invisible but now invisible', () => {
-        it('should take into account the droppable scroll when detecting visibility', () => {
+    describe("with changes in droppable scroll", () => {
+      describe("originally invisible but now invisible", () => {
+        it("should take into account the droppable scroll when detecting visibility", () => {
           const originallyInvisible: Spacing = {
             left: frameBorderBox.left,
             right: frameBorderBox.right,
@@ -373,7 +373,7 @@ describe('is partially visible', () => {
               destination: scrollable,
               withDroppableDisplacement: true,
               viewport,
-            }),
+            })
           ).toBe(false);
 
           // after scroll the target is now visible
@@ -383,13 +383,13 @@ describe('is partially visible', () => {
               destination: scrollDroppable(scrollable, { x: 0, y: 100 }),
               viewport,
               withDroppableDisplacement: true,
-            }),
+            })
           ).toBe(true);
         });
       });
 
-      describe('originally visible but now visible', () => {
-        it('should take into account the droppable scroll when detecting visibility', () => {
+      describe("originally visible but now visible", () => {
+        it("should take into account the droppable scroll when detecting visibility", () => {
           const originallyVisible: Spacing = {
             ...frameBorderBox,
             top: 10,
@@ -403,7 +403,7 @@ describe('is partially visible', () => {
               destination: scrollable,
               viewport,
               withDroppableDisplacement: true,
-            }),
+            })
           ).toBe(true);
 
           // after scroll the target is now invisible
@@ -413,12 +413,12 @@ describe('is partially visible', () => {
               destination: scrollDroppable(scrollable, { x: 0, y: 100 }),
               viewport,
               withDroppableDisplacement: true,
-            }),
+            })
           ).toBe(false);
         });
       });
 
-      it('should not consider droppable scroll changes if asked to ignore them', () => {
+      it("should not consider droppable scroll changes if asked to ignore them", () => {
         const originallyInvisible: Spacing = {
           left: frameBorderBox.left,
           right: frameBorderBox.right,
@@ -433,7 +433,7 @@ describe('is partially visible', () => {
             destination: scrollable,
             withDroppableDisplacement: true,
             viewport,
-          }),
+          })
         ).toBe(false);
 
         const scrolled: DroppableDimension = scrollDroppable(scrollable, {
@@ -448,7 +448,7 @@ describe('is partially visible', () => {
             viewport,
             // key change
             withDroppableDisplacement: false,
-          }),
+          })
         ).toBe(false);
         // validation: when asked to consider scroll the target is now visible
         expect(
@@ -457,19 +457,19 @@ describe('is partially visible', () => {
             destination: scrolled,
             viewport,
             withDroppableDisplacement: true,
-          }),
+          })
         ).toBe(true);
       });
     });
 
-    describe('with invisible subject', () => {
-      it('should return false when subject is totally invisible', () => {
+    describe("with invisible subject", () => {
+      it("should return false when subject is totally invisible", () => {
         // creating a droppable where the frame is bigger than the subject
         const droppable: DroppableDimension = getDroppableDimension({
           descriptor: {
-            id: 'droppable',
-            type: 'TYPE',
-            mode: 'standard',
+            id: "droppable",
+            type: "TYPE",
+            mode: "standard",
           },
           borderBox: {
             top: 0,
@@ -506,13 +506,13 @@ describe('is partially visible', () => {
             destination: droppable,
             viewport,
             withDroppableDisplacement: true,
-          }),
+          })
         ).toBe(true);
 
         // subject is now totally invisible
         const scrolled: DroppableDimension = scrollDroppable(
           droppable,
-          getFrame(droppable).scroll.max,
+          getFrame(droppable).scroll.max
         );
         // asserting frame is not visible
         expect(scrolled.subject.active).toBe(null);
@@ -524,41 +524,41 @@ describe('is partially visible', () => {
             destination: scrolled,
             viewport,
             withDroppableDisplacement: true,
-          }),
+          })
         ).toBe(false);
       });
     });
   });
 
-  describe('viewport + droppable', () => {
-    it('should return true if visible in the viewport and the droppable', () => {
+  describe("viewport + droppable", () => {
+    it("should return true if visible in the viewport and the droppable", () => {
       expect(
         isPartiallyVisible({
           target: inViewport1,
           viewport,
           destination: asBigAsInViewport1,
           withDroppableDisplacement: true,
-        }),
+        })
       ).toBe(true);
     });
 
-    it('should return false if not visible in the droppable even if visible in the viewport', () => {
+    it("should return false if not visible in the droppable even if visible in the viewport", () => {
       expect(
         isPartiallyVisible({
           target: inViewport2,
           viewport,
           destination: asBigAsInViewport1,
           withDroppableDisplacement: true,
-        }),
+        })
       ).toBe(false);
     });
 
-    it('should return false if not visible in the viewport even if visible in the droppable', () => {
+    it("should return false if not visible in the viewport even if visible in the droppable", () => {
       const notVisibleDroppable = getDroppableDimension({
         descriptor: {
-          id: 'not-visible',
-          type: 'TYPE',
-          mode: 'standard',
+          id: "not-visible",
+          type: "TYPE",
+          mode: "standard",
         },
         borderBox: notInViewport,
       });
@@ -571,7 +571,7 @@ describe('is partially visible', () => {
           viewport,
           destination: notVisibleDroppable,
           withDroppableDisplacement: true,
-        }),
+        })
       ).toBe(false);
     });
   });

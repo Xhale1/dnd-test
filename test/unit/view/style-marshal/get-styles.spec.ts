@@ -6,12 +6,12 @@
  * See: https://github.com/stylelint/stylelint/issues/5904#issuecomment-1040585353
  */
 
-import stylelint from 'stylelint';
-import getStyles from '../../../../src/view/use-style-marshal/get-styles';
+import stylelint from "stylelint";
+import getStyles from "../../../../src/view/use-style-marshal/get-styles";
 
-import type { Styles } from '../../../../src/view/use-style-marshal/get-styles';
+import type { Styles } from "../../../../src/view/use-style-marshal/get-styles";
 
-const styles: Styles = getStyles('hey');
+const styles: Styles = getStyles("hey");
 
 (Object.keys(styles) as Array<keyof Styles>).forEach((key) => {
   it(`should generate valid ${key} styles`, () =>
@@ -20,11 +20,11 @@ const styles: Styles = getStyles('hey');
         code: styles[key],
         config: {
           // just using the recommended config as it only checks for errors and not formatting
-          extends: ['stylelint-config-recommended'],
+          extends: ["stylelint-config-recommended"],
           // basic semi colin rules
           rules: {
-            'no-extra-semicolons': true,
-            'declaration-block-semicolon-space-after': 'always-single-line',
+            "no-extra-semicolons": true,
+            "declaration-block-semicolon-space-after": "always-single-line",
           },
         },
       })
@@ -36,7 +36,7 @@ const styles: Styles = getStyles('hey');
           // Types on _postcssResult are not properly working,
           // because the `css` is not avalaible
           // eslint-disable-next-line @typescript-eslint/no-explicit-any, no-underscore-dangle
-          (result.results[0]._postcssResult as any)?.css.length,
+          (result.results[0]._postcssResult as any)?.css.length
         ).toBeGreaterThan(1);
       }));
 });

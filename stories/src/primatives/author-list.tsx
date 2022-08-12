@@ -1,16 +1,16 @@
-import React, { Component, ReactElement } from 'react';
-import styled from '@emotion/styled';
-import { colors } from '@atlaskit/theme';
-import { Droppable, Draggable } from '@react-forked/dnd';
+import { colors } from "@atlaskit/theme";
+import styled from "@emotion/styled";
 import type {
-  DroppableProvided,
-  DroppableStateSnapshot,
   DraggableProvided,
   DraggableStateSnapshot,
-} from '@react-forked/dnd';
-import Author from './author-item';
-import { grid } from '../constants';
-import type { Quote } from '../types';
+  DroppableProvided,
+  DroppableStateSnapshot,
+} from "@hello-pangea/dnd";
+import { Draggable, Droppable } from "@hello-pangea/dnd";
+import React, { Component, ReactElement } from "react";
+import { grid } from "../constants";
+import type { Quote } from "../types";
+import Author from "./author-item";
 
 interface WrapperProps {
   isDraggingOver: boolean;
@@ -80,7 +80,7 @@ export default class AuthorList extends Component<Props> {
             <Draggable key={quote.id} draggableId={quote.id} index={index}>
               {(
                 dragProvided: DraggableProvided,
-                dragSnapshot: DraggableStateSnapshot,
+                dragSnapshot: DraggableStateSnapshot
               ) => (
                 <Author
                   author={quote.author}
@@ -108,7 +108,7 @@ export default class AuthorList extends Component<Props> {
       >
         {(
           dropProvided: DroppableProvided,
-          dropSnapshot: DroppableStateSnapshot,
+          dropSnapshot: DroppableStateSnapshot
         ) => (
           <Wrapper
             isDraggingOver={dropSnapshot.isDraggingOver}

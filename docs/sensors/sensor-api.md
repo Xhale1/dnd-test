@@ -11,7 +11,7 @@ The public Sensor API is the same API that our [mouse](/docs/sensors/mouse.md), 
 
 ## Examples
 
-⚠️ These following examples are based on [react-beautiful-dnd](https://github.com/atlassian/react-beautiful-dnd) and might not work with future version of [@react-forked/dnd](https://github.com/react-forked/dnd).
+⚠️ These following examples are based on [react-beautiful-dnd](https://github.com/atlassian/react-beautiful-dnd) and might not work with future version of [@hello-pangea/dnd](https://github.com/react-forked/dnd).
 
 These are some examples to show off what is possible with the Sensor API. They are currently not built to be production ready. Feel free to reach out if you would like to help improve them or add your own!
 
@@ -33,7 +33,7 @@ You create a `sensor` that has the ability to attempt to claim a **lock**. A **l
 
 ```ts
 function mySimpleSensor(api: SensorAPI) {
-  const preDrag: PreDragActions | null = api.tryGetLock('item-1');
+  const preDrag: PreDragActions | null = api.tryGetLock("item-1");
   // Could not get lock
   if (!preDrag) {
     return;
@@ -78,7 +78,7 @@ A `sensor` is a [React hook](https://reactjs.org/docs/hooks-intro.html). It is f
 ```ts
 function useMyCoolSensor(api: SensorAPI) {
   const start = useCallback(function start(event: MouseEvent) {
-    const preDrag: PreDragActions | null = api.tryGetLock('item-2');
+    const preDrag: PreDragActions | null = api.tryGetLock("item-2");
     if (!preDrag) {
       return;
     }
@@ -88,10 +88,10 @@ function useMyCoolSensor(api: SensorAPI) {
   }, []);
 
   useEffect(() => {
-    window.addEventListener('click', start);
+    window.addEventListener("click", start);
 
     return () => {
-      window.removeEventListener('click', start);
+      window.removeEventListener("click", start);
     };
   }, []);
 }
@@ -142,7 +142,8 @@ interface DraggableOptions {
 ```ts
 type TryGetLock = (
   draggableId: DraggableId,
-  forceStop?: () => void, options?: TryGetLockOptions,
+  forceStop?: () => void,
+  options?: TryGetLockOptions
 ) => PreDragActions | null;
 ```
 
@@ -249,7 +250,7 @@ function useMySensor(api: SensorAPI) {
     }
   }
 
-  const preDrag: PreDragActions | null = api.tryGetLock('item-1', forceStop);
+  const preDrag: PreDragActions | null = api.tryGetLock("item-1", forceStop);
   // Could not get lock
   if (!preDrag) {
     return;
@@ -257,8 +258,8 @@ function useMySensor(api: SensorAPI) {
 
   const drag: SnapDragActions = preDrag.snapLift();
   const move = () => drag.moveDown();
-  window.addEventListener('click', move);
-  unbindClick = window.removeEventListener('click', move);
+  window.addEventListener("click", move);
+  unbindClick = window.removeEventListener("click", move);
 }
 ```
 
@@ -279,9 +280,9 @@ function useMySensor(api: SensorAPI) {
       return;
     }
     // unbinding if no longer active
-    window.removeEventListener('click', move);
+    window.removeEventListener("click", move);
   };
-  window.addEventListener('click', move);
+  window.addEventListener("click", move);
 }
 ```
 

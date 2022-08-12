@@ -1,22 +1,22 @@
-import isHtmlElement from '../is-type-of-element/is-html-element';
+import isHtmlElement from "../is-type-of-element/is-html-element";
 
 export type InteractiveTagNames = typeof interactiveTagNames;
 export type InteractiveTagName = InteractiveTagNames[number];
 
 export const interactiveTagNames = [
-  'input',
-  'button',
-  'textarea',
-  'select',
-  'option',
-  'optgroup',
-  'video',
-  'audio',
+  "input",
+  "button",
+  "textarea",
+  "select",
+  "option",
+  "optgroup",
+  "video",
+  "audio",
 ] as const;
 
 function isAnInteractiveElement(
   parent: Element,
-  current?: Element | null,
+  current?: Element | null
 ): boolean {
   if (current == null) {
     return false;
@@ -39,8 +39,8 @@ function isAnInteractiveElement(
   // contenteditable="true" or contenteditable="" are valid ways
   // of creating a contenteditable container
   // https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/contenteditable
-  const attribute: string | null = current.getAttribute('contenteditable');
-  if (attribute === 'true' || attribute === '') {
+  const attribute: string | null = current.getAttribute("contenteditable");
+  if (attribute === "true" || attribute === "") {
     return true;
   }
 
@@ -55,7 +55,7 @@ function isAnInteractiveElement(
 
 export default function isEventInInteractiveElement(
   draggable: Element,
-  event: Event,
+  event: Event
 ): boolean {
   const target = event.target;
 

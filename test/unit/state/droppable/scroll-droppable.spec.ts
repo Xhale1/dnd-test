@@ -1,25 +1,25 @@
-import { createBox, getRect } from 'css-box-model';
-import type { BoxModel, Position } from 'css-box-model';
-import { invariant } from '../../../../src/invariant';
+import { createBox, getRect } from "css-box-model";
+import type { BoxModel, Position } from "css-box-model";
+import { invariant } from "../../../../src/invariant";
 import type {
   ScrollSize,
   DroppableDimension,
   DroppableDescriptor,
   Scrollable,
   ScrollDetails,
-} from '../../../../src/types';
-import getDroppable from '../../../../src/state/droppable/get-droppable';
-import scrollDroppable from '../../../../src/state/droppable/scroll-droppable';
-import { negate } from '../../../../src/state/position';
-import getMaxScroll from '../../../../src/state/get-max-scroll';
+} from "../../../../src/types";
+import getDroppable from "../../../../src/state/droppable/get-droppable";
+import scrollDroppable from "../../../../src/state/droppable/scroll-droppable";
+import { negate } from "../../../../src/state/position";
+import getMaxScroll from "../../../../src/state/get-max-scroll";
 
 const descriptor: DroppableDescriptor = {
-  id: 'drop-1',
-  type: 'TYPE',
-  mode: 'standard',
+  id: "drop-1",
+  type: "TYPE",
+  mode: "standard",
 };
 
-it('should update the frame scroll and the subject', () => {
+it("should update the frame scroll and the subject", () => {
   const scrollSize: ScrollSize = {
     scrollHeight: 500,
     scrollWidth: 100,
@@ -50,7 +50,7 @@ it('should update the frame scroll and the subject', () => {
     descriptor,
     client: customClient,
     page: customPage,
-    direction: 'vertical',
+    direction: "vertical",
     isEnabled: true,
     isCombineEnabled: false,
     isFixedOnPage: false,
@@ -108,11 +108,11 @@ it('should update the frame scroll and the subject', () => {
       // unchanged
       right: 100,
       left: 0,
-    }),
+    })
   );
 });
 
-it('should allow scrolling beyond the max position', () => {
+it("should allow scrolling beyond the max position", () => {
   const customClient: BoxModel = createBox({
     borderBox: {
       top: 0,
@@ -135,7 +135,7 @@ it('should allow scrolling beyond the max position', () => {
     client: customClient,
     page: customClient,
     isEnabled: true,
-    direction: 'vertical',
+    direction: "vertical",
     isCombineEnabled: false,
     isFixedOnPage: false,
     closest: {

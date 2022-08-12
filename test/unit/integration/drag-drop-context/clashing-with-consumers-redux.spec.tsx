@@ -1,17 +1,17 @@
 /* eslint-disable react/no-multi-comp */
-import React, { Component } from 'react';
-import { render } from '@testing-library/react';
-import { Provider, connect } from 'react-redux';
-import { createStore } from 'redux';
-import { Droppable, Draggable, DragDropContext } from '../../../../src';
-import type { DraggableProvided, DroppableProvided } from '../../../../src';
+import React, { Component } from "react";
+import { render } from "@testing-library/react";
+import { Provider, connect } from "react-redux";
+import { createStore } from "redux";
+import { Droppable, Draggable, DragDropContext } from "../../../../src";
+import type { DraggableProvided, DroppableProvided } from "../../../../src";
 
 interface AppState {
   foo: string;
 }
 
 const original: AppState = {
-  foo: 'bar',
+  foo: "bar",
 };
 // super boring reducer that always returns the same thing
 const reducer = (state: AppState = original) => state;
@@ -29,7 +29,7 @@ function mapStateToProps(state: AppState): AppState {
 
 const Connected = connect(mapStateToProps)(Unconnected);
 
-it('should avoid clashes with parent redux applications', () => {
+it("should avoid clashes with parent redux applications", () => {
   class App extends Component<any> {
     render() {
       return (
@@ -68,7 +68,7 @@ it('should avoid clashes with parent redux applications', () => {
   unmount();
 });
 
-it('should avoid clashes with child redux applications', () => {
+it("should avoid clashes with child redux applications", () => {
   class App extends Component<any> {
     render() {
       return (

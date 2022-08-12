@@ -1,7 +1,7 @@
-import type { CreateFunction } from '@testing-library/dom';
+import type { CreateFunction } from "@testing-library/dom";
 
 // TODO: Open a PR to fix createEvent types
-declare module '@testing-library/dom' {
+declare module "@testing-library/dom" {
   interface EventMap {
     // Clipboard Events
     copy: ClipboardEvent;
@@ -106,7 +106,7 @@ declare module '@testing-library/dom' {
   type OverridedCreateObject = {
     [K in keyof EventMap]: (
       element: Document | Element | Window | Node,
-      options?: Record<string, unknown>,
+      options?: Record<string, unknown>
     ) => EventMap[K];
   };
 

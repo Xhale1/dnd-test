@@ -1,17 +1,17 @@
-import { JSDOM } from 'jsdom';
-import isHtmlElement from '../../../../src/view/is-type-of-element/is-html-element';
-import isSvgElement from '../../../../src/view/is-type-of-element/is-svg-element';
-import getSvg from './util/get-svg';
+import { JSDOM } from "jsdom";
+import isHtmlElement from "../../../../src/view/is-type-of-element/is-html-element";
+import isSvgElement from "../../../../src/view/is-type-of-element/is-svg-element";
+import getSvg from "./util/get-svg";
 
-it('should allow html elements through', () => {
-  const anchor: HTMLElement = document.createElement('a');
+it("should allow html elements through", () => {
+  const anchor: HTMLElement = document.createElement("a");
 
   expect(isHtmlElement(anchor)).toBe(true);
   // validation
   expect(anchor instanceof HTMLElement).toBe(true);
 });
 
-it('should not allow svg elements through', () => {
+it("should not allow svg elements through", () => {
   const svg: SVGElement = getSvg(document);
 
   expect(isHtmlElement(svg)).toBe(false);
@@ -20,9 +20,9 @@ it('should not allow svg elements through', () => {
   expect(isSvgElement(svg)).toBe(true);
 });
 
-it('should allow html elements from another window', () => {
+it("should allow html elements from another window", () => {
   const other = new JSDOM(`<!DOCTYPE html><p>Hello world</p>`);
-  const anchor: HTMLElement = other.window.document.createElement('a');
+  const anchor: HTMLElement = other.window.document.createElement("a");
 
   // normally would not pass an instanceof check
   expect(anchor instanceof HTMLElement).toBe(false);
@@ -32,7 +32,7 @@ it('should allow html elements from another window', () => {
   expect(isHtmlElement(anchor)).toBe(true);
 });
 
-it('should not allow svg elements from another window', () => {
+it("should not allow svg elements from another window", () => {
   const other = new JSDOM(`<!DOCTYPE html><p>Hello world</p>`);
   const svg: SVGElement = getSvg(other.window.document);
 

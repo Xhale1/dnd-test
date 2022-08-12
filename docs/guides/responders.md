@@ -106,7 +106,7 @@ type Announce = (message: string) => void;
 // While the return type is `mixed`, the return value is not used.
 type OnDragStartResponder = (
   start: DragStart,
-  provided: ResponderProvided,
+  provided: ResponderProvided
 ) => unknown;
 
 // supporting types
@@ -118,7 +118,7 @@ interface DraggableRubric {
 
 interface DragStart extends DraggableRubric {
   mode: MovementMode;
-};
+}
 
 interface DraggableLocation {
   droppableId: DroppableId;
@@ -130,7 +130,7 @@ type DraggableId = Id;
 type DroppableId = Id;
 type TypeId = Id;
 
-type MovementMode = 'FLUID' | 'SNAP';
+type MovementMode = "FLUID" | "SNAP";
 ```
 
 - `start.draggableId`: the id of the `<Draggable />` that is now dragging
@@ -152,7 +152,7 @@ It is important that you not do too much work as a result of this function as it
 // The return value of `mixed` is not used
 type OnDragUpdateResponder = (
   update: DragUpdate,
-  provided: ResponderProvided,
+  provided: ResponderProvided
 ) => unknown;
 
 interface DragUpdate extends DragStart {
@@ -174,21 +174,21 @@ interface Combine {
 
 ### `onDragEnd` (required)
 
-> `@react-forked/dnd` will throw an error if a `onDragEnd` prop is not provided
+> `@hello-pangea/dnd` will throw an error if a `onDragEnd` prop is not provided
 
 This function is _extremely_ important and has an critical role to play in the application lifecycle. **This function must result in the _synchronous_ reordering of a list of `Draggables`**
 
 ```ts
 type OragEndResponder = (
   result: DropResult,
-  provided: ResponderProvided,
+  provided: ResponderProvided
 ) => unknown;
 
 interface DropResult extends DragUpdate {
   reason: DropReason;
 }
 
-type DropReason = 'DROP' | 'CANCEL';
+type DropReason = "DROP" | "CANCEL";
 ```
 
 - `...DragUpdate`: _see above_
@@ -202,7 +202,7 @@ If you need to persist a reorder to a remote data store - update the list synchr
 
 ## No dimension changes during a drag
 
-`@react-forked/dnd` does not support the changing of the size of any `<Draggable />` or `<Droppable />` after a drag has started. We build a virtual model of every `<Draggable />` and `<Droppable />` when a drag starts. We do not recollect these during a drag. So if you change the size of something: the user will see the updated size, but our virtual model will remain unchanged. If you want to modify dimensions before a drag starts you can use `onBeforeCapture`
+`@hello-pangea/dnd` does not support the changing of the size of any `<Draggable />` or `<Droppable />` after a drag has started. We build a virtual model of every `<Draggable />` and `<Droppable />` when a drag starts. We do not recollect these during a drag. So if you change the size of something: the user will see the updated size, but our virtual model will remain unchanged. If you want to modify dimensions before a drag starts you can use `onBeforeCapture`
 
 ## Block updates during a drag
 

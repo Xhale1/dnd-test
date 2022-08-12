@@ -1,4 +1,4 @@
-import type { Position } from 'css-box-model';
+import type { Position } from "css-box-model";
 import type {
   DraggableDimension,
   ClientPositions,
@@ -9,10 +9,10 @@ import type {
   DimensionMap,
   StateWhenUpdatesAllowed,
   DroppableDimensionMap,
-} from '../../../types';
-import getDragImpact from '../../get-drag-impact';
-import { add, subtract } from '../../position';
-import recomputePlaceholders from '../../recompute-placeholders';
+} from "../../../types";
+import getDragImpact from "../../get-drag-impact";
+import { add, subtract } from "../../position";
+import recomputePlaceholders from "../../recompute-placeholders";
 
 interface Args<TState extends StateWhenUpdatesAllowed> {
   state: TState;
@@ -43,7 +43,7 @@ export default <TState extends StateWhenUpdatesAllowed>({
 
   const offset: Position = subtract(
     clientSelection,
-    state.initial.client.selection,
+    state.initial.client.selection
   );
 
   const client: ClientPositions = {
@@ -64,7 +64,7 @@ export default <TState extends StateWhenUpdatesAllowed>({
   };
 
   // Not updating impact while bulk collecting
-  if (state.phase === 'COLLECTING') {
+  if (state.phase === "COLLECTING") {
     return {
       ...state,
       dimensions,

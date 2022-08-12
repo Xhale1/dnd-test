@@ -1,15 +1,14 @@
-import React from 'react';
-import { getRect } from 'css-box-model';
-// import { mount, type ReactWrapper } from 'enzyme';
-import { render, fireEvent } from '@testing-library/react';
-import { DragDropContext, Draggable, Droppable } from '../../../src';
-import type { DropResult } from '../../../src';
-import { getComputedSpacing } from '../../util/dimension';
-import * as keyCodes from '../../../src/view/key-codes';
-import { simpleLift, keyboard } from './util/controls';
-import type { DraggableProvided } from '../../../src/view/draggable/draggable-types';
-import type { DroppableProvided } from '../../../src/view/droppable/droppable-types';
-import setDOMRect from '../../util/set-dom-rect';
+import React from "react";
+import { getRect } from "css-box-model";
+import { render, fireEvent } from "@testing-library/react";
+import { DragDropContext, Draggable, Droppable } from "../../../src";
+import type { DropResult } from "../../../src";
+import { getComputedSpacing } from "../../util/dimension";
+import * as keyCodes from "../../../src/view/key-codes";
+import { simpleLift, keyboard } from "./util/controls";
+import type { DraggableProvided } from "../../../src/view/draggable/draggable-types";
+import type { DroppableProvided } from "../../../src/view/droppable/droppable-types";
+import setDOMRect from "../../util/set-dom-rect";
 
 const reorder = (list: any[], startIndex: number, endIndex: number): any[] => {
   // eslint-disable-next-line no-restricted-syntax
@@ -76,7 +75,7 @@ class InnerList extends React.Component<InnerListProps> {
 
 // Stubbing out totally - not including margins in this
 jest
-  .spyOn(window, 'getComputedStyle')
+  .spyOn(window, "getComputedStyle")
   .mockImplementation(() => getComputedSpacing({}));
 
 const setDroppableBounds = (ref?: HTMLElement | null) => {
@@ -90,7 +89,7 @@ const setDroppableBounds = (ref?: HTMLElement | null) => {
         left: 0,
         right: 100,
         bottom: 300,
-      }),
+      })
     );
 };
 
@@ -99,7 +98,7 @@ interface State {
 }
 
 const first = {
-  id: 'first',
+  id: "first",
   onRender: jest.fn(),
   setRef: (ref?: HTMLElement | null) => {
     if (!ref) {
@@ -112,13 +111,13 @@ const first = {
           left: 0,
           right: 100,
           bottom: 20,
-        }),
+        })
       );
   },
 };
 
 const second = {
-  id: 'second',
+  id: "second",
   onRender: jest.fn(),
   setRef: (ref?: HTMLElement | null) => {
     if (!ref) {
@@ -131,7 +130,7 @@ const second = {
           left: 0,
           right: 100,
           bottom: 50,
-        }),
+        })
       );
   },
 };
@@ -151,7 +150,7 @@ class App extends React.Component<any, State> {
       tasks: reorder(
         this.state.tasks,
         result.source.index,
-        result.destination.index,
+        result.destination.index
       ),
     });
   };
@@ -186,7 +185,7 @@ afterEach(() => {
   jest.useRealTimers();
 });
 
-it('should call the onBeforeDragStart before connected components are updated, and onDragStart after', () => {
+it("should call the onBeforeDragStart before connected components are updated, and onDragStart after", () => {
   const clearRenderMocks = () => {
     first.onRender.mockClear();
     second.onRender.mockClear();
@@ -200,7 +199,7 @@ it('should call the onBeforeDragStart before connected components are updated, a
   clearRenderMocks();
 
   // start a drag
-  const handle: HTMLElement = getAllByTestId('drag-handle')[0];
+  const handle: HTMLElement = getAllByTestId("drag-handle")[0];
   simpleLift(keyboard, handle);
 
   // flushing onDragStart

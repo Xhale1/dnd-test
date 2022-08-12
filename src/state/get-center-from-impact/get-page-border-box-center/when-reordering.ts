@@ -1,5 +1,5 @@
-import { offset } from 'css-box-model';
-import type { Position, BoxModel } from 'css-box-model';
+import { offset } from "css-box-model";
+import type { Position, BoxModel } from "css-box-model";
 import type {
   Axis,
   DragImpact,
@@ -8,11 +8,11 @@ import type {
   DraggableDimensionMap,
   DroppableDimension,
   LiftEffect,
-} from '../../../types';
-import { goBefore, goAfter, goIntoStart } from '../move-relative-to';
-import getDraggablesInsideDroppable from '../../get-draggables-inside-droppable';
-import { negate } from '../../position';
-import didStartAfterCritical from '../../did-start-after-critical';
+} from "../../../types";
+import { goBefore, goAfter, goIntoStart } from "../move-relative-to";
+import getDraggablesInsideDroppable from "../../get-draggables-inside-droppable";
+import { negate } from "../../position";
+import didStartAfterCritical from "../../did-start-after-critical";
 
 interface NewHomeArgs {
   impact: DragImpact;
@@ -33,7 +33,7 @@ export default ({
 }: NewHomeArgs): Position => {
   const insideDestination: DraggableDimension[] = getDraggablesInsideDroppable(
     droppable.descriptor.id,
-    draggables,
+    draggables
   );
 
   const draggablePage: BoxModel = draggable.page;
@@ -94,7 +94,7 @@ export default ({
 
     const page: BoxModel = offset(
       last.page,
-      negate(afterCritical.displacedBy.point),
+      negate(afterCritical.displacedBy.point)
     );
     return goAfter({
       axis,

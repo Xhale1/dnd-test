@@ -1,11 +1,11 @@
-import React from 'react';
-import { render, fireEvent } from '@testing-library/react';
-import type { Position } from 'css-box-model';
-import App from '../util/app';
-import type { RenderItem } from '../util/app';
-import type { DraggableStateSnapshot, DropAnimation } from '../../../../src';
-import { simpleLift, mouse, getTransitionEnd } from '../util/controls';
-import expandedMouse from '../util/expanded-mouse';
+import React from "react";
+import { render, fireEvent } from "@testing-library/react";
+import type { Position } from "css-box-model";
+import App from "../util/app";
+import type { RenderItem } from "../util/app";
+import type { DraggableStateSnapshot, DropAnimation } from "../../../../src";
+import { simpleLift, mouse, getTransitionEnd } from "../util/controls";
+import expandedMouse from "../util/expanded-mouse";
 import {
   isDragging,
   isDropAnimating,
@@ -14,18 +14,18 @@ import {
   withPoorDimensionMocks,
   getLast,
   getSnapshotsFor,
-} from '../util/helpers';
+} from "../util/helpers";
 import {
   transitions,
   timings,
   curves,
   combine,
-} from '../../../../src/animation';
-import { zIndexOptions } from '../../../../src/view/draggable/get-style';
+} from "../../../../src/animation";
+import { zIndexOptions } from "../../../../src/view/draggable/get-style";
 
-it('should animate a drop to the required offset', () => {
+it("should animate a drop to the required offset", () => {
   const { getByText } = render(<App />);
-  const handle: HTMLElement = getByText('item: 0');
+  const handle: HTMLElement = getByText("item: 0");
 
   simpleLift(mouse, handle);
   expect(isDragging(handle)).toBe(true);
@@ -35,10 +35,10 @@ it('should animate a drop to the required offset', () => {
   // start a drop
   fireEvent.mouseUp(handle);
   expect(isDropAnimating(handle)).toBe(true);
-  expect(handle.style.position).toBe('fixed');
+  expect(handle.style.position).toBe("fixed");
 
   // moving back to origin so no transform
-  expect(handle.style.transform).toBe('');
+  expect(handle.style.transform).toBe("");
   expect(handle.style.transition).toBe(transitions.drop(timings.minDropTime));
   expect(handle.style.zIndex).toBe(`${zIndexOptions.dropAnimating}`);
 
@@ -46,22 +46,22 @@ it('should animate a drop to the required offset', () => {
   fireEvent(handle, getTransitionEnd());
   expect(isDropAnimating(handle)).toBe(false);
   // transition cleared
-  expect(handle.style.transition).toBe('');
+  expect(handle.style.transition).toBe("");
   // position: fixed cleared
-  expect(handle.style.position).toBe('');
+  expect(handle.style.position).toBe("");
 });
 
-it('should provide the correct snapshot to consumers', () => {
+it("should provide the correct snapshot to consumers", () => {
   const spy = jest.fn();
   const renderItem: RenderItem = renderItemAndSpy(spy);
 
   const { getByText } = render(<App renderItem={renderItem} />);
-  const handle: HTMLElement = getByText('item: 0');
-  expect(getSnapshotsFor('0', spy)).toHaveLength(1);
+  const handle: HTMLElement = getByText("item: 0");
+  expect(getSnapshotsFor("0", spy)).toHaveLength(1);
 
   simpleLift(mouse, handle);
   expect(isDragging(handle)).toBe(true);
-  expect(getSnapshotsFor('0', spy)).toHaveLength(2);
+  expect(getSnapshotsFor("0", spy)).toHaveLength(2);
 
   mouse.move(handle);
 
@@ -69,7 +69,7 @@ it('should provide the correct snapshot to consumers', () => {
   fireEvent.mouseUp(handle);
   expect(isDropAnimating(handle)).toBe(true);
 
-  const snapshot = getLast(getSnapshotsFor('0', spy));
+  const snapshot = getLast(getSnapshotsFor("0", spy));
 
   const dropping: DropAnimation = {
     duration: timings.minDropTime,
@@ -88,12 +88,12 @@ it('should provide the correct snapshot to consumers', () => {
     draggingOver: null,
     combineWith: null,
     combineTargetFor: null,
-    mode: 'FLUID',
+    mode: "FLUID",
   };
   expect(snapshot).toEqual(expected);
 });
 
-it('should animate scale and opacity when combining', () => {
+it("should animate scale and opacity when combining", () => {
   withPoorDimensionMocks((preset) => {
     const spy = jest.fn();
     const renderItem: RenderItem = renderItemAndSpy(spy);
@@ -101,9 +101,9 @@ it('should animate scale and opacity when combining', () => {
     const box1 = preset.inHome2.client.borderBox;
 
     const { getByText } = render(
-      <App renderItem={renderItem} isCombineEnabled />,
+      <App renderItem={renderItem} isCombineEnabled />
     );
-    const handle: HTMLElement = getByText('item: 0');
+    const handle: HTMLElement = getByText("item: 0");
 
     // lift
     expandedMouse.powerLift(handle, box0.center);
@@ -116,7 +116,7 @@ it('should animate scale and opacity when combining', () => {
     expandedMouse.startDrop(handle);
 
     {
-      const snapshot = getLast(getSnapshotsFor('0', spy));
+      const snapshot = getLast(getSnapshotsFor("0", spy));
       const dropping: DropAnimation = {
         // force cast to number :D
         duration: expect.any(Number) as any as number,
@@ -131,23 +131,23 @@ it('should animate scale and opacity when combining', () => {
         isDropAnimating: true,
         isClone: false,
         dropAnimation: dropping,
-        draggingOver: 'droppable',
-        combineWith: '1',
+        draggingOver: "droppable",
+        combineWith: "1",
         combineTargetFor: null,
-        mode: 'FLUID',
+        mode: "FLUID",
       };
       expect(snapshot).toEqual(expected);
       expect(handle.style.opacity).toBe(`${combine.opacity.drop}`);
       expect(handle.style.transition).toBe(transitions.drop(0.33));
       expect(handle.style.transform).toEqual(
-        expect.stringContaining(`scale(${combine.scale.drop})`),
+        expect.stringContaining(`scale(${combine.scale.drop})`)
       );
     }
 
     expandedMouse.finishDrop(handle);
 
     {
-      const snapshot = getLast(getSnapshotsFor('0', spy));
+      const snapshot = getLast(getSnapshotsFor("0", spy));
       const expected: DraggableStateSnapshot = {
         isDragging: false,
         isDropAnimating: false,
@@ -159,16 +159,16 @@ it('should animate scale and opacity when combining', () => {
         mode: null,
       };
       expect(snapshot).toEqual(expected);
-      expect(handle.style.opacity).toBe('');
-      expect(handle.style.transition).toBe('');
-      expect(handle.style.transform).toEqual('');
+      expect(handle.style.opacity).toBe("");
+      expect(handle.style.transition).toBe("");
+      expect(handle.style.transform).toEqual("");
     }
   });
 });
 
-it('should not trigger a drop animation finished if a transitionend occurs that is a non-primary property', () => {
+it("should not trigger a drop animation finished if a transitionend occurs that is a non-primary property", () => {
   const { getByText } = render(<App />);
-  const handle: HTMLElement = getByText('item: 0');
+  const handle: HTMLElement = getByText("item: 0");
 
   simpleLift(mouse, handle);
   expect(isDragging(handle)).toBe(true);
@@ -179,16 +179,16 @@ it('should not trigger a drop animation finished if a transitionend occurs that 
   fireEvent.mouseUp(handle);
   expect(isDropAnimating(handle)).toBe(true);
 
-  const event = getTransitionEnd('background');
+  const event = getTransitionEnd("background");
   fireEvent(handle, event);
 
   // still drop animating!
   expect(isDropAnimating(handle)).toBe(true);
 });
 
-it('should not trigger a drop if a transitionend event occurs when not dropping', () => {
+it("should not trigger a drop if a transitionend event occurs when not dropping", () => {
   const { getByText } = render(<App />);
-  const handle: HTMLElement = getByText('item: 0');
+  const handle: HTMLElement = getByText("item: 0");
 
   mouse.preLift(handle);
   fireEvent(handle, getTransitionEnd());

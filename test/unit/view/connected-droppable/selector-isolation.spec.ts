@@ -1,14 +1,14 @@
-import getStatePreset from '../../../util/get-simple-state-preset';
-import { makeMapStateToProps } from '../../../../src/view/droppable/connected-droppable';
-import type { State } from '../../../../src/types';
-import type { Selector } from '../../../../src/view/droppable/droppable-types';
-import getOwnProps from './util/get-own-props';
-import { getPreset } from '../../../util/dimension';
+import getStatePreset from "../../../util/get-simple-state-preset";
+import { makeMapStateToProps } from "../../../../src/view/droppable/connected-droppable";
+import type { State } from "../../../../src/types";
+import type { Selector } from "../../../../src/view/droppable/droppable-types";
+import getOwnProps from "./util/get-own-props";
+import { getPreset } from "../../../util/dimension";
 
 const preset = getPreset();
 const state = getStatePreset();
 
-it('should not break memoization across selectors', () => {
+it("should not break memoization across selectors", () => {
   const homeSelector: Selector = makeMapStateToProps();
   const homeOwnProps = getOwnProps(preset.home);
   const foreignSelector: Selector = makeMapStateToProps();

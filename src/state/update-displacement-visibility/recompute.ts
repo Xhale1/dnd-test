@@ -6,8 +6,8 @@ import type {
   Viewport,
   DraggableId,
   DisplacementGroups,
-} from '../../types';
-import getDisplacementGroups from '../get-displacement-groups';
+} from "../../types";
+import getDisplacementGroups from "../get-displacement-groups";
 
 interface RecomputeArgs {
   impact: DragImpact;
@@ -19,7 +19,7 @@ interface RecomputeArgs {
 
 function getDraggables(
   ids: DraggableId[],
-  draggables: DraggableDimensionMap,
+  draggables: DraggableDimensionMap
 ): DraggableDimension[] {
   return ids.map((id: DraggableId): DraggableDimension => draggables[id]);
 }
@@ -34,7 +34,7 @@ export default ({
   const last: DisplacementGroups = impact.displaced;
   const afterDragging: DraggableDimension[] = getDraggables(
     last.all,
-    draggables,
+    draggables
   );
 
   const displaced: DisplacementGroups = getDisplacementGroups({

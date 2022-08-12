@@ -1,28 +1,28 @@
-import type { Position, Rect } from 'css-box-model';
+import type { Position, Rect } from "css-box-model";
 import {
   getDroppableDimension,
   getDraggableDimension,
-} from '../../../util/dimension';
-import { patch } from '../../../../src/state/position';
-import { offsetRectByPosition } from '../../../../src/state/rect';
+} from "../../../util/dimension";
+import { patch } from "../../../../src/state/position";
+import { offsetRectByPosition } from "../../../../src/state/rect";
 import type {
   DraggableDimension,
   DroppableDimension,
-} from '../../../../src/types';
-import getDroppableOver from '../../../../src/state/get-droppable-over';
+} from "../../../../src/types";
+import getDroppableOver from "../../../../src/state/get-droppable-over";
 import {
   getOffsetForCrossAxisEndEdge,
   getOffsetForCrossAxisStartEdge,
-} from '../get-drag-impact/util/get-offset-for-edge';
-import { toDroppableMap } from '../../../../src/state/dimension-structures';
-import { beforeCrossAxisPoint } from '../../../util/before-point';
-import { afterCrossAxisPoint } from '../../../util/after-point';
+} from "../get-drag-impact/util/get-offset-for-edge";
+import { toDroppableMap } from "../../../../src/state/dimension-structures";
+import { beforeCrossAxisPoint } from "../../../util/before-point";
+import { afterCrossAxisPoint } from "../../../util/after-point";
 
 const droppableLarge: DroppableDimension = getDroppableDimension({
   descriptor: {
-    id: 'large',
-    type: 'standard',
-    mode: 'standard',
+    id: "large",
+    type: "standard",
+    mode: "standard",
   },
   borderBox: {
     top: 0,
@@ -34,9 +34,9 @@ const droppableLarge: DroppableDimension = getDroppableDimension({
 
 const droppableSmall: DroppableDimension = getDroppableDimension({
   descriptor: {
-    id: 'small',
-    type: 'standard',
-    mode: 'standard',
+    id: "small",
+    type: "standard",
+    mode: "standard",
   },
   borderBox: {
     top: 1000,
@@ -50,7 +50,7 @@ const axis = droppableSmall.axis;
 
 const draggable: DraggableDimension = getDraggableDimension({
   descriptor: {
-    id: 'my draggable',
+    id: "my draggable",
     index: 0,
     type: droppableLarge.descriptor.type,
     droppableId: droppableLarge.descriptor.id,
@@ -58,11 +58,11 @@ const draggable: DraggableDimension = getDraggableDimension({
   borderBox: droppableLarge.client.borderBox,
 });
 
-it('should hit when dragging element completely covers the list (end edge +1)', () => {
+it("should hit when dragging element completely covers the list (end edge +1)", () => {
   const endEdge: Position = patch(
     axis.line,
     droppableSmall.page.borderBox[axis.crossAxisEnd],
-    droppableSmall.page.borderBox.center[axis.line],
+    droppableSmall.page.borderBox.center[axis.line]
   );
 
   const offset = getOffsetForCrossAxisEndEdge({
@@ -75,7 +75,7 @@ it('should hit when dragging element completely covers the list (end edge +1)', 
   {
     const pageBorderBox: Rect = offsetRectByPosition(
       draggable.page.borderBox,
-      offset,
+      offset
     );
 
     const result = getDroppableOver({
@@ -91,7 +91,7 @@ it('should hit when dragging element completely covers the list (end edge +1)', 
   {
     const pageBorderBox: Rect = offsetRectByPosition(
       draggable.page.borderBox,
-      afterCrossAxisPoint(droppableSmall.axis, offset),
+      afterCrossAxisPoint(droppableSmall.axis, offset)
     );
 
     const result = getDroppableOver({
@@ -104,11 +104,11 @@ it('should hit when dragging element completely covers the list (end edge +1)', 
   }
 });
 
-it('should hit when dragging element completely covers the list (start edge -1)', () => {
+it("should hit when dragging element completely covers the list (start edge -1)", () => {
   const startEdge: Position = patch(
     axis.line,
     droppableSmall.page.borderBox[axis.crossAxisStart],
-    droppableSmall.page.borderBox.center[axis.line],
+    droppableSmall.page.borderBox.center[axis.line]
   );
 
   const offset = getOffsetForCrossAxisStartEdge({
@@ -121,7 +121,7 @@ it('should hit when dragging element completely covers the list (start edge -1)'
   {
     const pageBorderBox: Rect = offsetRectByPosition(
       draggable.page.borderBox,
-      offset,
+      offset
     );
 
     const result = getDroppableOver({
@@ -137,7 +137,7 @@ it('should hit when dragging element completely covers the list (start edge -1)'
   {
     const pageBorderBox: Rect = offsetRectByPosition(
       draggable.page.borderBox,
-      beforeCrossAxisPoint(droppableSmall.axis, offset),
+      beforeCrossAxisPoint(droppableSmall.axis, offset)
     );
 
     const result = getDroppableOver({

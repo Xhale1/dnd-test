@@ -1,13 +1,13 @@
-import React, { Component } from 'react';
-import type { ReactNode } from 'react';
-import { render } from '@testing-library/react';
-import { DragDropContext } from '../../../../src';
-import { getPreset } from '../../../util/dimension';
-import Draggable from '../../../../src/view/draggable/connected-draggable';
-import type { DraggableProvided } from '../../../../src/view/draggable/draggable-types';
-import DroppableContext from '../../../../src/view/context/droppable-context';
+import React, { Component } from "react";
+import type { ReactNode } from "react";
+import { render } from "@testing-library/react";
+import { DragDropContext } from "../../../../src";
+import { getPreset } from "../../../util/dimension";
+import Draggable from "../../../../src/view/draggable/connected-draggable";
+import type { DraggableProvided } from "../../../../src/view/draggable/draggable-types";
+import DroppableContext from "../../../../src/view/context/droppable-context";
 
-import type { DroppableContextValue } from '../../../../src/view/context/droppable-context';
+import type { DroppableContextValue } from "../../../../src/view/context/droppable-context";
 
 const preset = getPreset();
 
@@ -58,15 +58,15 @@ function getMock() {
   ));
 }
 
-it('should render the child function when the parent renders', () => {
+it("should render the child function when the parent renders", () => {
   const child = getMock();
   const { container } = render(<App currentUser="Jake">{child}</App>);
 
   expect(child).toHaveBeenCalledTimes(1);
-  expect(container.textContent).toBe('Jake');
+  expect(container.textContent).toBe("Jake");
 });
 
-it('should render the child function when the parent re-renders', () => {
+it("should render the child function when the parent re-renders", () => {
   const child = getMock();
   const { container, rerender } = render(<App currentUser="Jake">{child}</App>);
   expect(child).toHaveBeenCalledTimes(1);
@@ -74,10 +74,10 @@ it('should render the child function when the parent re-renders', () => {
   rerender(<App currentUser="Jake">{child}</App>);
   expect(child).toHaveBeenCalledTimes(2);
 
-  expect(container.textContent).toBe('Jake');
+  expect(container.textContent).toBe("Jake");
 });
 
-it('should render the child function when the parents props changes that cause a re-render', () => {
+it("should render the child function when the parents props changes that cause a re-render", () => {
   const child = getMock();
   const { container, rerender } = render(<App currentUser="Jake">{child}</App>);
   expect(child).toHaveBeenCalledTimes(1);
@@ -85,5 +85,5 @@ it('should render the child function when the parents props changes that cause a
   rerender(<App currentUser="Finn">{child}</App>);
   expect(child).toHaveBeenCalledTimes(2);
 
-  expect(container.textContent).toBe('Finn');
+  expect(container.textContent).toBe("Finn");
 });

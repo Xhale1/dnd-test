@@ -1,12 +1,12 @@
-import type { Column, Entities, TaskMap } from './types';
-import type { Task, Id } from '../types';
+import type { Column, Entities, TaskMap } from "./types";
+import type { Task, Id } from "../types";
 
 // eslint-disable-next-line no-restricted-syntax
 const tasks: Task[] = Array.from({ length: 20 }, (v, k) => k).map(
   (val: number): Task => ({
     id: `task-${val}`,
     content: `Task ${val}`,
-  }),
+  })
 );
 
 const taskMap: TaskMap = tasks.reduce(
@@ -14,18 +14,18 @@ const taskMap: TaskMap = tasks.reduce(
     previous[current.id] = current;
     return previous;
   },
-  {},
+  {}
 );
 
 const todo: Column = {
-  id: 'todo',
-  title: 'To do',
+  id: "todo",
+  title: "To do",
   taskIds: tasks.map((task: Task): Id => task.id),
 };
 
 const done: Column = {
-  id: 'done',
-  title: 'Done',
+  id: "done",
+  title: "Done",
   taskIds: [],
 };
 

@@ -1,15 +1,15 @@
-import React from 'react';
-import { render, createEvent, fireEvent } from '@testing-library/react';
-import App from '../../util/app';
-import { getDropReason } from '../../util/helpers';
-import * as keyCodes from '../../../../../src/view/key-codes';
-import { simpleLift, mouse } from '../../util/controls';
-import supportedEventName from '../../../../../src/view/use-sensor-marshal/sensors/util/supported-page-visibility-event-name';
+import React from "react";
+import { render, createEvent, fireEvent } from "@testing-library/react";
+import App from "../../util/app";
+import { getDropReason } from "../../util/helpers";
+import * as keyCodes from "../../../../../src/view/key-codes";
+import { simpleLift, mouse } from "../../util/controls";
+import supportedEventName from "../../../../../src/view/use-sensor-marshal/sensors/util/supported-page-visibility-event-name";
 
-it('should prevent default on the event that causes a drop', () => {
+it("should prevent default on the event that causes a drop", () => {
   const onDragEnd = jest.fn();
   const { getByText } = render(<App onDragEnd={onDragEnd} />);
-  const handle: HTMLElement = getByText('item: 0');
+  const handle: HTMLElement = getByText("item: 0");
 
   simpleLift(mouse, handle);
 
@@ -17,13 +17,13 @@ it('should prevent default on the event that causes a drop', () => {
   fireEvent(handle, event);
 
   expect(event.defaultPrevented).toBe(true);
-  expect(getDropReason(onDragEnd)).toBe('DROP');
+  expect(getDropReason(onDragEnd)).toBe("DROP");
 });
 
-it('should prevent default on an escape press', () => {
+it("should prevent default on an escape press", () => {
   const onDragEnd = jest.fn();
   const { getByText } = render(<App onDragEnd={onDragEnd} />);
-  const handle: HTMLElement = getByText('item: 0');
+  const handle: HTMLElement = getByText("item: 0");
 
   simpleLift(mouse, handle);
 
@@ -33,14 +33,14 @@ it('should prevent default on an escape press', () => {
   fireEvent(handle, event);
 
   expect(event.defaultPrevented).toBe(true);
-  expect(getDropReason(onDragEnd)).toBe('CANCEL');
+  expect(getDropReason(onDragEnd)).toBe("CANCEL");
 });
 
-it('should not prevent the default behaviour for an indirect cancel', () => {
-  ['resize', supportedEventName].forEach((eventName: string) => {
+it("should not prevent the default behaviour for an indirect cancel", () => {
+  ["resize", supportedEventName].forEach((eventName: string) => {
     const onDragEnd = jest.fn();
     const { getByText, unmount } = render(<App onDragEnd={onDragEnd} />);
-    const handle: HTMLElement = getByText('item: 0');
+    const handle: HTMLElement = getByText("item: 0");
 
     simpleLift(mouse, handle);
 
@@ -53,16 +53,16 @@ it('should not prevent the default behaviour for an indirect cancel', () => {
 
     // not an explicit cancel
     expect(event.defaultPrevented).toBe(false);
-    expect(getDropReason(onDragEnd)).toBe('CANCEL');
+    expect(getDropReason(onDragEnd)).toBe("CANCEL");
 
     unmount();
   });
 });
 
-it('should cancel and prevent default on mousedown during a drag as it might be from a different button', () => {
+it("should cancel and prevent default on mousedown during a drag as it might be from a different button", () => {
   const onDragEnd = jest.fn();
   const { getByText } = render(<App onDragEnd={onDragEnd} />);
-  const handle: HTMLElement = getByText('item: 0');
+  const handle: HTMLElement = getByText("item: 0");
 
   simpleLift(mouse, handle);
 
@@ -70,5 +70,5 @@ it('should cancel and prevent default on mousedown during a drag as it might be 
   fireEvent(handle, event);
 
   expect(event.defaultPrevented).toBe(true);
-  expect(getDropReason(onDragEnd)).toBe('CANCEL');
+  expect(getDropReason(onDragEnd)).toBe("CANCEL");
 });

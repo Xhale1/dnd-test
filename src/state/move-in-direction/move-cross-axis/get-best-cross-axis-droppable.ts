@@ -1,16 +1,16 @@
-import type { Position, Rect } from 'css-box-model';
-import { invariant } from '../../../invariant';
-import { closest } from '../../position';
-import isWithin from '../../is-within';
-import { getCorners } from '../../spacing';
-import isPartiallyVisibleThroughFrame from '../../visibility/is-partially-visible-through-frame';
-import { toDroppableList } from '../../dimension-structures';
+import type { Position, Rect } from "css-box-model";
+import { invariant } from "../../../invariant";
+import { closest } from "../../position";
+import isWithin from "../../is-within";
+import { getCorners } from "../../spacing";
+import isPartiallyVisibleThroughFrame from "../../visibility/is-partially-visible-through-frame";
+import { toDroppableList } from "../../dimension-structures";
 import type {
   Axis,
   DroppableDimension,
   DroppableDimensionMap,
   Viewport,
-} from '../../../types';
+} from "../../../types";
 
 interface GetBestDroppableArgs {
   isMovingForward: boolean;
@@ -26,7 +26,7 @@ interface GetBestDroppableArgs {
 const getKnownActive = (droppable: DroppableDimension): Rect => {
   const rect: Rect | null = droppable.subject.active;
 
-  invariant(rect, 'Cannot get clipped area from droppable');
+  invariant(rect, "Cannot get clipped area from droppable");
 
   return rect;
 };
@@ -53,11 +53,11 @@ export default ({
     .filter((droppable: DroppableDimension): boolean => droppable.isEnabled)
     // Remove any droppables that do not have a visible subject
     .filter((droppable: DroppableDimension): boolean =>
-      Boolean(droppable.subject.active),
+      Boolean(droppable.subject.active)
     )
     // Remove any that are not visible in the window
     .filter((droppable: DroppableDimension): boolean =>
-      isPartiallyVisibleThroughFrame(viewport.frame)(getKnownActive(droppable)),
+      isPartiallyVisibleThroughFrame(viewport.frame)(getKnownActive(droppable))
     )
     .filter((droppable: DroppableDimension): boolean => {
       const activeOfTarget: Rect = getKnownActive(droppable);
@@ -75,7 +75,7 @@ export default ({
 
       const isBetweenDestinationClipped = isWithin(
         activeOfTarget[axis.start],
-        activeOfTarget[axis.end],
+        activeOfTarget[axis.end]
       );
 
       return (
@@ -100,10 +100,10 @@ export default ({
       (
         droppable: DroppableDimension,
         index: number,
-        array: DroppableDimension[],
+        array: DroppableDimension[]
       ): boolean =>
         getKnownActive(droppable)[axis.crossAxisStart] ===
-        getKnownActive(array[0])[axis.crossAxisStart],
+        getKnownActive(array[0])[axis.crossAxisStart]
     );
 
   // no possible candidates
@@ -124,10 +124,10 @@ export default ({
     (droppable: DroppableDimension) => {
       const isWithinDroppable = isWithin(
         getKnownActive(droppable)[axis.start],
-        getKnownActive(droppable)[axis.end],
+        getKnownActive(droppable)[axis.end]
       );
       return isWithinDroppable(pageBorderBoxCenter[axis.line]);
-    },
+    }
   );
 
   if (contains.length === 1) {
@@ -139,7 +139,7 @@ export default ({
     // sort on the main axis and choose the first
     return contains.sort(
       (a: DroppableDimension, b: DroppableDimension): number =>
-        getKnownActive(a)[axis.start] - getKnownActive(b)[axis.start],
+        getKnownActive(a)[axis.start] - getKnownActive(b)[axis.start]
     )[0];
   }
 
@@ -151,7 +151,7 @@ export default ({
       const first = closest(pageBorderBoxCenter, getCorners(getKnownActive(a)));
       const second = closest(
         pageBorderBoxCenter,
-        getCorners(getKnownActive(b)),
+        getCorners(getKnownActive(b))
       );
 
       // if the distances are not equal - choose the shortest
@@ -162,6 +162,6 @@ export default ({
       // They both have the same distance -
       // choose the one that is first on the main axis
       return getKnownActive(a)[axis.start] - getKnownActive(b)[axis.start];
-    },
+    }
   )[0];
 };

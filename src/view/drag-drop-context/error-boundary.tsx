@@ -1,10 +1,10 @@
-import React from 'react';
-import type { ReactNode } from 'react';
-import { warning, error } from '../../dev-warning';
-import { noop } from '../../empty';
-import bindEvents from '../event-bindings/bind-events';
-import { RbdInvariant } from '../../invariant';
-import type { AppCallbacks } from './drag-drop-context-types';
+import React from "react";
+import type { ReactNode } from "react";
+import { warning, error } from "../../dev-warning";
+import { noop } from "../../empty";
+import bindEvents from "../event-bindings/bind-events";
+import { RbdInvariant } from "../../invariant";
+import type { AppCallbacks } from "./drag-drop-context-types";
 
 interface Props {
   children: (setCallbacks: (callbacks: AppCallbacks) => void) => ReactNode;
@@ -17,7 +17,7 @@ export default class ErrorBoundary extends React.Component<Props> {
   componentDidMount() {
     this.unbind = bindEvents(window, [
       {
-        eventName: 'error',
+        eventName: "error",
         fn: this.onWindowError,
       },
     ]);
@@ -25,7 +25,7 @@ export default class ErrorBoundary extends React.Component<Props> {
 
   componentDidCatch(err: Error) {
     if (err instanceof RbdInvariant) {
-      if (process.env.NODE_ENV !== 'production') {
+      if (process.env.NODE_ENV !== "production") {
         error(err.message);
       }
 
@@ -59,7 +59,7 @@ export default class ErrorBoundary extends React.Component<Props> {
       // Marking the event as dealt with.
       // This will prevent any 'uncaught' error warnings in the console
       event.preventDefault();
-      if (process.env.NODE_ENV !== 'production') {
+      if (process.env.NODE_ENV !== "production") {
         error(err.message);
       }
     }
@@ -68,7 +68,7 @@ export default class ErrorBoundary extends React.Component<Props> {
   getCallbacks = (): AppCallbacks => {
     if (!this.callbacks) {
       // eslint-disable-next-line no-restricted-syntax
-      throw new Error('Unable to find AppCallbacks in <ErrorBoundary/>');
+      throw new Error("Unable to find AppCallbacks in <ErrorBoundary/>");
     }
     return this.callbacks;
   };

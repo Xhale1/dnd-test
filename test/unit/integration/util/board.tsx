@@ -1,24 +1,24 @@
-import React from 'react';
-import type { BoxModel } from 'css-box-model';
-import { invariant } from '../../../../src/invariant';
-import * as attributes from '../../../../src/view/data-attributes';
-import { DragDropContext, Droppable, Draggable } from '../../../../src';
+import React from "react";
+import type { BoxModel } from "css-box-model";
+import { invariant } from "../../../../src/invariant";
+import * as attributes from "../../../../src/view/data-attributes";
+import { DragDropContext, Droppable, Draggable } from "../../../../src";
 import type {
   DroppableProvided,
   DraggableProvided,
   DraggableStateSnapshot,
-} from '../../../../src';
+} from "../../../../src";
 import type {
   DroppableDescriptor,
   DraggableDescriptor,
   DraggableId,
   DroppableId,
-} from '../../../../src/types';
-import { noop } from '../../../../src/empty';
-import { getComputedSpacing, getPreset } from '../../../util/dimension';
-import { toDroppableList } from '../../../../src/state/dimension-structures';
-import getDraggablesInsideDroppable from '../../../../src/state/get-draggables-inside-droppable';
-import setDOMRect from '../../../util/set-dom-rect';
+} from "../../../../src/types";
+import { noop } from "../../../../src/empty";
+import { getComputedSpacing, getPreset } from "../../../util/dimension";
+import { toDroppableList } from "../../../../src/state/dimension-structures";
+import getDraggablesInsideDroppable from "../../../../src/state/get-draggables-inside-droppable";
+import setDOMRect from "../../../util/set-dom-rect";
 
 const preset = getPreset();
 
@@ -71,7 +71,7 @@ function Column(props: ColumnProps) {
               >
                 {getDraggablesInsideDroppable(
                   props.descriptor.id,
-                  preset.draggables,
+                  preset.draggables
                 ).map((draggable, index) => (
                   <Card
                     key={draggable.descriptor.id}
@@ -112,31 +112,31 @@ export default function Board() {
 
 export function withPoorBoardDimensions(fn: (a: typeof preset) => void): void {
   const protoSpy = jest
-    .spyOn(Element.prototype, 'getBoundingClientRect')
+    .spyOn(Element.prototype, "getBoundingClientRect")
     .mockImplementation(function fake(this: HTMLElement) {
       invariant(
         this instanceof HTMLElement,
-        'Expected "this" to be a HTMLElement',
+        'Expected "this" to be a HTMLElement'
       );
 
       const droppableId: DroppableId | null = this.getAttribute(
-        attributes.droppable.id,
+        attributes.droppable.id
       );
       if (droppableId) {
         return setDOMRect(preset.droppables[droppableId].client.borderBox);
       }
 
       const draggableId: DraggableId | null = this.getAttribute(
-        attributes.draggable.id,
+        attributes.draggable.id
       );
-      invariant(draggableId, 'Expected element to be a draggable');
+      invariant(draggableId, "Expected element to be a draggable");
 
       return setDOMRect(preset.draggables[draggableId].client.borderBox);
     });
 
   // Stubbing out totally - not including margins in this
   const styleSpy = jest
-    .spyOn(window, 'getComputedStyle')
+    .spyOn(window, "getComputedStyle")
     .mockImplementation(function fake(el: Element) {
       function getSpacing(box: BoxModel) {
         return getComputedSpacing({
@@ -147,21 +147,21 @@ export function withPoorBoardDimensions(fn: (a: typeof preset) => void): void {
       }
 
       const droppableId: DroppableId | null = el.getAttribute(
-        attributes.droppable.id,
+        attributes.droppable.id
       );
 
       if (droppableId) {
-        if (droppableId === 'BOARD') {
+        if (droppableId === "BOARD") {
           return getComputedSpacing({}) as CSSStyleDeclaration;
         }
 
         return getSpacing(
-          preset.droppables[droppableId].client,
+          preset.droppables[droppableId].client
         ) as CSSStyleDeclaration;
       }
 
       const draggableId: DraggableId | null = el.getAttribute(
-        attributes.draggable.id,
+        attributes.draggable.id
       );
 
       // this can be the case when looking up the tree for a scroll container
@@ -171,14 +171,14 @@ export function withPoorBoardDimensions(fn: (a: typeof preset) => void): void {
 
       if (preset.draggables[draggableId]) {
         return getSpacing(
-          preset.draggables[draggableId].client,
+          preset.draggables[draggableId].client
         ) as CSSStyleDeclaration;
       }
 
       // columns are also draggables for our example
       if (preset.droppables[draggableId]) {
         return getSpacing(
-          preset.droppables[draggableId].client,
+          preset.droppables[draggableId].client
         ) as CSSStyleDeclaration;
       }
 

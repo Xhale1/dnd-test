@@ -1,19 +1,19 @@
-import React, { ReactElement } from 'react';
-import ReactDOM from 'react-dom';
-import styled from '@emotion/styled';
-import { colors } from '@atlaskit/theme';
-import { DragDropContext, Draggable, Droppable } from '@react-forked/dnd';
+import { colors } from "@atlaskit/theme";
+import styled from "@emotion/styled";
 import type {
-  DropResult,
   DraggableProvided,
   DraggableStateSnapshot,
   DroppableProvided,
-} from '@react-forked/dnd';
-import type { Quote } from '../types';
-import { grid } from '../constants';
-import { getQuotes } from '../data';
-import QuoteItem from '../primatives/quote-item';
-import { invariant } from '../../../src/invariant';
+  DropResult,
+} from "@hello-pangea/dnd";
+import { DragDropContext, Draggable, Droppable } from "@hello-pangea/dnd";
+import React, { ReactElement } from "react";
+import ReactDOM from "react-dom";
+import { invariant } from "../../../src/invariant";
+import { grid } from "../constants";
+import { getQuotes } from "../data";
+import QuoteItem from "../primatives/quote-item";
+import type { Quote } from "../types";
 
 const sidebarWidth = 300;
 
@@ -35,10 +35,10 @@ interface ListProps {
   quotes: Quote[];
 }
 
-const sidebarPortal: HTMLElement = document.createElement('div');
-sidebarPortal.classList.add('sidebar-portal');
+const sidebarPortal: HTMLElement = document.createElement("div");
+sidebarPortal.classList.add("sidebar-portal");
 
-invariant(document.body, 'body not ready for portal creation!');
+invariant(document.body, "body not ready for portal creation!");
 
 document.body.appendChild(sidebarPortal);
 
@@ -57,7 +57,7 @@ class Sidebar extends React.Component<ListProps> {
                 <Draggable draggableId={quote.id} index={index} key={quote.id}>
                   {(
                     draggableProvided: DraggableProvided,
-                    draggableSnapshot: DraggableStateSnapshot,
+                    draggableSnapshot: DraggableStateSnapshot
                   ): ReactElement => {
                     const usePortal: boolean = draggableSnapshot.isDragging;
 
@@ -111,7 +111,7 @@ class Content extends React.Component<ListProps> {
                 <Draggable draggableId={quote.id} index={index} key={quote.id}>
                   {(
                     draggableProvided: DraggableProvided,
-                    draggableSnapshot: DraggableStateSnapshot,
+                    draggableSnapshot: DraggableStateSnapshot
                   ) => (
                     <QuoteItem
                       quote={quote}
@@ -145,7 +145,7 @@ export default class App extends React.Component<unknown, State> {
 
   onDragEnd = (result: DropResult): void => {
     // eslint-disable-next-line no-console
-    console.log('TODO: reorder', result);
+    console.log("TODO: reorder", result);
   };
 
   render(): ReactElement {

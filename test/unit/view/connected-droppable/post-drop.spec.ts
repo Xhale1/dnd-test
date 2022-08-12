@@ -3,15 +3,15 @@ import type {
   Combine,
   DropAnimatingState,
   IdleState,
-} from '../../../../src/types';
+} from "../../../../src/types";
 import type {
   Selector,
   MapProps,
-} from '../../../../src/view/droppable/droppable-types';
-import { makeMapStateToProps } from '../../../../src/view/droppable/connected-droppable';
-import { getPreset } from '../../../util/dimension';
-import getStatePreset from '../../../util/get-simple-state-preset';
-import getOwnProps from './util/get-own-props';
+} from "../../../../src/view/droppable/droppable-types";
+import { makeMapStateToProps } from "../../../../src/view/droppable/connected-droppable";
+import { getPreset } from "../../../util/dimension";
+import getStatePreset from "../../../util/get-simple-state-preset";
+import getOwnProps from "./util/get-own-props";
 
 const preset = getPreset();
 const state = getStatePreset();
@@ -28,8 +28,8 @@ const isOverHomeMapProps: MapProps = {
   useClone: null,
 };
 
-describe('was over - reordering', () => {
-  it('should immediately remove a placeholder', () => {
+describe("was over - reordering", () => {
+  it("should immediately remove a placeholder", () => {
     const ownProps = getOwnProps(preset.home);
     const selector: Selector = makeMapStateToProps();
     // initial value: not animated
@@ -38,14 +38,14 @@ describe('was over - reordering', () => {
 
     // while dropping
     const dropping: DropAnimatingState = state.dropAnimating(
-      preset.inHome1.descriptor.id,
+      preset.inHome1.descriptor.id
     );
     const whileDropping: MapProps = selector(dropping, ownProps);
     expect(whileDropping).toEqual(isOverHomeMapProps);
 
     // drop complete
     const idle: IdleState = {
-      phase: 'IDLE',
+      phase: "IDLE",
       completed: dropping.completed,
       shouldFlush: false,
     };
@@ -54,8 +54,8 @@ describe('was over - reordering', () => {
   });
 });
 
-describe('was over - merging', () => {
-  it('should animate a placeholder closed', () => {
+describe("was over - merging", () => {
+  it("should animate a placeholder closed", () => {
     const ownProps = getOwnProps(preset.home);
     const selector: Selector = makeMapStateToProps();
     const atRest: MapProps = selector(state.idle, ownProps);
@@ -69,7 +69,7 @@ describe('was over - merging', () => {
     const combineImpact: DragImpact = {
       ...base.completed.impact,
       at: {
-        type: 'COMBINE',
+        type: "COMBINE",
         combine,
       },
     };
@@ -90,7 +90,7 @@ describe('was over - merging', () => {
 
     // drop complete
     const idle: IdleState = {
-      phase: 'IDLE',
+      phase: "IDLE",
       completed: dropping.completed,
       shouldFlush: false,
     };
@@ -104,8 +104,8 @@ describe('was over - merging', () => {
   });
 });
 
-describe('was not over', () => {
-  it('should animate a placeholder closed', () => {
+describe("was not over", () => {
+  it("should animate a placeholder closed", () => {
     const ownProps = getOwnProps(preset.foreign);
     const selector: Selector = makeMapStateToProps();
     const atRest: MapProps = selector(state.idle, ownProps);
@@ -121,7 +121,7 @@ describe('was not over', () => {
 
     // drop complete
     const idle: IdleState = {
-      phase: 'IDLE',
+      phase: "IDLE",
       completed: dropping.completed,
       shouldFlush: false,
     };
@@ -130,8 +130,8 @@ describe('was not over', () => {
   });
 });
 
-describe('flushed', () => {
-  it('should cut an animation', () => {
+describe("flushed", () => {
+  it("should cut an animation", () => {
     const ownProps = getOwnProps(preset.home);
     const selector: Selector = makeMapStateToProps();
     const atRest: MapProps = selector(state.idle, ownProps);
@@ -145,7 +145,7 @@ describe('flushed', () => {
     const combineImpact: DragImpact = {
       ...base.completed.impact,
       at: {
-        type: 'COMBINE',
+        type: "COMBINE",
         combine,
       },
     };
@@ -164,7 +164,7 @@ describe('flushed', () => {
 
     // drop complete
     const withFlush: IdleState = {
-      phase: 'IDLE',
+      phase: "IDLE",
       completed: dropping.completed,
       shouldFlush: true,
     };
@@ -177,14 +177,14 @@ describe('flushed', () => {
     expect(postDrop).toEqual(expected);
   });
 
-  it('should cut animation in a list that was not animating', () => {
+  it("should cut animation in a list that was not animating", () => {
     const ownProps = getOwnProps(preset.foreign);
     const selector: Selector = makeMapStateToProps();
     const atRest: MapProps = selector(state.idle, ownProps);
 
     // drop complete
     const withFlush: IdleState = {
-      phase: 'IDLE',
+      phase: "IDLE",
       completed: state.dropAnimating().completed,
       shouldFlush: true,
     };

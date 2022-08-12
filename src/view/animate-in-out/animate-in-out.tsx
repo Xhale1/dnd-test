@@ -1,6 +1,6 @@
-import React from 'react';
-import type { ReactNode } from 'react';
-import type { InOutAnimationMode } from '../../types';
+import React from "react";
+import type { ReactNode } from "react";
+import type { InOutAnimationMode } from "../../types";
 
 export interface AnimateProvided {
   onClose: () => void;
@@ -29,7 +29,7 @@ export default class AnimateInOut extends React.PureComponent<Props, State> {
     isVisible: Boolean(this.props.on),
     data: this.props.on,
     // not allowing to animate close on mount
-    animate: this.props.shouldAnimate && this.props.on ? 'open' : 'none',
+    animate: this.props.shouldAnimate && this.props.on ? "open" : "none",
   };
 
   static getDerivedStateFromProps(props: Props, state: State): State {
@@ -37,7 +37,7 @@ export default class AnimateInOut extends React.PureComponent<Props, State> {
       return {
         isVisible: Boolean(props.on),
         data: props.on,
-        animate: 'none',
+        animate: "none",
       };
     }
 
@@ -47,7 +47,7 @@ export default class AnimateInOut extends React.PureComponent<Props, State> {
         isVisible: true,
         // have new data to animate in with
         data: props.on,
-        animate: 'open',
+        animate: "open",
       };
     }
 
@@ -58,20 +58,20 @@ export default class AnimateInOut extends React.PureComponent<Props, State> {
         isVisible: true,
         // use old data for animating out
         data: state.data,
-        animate: 'close',
+        animate: "close",
       };
     }
 
     // close animation no longer visible
     return {
       isVisible: false,
-      animate: 'close',
+      animate: "close",
       data: null,
     };
   }
 
   onClose = () => {
-    if (this.state.animate !== 'close') {
+    if (this.state.animate !== "close") {
       return;
     }
 

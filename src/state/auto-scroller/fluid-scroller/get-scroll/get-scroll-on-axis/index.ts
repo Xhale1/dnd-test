@@ -1,8 +1,8 @@
-import type { Rect, Spacing } from 'css-box-model';
-import getDistanceThresholds from './get-distance-thresholds';
-import type { DistanceThresholds } from './get-distance-thresholds';
-import type { Axis } from '../../../../../types';
-import getValue from './get-value';
+import type { Rect, Spacing } from "css-box-model";
+import getDistanceThresholds from "./get-distance-thresholds";
+import type { DistanceThresholds } from "./get-distance-thresholds";
+import type { Axis } from "../../../../../types";
+import getValue from "./get-value";
 
 interface GetOnAxisArgs {
   container: Rect;

@@ -1,21 +1,21 @@
-import type { Position } from 'css-box-model';
+import type { Position } from "css-box-model";
 import type {
   Axis,
   DragImpact,
   Viewport,
   DisplacedBy,
-} from '../../../../../../src/types';
-import { horizontal, vertical } from '../../../../../../src/state/axis';
-import getDisplacedBy from '../../../../../../src/state/get-displaced-by';
-import getDragImpact from '../../../../../../src/state/get-drag-impact';
-import getLiftEffect from '../../../../../../src/state/get-lift-effect';
-import { getPreset } from '../../../../../util/dimension';
-import { emptyGroups } from '../../../../../../src/state/no-impact';
-import { getOffsetForStartEdge } from '../../util/get-offset-for-edge';
+} from "../../../../../../src/types";
+import { horizontal, vertical } from "../../../../../../src/state/axis";
+import getDisplacedBy from "../../../../../../src/state/get-displaced-by";
+import getDragImpact from "../../../../../../src/state/get-drag-impact";
+import getLiftEffect from "../../../../../../src/state/get-lift-effect";
+import { getPreset } from "../../../../../util/dimension";
+import { emptyGroups } from "../../../../../../src/state/no-impact";
+import { getOffsetForStartEdge } from "../../util/get-offset-for-edge";
 
 [vertical, horizontal].forEach((axis: Axis) => {
   describe(`on ${axis.direction} axis`, () => {
-    it('should allow movement past the last item', () => {
+    it("should allow movement past the last item", () => {
       const preset = getPreset(axis);
       const viewport: Viewport = preset.viewport;
       const { afterCritical, impact: homeImpact } = getLiftEffect({
@@ -26,7 +26,7 @@ import { getOffsetForStartEdge } from '../../util/get-offset-for-edge';
       });
       const displacedBy: DisplacedBy = getDisplacedBy(
         axis,
-        preset.inHome1.displaceBy,
+        preset.inHome1.displaceBy
       );
 
       const offsetForStartOnInForeign4Center: Position = getOffsetForStartEdge({
@@ -51,7 +51,7 @@ import { getOffsetForStartEdge } from '../../util/get-offset-for-edge';
         displaced: emptyGroups,
         displacedBy,
         at: {
-          type: 'REORDER',
+          type: "REORDER",
           // after last item
           destination: {
             index: preset.inForeign4.descriptor.index + 1,

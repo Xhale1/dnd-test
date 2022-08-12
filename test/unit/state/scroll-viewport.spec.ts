@@ -1,13 +1,13 @@
-import { getRect } from 'css-box-model';
-import type { Position, Rect } from 'css-box-model';
-import type { Viewport } from '../../../src/types';
-import { add, negate, subtract } from '../../../src/state/position';
-import scrollViewport from '../../../src/state/scroll-viewport';
-import { offsetByPosition } from '../../../src/state/spacing';
+import { getRect } from "css-box-model";
+import type { Position, Rect } from "css-box-model";
+import type { Viewport } from "../../../src/types";
+import { add, negate, subtract } from "../../../src/state/position";
+import scrollViewport from "../../../src/state/scroll-viewport";
+import { offsetByPosition } from "../../../src/state/spacing";
 
 const origin: Position = { x: 0, y: 0 };
 
-it('should update the window details scroll', () => {
+it("should update the window details scroll", () => {
   const original: Viewport = {
     frame: getRect({
       top: 0,
@@ -51,7 +51,7 @@ it('should update the window details scroll', () => {
   expect(updated).toEqual(expected);
 });
 
-it('should correctly update scroll across multiple movements (forwards)', () => {
+it("should correctly update scroll across multiple movements (forwards)", () => {
   const original: Rect = getRect({
     top: 0,
     left: 0,
@@ -106,7 +106,7 @@ it('should correctly update scroll across multiple movements (forwards)', () => 
   expect(runCount).toBeGreaterThan(2);
 });
 
-it('should correctly update scroll across multiple movements (backwards)', () => {
+it("should correctly update scroll across multiple movements (backwards)", () => {
   const original: Rect = getRect({
     top: 0,
     left: 0,

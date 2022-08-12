@@ -1,17 +1,17 @@
-import React, { Component, ReactElement } from 'react';
-import styled from '@emotion/styled';
-import { DragDropContext } from '@react-forked/dnd';
+import styled from "@emotion/styled";
 import type {
+  DraggableLocation,
   DragStart,
   DropResult,
-  DraggableLocation,
-} from '@react-forked/dnd';
-import initial from './data';
-import Column from './column';
-import type { Result as ReorderResult } from './utils';
-import { mutliDragAwareReorder, multiSelectTo as multiSelect } from './utils';
-import type { Task, Id } from '../types';
-import type { Entities } from './types';
+} from "@hello-pangea/dnd";
+import { DragDropContext } from "@hello-pangea/dnd";
+import React, { Component, ReactElement } from "react";
+import type { Id, Task } from "../types";
+import Column from "./column";
+import initial from "./data";
+import type { Entities } from "./types";
+import type { Result as ReorderResult } from "./utils";
+import { multiSelectTo as multiSelect, mutliDragAwareReorder } from "./utils";
 
 const Container = styled.div`
   display: flex;
@@ -27,7 +27,7 @@ interface State {
 
 const getTasks = (entities: Entities, columnId: Id): Task[] =>
   entities.columns[columnId].taskIds.map(
-    (taskId: Id): Task => entities.tasks[taskId],
+    (taskId: Id): Task => entities.tasks[taskId]
   );
 export default class TaskApp extends Component<unknown, State> {
   state: State = {
@@ -37,21 +37,21 @@ export default class TaskApp extends Component<unknown, State> {
   };
 
   componentDidMount(): void {
-    window.addEventListener('click', this.onWindowClick);
-    window.addEventListener('keydown', this.onWindowKeyDown);
-    window.addEventListener('touchend', this.onWindowTouchEnd);
+    window.addEventListener("click", this.onWindowClick);
+    window.addEventListener("keydown", this.onWindowKeyDown);
+    window.addEventListener("touchend", this.onWindowTouchEnd);
   }
 
   componentWillUnmount(): void {
-    window.removeEventListener('click', this.onWindowClick);
-    window.removeEventListener('keydown', this.onWindowKeyDown);
-    window.removeEventListener('touchend', this.onWindowTouchEnd);
+    window.removeEventListener("click", this.onWindowClick);
+    window.removeEventListener("keydown", this.onWindowKeyDown);
+    window.removeEventListener("touchend", this.onWindowTouchEnd);
   }
 
   onDragStart = (start: DragStart): void => {
     const id: string = start.draggableId;
     const selected: Id | undefined | null = this.state.selectedTaskIds.find(
-      (taskId: Id): boolean => taskId === id,
+      (taskId: Id): boolean => taskId === id
     );
 
     // if dragging an item that is not selected - unselect all items
@@ -69,7 +69,7 @@ export default class TaskApp extends Component<unknown, State> {
     const source: DraggableLocation = result.source;
 
     // nothing to do
-    if (!destination || result.reason === 'CANCEL') {
+    if (!destination || result.reason === "CANCEL") {
       this.setState({
         draggingTaskId: null,
       });
@@ -94,7 +94,7 @@ export default class TaskApp extends Component<unknown, State> {
       return;
     }
 
-    if (event.key === 'Escape') {
+    if (event.key === "Escape") {
       this.unselectAll();
     }
   };
@@ -165,7 +165,7 @@ export default class TaskApp extends Component<unknown, State> {
     const updated: Id[] | undefined | null = multiSelect(
       this.state.entities,
       this.state.selectedTaskIds,
-      newTaskId,
+      newTaskId
     );
 
     if (updated == null) {

@@ -1,12 +1,12 @@
-import memoizeOne from 'memoize-one';
-import type { DraggableDimension } from '../types';
+import memoizeOne from "memoize-one";
+import type { DraggableDimension } from "../types";
 
 export default memoizeOne(
   (
     remove: DraggableDimension,
-    list: DraggableDimension[],
+    list: DraggableDimension[]
   ): DraggableDimension[] =>
     list.filter(
-      (item: DraggableDimension) => item.descriptor.id !== remove.descriptor.id,
-    ),
+      (item: DraggableDimension) => item.descriptor.id !== remove.descriptor.id
+    )
 );

@@ -1,5 +1,5 @@
-import { invariant } from '../../src/invariant';
-import writable from './writable';
+import { invariant } from "../../src/invariant";
+import writable from "./writable";
 
 interface Args {
   scrollHeight: number;
@@ -9,7 +9,7 @@ interface Args {
 const setWindowScrollSize = ({ scrollHeight, scrollWidth }: Args): void => {
   const el = document.documentElement;
 
-  invariant(el, 'Unable to find document element');
+  invariant(el, "Unable to find document element");
 
   writable(el).scrollHeight = scrollHeight;
   writable(el).scrollWidth = scrollWidth;
@@ -18,7 +18,7 @@ const setWindowScrollSize = ({ scrollHeight, scrollWidth }: Args): void => {
 const original: Args = (() => {
   const el = document.documentElement;
 
-  invariant(el, 'Unable to find document element');
+  invariant(el, "Unable to find document element");
 
   return {
     scrollWidth: el.scrollWidth,

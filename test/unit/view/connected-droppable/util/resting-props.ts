@@ -1,4 +1,4 @@
-import type { MapProps } from '../../../../../src/view/droppable/droppable-types';
+import type { MapProps } from "../../../../../src/view/droppable/droppable-types";
 
 const restingProps: MapProps = {
   placeholder: null,

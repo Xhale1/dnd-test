@@ -1,16 +1,16 @@
-const path = require('path');
+const path = require("path");
 
 const common = {
-  context: path.resolve(__dirname, '..'),
-  mode: 'development',
-  entry: path.resolve(__dirname, 'main.js'),
-  target: 'web',
+  context: path.resolve(__dirname, ".."),
+  mode: "development",
+  entry: path.resolve(__dirname, "main.js"),
+  target: "web",
   output: {
-    filename: 'client.js',
-    path: path.resolve(__dirname, 'dist'),
+    filename: "client.js",
+    path: path.resolve(__dirname, "dist"),
   },
   resolve: {
-    extensions: ['.ts', '.tsx', '.js', '.jsx', '.mjs'],
+    extensions: [".ts", ".tsx", ".js", ".jsx", ".mjs"],
   },
   module: {
     rules: [
@@ -18,7 +18,7 @@ const common = {
         test: /\.(png|jpg|gif)$/i,
         use: [
           {
-            loader: 'url-loader',
+            loader: "url-loader",
           },
         ],
       },
@@ -27,9 +27,9 @@ const common = {
         exclude: [/node_modules/],
         use: [
           {
-            loader: 'babel-loader',
+            loader: "babel-loader",
             options: {
-              configFile: path.resolve(__dirname, '..', 'babel.config.js'),
+              configFile: path.resolve(__dirname, "..", "babel.config.js"),
             },
           },
         ],
@@ -38,24 +38,24 @@ const common = {
   },
   externals: [
     {
-      express: 'express',
-      fs: 'fs',
-      'convert-source-map': 'convert-source-map',
+      express: "express",
+      fs: "fs",
+      "convert-source-map": "convert-source-map",
     },
   ],
 };
 
 module.exports = [
-  { ...common, entry: path.resolve(__dirname, 'client.tsx'), name: 'client' },
+  { ...common, entry: path.resolve(__dirname, "client.tsx"), name: "client" },
   {
     ...common,
-    entry: path.resolve(__dirname, 'server.tsx'),
-    name: 'server',
-    target: 'node',
+    entry: path.resolve(__dirname, "server.tsx"),
+    name: "server",
+    target: "node",
     output: {
-      filename: 'server.js',
-      path: path.resolve(__dirname, 'dist'),
-      libraryTarget: 'commonjs2',
+      filename: "server.js",
+      path: path.resolve(__dirname, "dist"),
+      libraryTarget: "commonjs2",
     },
   },
 ];

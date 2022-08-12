@@ -1,5 +1,5 @@
-import React from 'react';
 import { colors } from '@atlaskit/theme';
+import React from 'react';
 import { version } from '../package.json';
 
 // Doing this more complex check as console.table || console.log makes CI cry
@@ -25,7 +25,7 @@ function welcomeMessage(): void {
   );
 
   consoleTable([
-    ['@react-forked/dnd version', version],
+    ['@hello-pangea/dnd version', version],
     ['react version', React.version],
     ['process.env.NODE_ENV', process.env.NODE_ENV],
   ]);

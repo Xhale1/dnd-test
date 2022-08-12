@@ -1,5 +1,5 @@
-import { invariant } from '../invariant';
-import isHtmlElement from './is-type-of-element/is-html-element';
+import { invariant } from "../invariant";
+import isHtmlElement from "./is-type-of-element/is-html-element";
 
 export default (ref?: unknown | null) => {
   invariant(
@@ -9,6 +9,6 @@ export default (ref?: unknown | null) => {
 
     You can find a guide on using the innerRef callback functions at:
     https://github.com/react-forked/dnd/blob/main/docs/guides/using-inner-ref.md
-  `,
+  `
   );
 };

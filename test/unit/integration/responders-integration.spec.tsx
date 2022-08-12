@@ -1,11 +1,11 @@
 /* eslint-disable jest/expect-expect */
-import React from 'react';
-import { render, fireEvent, RenderResult } from '@testing-library/react';
-import { getRect } from 'css-box-model';
-import type { Rect } from 'css-box-model';
-import { invariant } from '../../../src/invariant';
-import { DragDropContext, Draggable, Droppable } from '../../../src';
-import { sloppyClickThreshold } from '../../../src/view/use-sensor-marshal/sensors/use-mouse-sensor';
+import React from "react";
+import { render, fireEvent, RenderResult } from "@testing-library/react";
+import { getRect } from "css-box-model";
+import type { Rect } from "css-box-model";
+import { invariant } from "../../../src/invariant";
+import { DragDropContext, Draggable, Droppable } from "../../../src";
+import { sloppyClickThreshold } from "../../../src/view/use-sensor-marshal/sensors/use-mouse-sensor";
 import type {
   Responders,
   DraggableLocation,
@@ -19,16 +19,16 @@ import type {
   OnDragStartResponder,
   OnDragUpdateResponder,
   OnDragEndResponder,
-} from '../../../src/types';
-import type { DraggableProvided } from '../../../src/view/draggable/draggable-types';
-import type { DroppableProvided } from '../../../src/view/droppable/droppable-types';
-import { getComputedSpacing } from '../../util/dimension';
-import { simpleLift, mouse } from './util/controls';
-import setDOMRect from '../../util/set-dom-rect';
-import { disableWarn } from '../../util/console';
+} from "../../../src/types";
+import type { DraggableProvided } from "../../../src/view/draggable/draggable-types";
+import type { DroppableProvided } from "../../../src/view/droppable/droppable-types";
+import { getComputedSpacing } from "../../util/dimension";
+import { simpleLift, mouse } from "./util/controls";
+import setDOMRect from "../../util/set-dom-rect";
+import { disableWarn } from "../../util/console";
 
-const draggableId: DraggableId = 'drag-1';
-const droppableId: DroppableId = 'drop-1';
+const draggableId: DraggableId = "drag-1";
+const droppableId: DroppableId = "drop-1";
 
 // both our list and item have the same dimension for now
 const borderBox: Rect = getRect({
@@ -44,12 +44,12 @@ const setRefDimensions = (ref?: HTMLElement | null) => {
   }
 
   jest
-    .spyOn(ref, 'getBoundingClientRect')
+    .spyOn(ref, "getBoundingClientRect")
     .mockImplementation(() => setDOMRect(borderBox));
 
   // Stubbing out totally - not including margins in this
   jest
-    .spyOn(window, 'getComputedStyle')
+    .spyOn(window, "getComputedStyle")
     .mockImplementation(() => getComputedSpacing({}));
 };
 
@@ -106,7 +106,7 @@ function App({ responders }: Props) {
   );
 }
 
-describe('responders integration', () => {
+describe("responders integration", () => {
   let responders: MockedResponders;
   let wrapper: RenderResult;
 
@@ -133,7 +133,7 @@ describe('responders integration', () => {
 
   const drag = (() => {
     function getHandle(): HTMLElement {
-      const handle: HTMLElement = wrapper.getByTestId('drag-handle');
+      const handle: HTMLElement = wrapper.getByTestId("drag-handle");
       return handle;
     }
 
@@ -181,9 +181,9 @@ describe('responders integration', () => {
 
     const start: DragStart = {
       draggableId,
-      type: 'DEFAULT',
+      type: "DEFAULT",
       source,
-      mode: 'FLUID',
+      mode: "FLUID",
     };
 
     // Unless we do some more hardcore stubbing
@@ -194,19 +194,19 @@ describe('responders integration', () => {
       // did not move anywhere
       destination: source,
       combine: null,
-      reason: 'DROP',
+      reason: "DROP",
     };
 
     const cancelled: DropResult = {
       ...start,
       destination: null,
       combine: null,
-      reason: 'CANCEL',
+      reason: "CANCEL",
     };
 
     const beforeCapture: BeforeCapture = {
       draggableId: start.draggableId,
-      mode: 'FLUID',
+      mode: "FLUID",
     };
 
     return { beforeCapture, start, completed, cancelled };
@@ -214,13 +214,13 @@ describe('responders integration', () => {
 
   const wasOnBeforeCaptureCalled = (
     amountOfDrags = 1,
-    provided = responders,
+    provided = responders
   ) => {
     invariant(provided.onBeforeCapture);
     expect(provided.onBeforeCapture).toHaveBeenCalledTimes(amountOfDrags);
     // $ExpectError - mock property
     expect(provided.onBeforeCapture.mock.calls[amountOfDrags - 1][0]).toEqual(
-      expected.beforeCapture,
+      expected.beforeCapture
     );
   };
 
@@ -229,19 +229,19 @@ describe('responders integration', () => {
     expect(provided.onBeforeDragStart).toHaveBeenCalledTimes(amountOfDrags);
     // $ExpectError - mock property
     expect(provided.onBeforeDragStart.mock.calls[amountOfDrags - 1][0]).toEqual(
-      expected.start,
+      expected.start
     );
   };
 
   const wasDragStarted = (amountOfDrags = 1, provided = responders) => {
     invariant(
       provided.onDragStart,
-      'cannot validate if drag was started without onDragStart responder',
+      "cannot validate if drag was started without onDragStart responder"
     );
     expect(provided.onDragStart).toHaveBeenCalledTimes(amountOfDrags);
     // $ExpectError - mock property
     expect(provided.onDragStart.mock.calls[amountOfDrags - 1][0]).toEqual(
-      expected.start,
+      expected.start
     );
   };
 
@@ -249,7 +249,7 @@ describe('responders integration', () => {
     expect(provided.onDragEnd).toHaveBeenCalledTimes(amountOfDrags);
     // $ExpectError - mock
     expect(provided.onDragEnd.mock.calls[amountOfDrags - 1][0]).toEqual(
-      expected.completed,
+      expected.completed
     );
   };
 
@@ -257,12 +257,12 @@ describe('responders integration', () => {
     expect(responders.onDragEnd).toHaveBeenCalledTimes(amountOfDrags);
     // $ExpectError - mock
     expect(responders.onDragEnd.mock.calls[amountOfDrags - 1][0]).toEqual(
-      expected.cancelled,
+      expected.cancelled
     );
   };
 
-  describe('before capture', () => {
-    it('should call the onBeforeDragCapture responder just before the drag starts', () => {
+  describe("before capture", () => {
+    it("should call the onBeforeDragCapture responder just before the drag starts", () => {
       drag.start();
 
       wasOnBeforeCaptureCalled();
@@ -272,8 +272,8 @@ describe('responders integration', () => {
     });
   });
 
-  describe('before drag start', () => {
-    it('should call the onBeforeDragStart responder just before the drag starts', () => {
+  describe("before drag start", () => {
+    it("should call the onBeforeDragStart responder just before the drag starts", () => {
       drag.start();
 
       wasOnBeforeDragCalled();
@@ -282,7 +282,7 @@ describe('responders integration', () => {
       drag.stop();
     });
 
-    it('should not call onDragStart while the drag is occurring', () => {
+    it("should not call onDragStart while the drag is occurring", () => {
       drag.start();
 
       wasOnBeforeDragCalled();
@@ -297,8 +297,8 @@ describe('responders integration', () => {
     });
   });
 
-  describe('drag start', () => {
-    it('should call the onDragStart responder when a drag starts', () => {
+  describe("drag start", () => {
+    it("should call the onDragStart responder when a drag starts", () => {
       drag.start();
 
       wasDragStarted();
@@ -307,7 +307,7 @@ describe('responders integration', () => {
       drag.stop();
     });
 
-    it('should not call onDragStart while the drag is occurring', () => {
+    it("should not call onDragStart while the drag is occurring", () => {
       drag.start();
 
       wasDragStarted();
@@ -322,14 +322,14 @@ describe('responders integration', () => {
     });
   });
 
-  describe('drag end', () => {
-    it('should call the onDragEnd responder when a drag ends', () => {
+  describe("drag end", () => {
+    it("should call the onDragEnd responder when a drag ends", () => {
       drag.perform();
 
       wasDragCompleted();
     });
 
-    it('should call the onDragEnd responder when a drag ends when instantly stopped', () => {
+    it("should call the onDragEnd responder when a drag ends when instantly stopped", () => {
       drag.start();
       drag.stop();
 
@@ -337,8 +337,8 @@ describe('responders integration', () => {
     });
   });
 
-  describe('drag cancel', () => {
-    it('should call onDragEnd when a drag is canceled', () => {
+  describe("drag cancel", () => {
+    it("should call onDragEnd when a drag is canceled", () => {
       drag.start();
       drag.move();
       drag.cancel();
@@ -346,7 +346,7 @@ describe('responders integration', () => {
       wasDragCancelled();
     });
 
-    it('should call onDragEnd when a drag is canceled instantly', () => {
+    it("should call onDragEnd when a drag is canceled instantly", () => {
       drag.start();
       drag.cancel();
 
@@ -354,8 +354,8 @@ describe('responders integration', () => {
     });
   });
 
-  describe('unmounted mid drag', () => {
-    it('should cancel a drag if unmounted mid drag', () => {
+  describe("unmounted mid drag", () => {
+    it("should cancel a drag if unmounted mid drag", () => {
       drag.start();
 
       wrapper.unmount();
@@ -364,8 +364,8 @@ describe('responders integration', () => {
     });
   });
 
-  describe('subsequent drags', () => {
-    it('should publish subsequent drags', () => {
+  describe("subsequent drags", () => {
+    it("should publish subsequent drags", () => {
       drag.perform();
       wasDragStarted(1);
       wasDragCompleted(1);
@@ -375,7 +375,7 @@ describe('responders integration', () => {
       wasDragCompleted(2);
     });
 
-    it('should publish subsequent drags after a cancel', () => {
+    it("should publish subsequent drags after a cancel", () => {
       drag.start();
       drag.cancel();
       wasOnBeforeDragCalled(1);
@@ -389,12 +389,12 @@ describe('responders integration', () => {
     });
   });
 
-  describe('dynamic responders', () => {
+  describe("dynamic responders", () => {
     const setResponders = (provided: Responders) => {
       wrapper.rerender(<App responders={provided} />);
     };
 
-    it('should allow you to change responders before a drag started', () => {
+    it("should allow you to change responders before a drag started", () => {
       const newResponders: MockedResponders = {
         ...responders,
         onDragStart: jest.fn(),
@@ -412,7 +412,7 @@ describe('responders integration', () => {
       expect(responders.onDragEnd).not.toHaveBeenCalled();
     });
 
-    it('should allow you to change onDragEnd during a drag', () => {
+    it("should allow you to change onDragEnd during a drag", () => {
       const newResponders: MockedResponders = {
         ...responders,
         onDragEnd: jest.fn(),
@@ -430,7 +430,7 @@ describe('responders integration', () => {
       expect(responders.onDragEnd).not.toHaveBeenCalled();
     });
 
-    it('should allow you to change responders between drags', () => {
+    it("should allow you to change responders between drags", () => {
       const newResponders: MockedResponders = {
         ...responders,
         onDragStart: jest.fn(),

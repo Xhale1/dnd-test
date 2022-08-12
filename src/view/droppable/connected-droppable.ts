@@ -1,44 +1,44 @@
-import { connect } from 'react-redux';
-import memoizeOne from 'memoize-one';
-import { FunctionComponent } from 'react';
-import { invariant } from '../../invariant';
+import memoizeOne from "memoize-one";
+import { FunctionComponent } from "react";
+import { connect } from "react-redux";
+import { invariant } from "../../invariant";
+import { updateViewportMaxScroll as updateViewportMaxScrollAction } from "../../state/action-creators";
+import whatIsDraggedOver from "../../state/droppable/what-is-dragged-over";
+import whatIsDraggedOverFromResult from "../../state/droppable/what-is-dragged-over-from-result";
+import isDragging from "../../state/is-dragging";
 import type {
-  State,
-  DroppableId,
-  DraggableId,
   CompletedDrag,
-  DraggableDimension,
-  DimensionMap,
-  TypeId,
   Critical,
-  DraggableRubric,
+  DimensionMap,
   DraggableDescriptor,
-} from '../../types';
+  DraggableDimension,
+  DraggableId,
+  DraggableRubric,
+  DroppableId,
+  State,
+  TypeId,
+} from "../../types";
+import StoreContext from "../context/store-context";
+import isStrictEqual from "../is-strict-equal";
+import Droppable from "./droppable";
 import type {
-  MapProps,
-  InternalOwnProps,
-  DroppableProps,
   DefaultProps,
-  Selector,
   DispatchProps,
-  DroppableStateSnapshot,
-  UseClone,
   DraggableChildrenFn,
-} from './droppable-types';
-import Droppable from './droppable';
-import isStrictEqual from '../is-strict-equal';
-import whatIsDraggedOver from '../../state/droppable/what-is-dragged-over';
-import { updateViewportMaxScroll as updateViewportMaxScrollAction } from '../../state/action-creators';
-import isDragging from '../../state/is-dragging';
-import StoreContext from '../context/store-context';
-import whatIsDraggedOverFromResult from '../../state/droppable/what-is-dragged-over-from-result';
+  DroppableProps,
+  DroppableStateSnapshot,
+  InternalOwnProps,
+  MapProps,
+  Selector,
+  UseClone,
+} from "./droppable-types";
 
 const isMatchingType = (type: TypeId, critical: Critical): boolean =>
   type === critical.droppable.type;
 
 const getDraggable = (
   critical: Critical,
-  dimensions: DimensionMap,
+  dimensions: DimensionMap
 ): DraggableDimension => dimensions.draggables[critical.draggable.id];
 
 // Returning a function to ensure each
@@ -70,7 +70,7 @@ export const makeMapStateToProps = (): Selector => {
         index: descriptor.index,
         droppableId: descriptor.droppableId,
       },
-    }),
+    })
   );
 
   const getMapProps = memoizeOne(
@@ -81,7 +81,7 @@ export const makeMapStateToProps = (): Selector => {
       isDraggingOverForImpact: boolean,
       dragging: DraggableDimension,
       // snapshot: StateSnapshot,
-      renderClone?: DraggableChildrenFn | null,
+      renderClone?: DraggableChildrenFn | null
     ): MapProps => {
       const draggableId: DraggableId = dragging.descriptor.id;
       const isHome: boolean = dragging.descriptor.droppableId === id;
@@ -132,7 +132,7 @@ export const makeMapStateToProps = (): Selector => {
         snapshot,
         useClone: null,
       };
-    },
+    }
   );
 
   const selector = (state: State, ownProps: InternalOwnProps): MapProps => {
@@ -151,7 +151,7 @@ export const makeMapStateToProps = (): Selector => {
 
       const dragging: DraggableDimension = getDraggable(
         critical,
-        state.dimensions,
+        state.dimensions
       );
       const isDraggingOver: boolean = whatIsDraggedOver(state.impact) === id;
 
@@ -161,11 +161,11 @@ export const makeMapStateToProps = (): Selector => {
         isDraggingOver,
         isDraggingOver,
         dragging,
-        renderClone,
+        renderClone
       );
     }
 
-    if (state.phase === 'DROP_ANIMATING') {
+    if (state.phase === "DROP_ANIMATING") {
       const completed: CompletedDrag = state.completed;
       if (!isMatchingType(type, completed.critical)) {
         return idleWithoutAnimation;
@@ -173,7 +173,7 @@ export const makeMapStateToProps = (): Selector => {
 
       const dragging: DraggableDimension = getDraggable(
         completed.critical,
-        state.dimensions,
+        state.dimensions
       );
 
       // Snapshot based on result and not impact
@@ -185,11 +185,11 @@ export const makeMapStateToProps = (): Selector => {
         whatIsDraggedOverFromResult(completed.result) === id,
         whatIsDraggedOver(completed.impact) === id,
         dragging,
-        renderClone,
+        renderClone
       );
     }
 
-    if (state.phase === 'IDLE' && state.completed && !state.shouldFlush) {
+    if (state.phase === "IDLE" && state.completed && !state.shouldFlush) {
       const completed: CompletedDrag = state.completed;
       if (!isMatchingType(type, completed.critical)) {
         return idleWithoutAnimation;
@@ -198,7 +198,7 @@ export const makeMapStateToProps = (): Selector => {
       // Looking at impact as this controls the placeholder
       const wasOver: boolean = whatIsDraggedOver(completed.impact) === id;
       const wasCombining = Boolean(
-        completed.impact.at && completed.impact.at.type === 'COMBINE',
+        completed.impact.at && completed.impact.at.type === "COMBINE"
       );
       const isHome: boolean = completed.critical.droppable.id === id;
 
@@ -229,14 +229,14 @@ const mapDispatchToProps: DispatchProps = {
 };
 
 function getBody(): HTMLElement {
-  invariant(document.body, 'document.body is not ready');
+  invariant(document.body, "document.body is not ready");
   return document.body;
 }
 
 const defaultProps: DefaultProps = {
-  mode: 'standard',
-  type: 'DEFAULT',
-  direction: 'vertical',
+  mode: "standard",
+  type: "DEFAULT",
+  direction: "vertical",
   isDropDisabled: false,
   isCombineEnabled: false,
   ignoreContainerClipping: false,
@@ -266,13 +266,11 @@ const ConnectedDroppable = connect(
   {
     // Ensuring our context does not clash with consumers
     context: StoreContext as any,
-    // pure: true is default value, but being really clear
-    pure: true,
     // When pure, compares the result of mapStateToProps to its previous value.
     // Default value: shallowEqual
     // Switching to a strictEqual as we return a memoized object on changes
     areStatePropsEqual: isStrictEqual,
-  },
+  }
   // FIXME: Typings are really complexe
 )(Droppable) as unknown as FunctionComponent<DroppableProps>;
 

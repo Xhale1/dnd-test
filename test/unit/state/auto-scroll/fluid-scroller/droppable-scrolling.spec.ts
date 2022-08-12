@@ -1,46 +1,46 @@
-import type { Position } from 'css-box-model';
-import forEach from './util/for-each';
-import type { BlockFnArgs } from './util/for-each';
-import type { DroppableDimension, DroppableId } from '../../../../../src/types';
-import { unscrollableViewport } from './util/viewport';
-import getDroppable from './util/get-droppable';
-import dragTo from './util/drag-to';
-import getScroller from '../../../../../src/state/auto-scroller/fluid-scroller';
-import type { FluidScroller } from '../../../../../src/state/auto-scroller/fluid-scroller';
-import getDistanceThresholds from '../../../../../src/state/auto-scroller/fluid-scroller/get-scroll/get-scroll-on-axis/get-distance-thresholds';
-import type { DistanceThresholds } from '../../../../../src/state/auto-scroller/fluid-scroller/get-scroll/get-scroll-on-axis/get-distance-thresholds';
+import type { Position } from "css-box-model";
+import forEach from "./util/for-each";
+import type { BlockFnArgs } from "./util/for-each";
+import type { DroppableDimension, DroppableId } from "../../../../../src/types";
+import { unscrollableViewport } from "./util/viewport";
+import getDroppable from "./util/get-droppable";
+import dragTo from "./util/drag-to";
+import getScroller from "../../../../../src/state/auto-scroller/fluid-scroller";
+import type { FluidScroller } from "../../../../../src/state/auto-scroller/fluid-scroller";
+import getDistanceThresholds from "../../../../../src/state/auto-scroller/fluid-scroller/get-scroll/get-scroll-on-axis/get-distance-thresholds";
+import type { DistanceThresholds } from "../../../../../src/state/auto-scroller/fluid-scroller/get-scroll/get-scroll-on-axis/get-distance-thresholds";
 import {
   patch,
   add,
   subtract,
   negate,
-} from '../../../../../src/state/position';
-import getArgsMock from './util/get-args-mock';
-import config from '../../../../../src/state/auto-scroller/fluid-scroller/config';
-import scrollDroppable from '../../../../../src/state/droppable/scroll-droppable';
+} from "../../../../../src/state/position";
+import getArgsMock from "./util/get-args-mock";
+import config from "../../../../../src/state/auto-scroller/fluid-scroller/config";
+import scrollDroppable from "../../../../../src/state/droppable/scroll-droppable";
 
 forEach(({ axis, state, preset }: BlockFnArgs) => {
   const { scrollable, frameClient } = getDroppable(preset);
   const thresholds: DistanceThresholds = getDistanceThresholds(
     frameClient.borderBox,
-    axis,
+    axis
   );
 
-  describe('moving forward to end of droppable', () => {
+  describe("moving forward to end of droppable", () => {
     const onStartBoundary: Position = patch(
       axis.line,
       // to the boundary is not enough to start
       frameClient.borderBox[axis.size] - thresholds.startScrollingFrom,
-      frameClient.borderBox.center[axis.crossAxisLine],
+      frameClient.borderBox.center[axis.crossAxisLine]
     );
     const onMaxBoundary: Position = patch(
       axis.line,
       frameClient.borderBox[axis.size] - thresholds.maxScrollValueAt,
-      frameClient.borderBox.center[axis.crossAxisLine],
+      frameClient.borderBox.center[axis.crossAxisLine]
     );
     const noScrollTarget: Position = subtract(
       onStartBoundary,
-      patch(axis.line, 1),
+      patch(axis.line, 1)
     );
 
     const startWithNoScroll = (scroller: FluidScroller) => {
@@ -50,12 +50,12 @@ forEach(({ axis, state, preset }: BlockFnArgs) => {
           viewport: unscrollableViewport,
           droppable: scrollable,
           state,
-        }),
+        })
       );
       requestAnimationFrame.step();
     };
 
-    it('should not scroll if before the start threshold', () => {
+    it("should not scroll if before the start threshold", () => {
       const mocks = getArgsMock();
       const scroller: FluidScroller = getScroller(mocks);
       const target: Position = subtract(onStartBoundary, patch(axis.line, 1));
@@ -66,14 +66,14 @@ forEach(({ axis, state, preset }: BlockFnArgs) => {
           viewport: unscrollableViewport,
           droppable: scrollable,
           state,
-        }),
+        })
       );
 
       requestAnimationFrame.flush();
       expect(mocks.scrollDroppable).not.toHaveBeenCalled();
     });
 
-    it('should scroll if on the start threshold', () => {
+    it("should scroll if on the start threshold", () => {
       const mocks = getArgsMock();
       const scroller: FluidScroller = getScroller(mocks);
 
@@ -83,7 +83,7 @@ forEach(({ axis, state, preset }: BlockFnArgs) => {
           viewport: unscrollableViewport,
           droppable: scrollable,
           state,
-        }),
+        })
       );
 
       expect(mocks.scrollDroppable).not.toHaveBeenCalled();
@@ -91,7 +91,7 @@ forEach(({ axis, state, preset }: BlockFnArgs) => {
       expect(mocks.scrollDroppable).toHaveBeenCalled();
     });
 
-    it('should scroll if moving beyond the start threshold', () => {
+    it("should scroll if moving beyond the start threshold", () => {
       const mocks = getArgsMock();
       const scroller: FluidScroller = getScroller(mocks);
       const target: Position = add(onStartBoundary, patch(axis.line, 1));
@@ -102,7 +102,7 @@ forEach(({ axis, state, preset }: BlockFnArgs) => {
           viewport: unscrollableViewport,
           droppable: scrollable,
           state,
-        }),
+        })
       );
 
       expect(mocks.scrollDroppable).not.toHaveBeenCalled();
@@ -117,13 +117,13 @@ forEach(({ axis, state, preset }: BlockFnArgs) => {
       expect(request[axis.line]).toBeGreaterThan(0);
     });
 
-    it('should get faster the closer to the max speed point', () => {
+    it("should get faster the closer to the max speed point", () => {
       const mocks = getArgsMock();
       const scroller: FluidScroller = getScroller(mocks);
       const atStartOfRange: Position = onStartBoundary;
       const atEndOfRange: Position = subtract(
         onMaxBoundary,
-        patch(axis.line, 1),
+        patch(axis.line, 1)
       );
 
       // start the drag with no auto scrolling
@@ -137,7 +137,7 @@ forEach(({ axis, state, preset }: BlockFnArgs) => {
           viewport: unscrollableViewport,
           droppable: scrollable,
           state,
-        }),
+        })
       );
       requestAnimationFrame.step();
       expect(mocks.scrollDroppable).toHaveBeenCalledTimes(1);
@@ -149,7 +149,7 @@ forEach(({ axis, state, preset }: BlockFnArgs) => {
           viewport: unscrollableViewport,
           droppable: scrollable,
           state,
-        }),
+        })
       );
       requestAnimationFrame.step();
       expect(mocks.scrollDroppable).toHaveBeenCalledTimes(2);
@@ -162,7 +162,7 @@ forEach(({ axis, state, preset }: BlockFnArgs) => {
       expect(scroll2[axis.crossAxisLine]).toBe(0);
     });
 
-    it('should have the top speed at the max speed point', () => {
+    it("should have the top speed at the max speed point", () => {
       const mocks = getArgsMock();
       const scroller: FluidScroller = getScroller(mocks);
 
@@ -173,16 +173,16 @@ forEach(({ axis, state, preset }: BlockFnArgs) => {
           viewport: unscrollableViewport,
           droppable: scrollable,
           state,
-        }),
+        })
       );
       requestAnimationFrame.step();
       expect(mocks.scrollDroppable).toHaveBeenCalledWith(
         scrollable.descriptor.id,
-        patch(axis.line, config.maxPixelScroll),
+        patch(axis.line, config.maxPixelScroll)
       );
     });
 
-    it('should have the top speed when moving beyond the max speed point', () => {
+    it("should have the top speed when moving beyond the max speed point", () => {
       const mocks = getArgsMock();
       const scroller: FluidScroller = getScroller(mocks);
       const target: Position = add(onMaxBoundary, patch(axis.line, 1));
@@ -194,16 +194,16 @@ forEach(({ axis, state, preset }: BlockFnArgs) => {
           viewport: unscrollableViewport,
           droppable: scrollable,
           state,
-        }),
+        })
       );
       requestAnimationFrame.step();
       expect(mocks.scrollDroppable).toHaveBeenCalledWith(
         scrollable.descriptor.id,
-        patch(axis.line, config.maxPixelScroll),
+        patch(axis.line, config.maxPixelScroll)
       );
     });
 
-    it('should throttle multiple scrolls into a single animation frame', () => {
+    it("should throttle multiple scrolls into a single animation frame", () => {
       const mocks = getArgsMock();
       const scroller: FluidScroller = getScroller(mocks);
       const target1: Position = add(onStartBoundary, patch(axis.line, 1));
@@ -216,7 +216,7 @@ forEach(({ axis, state, preset }: BlockFnArgs) => {
           viewport: unscrollableViewport,
           droppable: scrollable,
           state,
-        }),
+        })
       );
       scroller.scroll(
         dragTo({
@@ -224,35 +224,35 @@ forEach(({ axis, state, preset }: BlockFnArgs) => {
           viewport: unscrollableViewport,
           droppable: scrollable,
           state,
-        }),
+        })
       );
 
       requestAnimationFrame.step();
       expect(mocks.scrollDroppable).toHaveBeenCalledTimes(1);
       expect(mocks.scrollDroppable).toHaveBeenCalledWith(
         scrollable.descriptor.id,
-        patch(axis.line, config.maxPixelScroll),
+        patch(axis.line, config.maxPixelScroll)
       );
     });
   });
 
-  describe('moving backward to start of droppable', () => {
+  describe("moving backward to start of droppable", () => {
     const droppableScroll: Position = patch(axis.line, 10);
     const scrolled: DroppableDimension = scrollDroppable(
       scrollable,
-      droppableScroll,
+      droppableScroll
     );
 
     const onStartBoundary: Position = patch(
       axis.line,
       // at the boundary is not enough to start
       frameClient.borderBox[axis.start] + thresholds.startScrollingFrom,
-      frameClient.borderBox.center[axis.crossAxisLine],
+      frameClient.borderBox.center[axis.crossAxisLine]
     );
     const onMaxBoundary: Position = patch(
       axis.line,
       frameClient.borderBox[axis.start] + thresholds.maxScrollValueAt,
-      frameClient.borderBox.center[axis.crossAxisLine],
+      frameClient.borderBox.center[axis.crossAxisLine]
     );
     const noScrollTarget: Position = add(onStartBoundary, patch(axis.line, 1));
 
@@ -263,12 +263,12 @@ forEach(({ axis, state, preset }: BlockFnArgs) => {
           viewport: unscrollableViewport,
           droppable: scrolled,
           state,
-        }),
+        })
       );
       requestAnimationFrame.step();
     };
 
-    it('should not scroll if before the start threshold', () => {
+    it("should not scroll if before the start threshold", () => {
       const mocks = getArgsMock();
       const scroller: FluidScroller = getScroller(mocks);
       const target: Position = add(onStartBoundary, patch(axis.line, 1));
@@ -279,14 +279,14 @@ forEach(({ axis, state, preset }: BlockFnArgs) => {
           viewport: unscrollableViewport,
           droppable: scrolled,
           state,
-        }),
+        })
       );
 
       requestAnimationFrame.flush();
       expect(mocks.scrollDroppable).not.toHaveBeenCalled();
     });
 
-    it('should scroll if on the start threshold', () => {
+    it("should scroll if on the start threshold", () => {
       const mocks = getArgsMock();
       const scroller: FluidScroller = getScroller(mocks);
 
@@ -296,7 +296,7 @@ forEach(({ axis, state, preset }: BlockFnArgs) => {
           viewport: unscrollableViewport,
           droppable: scrolled,
           state,
-        }),
+        })
       );
 
       expect(mocks.scrollDroppable).not.toHaveBeenCalled();
@@ -304,7 +304,7 @@ forEach(({ axis, state, preset }: BlockFnArgs) => {
       expect(mocks.scrollDroppable).toHaveBeenCalled();
     });
 
-    it('should scroll if moving beyond the start threshold', () => {
+    it("should scroll if moving beyond the start threshold", () => {
       const mocks = getArgsMock();
       const scroller: FluidScroller = getScroller(mocks);
       const target: Position = subtract(onStartBoundary, patch(axis.line, 1));
@@ -315,7 +315,7 @@ forEach(({ axis, state, preset }: BlockFnArgs) => {
           viewport: unscrollableViewport,
           droppable: scrolled,
           state,
-        }),
+        })
       );
 
       expect(mocks.scrollDroppable).not.toHaveBeenCalled();
@@ -328,7 +328,7 @@ forEach(({ axis, state, preset }: BlockFnArgs) => {
       expect(request[axis.line]).toBeLessThan(0);
     });
 
-    it('should get faster the closer to the max speed point', () => {
+    it("should get faster the closer to the max speed point", () => {
       const mocks = getArgsMock();
       const scroller: FluidScroller = getScroller(mocks);
       const atStartOfRange: Position = onStartBoundary;
@@ -345,7 +345,7 @@ forEach(({ axis, state, preset }: BlockFnArgs) => {
           viewport: unscrollableViewport,
           droppable: scrolled,
           state,
-        }),
+        })
       );
       requestAnimationFrame.step();
       expect(mocks.scrollDroppable).toHaveBeenCalledTimes(1);
@@ -357,7 +357,7 @@ forEach(({ axis, state, preset }: BlockFnArgs) => {
           viewport: unscrollableViewport,
           droppable: scrolled,
           state,
-        }),
+        })
       );
       requestAnimationFrame.step();
       expect(mocks.scrollDroppable).toHaveBeenCalledTimes(2);
@@ -370,7 +370,7 @@ forEach(({ axis, state, preset }: BlockFnArgs) => {
       expect(scroll2[axis.crossAxisLine]).toBe(0);
     });
 
-    it('should have the top speed at the max speed point', () => {
+    it("should have the top speed at the max speed point", () => {
       const mocks = getArgsMock();
       const scroller: FluidScroller = getScroller(mocks);
 
@@ -381,16 +381,16 @@ forEach(({ axis, state, preset }: BlockFnArgs) => {
           viewport: unscrollableViewport,
           droppable: scrolled,
           state,
-        }),
+        })
       );
       requestAnimationFrame.step();
       expect(mocks.scrollDroppable).toHaveBeenCalledWith(
         scrolled.descriptor.id,
-        negate(patch(axis.line, config.maxPixelScroll)),
+        negate(patch(axis.line, config.maxPixelScroll))
       );
     });
 
-    it('should have the top speed when moving beyond the max speed point', () => {
+    it("should have the top speed when moving beyond the max speed point", () => {
       const mocks = getArgsMock();
       const scroller: FluidScroller = getScroller(mocks);
       const target: Position = subtract(onMaxBoundary, patch(axis.line, 1));
@@ -402,16 +402,16 @@ forEach(({ axis, state, preset }: BlockFnArgs) => {
           viewport: unscrollableViewport,
           droppable: scrolled,
           state,
-        }),
+        })
       );
       requestAnimationFrame.step();
       expect(mocks.scrollDroppable).toHaveBeenCalledWith(
         scrolled.descriptor.id,
-        negate(patch(axis.line, config.maxPixelScroll)),
+        negate(patch(axis.line, config.maxPixelScroll))
       );
     });
 
-    it('should throttle multiple scrolls into a single animation frame', () => {
+    it("should throttle multiple scrolls into a single animation frame", () => {
       const mocks = getArgsMock();
       const scroller: FluidScroller = getScroller(mocks);
       const target1: Position = subtract(onStartBoundary, patch(axis.line, 1));
@@ -424,7 +424,7 @@ forEach(({ axis, state, preset }: BlockFnArgs) => {
           viewport: unscrollableViewport,
           droppable: scrolled,
           state,
-        }),
+        })
       );
       scroller.scroll(
         dragTo({
@@ -432,14 +432,14 @@ forEach(({ axis, state, preset }: BlockFnArgs) => {
           viewport: unscrollableViewport,
           droppable: scrolled,
           state,
-        }),
+        })
       );
 
       requestAnimationFrame.step();
       expect(mocks.scrollDroppable).toHaveBeenCalledTimes(1);
       expect(mocks.scrollDroppable).toHaveBeenCalledWith(
         scrolled.descriptor.id,
-        negate(patch(axis.line, config.maxPixelScroll)),
+        negate(patch(axis.line, config.maxPixelScroll))
       );
     });
   });

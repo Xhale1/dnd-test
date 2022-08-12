@@ -1,5 +1,5 @@
-import type { Position } from 'css-box-model';
-import { invariant } from '../invariant';
+import type { Position } from "css-box-model";
+import { invariant } from "../invariant";
 import type {
   DimensionMap,
   State,
@@ -15,28 +15,28 @@ import type {
   DropPendingState,
   Viewport,
   DropReason,
-} from '../types';
-import type { Action } from './store-types';
-import type { PublicResult as MoveInDirectionResult } from './move-in-direction/move-in-direction-types';
-import scrollDroppable from './droppable/scroll-droppable';
-import moveInDirection from './move-in-direction';
-import { add, isEqual, origin } from './position';
-import scrollViewport from './scroll-viewport';
-import isMovementAllowed from './is-movement-allowed';
-import { toDroppableList } from './dimension-structures';
-import update from './post-reducer/when-moving/update';
-import refreshSnap from './post-reducer/when-moving/refresh-snap';
-import getLiftEffect from './get-lift-effect';
-import patchDimensionMap from './patch-dimension-map';
-import publishWhileDraggingInVirtual from './publish-while-dragging-in-virtual';
+} from "../types";
+import type { Action } from "./store-types";
+import type { PublicResult as MoveInDirectionResult } from "./move-in-direction/move-in-direction-types";
+import scrollDroppable from "./droppable/scroll-droppable";
+import moveInDirection from "./move-in-direction";
+import { add, isEqual, origin } from "./position";
+import scrollViewport from "./scroll-viewport";
+import isMovementAllowed from "./is-movement-allowed";
+import { toDroppableList } from "./dimension-structures";
+import update from "./post-reducer/when-moving/update";
+import refreshSnap from "./post-reducer/when-moving/refresh-snap";
+import getLiftEffect from "./get-lift-effect";
+import patchDimensionMap from "./patch-dimension-map";
+import publishWhileDraggingInVirtual from "./publish-while-dragging-in-virtual";
 
 const isSnapping = (state: StateWhenUpdatesAllowed): boolean =>
-  state.movementMode === 'SNAP';
+  state.movementMode === "SNAP";
 
 const postDroppableChange = (
   state: StateWhenUpdatesAllowed,
   updated: DroppableDimension,
-  isEnabledChanging: boolean,
+  isEnabledChanging: boolean
 ): StateWhenUpdatesAllowed => {
   const dimensions: DimensionMap = patchDimensionMap(state.dimensions, updated);
 
@@ -55,9 +55,9 @@ const postDroppableChange = (
 };
 
 function removeScrollJumpRequest(
-  state: DraggingState | CollectingState | DropPendingState,
+  state: DraggingState | CollectingState | DropPendingState
 ): DraggingState | CollectingState | DropPendingState {
-  if (state.isDragging && state.movementMode === 'SNAP') {
+  if (state.isDragging && state.movementMode === "SNAP") {
     return {
       ...state,
       scrollJumpRequest: null,
@@ -66,21 +66,21 @@ function removeScrollJumpRequest(
   return state;
 }
 
-const idle: IdleState = { phase: 'IDLE', completed: null, shouldFlush: false };
+const idle: IdleState = { phase: "IDLE", completed: null, shouldFlush: false };
 
 // eslint-disable-next-line default-param-last
 export default (state: State = idle, action: Action): State => {
-  if (action.type === 'FLUSH') {
+  if (action.type === "FLUSH") {
     return {
       ...idle,
       shouldFlush: true,
     };
   }
 
-  if (action.type === 'INITIAL_PUBLISH') {
+  if (action.type === "INITIAL_PUBLISH") {
     invariant(
-      state.phase === 'IDLE',
-      'INITIAL_PUBLISH must come after a IDLE phase',
+      state.phase === "IDLE",
+      "INITIAL_PUBLISH must come after a IDLE phase"
     );
     const { critical, clientSelection, viewport, dimensions, movementMode } =
       action.payload;
@@ -107,7 +107,7 @@ export default (state: State = idle, action: Action): State => {
 
     // Can only auto scroll the window if every list is not fixed on the page
     const isWindowScrollAllowed: boolean = toDroppableList(
-      dimensions.droppables,
+      dimensions.droppables
     ).every((item: DroppableDimension) => !item.isFixedOnPage);
 
     const { impact, afterCritical } = getLiftEffect({
@@ -118,7 +118,7 @@ export default (state: State = idle, action: Action): State => {
     });
 
     const result: DraggingState = {
-      phase: 'DRAGGING',
+      phase: "DRAGGING",
       isDragging: true,
       critical,
       movementMode,
@@ -137,31 +137,31 @@ export default (state: State = idle, action: Action): State => {
     return result;
   }
 
-  if (action.type === 'COLLECTION_STARTING') {
+  if (action.type === "COLLECTION_STARTING") {
     // A collection might have restarted. We do not care as we are already in the right phase
     // TODO: remove?
-    if (state.phase === 'COLLECTING' || state.phase === 'DROP_PENDING') {
+    if (state.phase === "COLLECTING" || state.phase === "DROP_PENDING") {
       return state;
     }
 
     invariant(
-      state.phase === 'DRAGGING',
-      `Collection cannot start from phase ${state.phase}`,
+      state.phase === "DRAGGING",
+      `Collection cannot start from phase ${state.phase}`
     );
 
     const result: CollectingState = {
       ...state,
-      phase: 'COLLECTING',
+      phase: "COLLECTING",
     };
 
     return result;
   }
 
-  if (action.type === 'PUBLISH_WHILE_DRAGGING') {
+  if (action.type === "PUBLISH_WHILE_DRAGGING") {
     // Unexpected bulk publish
     invariant(
-      state.phase === 'COLLECTING' || state.phase === 'DROP_PENDING',
-      `Unexpected ${action.type} received in phase ${state.phase}`,
+      state.phase === "COLLECTING" || state.phase === "DROP_PENDING",
+      `Unexpected ${action.type} received in phase ${state.phase}`
     );
 
     return publishWhileDraggingInVirtual({
@@ -170,15 +170,15 @@ export default (state: State = idle, action: Action): State => {
     });
   }
 
-  if (action.type === 'MOVE') {
+  if (action.type === "MOVE") {
     // Not allowing any more movements
-    if (state.phase === 'DROP_PENDING') {
+    if (state.phase === "DROP_PENDING") {
       return state;
     }
 
     invariant(
       isMovementAllowed(state),
-      `${action.type} not permitted in phase ${state.phase}`,
+      `${action.type} not permitted in phase ${state.phase}`
     );
 
     const { client: clientSelection } = action.payload;
@@ -196,23 +196,23 @@ export default (state: State = idle, action: Action): State => {
     });
   }
 
-  if (action.type === 'UPDATE_DROPPABLE_SCROLL') {
+  if (action.type === "UPDATE_DROPPABLE_SCROLL") {
     // Not allowing changes while a drop is pending
     // Cannot get this during a DROP_ANIMATING as the dimension
     // marshal will cancel any pending scroll updates
-    if (state.phase === 'DROP_PENDING') {
+    if (state.phase === "DROP_PENDING") {
       return removeScrollJumpRequest(state);
     }
 
     // We will be updating the scroll in response to dynamic changes
     // manually on the droppable so we can ignore this change
-    if (state.phase === 'COLLECTING') {
+    if (state.phase === "COLLECTING") {
       return removeScrollJumpRequest(state);
     }
 
     invariant(
       isMovementAllowed(state),
-      `${action.type} not permitted in phase ${state.phase}`,
+      `${action.type} not permitted in phase ${state.phase}`
     );
 
     const { id, newScroll } = action.payload;
@@ -228,15 +228,15 @@ export default (state: State = idle, action: Action): State => {
     return postDroppableChange(state, scrolled, false);
   }
 
-  if (action.type === 'UPDATE_DROPPABLE_IS_ENABLED') {
+  if (action.type === "UPDATE_DROPPABLE_IS_ENABLED") {
     // Things are locked at this point
-    if (state.phase === 'DROP_PENDING') {
+    if (state.phase === "DROP_PENDING") {
       return state;
     }
 
     invariant(
       isMovementAllowed(state),
-      `Attempting to move in an unsupported phase ${state.phase}`,
+      `Attempting to move in an unsupported phase ${state.phase}`
     );
 
     const { id, isEnabled } = action.payload;
@@ -244,13 +244,13 @@ export default (state: State = idle, action: Action): State => {
 
     invariant(
       target,
-      `Cannot find Droppable[id: ${id}] to toggle its enabled state`,
+      `Cannot find Droppable[id: ${id}] to toggle its enabled state`
     );
 
     invariant(
       target.isEnabled !== isEnabled,
       `Trying to set droppable isEnabled to ${String(isEnabled)}
-      but it is already ${String(target.isEnabled)}`,
+      but it is already ${String(target.isEnabled)}`
     );
 
     const updated: DroppableDimension = {
@@ -261,15 +261,15 @@ export default (state: State = idle, action: Action): State => {
     return postDroppableChange(state, updated, true);
   }
 
-  if (action.type === 'UPDATE_DROPPABLE_IS_COMBINE_ENABLED') {
+  if (action.type === "UPDATE_DROPPABLE_IS_COMBINE_ENABLED") {
     // Things are locked at this point
-    if (state.phase === 'DROP_PENDING') {
+    if (state.phase === "DROP_PENDING") {
       return state;
     }
 
     invariant(
       isMovementAllowed(state),
-      `Attempting to move in an unsupported phase ${state.phase}`,
+      `Attempting to move in an unsupported phase ${state.phase}`
     );
 
     const { id, isCombineEnabled } = action.payload;
@@ -277,13 +277,13 @@ export default (state: State = idle, action: Action): State => {
 
     invariant(
       target,
-      `Cannot find Droppable[id: ${id}] to toggle its isCombineEnabled state`,
+      `Cannot find Droppable[id: ${id}] to toggle its isCombineEnabled state`
     );
 
     invariant(
       target.isCombineEnabled !== isCombineEnabled,
       `Trying to set droppable isCombineEnabled to ${String(isCombineEnabled)}
-      but it is already ${String(target.isCombineEnabled)}`,
+      but it is already ${String(target.isCombineEnabled)}`
     );
 
     const updated: DroppableDimension = {
@@ -294,20 +294,20 @@ export default (state: State = idle, action: Action): State => {
     return postDroppableChange(state, updated, true);
   }
 
-  if (action.type === 'MOVE_BY_WINDOW_SCROLL') {
+  if (action.type === "MOVE_BY_WINDOW_SCROLL") {
     // No longer accepting changes
-    if (state.phase === 'DROP_PENDING' || state.phase === 'DROP_ANIMATING') {
+    if (state.phase === "DROP_PENDING" || state.phase === "DROP_ANIMATING") {
       return state;
     }
 
     invariant(
       isMovementAllowed(state),
-      `Cannot move by window in phase ${state.phase}`,
+      `Cannot move by window in phase ${state.phase}`
     );
 
     invariant(
       state.isWindowScrollAllowed,
-      'Window scrolling is currently not supported for fixed lists',
+      "Window scrolling is currently not supported for fixed lists"
     );
 
     const newScroll: Position = action.payload.newScroll;
@@ -332,7 +332,7 @@ export default (state: State = idle, action: Action): State => {
     });
   }
 
-  if (action.type === 'UPDATE_VIEWPORT_MAX_SCROLL') {
+  if (action.type === "UPDATE_VIEWPORT_MAX_SCROLL") {
     // Could occur if a transitionEnd occurs after a drag ends
     if (!isMovementAllowed(state)) {
       return state;
@@ -359,19 +359,19 @@ export default (state: State = idle, action: Action): State => {
     };
   }
   if (
-    action.type === 'MOVE_UP' ||
-    action.type === 'MOVE_DOWN' ||
-    action.type === 'MOVE_LEFT' ||
-    action.type === 'MOVE_RIGHT'
+    action.type === "MOVE_UP" ||
+    action.type === "MOVE_DOWN" ||
+    action.type === "MOVE_LEFT" ||
+    action.type === "MOVE_RIGHT"
   ) {
     // Not doing keyboard movements during these phases
-    if (state.phase === 'COLLECTING' || state.phase === 'DROP_PENDING') {
+    if (state.phase === "COLLECTING" || state.phase === "DROP_PENDING") {
       return state;
     }
 
     invariant(
-      state.phase === 'DRAGGING',
-      `${action.type} received while not in DRAGGING phase`,
+      state.phase === "DRAGGING",
+      `${action.type} received while not in DRAGGING phase`
     );
 
     const result: MoveInDirectionResult | null = moveInDirection({
@@ -392,32 +392,32 @@ export default (state: State = idle, action: Action): State => {
     });
   }
 
-  if (action.type === 'DROP_PENDING') {
+  if (action.type === "DROP_PENDING") {
     const reason: DropReason = action.payload.reason;
     invariant(
-      state.phase === 'COLLECTING',
-      'Can only move into the DROP_PENDING phase from the COLLECTING phase',
+      state.phase === "COLLECTING",
+      "Can only move into the DROP_PENDING phase from the COLLECTING phase"
     );
 
     const newState: DropPendingState = {
       ...state,
-      phase: 'DROP_PENDING',
+      phase: "DROP_PENDING",
       isWaiting: true,
       reason,
     };
     return newState;
   }
 
-  if (action.type === 'DROP_ANIMATE') {
+  if (action.type === "DROP_ANIMATE") {
     const { completed, dropDuration, newHomeClientOffset } = action.payload;
     invariant(
-      state.phase === 'DRAGGING' || state.phase === 'DROP_PENDING',
-      `Cannot animate drop from phase ${state.phase}`,
+      state.phase === "DRAGGING" || state.phase === "DROP_PENDING",
+      `Cannot animate drop from phase ${state.phase}`
     );
 
     // Moving into a new phase
     const result: DropAnimatingState = {
-      phase: 'DROP_ANIMATING',
+      phase: "DROP_ANIMATING",
       completed,
       dropDuration,
       newHomeClientOffset,
@@ -429,11 +429,11 @@ export default (state: State = idle, action: Action): State => {
 
   // Action will be used by responders to call consumers
   // We can simply return to the idle state
-  if (action.type === 'DROP_COMPLETE') {
+  if (action.type === "DROP_COMPLETE") {
     const { completed } = action.payload;
 
     return {
-      phase: 'IDLE',
+      phase: "IDLE",
       completed,
       shouldFlush: false,
     };

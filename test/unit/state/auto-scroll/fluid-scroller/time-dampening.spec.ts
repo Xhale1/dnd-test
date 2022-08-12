@@ -1,16 +1,16 @@
-import type { Position } from 'css-box-model';
-import forEach from './util/for-each';
-import type { BlockFnArgs } from './util/for-each';
-import { scrollableViewport } from './util/viewport';
-import dragTo from './util/drag-to';
-import getScroller from '../../../../../src/state/auto-scroller/fluid-scroller';
-import type { FluidScroller } from '../../../../../src/state/auto-scroller/fluid-scroller';
-import getDistanceThresholds from '../../../../../src/state/auto-scroller/fluid-scroller/get-scroll/get-scroll-on-axis/get-distance-thresholds';
-import type { DistanceThresholds } from '../../../../../src/state/auto-scroller/fluid-scroller/get-scroll/get-scroll-on-axis/get-distance-thresholds';
-import { patch } from '../../../../../src/state/position';
-import getArgsMock from './util/get-args-mock';
-import config from '../../../../../src/state/auto-scroller/fluid-scroller/config';
-import minScroll from '../../../../../src/state/auto-scroller/fluid-scroller/get-scroll/get-scroll-on-axis/min-scroll';
+import type { Position } from "css-box-model";
+import forEach from "./util/for-each";
+import type { BlockFnArgs } from "./util/for-each";
+import { scrollableViewport } from "./util/viewport";
+import dragTo from "./util/drag-to";
+import getScroller from "../../../../../src/state/auto-scroller/fluid-scroller";
+import type { FluidScroller } from "../../../../../src/state/auto-scroller/fluid-scroller";
+import getDistanceThresholds from "../../../../../src/state/auto-scroller/fluid-scroller/get-scroll/get-scroll-on-axis/get-distance-thresholds";
+import type { DistanceThresholds } from "../../../../../src/state/auto-scroller/fluid-scroller/get-scroll/get-scroll-on-axis/get-distance-thresholds";
+import { patch } from "../../../../../src/state/position";
+import getArgsMock from "./util/get-args-mock";
+import config from "../../../../../src/state/auto-scroller/fluid-scroller/config";
+import minScroll from "../../../../../src/state/auto-scroller/fluid-scroller/get-scroll/get-scroll-on-axis/min-scroll";
 
 const stopAt: number = config.durationDampening.stopDampeningAt;
 const startAcceleratingAt: number = config.durationDampening.accelerateAt;
@@ -19,18 +19,18 @@ const accelerationRange: number = stopAt - startAcceleratingAt;
 forEach(({ state, axis }: BlockFnArgs) => {
   const thresholds: DistanceThresholds = getDistanceThresholds(
     scrollableViewport.frame,
-    axis,
+    axis
   );
   const onStartBoundary: Position = patch(
     axis.line,
     // to the boundary is not enough to start
     scrollableViewport.frame[axis.size] - thresholds.startScrollingFrom,
-    scrollableViewport.frame.center[axis.crossAxisLine],
+    scrollableViewport.frame.center[axis.crossAxisLine]
   );
   const onMaxBoundary: Position = patch(
     axis.line,
     scrollableViewport.frame[axis.size] - thresholds.maxScrollValueAt,
-    scrollableViewport.frame.center[axis.crossAxisLine],
+    scrollableViewport.frame.center[axis.crossAxisLine]
   );
 
   const originalNow = Date.now;
@@ -48,7 +48,7 @@ forEach(({ state, axis }: BlockFnArgs) => {
     Date.now = originalNow;
   });
 
-  it('should not dampen scrolling if not starting in scrollable area', () => {
+  it("should not dampen scrolling if not starting in scrollable area", () => {
     const mocks = getArgsMock();
     const scroller: FluidScroller = getScroller(mocks);
 
@@ -58,7 +58,7 @@ forEach(({ state, axis }: BlockFnArgs) => {
         selection: scrollableViewport.frame.center,
         viewport: scrollableViewport,
         state,
-      }),
+      })
     );
     requestAnimationFrame.flush();
     expect(mocks.scrollWindow).not.toHaveBeenCalled();
@@ -69,16 +69,16 @@ forEach(({ state, axis }: BlockFnArgs) => {
         selection: onMaxBoundary,
         viewport: scrollableViewport,
         state,
-      }),
+      })
     );
 
     requestAnimationFrame.step();
     expect(mocks.scrollWindow).toHaveBeenCalledWith(
-      patch(axis.line, config.maxPixelScroll),
+      patch(axis.line, config.maxPixelScroll)
     );
   });
 
-  it('should dampen if lifted in a scrollable area', () => {
+  it("should dampen if lifted in a scrollable area", () => {
     // on start of boundary: would have been a min scroll anyway
     {
       const mocks = getArgsMock();
@@ -90,12 +90,12 @@ forEach(({ state, axis }: BlockFnArgs) => {
           selection: onStartBoundary,
           viewport: scrollableViewport,
           state,
-        }),
+        })
       );
 
       requestAnimationFrame.step();
       expect(mocks.scrollWindow).toHaveBeenCalledWith(
-        patch(axis.line, minScroll),
+        patch(axis.line, minScroll)
       );
     }
     // would normally be max scroll speed
@@ -109,17 +109,17 @@ forEach(({ state, axis }: BlockFnArgs) => {
           selection: onMaxBoundary,
           viewport: scrollableViewport,
           state,
-        }),
+        })
       );
 
       requestAnimationFrame.step();
       expect(mocks.scrollWindow).toHaveBeenCalledWith(
-        patch(axis.line, minScroll),
+        patch(axis.line, minScroll)
       );
     }
   });
 
-  it('should have the minimum scroll up to a small time threshold and then accelerate to the max speed as time continues', () => {
+  it("should have the minimum scroll up to a small time threshold and then accelerate to the max speed as time continues", () => {
     const mocks = getArgsMock();
     const scroller: FluidScroller = getScroller(mocks);
 
@@ -129,11 +129,11 @@ forEach(({ state, axis }: BlockFnArgs) => {
         selection: onMaxBoundary,
         viewport: scrollableViewport,
         state,
-      }),
+      })
     );
     requestAnimationFrame.step();
     expect(mocks.scrollWindow).toHaveBeenCalledWith(
-      patch(axis.line, minScroll),
+      patch(axis.line, minScroll)
     );
     mocks.scrollWindow.mockClear();
 
@@ -144,13 +144,13 @@ forEach(({ state, axis }: BlockFnArgs) => {
         selection: onMaxBoundary,
         viewport: scrollableViewport,
         state,
-      }),
+      })
     );
 
     // still on the min scroll
     requestAnimationFrame.step();
     expect(mocks.scrollWindow).toHaveBeenCalledWith(
-      patch(axis.line, minScroll),
+      patch(axis.line, minScroll)
     );
     mocks.scrollWindow.mockClear();
 
@@ -161,12 +161,12 @@ forEach(({ state, axis }: BlockFnArgs) => {
         selection: onMaxBoundary,
         viewport: scrollableViewport,
         state,
-      }),
+      })
     );
     requestAnimationFrame.step();
     // still on the min scroll as the % change will be quite low
     expect(mocks.scrollWindow).toHaveBeenCalledWith(
-      patch(axis.line, minScroll),
+      patch(axis.line, minScroll)
     );
     mocks.scrollWindow.mockClear();
 
@@ -177,14 +177,14 @@ forEach(({ state, axis }: BlockFnArgs) => {
         selection: onMaxBoundary,
         viewport: scrollableViewport,
         state,
-      }),
+      })
     );
     requestAnimationFrame.step();
     const firstAcceleratedScroll: Position =
       mocks.scrollWindow.mock.calls[0][0];
     expect(firstAcceleratedScroll[axis.line]).toBeGreaterThan(minScroll);
     expect(firstAcceleratedScroll[axis.line]).toBeLessThan(
-      config.maxPixelScroll,
+      config.maxPixelScroll
     );
     mocks.scrollWindow.mockClear();
 
@@ -195,18 +195,18 @@ forEach(({ state, axis }: BlockFnArgs) => {
         selection: onMaxBoundary,
         viewport: scrollableViewport,
         state,
-      }),
+      })
     );
     requestAnimationFrame.step();
     const secondAcceleratedScroll: Position =
       mocks.scrollWindow.mock.calls[0][0];
     // is greater in acceleration
     expect(secondAcceleratedScroll[axis.line]).toBeGreaterThan(
-      firstAcceleratedScroll[axis.line],
+      firstAcceleratedScroll[axis.line]
     );
     expect(secondAcceleratedScroll[axis.line]).toBeGreaterThan(minScroll);
     expect(secondAcceleratedScroll[axis.line]).toBeLessThan(
-      config.maxPixelScroll,
+      config.maxPixelScroll
     );
     mocks.scrollWindow.mockClear();
 
@@ -217,13 +217,13 @@ forEach(({ state, axis }: BlockFnArgs) => {
         selection: onMaxBoundary,
         viewport: scrollableViewport,
         state,
-      }),
+      })
     );
     requestAnimationFrame.step();
     const lastAcceleratedScroll: Position = mocks.scrollWindow.mock.calls[0][0];
     // is greater in acceleration
     expect(lastAcceleratedScroll[axis.line]).toBeGreaterThan(
-      firstAcceleratedScroll[axis.line],
+      firstAcceleratedScroll[axis.line]
     );
     expect(lastAcceleratedScroll[axis.line]).toBeGreaterThan(minScroll);
     expect(lastAcceleratedScroll[axis.line]).toEqual(config.maxPixelScroll);

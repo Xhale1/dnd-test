@@ -1,4 +1,4 @@
-import type { Position } from 'css-box-model';
+import type { Position } from "css-box-model";
 import type {
   DroppableDimension,
   Viewport,
@@ -7,10 +7,10 @@ import type {
   DraggableDimension,
   DroppableId,
   LiftEffect,
-} from '../../../types';
-import whatIsDraggedOver from '../../droppable/what-is-dragged-over';
-import { subtract } from '../../position';
-import getClientBorderBoxCenter from '../../get-center-from-impact/get-client-border-box-center';
+} from "../../../types";
+import whatIsDraggedOver from "../../droppable/what-is-dragged-over";
+import { subtract } from "../../position";
+import getClientBorderBoxCenter from "../../get-center-from-impact/get-client-border-box-center";
 
 interface Args {
   impact: DragImpact;
@@ -46,7 +46,7 @@ export default ({
 
   const offset: Position = subtract(
     newClientCenter,
-    draggable.client.borderBox.center,
+    draggable.client.borderBox.center
   );
 
   return offset;

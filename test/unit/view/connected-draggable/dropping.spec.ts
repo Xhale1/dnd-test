@@ -1,27 +1,27 @@
-import { makeMapStateToProps } from '../../../../src/view/draggable/connected-draggable';
-import { getPreset } from '../../../util/dimension';
-import getStatePreset from '../../../util/get-simple-state-preset';
-import getOwnProps from './util/get-own-props';
+import { makeMapStateToProps } from "../../../../src/view/draggable/connected-draggable";
+import { getPreset } from "../../../util/dimension";
+import getStatePreset from "../../../util/get-simple-state-preset";
+import getOwnProps from "./util/get-own-props";
 import type {
   Selector,
   OwnProps,
   MapProps,
   DropAnimation,
-} from '../../../../src/view/draggable/draggable-types';
+} from "../../../../src/view/draggable/draggable-types";
 import type {
   DropAnimatingState,
   DragImpact,
   Combine,
-} from '../../../../src/types';
-import { curves, combine as combineStyle } from '../../../../src/animation';
-import getLiftEffect from '../../../../src/state/get-lift-effect';
-import { getDraggingSnapshot } from './util/get-snapshot';
+} from "../../../../src/types";
+import { curves, combine as combineStyle } from "../../../../src/animation";
+import getLiftEffect from "../../../../src/state/get-lift-effect";
+import { getDraggingSnapshot } from "./util/get-snapshot";
 
 const preset = getPreset();
 const state = getStatePreset();
 const ownProps: OwnProps = getOwnProps(preset.inHome1);
 
-it('should move to the new home offset', () => {
+it("should move to the new home offset", () => {
   const current: DropAnimatingState = state.dropAnimating();
   const selector: Selector = makeMapStateToProps();
   const dropping: DropAnimation = {
@@ -33,7 +33,7 @@ it('should move to the new home offset', () => {
   };
   const expected: MapProps = {
     mapped: {
-      type: 'DRAGGING',
+      type: "DRAGGING",
       dimension: preset.inHome1,
       draggingOver: preset.home.descriptor.id,
       forceShouldAnimate: null,
@@ -55,7 +55,7 @@ it('should move to the new home offset', () => {
   expect(whileDropping).toEqual(expected);
 });
 
-it('should maintain combine information', () => {
+it("should maintain combine information", () => {
   const { afterCritical, impact: homeImpact } = getLiftEffect({
     draggable: preset.inHome1,
     home: preset.home,
@@ -69,7 +69,7 @@ it('should maintain combine information', () => {
   const impact: DragImpact = {
     ...homeImpact,
     at: {
-      type: 'COMBINE',
+      type: "COMBINE",
       combine,
     },
   };
@@ -98,7 +98,7 @@ it('should maintain combine information', () => {
   };
   const expected: MapProps = {
     mapped: {
-      type: 'DRAGGING',
+      type: "DRAGGING",
       dimension: preset.inHome1,
       draggingOver: preset.home.descriptor.id,
       forceShouldAnimate: null,

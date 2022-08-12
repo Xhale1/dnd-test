@@ -1,6 +1,6 @@
-import type { ContextId } from '../../types';
-import { transitions } from '../../animation';
-import * as attributes from '../data-attributes';
+import type { ContextId } from "../../types";
+import { transitions } from "../../animation";
+import * as attributes from "../data-attributes";
 
 export interface Styles {
   always: string;
@@ -24,19 +24,19 @@ interface Rule {
 const makeGetSelector = (context: string) => (attribute: string) =>
   `[${attribute}="${context}"]`;
 
-const getStyles = (rules: Rule[], property: keyof Rule['styles']): string =>
+const getStyles = (rules: Rule[], property: keyof Rule["styles"]): string =>
   rules
     .map((rule: Rule): string => {
       const value = rule.styles[property];
       if (!value) {
-        return '';
+        return "";
       }
 
       return `${rule.selector} { ${value} }`;
     })
-    .join(' ');
+    .join(" ");
 
-const noPointerEvents = 'pointer-events: none;';
+const noPointerEvents = "pointer-events: none;";
 
 export default (contextId: ContextId): Styles => {
   const getSelector = makeGetSelector(contextId);
@@ -143,7 +143,7 @@ export default (contextId: ContextId): Styles => {
   // we do not want the browser to have behaviors we do not expect
 
   const body: Rule = {
-    selector: 'body',
+    selector: "body",
     styles: {
       dragging: `
         cursor: grabbing;
@@ -160,10 +160,10 @@ export default (contextId: ContextId): Styles => {
   const rules: Rule[] = [draggable, dragHandle, droppable, body];
 
   return {
-    always: getStyles(rules, 'always'),
-    resting: getStyles(rules, 'resting'),
-    dragging: getStyles(rules, 'dragging'),
-    dropAnimating: getStyles(rules, 'dropAnimating'),
-    userCancel: getStyles(rules, 'userCancel'),
+    always: getStyles(rules, "always"),
+    resting: getStyles(rules, "resting"),
+    dragging: getStyles(rules, "dragging"),
+    dropAnimating: getStyles(rules, "dropAnimating"),
+    userCancel: getStyles(rules, "userCancel"),
   };
 };

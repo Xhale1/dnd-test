@@ -2,9 +2,9 @@ import type {
   Critical,
   DimensionMap,
   DraggableDimension,
-} from '../../../types';
-import getDraggablesInsideDroppable from '../../get-draggables-inside-droppable';
-import { warning } from '../../../dev-warning';
+} from "../../../types";
+import getDraggablesInsideDroppable from "../../get-draggables-inside-droppable";
+import { warning } from "../../../dev-warning";
 
 interface ErrorMap {
   [index: number]: true;
@@ -17,7 +17,7 @@ function checkIndexes(insideDestination: DraggableDimension[]) {
   }
 
   const indexes: number[] = insideDestination.map(
-    (d: DraggableDimension): number => d.descriptor.index,
+    (d: DraggableDimension): number => d.descriptor.index
   );
 
   const errors: ErrorMap = {};
@@ -44,7 +44,7 @@ function checkIndexes(insideDestination: DraggableDimension[]) {
 
       return hasError ? `[🔥${index}]` : `${index}`;
     })
-    .join(', ');
+    .join(", ");
 
   warning(`
     Detected non-consecutive <Draggable /> indexes.
@@ -57,14 +57,14 @@ function checkIndexes(insideDestination: DraggableDimension[]) {
 
 export default function validateDimensions(
   critical: Critical,
-  dimensions: DimensionMap,
+  dimensions: DimensionMap
 ): void {
   // wrapping entire block for better minification
-  if (process.env.NODE_ENV !== 'production') {
+  if (process.env.NODE_ENV !== "production") {
     const insideDestination: DraggableDimension[] =
       getDraggablesInsideDroppable(
         critical.droppable.id,
-        dimensions.draggables,
+        dimensions.draggables
       );
     checkIndexes(insideDestination);
   }

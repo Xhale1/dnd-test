@@ -2,13 +2,13 @@ import type {
   AnyEventBinding,
   EventBinding,
   EventOptions,
-} from './event-types';
+} from "./event-types";
 
 type UnbindFn = () => void;
 
 function getOptions(
   shared?: EventOptions,
-  fromBinding?: EventOptions | null,
+  fromBinding?: EventOptions | null
 ): EventOptions {
   return {
     ...shared,
@@ -19,7 +19,7 @@ function getOptions(
 export default function bindEvents(
   el: HTMLElement | Window,
   bindings: AnyEventBinding[],
-  sharedOptions?: EventOptions,
+  sharedOptions?: EventOptions
 ): () => void {
   const unbindings: UnbindFn[] = (bindings as EventBinding[]).map(
     (binding): UnbindFn => {
@@ -30,7 +30,7 @@ export default function bindEvents(
       return function unbind() {
         el.removeEventListener(binding.eventName, binding.fn, options);
       };
-    },
+    }
   );
 
   // Return a function to unbind events

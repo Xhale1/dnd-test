@@ -1,4 +1,4 @@
-import type { Position } from 'css-box-model';
+import type { Position } from "css-box-model";
 import type {
   DragImpact,
   DraggableDimension,
@@ -7,14 +7,14 @@ import type {
   Viewport,
   DisplacedBy,
   LiftEffect,
-} from '../../../types';
-import getDisplacedBy from '../../get-displaced-by';
-import { emptyGroups, noDisplacedBy } from '../../no-impact';
-import getPageBorderBoxCenter from '../../get-center-from-impact/get-page-border-box-center';
-import isTotallyVisibleInNewLocation from '../move-to-next-place/is-totally-visible-in-new-location';
-import { addPlaceholder } from '../../droppable/with-placeholder';
-import isHomeOf from '../../droppable/is-home-of';
-import calculateReorderImpact from '../../calculate-drag-impact/calculate-reorder-impact';
+} from "../../../types";
+import getDisplacedBy from "../../get-displaced-by";
+import { emptyGroups, noDisplacedBy } from "../../no-impact";
+import getPageBorderBoxCenter from "../../get-center-from-impact/get-page-border-box-center";
+import isTotallyVisibleInNewLocation from "../move-to-next-place/is-totally-visible-in-new-location";
+import { addPlaceholder } from "../../droppable/with-placeholder";
+import isHomeOf from "../../droppable/is-home-of";
+import calculateReorderImpact from "../../calculate-drag-impact/calculate-reorder-impact";
 
 interface Args {
   previousPageBorderBoxCenter: Position;
@@ -48,7 +48,7 @@ export default ({
       displaced: emptyGroups,
       displacedBy: noDisplacedBy,
       at: {
-        type: 'REORDER',
+        type: "REORDER",
         destination: {
           droppableId: destination.descriptor.id,
           index: 0,
@@ -85,7 +85,7 @@ export default ({
     // Using <= as we optimise slightly for moving before items in a new list
     // This is nicer in lists with fixed height items
     previousPageBorderBoxCenter[destination.axis.line] <=
-      moveRelativeTo.page.borderBox.center[destination.axis.line],
+      moveRelativeTo.page.borderBox.center[destination.axis.line]
   );
 
   const proposedIndex: number = (() => {
@@ -104,7 +104,7 @@ export default ({
 
   const displacedBy: DisplacedBy = getDisplacedBy(
     destination.axis,
-    draggable.displaceBy,
+    draggable.displaceBy
   );
 
   return calculateReorderImpact({

@@ -1,26 +1,26 @@
-import type { Action, Store } from '../../../../src/state/store-types';
-import type { AutoScroller } from '../../../../src/state/auto-scroller/auto-scroller-types';
-import createStore from './util/create-store';
-import middleware from '../../../../src/state/middleware/auto-scroll';
+import type { Action, Store } from "../../../../src/state/store-types";
+import type { AutoScroller } from "../../../../src/state/auto-scroller/auto-scroller-types";
+import createStore from "./util/create-store";
+import middleware from "../../../../src/state/middleware/auto-scroll";
 import {
   animateDropArgs,
   userCancelArgs,
   initialPublishArgs,
   getCompletedArgs,
-} from '../../../util/preset-action-args';
+} from "../../../util/preset-action-args";
 import {
   animateDrop,
   completeDrop,
   initialPublish,
   moveDown,
   flush,
-} from '../../../../src/state/action-creators';
+} from "../../../../src/state/action-creators";
 
 const shouldStop: Action[] = [
   animateDrop(animateDropArgs),
   animateDrop(userCancelArgs),
-  completeDrop(getCompletedArgs('CANCEL')),
-  completeDrop(getCompletedArgs('DROP')),
+  completeDrop(getCompletedArgs("CANCEL")),
+  completeDrop(getCompletedArgs("DROP")),
   flush(),
 ];
 
@@ -36,7 +36,7 @@ shouldStop.forEach((action: Action) => {
     const store: Store = createStore(middleware(scroller));
 
     store.dispatch(initialPublish(initialPublishArgs));
-    expect(store.getState().phase).toBe('DRAGGING');
+    expect(store.getState().phase).toBe("DRAGGING");
     expect(scroller.start).toHaveBeenCalled();
 
     store.dispatch(action);
@@ -44,7 +44,7 @@ shouldStop.forEach((action: Action) => {
   });
 });
 
-it('should fire a scroll when there is an update', () => {
+it("should fire a scroll when there is an update", () => {
   const scroller: AutoScroller = getScrollerStub();
   const store: Store = createStore(middleware(scroller));
 

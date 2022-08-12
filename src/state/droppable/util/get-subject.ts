@@ -1,13 +1,13 @@
-import { getRect } from 'css-box-model';
-import type { Rect, Spacing, BoxModel } from 'css-box-model';
+import { getRect } from "css-box-model";
+import type { Rect, Spacing, BoxModel } from "css-box-model";
 import type {
   Axis,
   Scrollable,
   DroppableSubject,
   PlaceholderInSubject,
-} from '../../../types';
-import executeClip from './clip';
-import { offsetByPosition } from '../../spacing';
+} from "../../../types";
+import executeClip from "./clip";
+import { offsetByPosition } from "../../spacing";
 
 const scroll = (target: Spacing, frame?: Scrollable | null): Spacing => {
   if (!frame) {
@@ -20,7 +20,7 @@ const scroll = (target: Spacing, frame?: Scrollable | null): Spacing => {
 const increase = (
   target: Spacing,
   axis: Axis,
-  withPlaceholder?: PlaceholderInSubject | null,
+  withPlaceholder?: PlaceholderInSubject | null
 ): Spacing => {
   if (withPlaceholder && withPlaceholder.increasedBy) {
     return {

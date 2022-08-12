@@ -1,15 +1,15 @@
-import React, { ReactElement } from 'react';
-import type { ReactNode } from 'react';
-import styled from '@emotion/styled';
-import { colors } from '@atlaskit/theme';
-import { DragDropContext, Droppable, Draggable } from '@react-forked/dnd';
+import { colors } from "@atlaskit/theme";
+import styled from "@emotion/styled";
 import type {
-  DropResult,
-  DroppableProvided,
   DraggableProvided,
-} from '@react-forked/dnd';
-import { grid } from '../constants';
-import reorder from '../reorder';
+  DroppableProvided,
+  DropResult,
+} from "@hello-pangea/dnd";
+import { DragDropContext, Draggable, Droppable } from "@hello-pangea/dnd";
+import type { ReactNode } from "react";
+import React, { ReactElement } from "react";
+import { grid } from "../constants";
+import reorder from "../reorder";
 
 interface ItemType {
   id: string;
@@ -18,14 +18,14 @@ interface ItemType {
 
 const initial: ItemType[] = [
   {
-    id: 'button',
+    id: "button",
     component: (
       <div>
         <p>Standard</p>
         <button type="button">hello world</button>
         <br />
         <p>
-          With child{' '}
+          With child{" "}
           <a
             href="https://developer.mozilla.org/en-US/docs/Web/Guide/HTML/Content_categories#Phrasing_content"
             target="_blank"
@@ -35,13 +35,13 @@ const initial: ItemType[] = [
           </a>
         </p>
         <button type="button">
-          why{' '}
+          why{" "}
           <strong>
             hello <em>there!</em>
           </strong>
         </button>
         <p>
-          With child{' '}
+          With child{" "}
           <a
             href="https://developer.mozilla.org/en-US/docs/Web/API/SVGElement"
             target="_blank"
@@ -60,7 +60,7 @@ const initial: ItemType[] = [
     ),
   },
   {
-    id: 'select',
+    id: "select",
     component: (
       <select>
         <option>Option 1</option>
@@ -70,11 +70,11 @@ const initial: ItemType[] = [
     ),
   },
   {
-    id: 'textarea',
+    id: "textarea",
     component: <textarea placeholder="type some text here" />,
   },
   {
-    id: 'input',
+    id: "input",
     component: (
       <div>
         <input type="text" placeholder="text input" />
@@ -82,7 +82,7 @@ const initial: ItemType[] = [
     ),
   },
   {
-    id: 'checkbox',
+    id: "checkbox",
     component: (
       <div>
         <label htmlFor="myCheckbox1">
@@ -98,7 +98,7 @@ const initial: ItemType[] = [
     ),
   },
   {
-    id: 'radio',
+    id: "radio",
     component: (
       <div>
         <label htmlFor="myRadio">
@@ -114,11 +114,11 @@ const initial: ItemType[] = [
     ),
   },
   {
-    id: 'range',
+    id: "range",
     component: <input type="range" min="1" max="100" />,
   },
   {
-    id: 'content editable',
+    id: "content editable",
     component: (
       <div
         contentEditable
@@ -191,7 +191,7 @@ export default class InteractiveElementsApp extends React.Component<
     const items = reorder(
       this.state.items,
       result.source.index,
-      result.destination.index,
+      result.destination.index
     );
 
     this.setState({
@@ -243,9 +243,9 @@ export default class InteractiveElementsApp extends React.Component<
           </Droppable>
           <Controls>
             <p>
-              Dragging from interactive elements is{' '}
+              Dragging from interactive elements is{" "}
               <Status isEnabled={canDragInteractiveElements}>
-                {canDragInteractiveElements ? 'enabled' : 'disabled'}
+                {canDragInteractiveElements ? "enabled" : "disabled"}
               </Status>
             </p>
             <button type="button" onClick={this.toggleBlocking}>

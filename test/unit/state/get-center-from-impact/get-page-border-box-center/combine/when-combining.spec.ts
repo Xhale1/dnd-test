@@ -1,17 +1,17 @@
-import type { Position } from 'css-box-model';
+import type { Position } from "css-box-model";
 import type {
   Axis,
   DroppableDimension,
   DisplacedBy,
   DragImpact,
-} from '../../../../../../src/types';
-import { vertical, horizontal } from '../../../../../../src/state/axis';
-import getPageBorderBoxCenter from '../../../../../../src/state/get-center-from-impact/get-page-border-box-center';
-import getLiftEffect from '../../../../../../src/state/get-lift-effect';
-import { getPreset } from '../../../../../util/dimension';
-import getDisplacedBy from '../../../../../../src/state/get-displaced-by';
-import { subtract, add } from '../../../../../../src/state/position';
-import { getForcedDisplacement } from '../../../../../util/impact';
+} from "../../../../../../src/types";
+import { vertical, horizontal } from "../../../../../../src/state/axis";
+import getPageBorderBoxCenter from "../../../../../../src/state/get-center-from-impact/get-page-border-box-center";
+import getLiftEffect from "../../../../../../src/state/get-lift-effect";
+import { getPreset } from "../../../../../util/dimension";
+import getDisplacedBy from "../../../../../../src/state/get-displaced-by";
+import { subtract, add } from "../../../../../../src/state/position";
+import { getForcedDisplacement } from "../../../../../util/impact";
 
 [vertical, horizontal].forEach((axis: Axis) => {
   describe(`on ${axis.direction} axis`, () => {
@@ -28,11 +28,11 @@ import { getForcedDisplacement } from '../../../../../util/impact';
     });
     const displacedBy: DisplacedBy = getDisplacedBy(
       axis,
-      preset.inHome2.displaceBy,
+      preset.inHome2.displaceBy
     );
 
-    describe('item started displaced', () => {
-      it('should move onto a displaced center - the initial visible center', () => {
+    describe("item started displaced", () => {
+      it("should move onto a displaced center - the initial visible center", () => {
         const impact: DragImpact = {
           displaced: getForcedDisplacement({
             visible: [
@@ -48,7 +48,7 @@ import { getForcedDisplacement } from '../../../../../util/impact';
           }),
           displacedBy,
           at: {
-            type: 'COMBINE',
+            type: "COMBINE",
             // combining with inHome3
             combine: {
               draggableId: preset.inHome3.descriptor.id,
@@ -68,7 +68,7 @@ import { getForcedDisplacement } from '../../../../../util/impact';
         expect(result).toEqual(preset.inHome3.page.borderBox.center);
       });
 
-      it('should move onto a non-displaced center', () => {
+      it("should move onto a non-displaced center", () => {
         // combining with inHome3 which is no longer displaced
         // inHome2 would have moved forward and is now moving backwards
         const impact: DragImpact = {
@@ -77,7 +77,7 @@ import { getForcedDisplacement } from '../../../../../util/impact';
           }),
           displacedBy,
           at: {
-            type: 'COMBINE',
+            type: "COMBINE",
             // combining with not displaced inHome1
             combine: {
               draggableId: preset.inHome3.descriptor.id,
@@ -96,14 +96,14 @@ import { getForcedDisplacement } from '../../../../../util/impact';
 
         const expected: Position = subtract(
           preset.inHome3.page.borderBox.center,
-          displacedBy.point,
+          displacedBy.point
         );
         expect(result).toEqual(expected);
       });
     });
 
-    describe('item did not start displaced', () => {
-      it('should move onto a displaced center', () => {
+    describe("item did not start displaced", () => {
+      it("should move onto a displaced center", () => {
         // moving inHome2 backwards past inHome1 (pushing it forward)
         // and then moving onto inHome1
         const impact: DragImpact = {
@@ -126,7 +126,7 @@ import { getForcedDisplacement } from '../../../../../util/impact';
           }),
           displacedBy,
           at: {
-            type: 'COMBINE',
+            type: "COMBINE",
             // combining with not displaced inHome1
             combine: {
               draggableId: preset.inHome1.descriptor.id,
@@ -145,12 +145,12 @@ import { getForcedDisplacement } from '../../../../../util/impact';
 
         const expected: Position = add(
           preset.inHome1.page.borderBox.center,
-          displacedBy.point,
+          displacedBy.point
         );
         expect(result).toEqual(expected);
       });
 
-      it('should move onto a non-displaced center', () => {
+      it("should move onto a non-displaced center", () => {
         // moving inHome2 backwards onto inHome1
         const impact: DragImpact = {
           displaced: getForcedDisplacement({
@@ -168,7 +168,7 @@ import { getForcedDisplacement } from '../../../../../util/impact';
           }),
           displacedBy,
           at: {
-            type: 'COMBINE',
+            type: "COMBINE",
             // combining with not displaced inHome1
             combine: {
               draggableId: preset.inHome1.descriptor.id,

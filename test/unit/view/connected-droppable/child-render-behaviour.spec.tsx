@@ -1,9 +1,8 @@
-import React, { Component } from 'react';
-import { mount } from 'enzyme';
-import type { DroppableProvided } from '../../../../src/view/droppable/droppable-types';
-import Droppable from '../../../../src/view/droppable/connected-droppable';
-import forceUpdate from '../../../util/force-update';
-import { DragDropContext } from '../../../../src';
+import { render, screen } from "@testing-library/react";
+import React, { Component } from "react";
+import type { DroppableProvided } from "../../../../src/view/droppable/droppable-types";
+import Droppable from "../../../../src/view/droppable/connected-droppable";
+import { DragDropContext } from "../../../../src";
 
 class Person extends Component<{
   name: string;
@@ -38,42 +37,40 @@ class App extends Component<{
 let personRenderSpy: jest.SpyInstance;
 
 beforeEach(() => {
-  personRenderSpy = jest.spyOn(Person.prototype, 'render');
+  personRenderSpy = jest.spyOn(Person.prototype, "render");
 });
 
 afterEach(() => {
   personRenderSpy.mockRestore();
 });
 
-it('should render the child function when the parent renders', () => {
-  const wrapper = mount(<App currentUser="Jake" />);
+it("should render the child function when the parent renders", () => {
+  const { unmount } = render(<App currentUser="Jake" />);
 
   expect(personRenderSpy).toHaveBeenCalledTimes(1);
-  expect(wrapper.find(Person).props().name).toBe('Jake');
+  expect(screen.getByText(/Jake/)).toHaveTextContent("hello Jake");
 
-  wrapper.unmount();
+  unmount();
 });
 
-it('should render the child function when the parent re-renders', () => {
-  const wrapper = mount(<App currentUser="Jake" />);
+it("should render the child function when the parent re-renders", () => {
+  const { rerender, unmount } = render(<App currentUser="Jake" />);
 
-  forceUpdate(wrapper);
+  rerender(<App currentUser="Jake" />);
 
   expect(personRenderSpy).toHaveBeenCalledTimes(2);
-  expect(wrapper.find(Person).props().name).toBe('Jake');
+  expect(screen.getByText(/Jake/)).toHaveTextContent("hello Jake");
 
-  wrapper.unmount();
+  unmount();
 });
 
-it('should render the child function when the parents props changes that cause a re-render', () => {
-  const wrapper = mount(<App currentUser="Jake" />);
+it("should render the child function when the parents props changes that cause a re-render", () => {
+  const { rerender, unmount } = render(<App currentUser="Jake" />);
 
-  wrapper.setProps({
-    currentUser: 'Finn',
-  });
+  rerender(<App currentUser="Finn" />);
 
   expect(personRenderSpy).toHaveBeenCalledTimes(2);
-  expect(wrapper.find(Person).props().name).toBe('Finn');
+  expect(screen.getByText(/Finn/)).toHaveTextContent("hello Finn");
 
-  wrapper.unmount();
+  unmount();
 });

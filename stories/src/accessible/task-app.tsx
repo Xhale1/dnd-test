@@ -1,20 +1,20 @@
-import React, { Component, ReactElement } from 'react';
-import styled from '@emotion/styled';
-import { DragDropContext } from '@react-forked/dnd';
+import styled from "@emotion/styled";
 import type {
   Announce,
+  DraggableLocation,
   DragStart,
   DragUpdate,
   DropResult,
-  DraggableLocation,
   ResponderProvided,
-} from '@react-forked/dnd';
-import TaskList from './task-list';
-import initial from './data';
-import reorder from '../reorder';
-import { grid } from '../constants';
-import BlurContext from './blur-context';
-import type { Task } from '../types';
+} from "@hello-pangea/dnd";
+import { DragDropContext } from "@hello-pangea/dnd";
+import React, { Component, ReactElement } from "react";
+import { grid } from "../constants";
+import reorder from "../reorder";
+import type { Task } from "../types";
+import BlurContext from "./blur-context";
+import initial from "./data";
+import TaskList from "./task-list";
 
 interface State {
   tasks: Task[];
@@ -67,18 +67,18 @@ export default class TaskApp extends Component<unknown, State> {
   onDragUpdate = (update: DragUpdate, provided: ResponderProvided): void => {
     const announce: Announce = provided.announce;
     if (!update.destination) {
-      announce('You are currently not dragging over any droppable area');
+      announce("You are currently not dragging over any droppable area");
       return;
     }
     announce(
-      `You have moved the task to position ${update.destination.index + 1}`,
+      `You have moved the task to position ${update.destination.index + 1}`
     );
   };
 
   onDragEnd = (result: DropResult, provided: ResponderProvided): void => {
     const announce: Announce = provided.announce;
     // TODO: not being called on cancel!!!
-    if (result.reason === 'CANCEL') {
+    if (result.reason === "CANCEL") {
       announce(`
         Movement cancelled.
         The task has returned to its starting position of ${
@@ -104,7 +104,7 @@ export default class TaskApp extends Component<unknown, State> {
     const tasks: Task[] = reorder(
       this.state.tasks,
       result.source.index,
-      destination.index,
+      destination.index
     );
 
     this.setState({

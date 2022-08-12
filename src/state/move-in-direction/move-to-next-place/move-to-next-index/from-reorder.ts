@@ -1,4 +1,4 @@
-import type { DraggableDimension, DraggableLocation } from '../../../../types';
+import type { DraggableDimension, DraggableLocation } from "../../../../types";
 
 interface Args {
   isMovingForward: boolean;

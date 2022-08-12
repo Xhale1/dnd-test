@@ -1,8 +1,8 @@
-import type { Position, Rect, Spacing } from 'css-box-model';
-import { apply, isEqual, origin } from '../../../position';
-import getScrollOnAxis from './get-scroll-on-axis';
-import adjustForSizeLimits from './adjust-for-size-limits';
-import { horizontal, vertical } from '../../../axis';
+import type { Position, Rect, Spacing } from "css-box-model";
+import { apply, isEqual, origin } from "../../../position";
+import getScrollOnAxis from "./get-scroll-on-axis";
+import adjustForSizeLimits from "./adjust-for-size-limits";
+import { horizontal, vertical } from "../../../axis";
 
 // will replace -0 and replace with +0
 const clean = apply((value: number) => (value === 0 ? 0 : value));

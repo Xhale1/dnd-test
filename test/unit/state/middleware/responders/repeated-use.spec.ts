@@ -3,17 +3,17 @@ import {
   completeDrop,
   initialPublish,
   moveDown,
-} from '../../../../../src/state/action-creators';
-import middleware from '../../../../../src/state/middleware/responders';
+} from "../../../../../src/state/action-creators";
+import middleware from "../../../../../src/state/middleware/responders";
 import {
   getDragStart,
   initialPublishArgs,
-} from '../../../../util/preset-action-args';
-import createStore from '../util/create-store';
-import type { DragUpdate, DropResult } from '../../../../../src/types';
-import createResponders from './util/get-responders-stub';
-import getAnnounce from './util/get-announce-stub';
-import getCompletedWithResult from './util/get-completed-with-result';
+} from "../../../../util/preset-action-args";
+import createStore from "../util/create-store";
+import type { DragUpdate, DropResult } from "../../../../../src/types";
+import createResponders from "./util/get-responders-stub";
+import getAnnounce from "./util/get-announce-stub";
+import getCompletedWithResult from "./util/get-completed-with-result";
 
 beforeEach(() => {
   jest.useFakeTimers();
@@ -23,7 +23,7 @@ afterEach(() => {
   jest.useRealTimers();
 });
 
-it('should behave correctly across multiple drags', () => {
+it("should behave correctly across multiple drags", () => {
   const responders = createResponders();
   const store = createStore(middleware(() => responders, getAnnounce()));
   Array.from({ length: 4 }).forEach(() => {
@@ -32,7 +32,7 @@ it('should behave correctly across multiple drags', () => {
     jest.runOnlyPendingTimers();
     expect(responders.onDragStart).toHaveBeenCalledWith(
       getDragStart(),
-      expect.any(Object),
+      expect.any(Object)
     );
     expect(responders.onDragStart).toHaveBeenCalledTimes(1);
 
@@ -50,23 +50,23 @@ it('should behave correctly across multiple drags', () => {
     jest.runOnlyPendingTimers();
     expect(responders.onDragUpdate).toHaveBeenCalledWith(
       update,
-      expect.any(Object),
+      expect.any(Object)
     );
     expect(responders.onDragUpdate).toHaveBeenCalledTimes(1);
 
     // drop
     const result: DropResult = {
       ...update,
-      reason: 'DROP',
+      reason: "DROP",
     };
     store.dispatch(
       completeDrop({
         completed: getCompletedWithResult(result, store.getState()),
-      }),
+      })
     );
     expect(responders.onDragEnd).toHaveBeenCalledWith(
       result,
-      expect.any(Object),
+      expect.any(Object)
     );
     expect(responders.onDragEnd).toHaveBeenCalledTimes(1);
 

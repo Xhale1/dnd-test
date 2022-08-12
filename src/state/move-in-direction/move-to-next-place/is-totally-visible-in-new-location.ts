@@ -1,12 +1,12 @@
-import type { Position, Rect, Spacing } from 'css-box-model';
-import { subtract } from '../../position';
-import { offsetByPosition } from '../../spacing';
+import type { Position, Rect, Spacing } from "css-box-model";
+import { subtract } from "../../position";
+import { offsetByPosition } from "../../spacing";
 import {
   isTotallyVisible,
   isTotallyVisibleOnAxis,
-} from '../../visibility/is-visible';
-import type { Args as IsVisibleArgs } from '../../visibility/is-visible';
-import type { DraggableDimension, DroppableDimension } from '../../../types';
+} from "../../visibility/is-visible";
+import type { Args as IsVisibleArgs } from "../../visibility/is-visible";
+import type { DraggableDimension, DroppableDimension } from "../../../types";
 
 interface Args {
   draggable: DraggableDimension;
@@ -32,11 +32,11 @@ export default ({
   // of a Droppable (which is okay)
   const changeNeeded: Position = subtract(
     newPageBorderBoxCenter,
-    draggable.page.borderBox.center,
+    draggable.page.borderBox.center
   );
   const shifted: Spacing = offsetByPosition(
     draggable.page.borderBox,
-    changeNeeded,
+    changeNeeded
   );
 
   // Must be totally visible, not just partially visible.

@@ -1,24 +1,24 @@
-import type { Position } from 'css-box-model';
-import getDragImpact from '../../../../../../src/state/get-drag-impact';
-import { subtract } from '../../../../../../src/state/position';
-import { vertical, horizontal } from '../../../../../../src/state/axis';
-import { getPreset } from '../../../../../util/dimension';
-import getDisplacedBy from '../../../../../../src/state/get-displaced-by';
+import type { Position } from "css-box-model";
+import getDragImpact from "../../../../../../src/state/get-drag-impact";
+import { subtract } from "../../../../../../src/state/position";
+import { vertical, horizontal } from "../../../../../../src/state/axis";
+import { getPreset } from "../../../../../util/dimension";
+import getDisplacedBy from "../../../../../../src/state/get-displaced-by";
 import type {
   Axis,
   DragImpact,
   Viewport,
   DisplacedBy,
-} from '../../../../../../src/types';
-import getLiftEffect from '../../../../../../src/state/get-lift-effect';
-import beforePoint from '../../../../../util/before-point';
-import afterPoint from '../../../../../util/after-point';
-import getHomeLocation from '../../../../../../src/state/get-home-location';
-import { getForcedDisplacement } from '../../../../../util/impact';
+} from "../../../../../../src/types";
+import getLiftEffect from "../../../../../../src/state/get-lift-effect";
+import beforePoint from "../../../../../util/before-point";
+import afterPoint from "../../../../../util/after-point";
+import getHomeLocation from "../../../../../../src/state/get-home-location";
+import { getForcedDisplacement } from "../../../../../util/impact";
 import {
   getOffsetForEndEdge,
   getOffsetForStartEdge,
-} from '../../util/get-offset-for-edge';
+} from "../../util/get-offset-for-edge";
 
 [vertical, horizontal].forEach((axis: Axis) => {
   describe(`on ${axis.direction} axis`, () => {
@@ -27,7 +27,7 @@ import {
 
     const displacedBy: DisplacedBy = getDisplacedBy(
       axis,
-      preset.inHome2.displaceBy,
+      preset.inHome2.displaceBy
     );
     const { afterCritical, impact: homeImpact } = getLiftEffect({
       draggable: preset.inHome2,
@@ -52,7 +52,7 @@ import {
       afterCritical,
     });
 
-    it('should displace items backwards when end of dragging item goes past the target center', () => {
+    it("should displace items backwards when end of dragging item goes past the target center", () => {
       {
         const endOnInHome3Center: DragImpact = getDragImpact({
           pageOffset: offsetForEndOnInHome3Center,
@@ -80,7 +80,7 @@ import {
           }),
           displacedBy,
           at: {
-            type: 'REORDER',
+            type: "REORDER",
             destination: getHomeLocation(preset.inHome2.descriptor),
           },
         };
@@ -100,7 +100,7 @@ import {
         }),
         displacedBy,
         at: {
-          type: 'REORDER',
+          type: "REORDER",
           destination: {
             // is now in position of inHome3
             droppableId: preset.home.descriptor.id,
@@ -114,10 +114,10 @@ import {
 
     // Even though inHome3 is not 'displaced'
     // it is visibly displaced from the start of the drag
-    it('should end displacement if the start of the dragging item is less than the displaced target center', () => {
+    it("should end displacement if the start of the dragging item is less than the displaced target center", () => {
       const displacedInHome3Center: Position = subtract(
         preset.inHome3.page.borderBox.center,
-        displacedBy.point,
+        displacedBy.point
       );
 
       const offsetForStartOnDisplacedInHome2Center: Position =
@@ -170,7 +170,7 @@ import {
           }),
           displacedBy,
           at: {
-            type: 'REORDER',
+            type: "REORDER",
             destination: {
               droppableId: preset.home.descriptor.id,
               index: preset.inHome2.descriptor.index,

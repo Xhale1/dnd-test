@@ -1,4 +1,4 @@
-import type { Position } from 'css-box-model';
+import type { Position } from "css-box-model";
 import type {
   Id,
   DraggableId,
@@ -10,10 +10,10 @@ import type {
   DroppableDescriptor,
   DroppableDimension,
   TypeId,
-} from '../../types';
+} from "../../types";
 
 export type GetDraggableDimensionFn = (
-  windowScroll: Position,
+  windowScroll: Position
 ) => DraggableDimension;
 
 export interface DraggableEntry {
@@ -35,7 +35,7 @@ export interface DraggableAPI {
 
 export type GetDroppableDimensionFn = (
   windowScroll: Position,
-  options: ScrollOptions,
+  options: ScrollOptions
 ) => DroppableDimension;
 
 export interface RecollectDroppableOptions {
@@ -78,11 +78,11 @@ export interface DroppableAPI {
 
 export type RegistryEvent =
   | {
-      type: 'ADDITION';
+      type: "ADDITION";
       value: DraggableEntry;
     }
   | {
-      type: 'REMOVAL';
+      type: "REMOVAL";
       value: DraggableEntry;
     };
 
