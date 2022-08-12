@@ -1,3 +1,46 @@
+## [15.0.0](https://github.com/hello-pangea/dnd/compare/v14.0.2...v15.0.0) (2022-08-12)
+
+### Features 🔥
+
+- Support React 18
+
+### Breaking
+
+- Requires react and react-dom ^17 || ^18 (drop support for version 16)
+- Requires react-redux ^8 (drop support for version 7)
+- Drop support for IE 11
+
+### Tests 🧪
+
+- migrate from enzyme to @testing-library/react
+- Jest 27 -> 28
+- Use React 18 for tests
+
+### Bug Fixes 🛠
+
+- remove flicker caused by react 18 and react-redux 8 ([d7af384](https://github.com/hello-pangea/dnd/commit/d7af384ce0dffffc5dbea49b97aee8c3fa40b499))
+
+### Others 🔧
+
+- clean and re-run prettier ([4649adf](https://github.com/hello-pangea/dnd/commit/4649adf3082f3f64683519cf14d4532c211ac0e0))
+- improve release script ([9406edd](https://github.com/hello-pangea/dnd/commit/9406edd10b017ee5a3cc8a1efa808c4366dda00e))
+- instruct release-it to publish as public ([a805264](https://github.com/hello-pangea/dnd/commit/a805264e9631a0aadc51cd0291b5eccd82593f8f))
+- list package as public ([03efeda](https://github.com/hello-pangea/dnd/commit/03efeda88a47d46c528c31934f12a3c415104bac))
+- new browserlist (no more ie) ([bec128e](https://github.com/hello-pangea/dnd/commit/bec128eea25bd6a28c4f19de21c35d40a12ed0f1))
+- remove commit requirements ([8ba1a29](https://github.com/hello-pangea/dnd/commit/8ba1a29c8390f11593ef9c26607b8c8a2606ebf0))
+- remove unused storybook deps ([a19c4db](https://github.com/hello-pangea/dnd/commit/a19c4db013f81a38b0dbd2c48be1d1b784c554da))
+- switch from pnpm to npm ([f47cfe8](https://github.com/hello-pangea/dnd/commit/f47cfe869a8d3a2d985502452d087f2655355544))
+- temporarily revert version ([f890876](https://github.com/hello-pangea/dnd/commit/f890876d93abd14817227cbc36de819a1c903250))
+- update additional jest packages ([d652f47](https://github.com/hello-pangea/dnd/commit/d652f47994a2455b39a8f8448486ae1195174f31))
+- update deps minor version ([ca4c6ae](https://github.com/hello-pangea/dnd/commit/ca4c6ae4cef9da77fdf62491a7b191bc996fef72))
+- update deps, supported browsers ([ad60115](https://github.com/hello-pangea/dnd/commit/ad601157ebbd38e4dce993fa928d90197e740146))
+- update jest 27 -> 28 ([64d8802](https://github.com/hello-pangea/dnd/commit/64d8802009b15024d582bf4e064300ebca9a3d3f))
+- update jsdom and @rollup/plugin-commonjs ([9c64ce9](https://github.com/hello-pangea/dnd/commit/9c64ce9bb4f9ac03bf8f2a3d489c9fdc264efd0b))
+- update minor deps and remove airbnb eslint ([8b43f98](https://github.com/hello-pangea/dnd/commit/8b43f985c6ad95a742887f2e0048eea30ff76b4e))
+- update react-redux 7 -> 8 ([6bd19fb](https://github.com/hello-pangea/dnd/commit/6bd19fb01233e152a6ad20d96fd85f1d199d0046))
+- update stylelint packages ([b6b0399](https://github.com/hello-pangea/dnd/commit/b6b039947c0438e8a5d43a401bb356668a744d8c))
+- use react 18 for tests, fix tests, bug fixes ([c41b55b](https://github.com/hello-pangea/dnd/commit/c41b55bb138a3171ad980a595bb5dfe3024d1f05))
+
 ### [14.0.2](https://github.com/react-forked/dnd/compare/v14.0.1...v14.0.2) (2022-04-10)
 
 ### CI 🛠
