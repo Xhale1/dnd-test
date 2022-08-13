@@ -7,7 +7,7 @@
 
 **Beautiful** and **accessible** drag and drop for lists with [`React`](https://facebook.github.io/react/)
 
-[![npm](https://img.shields.io/npm/v/@hello-pangea/dnd.svg)](https://www.npmjs.com/package/@hello-pangea/dnd)
+[![npm](https://img.shields.io/npm/v/@hello-pangea/dnd.svg)](https://www.npmjs.com/package/@hello-pangea/dnd) ![Discord](https://img.shields.io/discord/1007763479010234398)
 
 ![quote application example](https://user-images.githubusercontent.com/2182637/53614150-efbed780-3c2c-11e9-9204-a5d2e746faca.gif)
 
