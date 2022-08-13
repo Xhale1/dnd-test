@@ -7,7 +7,7 @@
 
 **Beautiful** and **accessible** drag and drop for lists with [`React`](https://facebook.github.io/react/)
 
-[![npm](https://img.shields.io/npm/v/@hello-pangea/dnd.svg)](https://www.npmjs.com/package/@hello-pangea/dnd) ![Discord](https://img.shields.io/discord/1007763479010234398)
+[![npm](https://img.shields.io/npm/v/@hello-pangea/dnd.svg)](https://www.npmjs.com/package/@hello-pangea/dnd) [![discord](https://img.shields.io/discord/1007763479010234398)](https://discord.gg/zKhPpmvCEv)
 
 ![quote application example](https://user-images.githubusercontent.com/2182637/53614150-efbed780-3c2c-11e9-9204-a5d2e746faca.gif)
 
@@ -155,11 +155,11 @@ Alex Reardon [@alexandereardon](https://twitter.com/alexandereardon)
 
 > Alex is no longer personally maintaning this project. The other wonderful maintainers are carrying this project forward.
 
-## Maintainer 🛠️
+## Maintainers 🛠️
 
 - Reece Carolan [@Xhale1](https://github.com/Xhale1)
 - Gabriel Santerre [@100terres](https://github.com/100terres)
-- Many other [@Atlassian](https://twitter.com/Atlassian)'s!
+- Many [@Atlassian](https://twitter.com/Atlassian)'s have contributed to the original `react-beautiful-dnd`. Atlassian is no longer involved with this project.
 
 ## Collaborators 🤝
 
