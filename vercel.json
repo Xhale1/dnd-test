@@ -1,10 +1,6 @@
 {
   "rewrites": [
     {
-      "source": "/:match*",
-      "destination": "https://dnd-docs.hellopangea.dev/"
-    },
-    {
       "source": "/examples/:match*",
       "destination": "https://dnd-examples.hellopangea.dev/:match*"
     },
