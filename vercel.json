@@ -2,15 +2,15 @@
   "rewrites": [
     {
       "source": "/:match*",
-      "destination": "https://dnd-docs.hellopangea.com/"
+      "destination": "https://dnd-docs.hellopangea.dev/"
     },
     {
       "source": "/examples/:match*",
-      "destination": "https://dnd-examples.hellopangea.com/:match*"
+      "destination": "https://dnd-examples.hellopangea.dev/:match*"
     },
     {
       "source": "/docs/:match*",
-      "destination": "https://dnd-docs.hellopangea.com/:match*"
+      "destination": "https://dnd-docs.hellopangea.dev/:match*"
     }
   ]
 }
