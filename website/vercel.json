@@ -3,10 +3,6 @@
     {
       "source": "/examples/:match*",
       "destination": "https://dnd-examples.hellopangea.dev/:match*"
-    },
-    {
-      "source": "/docs/:match*",
-      "destination": "https://dnd-docs.hellopangea.dev/:match*"
     }
   ]
 }
