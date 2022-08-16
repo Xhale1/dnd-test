@@ -16,6 +16,27 @@ module.exports = {
   core: {
     builder: "webpack5",
   },
+  // See https://github.com/storybookjs/storybook/issues/1291#issuecomment-795251283
+  webpackFinal: async (config, { configType }) => {
+    if (configType === "PRODUCTION") {
+      config.output.publicPath = "/examples/";
+    }
+    return config;
+  },
+  managerWebpack: async (config, { configType }) => {
+    if (configType === "PRODUCTION") {
+      config.output.publicPath = "/examples/";
+    }
+    return config;
+  },
+  managerHead: (head, { configType }) => {
+    if (configType === "PRODUCTION") {
+      return `
+        ${head}
+        <base href="/examples/">
+      `;
+    }
+  },
   // TODO: investigate adding these back
   // babel: async (options) => ({
   //   ...options,
